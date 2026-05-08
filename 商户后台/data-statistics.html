@@ -15,24 +15,294 @@
       <section class="content stats-page">
         <div class="card stats-card">
           <div class="stats-toolbar">
-            <label class="stats-filter"><span>游戏</span><select class="stats-input"><option>请选择</option><option>Avlator</option></select></label>
-            <label class="stats-filter"><span>时间</span><input class="stats-input" type="date" value="2026-05-07" /></label>
-            <button class="profit-btn primary" type="button">查询</button>
-            <button class="profit-btn" type="button">重置</button>
+            <label class="stats-filter"><span>站点选择</span><select class="stats-input" data-site-filter><option value="">全部站点</option><option value="1041">1041</option><option value="1047">1047</option><option value="1095">1095</option></select></label>
+            <div class="stats-filter">
+              <span>游戏选择</span>
+              <div class="game-picker stats-game-picker" data-game-picker>
+                <button class="game-picker-trigger" type="button" data-game-trigger>
+                  <span class="game-choice-icon" data-game-icon>ALL</span>
+                  <span data-game-label>全部游戏</span>
+                  <span class="game-picker-arrow">⌄</span>
+                </button>
+                <div class="game-picker-panel" data-game-panel hidden>
+                  <div class="game-brand-tabs" data-game-brand-tabs>
+                    <button class="game-brand-tab active" type="button" data-game-brand value="">全部品牌</button>
+                    <label class="game-all-check" title="勾选后选择全部游戏">
+                      <input type="checkbox" data-game-all />
+                      <span>选择全部游戏</span>
+                    </label>
+                    <button class="game-brand-tab" type="button" data-game-brand value="PG">PG</button>
+                    <button class="game-brand-tab" type="button" data-game-brand value="PP">PP</button>
+                    <button class="game-brand-tab" type="button" data-game-brand value="JILI">JILI</button>
+                    <button class="game-brand-tab" type="button" data-game-brand value="SPRLBE">SPRLBE</button>
+                  </div>
+                  <input class="game-search" type="text" placeholder="搜索游戏名称 / 英文名 / 游戏ID" data-game-search />
+                  <div class="game-options stats-game-options" data-game-options>
+                    <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1001" data-value="Aviator" data-name="Aviator 飞机游戏" data-icon="飞" title="Aviator 飞机游戏"><span class="game-thumb kraken"><span>飞</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1002" data-value="PowerOfTheKraken" data-name="PowerOfTheKraken 法老牌" data-icon="K" title="PowerOfTheKraken"><span class="game-thumb kraken"><span>K</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1003" data-value="Fortune Gems" data-name="Fortune Gems 宝石热气球" data-icon="FG" title="Fortune Gems"><span class="game-thumb gems"><span>FG</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1004" data-value="Pharaoh Cards" data-name="Pharaoh Cards 法老牌" data-icon="法" title="Pharaoh Cards 法老牌"><span class="game-thumb pharaoh"><span>法</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1005" data-value="Gem Balloon" data-name="Gem Balloon 宝石热气球" data-icon="宝" title="Gem Balloon 宝石热气球"><span class="game-thumb balloon"><span>宝</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1006" data-value="Maya Gold" data-name="Maya Gold 玛雅黄金" data-icon="玛" title="Maya Gold 玛雅黄金"><span class="game-thumb maya"><span>玛</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1007" data-value="Dragon Treasure" data-name="Dragon Treasure 龙之宝藏" data-icon="龙" title="Dragon Treasure 龙之宝藏"><span class="game-thumb dragon"><span>龙</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="SPRLBE" data-id="1008" data-value="Lucky Candy" data-name="Lucky Candy 幸运糖果" data-icon="糖" title="Lucky Candy 幸运糖果"><span class="game-thumb candy"><span>糖</span></span></button>
+                    <button class="game-option" type="button" data-game-option data-brand="SPRLBE" data-id="1009" data-value="Star Gems" data-name="Star Gems 星辰宝石" data-icon="星" title="Star Gems 星辰宝石"><span class="game-thumb star"><span>星</span></span></button>
+                  </div>
+                  <div class="game-picker-pager">
+                    <button class="game-page-btn" type="button" data-game-prev>‹</button>
+                    <span class="game-page-info" data-game-page-info>1 / 1</span>
+                    <button class="game-page-btn" type="button" data-game-next>›</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label class="stats-filter"><span>时间</span><input class="stats-input" type="date" value="2026-05-07" data-date-filter /></label>
+            <button class="profit-btn primary" type="button" data-search-btn>查询</button>
+            <button class="profit-btn" type="button" data-reset-btn>重置</button>
           </div>
           <div class="stats-table-wrap">
-            <div class="stats-table site">
-              <div class="stats-row header"><div>序号</div><div>站点ID</div><div>游戏名称</div><div>总投注</div><div>总返奖</div><div>总输赢</div><div>有效投注额</div><div>投注人数</div><div>RTP</div><div>有效投注比</div><div>注单数</div><div>日期</div></div>
-              <div class="stats-row"><div>1</div><div>1041</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">7,716,040.42</div><div class="profit-num">7,565,392.45</div><div class="profit-num neg">150,647.97</div><div class="profit-num">7,343,818.30</div><div>1027</div><div>1.95%</div><div>95.18%</div><div>65,294</div><div>2026-05-07</div></div>
-              <div class="stats-row"><div>2</div><div>1047</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">16,933,980.32</div><div class="profit-num">16,452,266.90</div><div class="profit-num neg">481,713.42</div><div class="profit-num">16,339,719.85</div><div>2411</div><div>2.84%</div><div>96.49%</div><div>170,285</div><div>2026-05-07</div></div>
-              <div class="stats-row"><div>3</div><div>1095</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">5,083,650.53</div><div class="profit-num">4,922,510.46</div><div class="profit-num neg">161,140.07</div><div class="profit-num">4,770,516.37</div><div>2521</div><div>3.17%</div><div>93.84%</div><div>79,131</div><div>2026-05-07</div></div>
+            <div class="stats-table site" data-stats-table>
+              <div class="stats-row header" data-stats-head></div>
+              <div data-stats-body></div>
             </div>
           </div>
-          <div class="profit-pagination"><div>共 3 条</div><div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div><div class="profit-pages"><div class="profit-page-btn">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn">›</div></div><div class="profit-page-jump"><span>前往</span><input class="profit-page-input" value="1" /><span>页</span></div></div>
+          <div class="profit-pagination"><div data-total-text>共 0 条</div><div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div><div class="profit-pages"><div class="profit-page-btn">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn">›</div></div><div class="profit-page-jump"><span>前往</span><input class="profit-page-input" value="1" /><span>页</span></div></div>
         </div>
       </section>
     </main>
   </div>
   <script src="common.js"></script>
+  <script>
+    const siteInput = document.querySelector("[data-site-filter]");
+    const dateInput = document.querySelector("[data-date-filter]");
+    const picker = document.querySelector("[data-game-picker]");
+    const trigger = document.querySelector("[data-game-trigger]");
+    const panel = document.querySelector("[data-game-panel]");
+    const gameLabel = document.querySelector("[data-game-label]");
+    const gameIcon = document.querySelector("[data-game-icon]");
+    const gameSearch = document.querySelector("[data-game-search]");
+    const gameAllCheck = document.querySelector("[data-game-all]");
+    const gameAllCheckWrap = gameAllCheck?.closest(".game-all-check");
+    const gameBrandTabs = Array.from(document.querySelectorAll("[data-game-brand]"));
+    const gameOptions = Array.from(document.querySelectorAll("[data-game-option]"));
+    const gamePrev = document.querySelector("[data-game-prev]");
+    const gameNext = document.querySelector("[data-game-next]");
+    const gamePageInfo = document.querySelector("[data-game-page-info]");
+    const statsTable = document.querySelector("[data-stats-table]");
+    const statsHead = document.querySelector("[data-stats-head]");
+    const statsBody = document.querySelector("[data-stats-body]");
+    const totalText = document.querySelector("[data-total-text]");
+    const pageSize = 8;
+    let selectedGames = [];
+    let isAllGameExplicit = false;
+    let selectedBrand = "";
+    let gamePage = 1;
+    let filteredGameOptions = gameOptions;
+
+    const rows = [
+      { siteId: "1041", game: "Aviator", gameName: "Aviator 飞机游戏", date: "2026-05-07", bet: 7716040.42, reward: 7565392.45, win: 150647.97, valid: 7343818.3, players: 1027, orders: 65294 },
+      { siteId: "1047", game: "Aviator", gameName: "Aviator 飞机游戏", date: "2026-05-07", bet: 16933980.32, reward: 16452266.9, win: 481713.42, valid: 16339719.85, players: 2411, orders: 170285 },
+      { siteId: "1095", game: "Aviator", gameName: "Aviator 飞机游戏", date: "2026-05-07", bet: 5083650.53, reward: 4922510.46, win: 161140.07, valid: 4770516.37, players: 2521, orders: 79131 },
+      { siteId: "1041", game: "Fortune Gems", gameName: "Fortune Gems", date: "2026-05-07", bet: 3258810.9, reward: 3195520.18, win: 63290.72, valid: 3120400.7, players: 661, orders: 28466 },
+      { siteId: "1047", game: "Fortune Gems", gameName: "Fortune Gems", date: "2026-05-07", bet: 9024470.2, reward: 8789565.42, win: 234904.78, valid: 8617230.11, players: 1308, orders: 74320 },
+      { siteId: "1095", game: "Fortune Gems", gameName: "Fortune Gems", date: "2026-05-07", bet: 2435060.5, reward: 2369242.66, win: 65817.84, valid: 2298810.3, players: 718, orders: 23911 },
+      { siteId: "1041", game: "Maya Gold", gameName: "Maya Gold", date: "2026-05-07", bet: 1845520.42, reward: 1779030.12, win: 66490.3, valid: 1724380.2, players: 413, orders: 17002 },
+      { siteId: "1047", game: "Maya Gold", gameName: "Maya Gold", date: "2026-05-07", bet: 3987760.3, reward: 3870554.88, win: 117205.42, valid: 3791330.8, players: 807, orders: 35270 },
+      { siteId: "1095", game: "Maya Gold", gameName: "Maya Gold", date: "2026-05-07", bet: 1193088.26, reward: 1142080.1, win: 51008.16, valid: 1099254.9, players: 382, orders: 12840 },
+    ];
+
+    function money(value) {
+      return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function intText(value) {
+      return Math.round(value).toLocaleString("en-US");
+    }
+
+    function allGameValues() {
+      return gameOptions.map((item) => item.dataset.value);
+    }
+
+    function hasEveryGameSelected() {
+      return selectedGames.length === gameOptions.length && gameOptions.every((item) => selectedGames.includes(item.dataset.value));
+    }
+
+    function positionGamePanel() {
+      if (panel.hidden) return;
+      const triggerRect = trigger.getBoundingClientRect();
+      const sidebar = document.querySelector(".sidebar");
+      const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : { right: 0, bottom: 0 };
+      const isStackedLayout = window.matchMedia("(max-width: 820px)").matches;
+      const leftLimit = isStackedLayout ? 16 : Math.max(16, sidebarRect.right + 16);
+      const rightLimit = window.innerWidth - 24;
+      const topLimit = isStackedLayout ? Math.max(16, sidebarRect.bottom + 12) : 72;
+      const panelWidth = Math.max(280, Math.min(760, rightLimit - leftLimit));
+      let panelLeft = triggerRect.left;
+      if (panelLeft + panelWidth > rightLimit) panelLeft = rightLimit - panelWidth;
+      if (panelLeft < leftLimit) panelLeft = leftLimit;
+      let panelTop = triggerRect.bottom + 8;
+      if (panelTop < topLimit) panelTop = topLimit;
+      panel.style.left = `${panelLeft}px`;
+      panel.style.top = `${panelTop}px`;
+      panel.style.width = `${panelWidth}px`;
+      panel.style.maxHeight = `${Math.max(260, window.innerHeight - panelTop - 18)}px`;
+    }
+
+    function updateGameLabel() {
+      const allSelected = hasEveryGameSelected();
+      if (allSelected) {
+        isAllGameExplicit = true;
+      } else if (selectedGames.length) {
+        isAllGameExplicit = false;
+      }
+
+      if (!selectedGames.length || isAllGameExplicit) {
+        gameIcon.textContent = "ALL";
+        gameLabel.textContent = "全部游戏";
+      } else if (selectedGames.length === 1) {
+        const option = gameOptions.find((item) => item.dataset.value === selectedGames[0]);
+        gameIcon.textContent = option?.dataset.icon || "G";
+        gameLabel.textContent = option?.dataset.name || selectedGames[0];
+      } else {
+        gameIcon.textContent = selectedGames.length;
+        gameLabel.textContent = `已选 ${selectedGames.length} 款游戏`;
+      }
+      if (gameAllCheck) gameAllCheck.checked = isAllGameExplicit;
+      gameAllCheckWrap?.classList.toggle("active", isAllGameExplicit);
+      gameOptions.forEach((item) => item.classList.toggle("active", selectedGames.includes(item.dataset.value)));
+    }
+
+    function renderGamePage() {
+      const totalPages = Math.max(1, Math.ceil(filteredGameOptions.length / pageSize));
+      gamePage = Math.min(gamePage, totalPages);
+      const start = (gamePage - 1) * pageSize;
+      const visibleSet = new Set(filteredGameOptions.slice(start, start + pageSize));
+      gameOptions.forEach((option) => {
+        option.hidden = !visibleSet.has(option);
+      });
+      gamePageInfo.textContent = `${gamePage} / ${totalPages}`;
+      gamePrev.disabled = gamePage <= 1;
+      gameNext.disabled = gamePage >= totalPages;
+      positionGamePanel();
+    }
+
+    function filterGameOptions() {
+      const keyword = gameSearch.value.trim().toLowerCase();
+      filteredGameOptions = gameOptions.filter((option) => {
+        const matchBrand = !selectedBrand || option.dataset.brand === selectedBrand;
+        const name = option.dataset.name.toLowerCase();
+        const value = option.dataset.value.toLowerCase();
+        const id = option.dataset.id.toLowerCase();
+        const matchKeyword = !keyword || name.includes(keyword) || value.includes(keyword) || id.includes(keyword);
+        return matchBrand && matchKeyword;
+      });
+      gamePage = 1;
+      renderGamePage();
+    }
+
+    function getFilteredRows() {
+      return rows.filter((row) => {
+        const matchSite = !siteInput.value || row.siteId === siteInput.value;
+        const matchDate = !dateInput.value || row.date === dateInput.value;
+        const matchGame = !selectedGames.length || selectedGames.includes(row.game);
+        return matchSite && matchDate && matchGame;
+      });
+    }
+
+    function aggregate(list) {
+      const map = new Map();
+      list.forEach((row) => {
+        const key = row.siteId;
+        const item = map.get(key) || { siteId: row.siteId, gameName: row.gameName, date: row.date, bet: 0, reward: 0, win: 0, valid: 0, players: 0, orders: 0 };
+        item.bet += row.bet;
+        item.reward += row.reward;
+        item.win += row.win;
+        item.valid += row.valid;
+        item.players += row.players;
+        item.orders += row.orders;
+        map.set(key, item);
+      });
+      return Array.from(map.values());
+    }
+
+    function renderTable() {
+      const explicitGameSelection = isAllGameExplicit || selectedGames.length > 0;
+      const multiGame = isAllGameExplicit || selectedGames.length > 1;
+      statsTable.classList.toggle("hide-game-name", multiGame);
+      statsHead.innerHTML = multiGame
+        ? "<div>序号</div><div>站点ID</div><div>总投注</div><div>总返奖</div><div>总输赢</div><div>有效投注额</div><div>投注人数</div><div>RTP</div><div>有效投注比</div><div>注单数</div><div>日期</div>"
+        : "<div>序号</div><div>站点ID</div><div>游戏名称</div><div>总投注</div><div>总返奖</div><div>总输赢</div><div>有效投注额</div><div>投注人数</div><div>RTP</div><div>有效投注比</div><div>注单数</div><div>日期</div>";
+      const filtered = getFilteredRows();
+      const tableRows = explicitGameSelection ? aggregate(filtered) : filtered;
+      totalText.textContent = `共 ${tableRows.length} 条`;
+      statsBody.innerHTML = tableRows.map((row, index) => {
+        const rtp = row.bet ? (row.win / row.bet) * 100 : 0;
+        const validRatio = row.bet ? (row.valid / row.bet) * 100 : 0;
+        const gameCell = multiGame ? "" : `<div><span class="game-name-cell"><span class="game-avatar"></span>${row.gameName}</span></div>`;
+        return `<div class="stats-row"><div>${index + 1}</div><div>${row.siteId}</div>${gameCell}<div class="profit-num">${money(row.bet)}</div><div class="profit-num">${money(row.reward)}</div><div class="profit-num neg">${money(row.win)}</div><div class="profit-num">${money(row.valid)}</div><div>${intText(row.players)}</div><div>${rtp.toFixed(2)}%</div><div>${validRatio.toFixed(2)}%</div><div>${intText(row.orders)}</div><div>${row.date}</div></div>`;
+      }).join("");
+    }
+
+    trigger.addEventListener("click", () => {
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) {
+        renderGamePage();
+        positionGamePanel();
+        gameSearch.focus();
+      }
+    });
+    gameSearch.addEventListener("input", filterGameOptions);
+    gameAllCheck?.addEventListener("change", () => {
+      isAllGameExplicit = gameAllCheck.checked;
+      selectedGames = isAllGameExplicit ? allGameValues() : [];
+      updateGameLabel();
+    });
+    gameBrandTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        selectedBrand = tab.value;
+        gameBrandTabs.forEach((item) => item.classList.toggle("active", item === tab));
+        filterGameOptions();
+      });
+    });
+    gamePrev.addEventListener("click", () => {
+      gamePage -= 1;
+      renderGamePage();
+    });
+    gameNext.addEventListener("click", () => {
+      gamePage += 1;
+      renderGamePage();
+    });
+    gameOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        const value = option.dataset.value;
+        selectedGames = selectedGames.includes(value) ? selectedGames.filter((item) => item !== value) : [...selectedGames, value];
+        isAllGameExplicit = hasEveryGameSelected();
+        updateGameLabel();
+      });
+    });
+    document.querySelector("[data-search-btn]").addEventListener("click", renderTable);
+    document.querySelector("[data-reset-btn]").addEventListener("click", () => {
+      siteInput.value = "";
+      dateInput.value = "2026-05-07";
+      selectedGames = [];
+      isAllGameExplicit = false;
+      selectedBrand = "";
+      gameSearch.value = "";
+      gameBrandTabs.forEach((item) => item.classList.toggle("active", item.value === ""));
+      filteredGameOptions = gameOptions;
+      gamePage = 1;
+      updateGameLabel();
+      renderGamePage();
+      renderTable();
+    });
+    document.addEventListener("click", (event) => {
+      if (!picker.contains(event.target)) panel.hidden = true;
+    });
+    window.addEventListener("resize", positionGamePanel);
+    window.addEventListener("scroll", positionGamePanel, true);
+    updateGameLabel();
+    filterGameOptions();
+    renderTable();
+  </script>
 </body>
 </html>

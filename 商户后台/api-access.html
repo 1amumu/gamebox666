@@ -21,21 +21,21 @@
             <div><h2>API对接配置</h2><p>配置第三方域名、秘钥与返回大厅跳转地址</p></div>
           </div>
           <div class="api-form">
-            <label class="api-field">
+            <label class="api-field api-basic-field api-basic-mode">
               <span>API模式</span>
               <div class="api-control-group">
                 <input class="api-input" type="text" value="单一钱包" readonly />
               </div>
             </label>
-            <label class="api-field">
+            <label class="api-field api-basic-field api-basic-merchant">
               <span>商户ID</span>
               <div class="api-control-group">
                 <input class="api-input" type="text" value="21383" readonly />
                 <button class="api-btn ghost" type="button" data-copy="21383">复制</button>
               </div>
             </label>
-            <label class="api-field">
-              <span>秘钥</span>
+            <label class="api-field api-basic-field api-basic-key">
+              <span>商户秘钥</span>
               <div class="api-control-group">
                 <input class="api-input mono" type="text" value="3c04d1d116a94db592f1b5f7288927d8" readonly />
                 <button class="api-btn ghost" type="button" data-copy="3c04d1d116a94db592f1b5f7288927d8">复制</button>
@@ -76,11 +76,13 @@
                 <em class="api-field-note">商户接口地址，平台方回调</em>
               </div>
             </label>
-            <label class="api-field return-url-field">
+            <label class="api-field api-callback-field return-url-field">
               <span>返回大厅跳转地址</span>
               <div class="api-control-group">
                 <input class="api-input" type="url" placeholder="请输入完整跳转链接地址，例如：https://www.xx.com" />
+                <button class="api-btn warning" type="button">编辑</button>
                 <button class="api-btn primary" type="button">保存</button>
+                <em class="api-field-note">玩家退出游戏后，返回商户大厅</em>
               </div>
             </label>
           </div>
