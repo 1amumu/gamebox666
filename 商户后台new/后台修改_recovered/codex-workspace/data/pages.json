@@ -1,0 +1,552 @@
+﻿{
+    "generatedAt":  "2026-05-07 21:24:46",
+    "sourceRoot":  "C:\\Users\\Administrator\\Documents\\Codex\\2026-05-07\\new-chat-2\\后台修改_recovered",
+    "pageCount":  59,
+    "groups":  [
+                   {
+                       "name":  "axure-pages",
+                       "count":  45
+                   },
+                   {
+                       "name":  "entry",
+                       "count":  6
+                   },
+                   {
+                       "name":  "merchant-backend",
+                       "count":  8
+                   }
+               ],
+    "pages":  [
+                  {
+                      "title":  "index",
+                      "file":  "index.html",
+                      "group":  "entry",
+                      "source":  "../index.html",
+                      "size":  3395,
+                      "lastModified":  "2026-05-07 16:05:45",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "Untitled Document",
+                      "file":  "index111.html",
+                      "group":  "entry",
+                      "source":  "../index111.html",
+                      "size":  6500,
+                      "lastModified":  "2022-03-08 13:40:34",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "Page 1",
+                      "file":  "page_1.html",
+                      "group":  "entry",
+                      "source":  "../page_1.html",
+                      "size":  129760,
+                      "lastModified":  "2026-05-07 16:05:45",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "Untitled Document",
+                      "file":  "start.html",
+                      "group":  "entry",
+                      "source":  "../start.html",
+                      "size":  6500,
+                      "lastModified":  "2022-03-08 13:40:34",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "",
+                      "file":  "start_c_1.html",
+                      "group":  "entry",
+                      "source":  "../start_c_1.html",
+                      "size":  170,
+                      "lastModified":  "2020-06-19 10:16:06",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "",
+                      "file":  "start_with_pages.html",
+                      "group":  "entry",
+                      "source":  "../start_with_pages.html",
+                      "size":  178,
+                      "lastModified":  "2020-06-19 10:16:06",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "财务总览",
+                      "file":  "财务总览.html",
+                      "group":  "axure-pages",
+                      "source":  "../财务总览.html",
+                      "size":  33440,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "操作日志",
+                      "file":  "操作日志.html",
+                      "group":  "axure-pages",
+                      "source":  "../操作日志.html",
+                      "size":  35224,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "充值订单页",
+                      "file":  "充值订单页.html",
+                      "group":  "axure-pages",
+                      "source":  "../充值订单页.html",
+                      "size":  75692,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "创建商户",
+                      "file":  "创建商户.html",
+                      "group":  "axure-pages",
+                      "source":  "../创建商户.html",
+                      "size":  28480,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "创建商户页",
+                      "file":  "创建商户页.html",
+                      "group":  "axure-pages",
+                      "source":  "../创建商户页.html",
+                      "size":  5466,
+                      "lastModified":  "2026-04-14 10:43:27",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "创建账号",
+                      "file":  "创建账号.html",
+                      "group":  "axure-pages",
+                      "source":  "../创建账号.html",
+                      "size":  34815,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "待结算信息页",
+                      "file":  "待结算信息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../待结算信息页.html",
+                      "size":  50583,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "对账结算页",
+                      "file":  "对账结算页.html",
+                      "group":  "axure-pages",
+                      "source":  "../对账结算页.html",
+                      "size":  59031,
+                      "lastModified":  "2026-04-24 11:27:17",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "发布消息页",
+                      "file":  "发布消息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../发布消息页.html",
+                      "size":  43634,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "飞机爆点数据",
+                      "file":  "飞机爆点数据.html",
+                      "group":  "axure-pages",
+                      "source":  "../飞机爆点数据.html",
+                      "size":  37162,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "飞机房间管理页",
+                      "file":  "飞机房间管理页.html",
+                      "group":  "axure-pages",
+                      "source":  "../飞机房间管理页.html",
+                      "size":  38359,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "飞机房间配置页",
+                      "file":  "飞机房间配置页.html",
+                      "group":  "axure-pages",
+                      "source":  "../飞机房间配置页.html",
+                      "size":  64164,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "汇率查询",
+                      "file":  "汇率查询.html",
+                      "group":  "axure-pages",
+                      "source":  "../汇率查询.html",
+                      "size":  33792,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "结算信息页",
+                      "file":  "结算信息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../结算信息页.html",
+                      "size":  39921,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "今日玩家盈亏",
+                      "file":  "今日玩家盈亏.html",
+                      "group":  "axure-pages",
+                      "source":  "../今日玩家盈亏.html",
+                      "size":  36419,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "今日玩家盈亏",
+                      "file":  "今日玩家盈亏_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../今日玩家盈亏_1.html",
+                      "size":  2951,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "库存管理",
+                      "file":  "库存管理.html",
+                      "group":  "axure-pages",
+                      "source":  "../库存管理.html",
+                      "size":  29347,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户游戏库存管理系统",
+                      "file":  "库存模拟定稿.html",
+                      "group":  "axure-pages",
+                      "source":  "../库存模拟定稿.html",
+                      "size":  30056,
+                      "lastModified":  "2026-04-14 11:29:45",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "权限编辑",
+                      "file":  "权限编辑.html",
+                      "group":  "axure-pages",
+                      "source":  "../权限编辑.html",
+                      "size":  36989,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户充值订单页",
+                      "file":  "商户充值订单页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户充值订单页.html",
+                      "size":  28015,
+                      "lastModified":  "2026-04-14 10:43:28",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户充值页",
+                      "file":  "商户充值页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户充值页.html",
+                      "size":  39546,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户对账结算页",
+                      "file":  "商户对账结算页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户对账结算页.html",
+                      "size":  55023,
+                      "lastModified":  "2026-04-14 10:43:28",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户费率页",
+                      "file":  "商户费率页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户费率页.html",
+                      "size":  17205,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户结算信息页",
+                      "file":  "商户结算信息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户结算信息页.html",
+                      "size":  29149,
+                      "lastModified":  "2026-04-14 10:43:28",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户列表",
+                      "file":  "商户列表.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户列表.html",
+                      "size":  69708,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户列表页",
+                      "file":  "商户列表页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户列表页.html",
+                      "size":  44661,
+                      "lastModified":  "2026-04-14 10:43:27",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户-首页",
+                      "file":  "商户-首页.html",
+                      "group":  "merchant-backend",
+                      "source":  "../商户-首页.html",
+                      "size":  32472,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户盈亏",
+                      "file":  "商户盈亏.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户盈亏.html",
+                      "size":  40337,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "商户盈亏页",
+                      "file":  "商户盈亏页.html",
+                      "group":  "axure-pages",
+                      "source":  "../商户盈亏页.html",
+                      "size":  33271,
+                      "lastModified":  "2026-04-14 10:43:27",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "首页仪表盘",
+                      "file":  "首页仪表盘.html",
+                      "group":  "axure-pages",
+                      "source":  "../首页仪表盘.html",
+                      "size":  84283,
+                      "lastModified":  "2026-05-07 16:05:45",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家点控",
+                      "file":  "玩家点控.html",
+                      "group":  "axure-pages",
+                      "source":  "../玩家点控.html",
+                      "size":  46607,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家留存",
+                      "file":  "玩家留存.html",
+                      "group":  "axure-pages",
+                      "source":  "../玩家留存.html",
+                      "size":  33519,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家留存",
+                      "file":  "玩家留存_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../玩家留存_1.html",
+                      "size":  2933,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家在线数据",
+                      "file":  "玩家在线数据.html",
+                      "group":  "axure-pages",
+                      "source":  "../玩家在线数据.html",
+                      "size":  34427,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家在线数据",
+                      "file":  "玩家在线数据_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../玩家在线数据_1.html",
+                      "size":  2951,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "玩家总览页",
+                      "file":  "玩家总览页.html",
+                      "group":  "axure-pages",
+                      "source":  "../玩家总览页.html",
+                      "size":  59262,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "未结算信息页",
+                      "file":  "未结算信息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../未结算信息页.html",
+                      "size":  33304,
+                      "lastModified":  "2026-04-24 11:27:17",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "消息页",
+                      "file":  "消息页.html",
+                      "group":  "axure-pages",
+                      "source":  "../消息页.html",
+                      "size":  65871,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "新增游戏页",
+                      "file":  "新增游戏页.html",
+                      "group":  "axure-pages",
+                      "source":  "../新增游戏页.html",
+                      "size":  4098,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏RTP配置",
+                      "file":  "游戏rtp配置.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏rtp配置.html",
+                      "size":  31506,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏RTP配置",
+                      "file":  "游戏rtp配置_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../游戏rtp配置_1.html",
+                      "size":  28709,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏记录",
+                      "file":  "游戏记录.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏记录.html",
+                      "size":  40134,
+                      "lastModified":  "2026-05-07 16:05:45",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏记录",
+                      "file":  "游戏记录_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../游戏记录_1.html",
+                      "size":  37672,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏记录页",
+                      "file":  "游戏记录页.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏记录页.html",
+                      "size":  33048,
+                      "lastModified":  "2026-04-14 10:43:27",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏列表页",
+                      "file":  "游戏列表页.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏列表页.html",
+                      "size":  40639,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏留存",
+                      "file":  "游戏留存.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏留存.html",
+                      "size":  35502,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏留存",
+                      "file":  "游戏留存_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../游戏留存_1.html",
+                      "size":  2933,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "游戏配置页",
+                      "file":  "游戏配置页.html",
+                      "group":  "axure-pages",
+                      "source":  "../游戏配置页.html",
+                      "size":  27094,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "运营数据",
+                      "file":  "运营数据.html",
+                      "group":  "axure-pages",
+                      "source":  "../运营数据.html",
+                      "size":  68639,
+                      "lastModified":  "2026-05-07 16:05:46",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "运营数据",
+                      "file":  "运营数据_1.html",
+                      "group":  "merchant-backend",
+                      "source":  "../运营数据_1.html",
+                      "size":  63756,
+                      "lastModified":  "2026-05-07 16:05:50",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "赠送余额页",
+                      "file":  "赠送余额页.html",
+                      "group":  "axure-pages",
+                      "source":  "../赠送余额页.html",
+                      "size":  35242,
+                      "lastModified":  "2026-05-07 16:05:48",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "账号管理",
+                      "file":  "账号管理.html",
+                      "group":  "axure-pages",
+                      "source":  "../账号管理.html",
+                      "size":  42358,
+                      "lastModified":  "2026-05-07 16:05:49",
+                      "status":  "axure-source"
+                  },
+                  {
+                      "title":  "智能点控推荐",
+                      "file":  "智能点控推荐.html",
+                      "group":  "axure-pages",
+                      "source":  "../智能点控推荐.html",
+                      "size":  33036,
+                      "lastModified":  "2026-05-07 16:05:47",
+                      "status":  "axure-source"
+                  }
+              ]
+}
