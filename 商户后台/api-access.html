@@ -20,71 +20,71 @@
           <div class="api-card-head">
             <div><h2>API对接配置</h2><p>配置第三方域名、秘钥与返回大厅跳转地址</p></div>
           </div>
-          <div class="api-form">
-            <label class="api-field api-basic-field api-basic-mode">
-              <span>API模式</span>
-              <div class="api-control-group">
-                <input class="api-input" type="text" value="单一钱包" readonly />
-              </div>
-            </label>
-            <label class="api-field api-basic-field api-basic-merchant">
-              <span>商户ID</span>
-              <div class="api-control-group">
-                <input class="api-input" type="text" value="21383" readonly />
-                <button class="api-btn ghost" type="button" data-copy="21383">复制</button>
-              </div>
-            </label>
-            <label class="api-field api-basic-field api-basic-key">
-              <span>商户秘钥</span>
-              <div class="api-control-group">
-                <input class="api-input mono" type="text" value="3c04d1d116a94db592f1b5f7288927d8" readonly />
-                <button class="api-btn ghost" type="button" data-copy="3c04d1d116a94db592f1b5f7288927d8">复制</button>
-                <button class="api-btn warning" type="button">重置</button>
-              </div>
-            </label>
-            <div class="api-field api-doc-row">
-              <span>对接文档</span>
-              <div class="api-doc-actions">
-                <button class="api-link-btn" type="button">查看英文版</button>
-                <button class="api-link-btn" type="button">查看中文版</button>
+          <div class="api-form api-config-grid">
+            <div class="api-config-section api-config-basic">
+              <label class="api-field api-basic-field api-basic-mode">
+                <span>API模式</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="text" value="单一钱包" readonly />
+                </div>
+              </label>
+              <label class="api-field api-basic-field api-basic-merchant">
+                <span>商户ID</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="text" value="21383" readonly />
+                  <button class="api-btn ghost" type="button" data-copy="21383">复制</button>
+                </div>
+              </label>
+              <label class="api-field api-basic-field api-basic-key">
+                <span>商户秘钥</span>
+                <div class="api-control-group">
+                  <input class="api-input mono" type="text" value="3c04d1d116a94db592f1b5f7288927d8" readonly />
+                  <button class="api-btn ghost" type="button" data-copy="3c04d1d116a94db592f1b5f7288927d8">复制</button>
+                  <button class="api-btn warning" type="button">重置</button>
+                </div>
+              </label>
+              <div class="api-field api-doc-row">
+                <span>对接文档</span>
+                <div class="api-doc-actions">
+                  <button class="api-link-btn" type="button">查看英文版</button>
+                  <button class="api-link-btn" type="button">查看中文版</button>
+                </div>
               </div>
             </div>
-            <label class="api-field api-callback-field">
-              <span>获取玩家信息接口地址</span>
-              <div class="api-control-group">
-                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/getPlayer" />
-                <button class="api-btn warning" type="button">编辑</button>
-                <button class="api-btn primary" type="button">保存</button>
-                <em class="api-field-note">商户接口地址，平台方回调</em>
-              </div>
-            </label>
-            <label class="api-field api-callback-field">
-              <span>获取玩家余额接口地址</span>
-              <div class="api-control-group">
-                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/getBalance" />
-                <button class="api-btn warning" type="button">编辑</button>
-                <button class="api-btn primary" type="button">保存</button>
-                <em class="api-field-note">商户接口地址，平台方回调</em>
-              </div>
-            </label>
-            <label class="api-field api-callback-field">
-              <span>改变玩家余额接口地址</span>
-              <div class="api-control-group">
-                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/changeBalance" />
-                <button class="api-btn warning" type="button">编辑</button>
-                <button class="api-btn primary" type="button">保存</button>
-                <em class="api-field-note">商户接口地址，平台方回调</em>
-              </div>
-            </label>
-            <label class="api-field api-callback-field return-url-field">
-              <span>返回大厅跳转地址</span>
-              <div class="api-control-group">
-                <input class="api-input" type="url" placeholder="请输入完整跳转链接地址，例如：https://www.xx.com" />
-                <button class="api-btn warning" type="button">编辑</button>
-                <button class="api-btn primary" type="button">保存</button>
-                <em class="api-field-note">玩家退出游戏后，返回商户大厅</em>
-              </div>
-            </label>
+            <div class="api-config-section api-config-callbacks">
+              <label class="api-field api-callback-field">
+                <span>获取玩家信息接口地址</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="url" value="" placeholder="请填写获取玩家信息接口地址" />
+                  <button class="api-btn warning" type="button">编辑</button>
+                  <button class="api-btn primary" type="button">保存</button>
+                </div>
+              </label>
+              <label class="api-field api-callback-field">
+                <span>获取玩家余额接口地址</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="url" value="" placeholder="请填写获取玩家余额接口地址" />
+                  <button class="api-btn warning" type="button">编辑</button>
+                  <button class="api-btn primary" type="button">保存</button>
+                </div>
+              </label>
+              <label class="api-field api-callback-field">
+                <span>改变玩家余额接口地址</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="url" value="" placeholder="请填写改变玩家余额接口地址" />
+                  <button class="api-btn warning" type="button">编辑</button>
+                  <button class="api-btn primary" type="button">保存</button>
+                </div>
+              </label>
+              <label class="api-field api-callback-field return-url-field">
+                <span>返回大厅跳转地址</span>
+                <div class="api-control-group">
+                  <input class="api-input" type="url" placeholder="玩家退出游戏后，返回商户大厅" />
+                  <button class="api-btn warning" type="button">编辑</button>
+                  <button class="api-btn primary" type="button">保存</button>
+                </div>
+              </label>
+            </div>
           </div>
         </section>
 
