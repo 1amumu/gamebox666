@@ -5060,3 +5060,367 @@ body {
 .game-filter-game:hover {
   background:#F5F8FF;
 }
+
+/* Remove pool column and fit 13-column game record table. */
+.game-records-table th:nth-child(10),
+.game-records-table td:nth-child(10) {
+  width:48px !important;
+  text-align:center !important;
+}
+.game-records-table th:nth-child(11),
+.game-records-table td:nth-child(11) {
+  width:76px !important;
+  text-align:left !important;
+}
+.game-records-table th:nth-child(12),
+.game-records-table td:nth-child(12),
+.game-records-table th:nth-child(13),
+.game-records-table td:nth-child(13) {
+  width:104px !important;
+  text-align:right !important;
+}
+
+/* Fill the 1920 preview canvas without the Axure outer blank frame. */
+body {
+  width:1920px !important;
+  min-width:1920px !important;
+  margin:0 !important;
+  overflow:auto !important;
+}
+#base {
+  width:1920px !important;
+  min-width:1920px !important;
+  min-height:1080px !important;
+}
+#u758,
+#u758_div {
+  left:0 !important;
+  top:0 !important;
+  width:1920px !important;
+  height:1080px !important;
+}
+#u758_div {
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+/* Normalize the rebuilt page to a real 1920px admin layout. */
+#u759 {
+  left:28px !important;
+  top:22px !important;
+}
+#u760,
+#u760_img {
+  height:1008px !important;
+}
+#u760 {
+  left:256px !important;
+  top:72px !important;
+}
+#u813 {
+  left:42px !important;
+  top:88px !important;
+  height:960px !important;
+}
+.unified-topbar {
+  left:auto !important;
+  right:32px !important;
+  top:22px !important;
+}
+.game-records-page {
+  left:280px !important;
+  top:22px !important;
+  width:1608px !important;
+  min-height:0 !important;
+}
+.game-records-titlebar {
+  height:32px !important;
+  margin-bottom:12px !important;
+}
+.game-records-titlebar h1 {
+  font-size:22px !important;
+  line-height:32px !important;
+}
+.game-records-filters {
+  grid-template-columns:160px 180px 200px 140px 140px 260px 132px !important;
+  gap:12px !important;
+  padding:12px !important;
+}
+.game-records-table-card {
+  margin-top:12px !important;
+}
+
+/* Record detail modal shown from record id click. */
+.game-record-modal.codex-detail-modal {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:30000 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:rgba(15, 23, 42, 0.22) !important;
+}
+.game-record-modal.codex-detail-modal[hidden] {
+  display:none !important;
+}
+.record-detail-panel {
+  width:768px;
+  border:1px solid #E5E7EB;
+  border-radius:6px;
+  background:#FFFFFF;
+  box-shadow:0 20px 56px rgba(15, 23, 42, 0.18);
+  overflow:hidden;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+}
+.record-detail-header {
+  position:relative;
+  height:52px;
+  padding:0 52px 0 20px;
+  border-bottom:1px solid #EAECF0;
+  box-sizing:border-box;
+}
+.record-detail-header h2 {
+  margin:0;
+  color:#101828;
+  font-size:18px;
+  font-weight:600;
+  line-height:52px;
+}
+.record-detail-tabs {
+  display:flex;
+  align-items:flex-end;
+  height:52px;
+  gap:4px;
+}
+.record-detail-tabs button {
+  height:36px;
+  min-width:92px;
+  padding:0 16px;
+  border:1px solid #D0D5DD;
+  border-bottom-color:#EAECF0;
+  border-radius:5px 5px 0 0;
+  background:#F9FAFB;
+  color:#475467;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+}
+.record-detail-tabs button:hover {
+  color:#1D2939;
+  background:#FFFFFF;
+}
+.record-detail-tabs button.is-active {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
+.record-detail-close {
+  position:absolute;
+  right:10px;
+  top:10px;
+  width:32px;
+  height:32px;
+  border:0;
+  border-radius:4px;
+  background:transparent;
+  color:#98A2B3;
+  font-size:20px;
+  line-height:30px;
+  cursor:pointer;
+}
+.record-detail-close:hover {
+  background:#F2F4F7;
+  color:#475467;
+}
+.record-detail-body {
+  padding:16px 18px 0;
+}
+.record-detail-body[hidden],
+.record-detail-win[hidden] {
+  display:none !important;
+}
+.record-detail-body table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  border:1px solid #EAECF0;
+}
+.record-detail-body th,
+.record-detail-body td {
+  height:50px;
+  border:1px solid #EAECF0;
+  color:#475467;
+  font-size:14px;
+  line-height:22px;
+  vertical-align:middle;
+  box-sizing:border-box;
+}
+.record-detail-body th {
+  width:150px;
+  background:#F9FAFB;
+  color:#344054;
+  font-size:15px;
+  font-weight:600;
+  text-align:right;
+  padding:0 24px 0 12px;
+}
+.record-detail-body td {
+  padding:0 14px;
+  word-break:break-all;
+}
+.record-detail-empty th,
+.record-detail-empty td {
+  height:34px;
+  background:#FFFFFF;
+}
+.record-detail-game {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.record-detail-game-icon {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  border-radius:3px;
+  background:#111827;
+  color:#EF4444;
+  font-size:13px;
+  font-weight:700;
+  transform:skew(-8deg);
+}
+.record-detail-response {
+  display:block;
+  max-height:68px;
+  overflow:auto;
+  white-space:normal;
+  color:#344054;
+  font-family:Consolas, "Microsoft YaHei", monospace;
+  font-size:13px;
+  line-height:22px;
+}
+.record-detail-footer {
+  display:flex;
+  justify-content:flex-end;
+  padding:16px 18px 18px;
+  border-top:0;
+}
+.record-detail-ok {
+  min-width:64px;
+  height:34px;
+  padding:0 16px;
+  border:0;
+  border-radius:5px;
+  background:#2F80ED;
+  color:#FFFFFF;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  box-shadow:0 1px 2px rgba(16, 24, 40, 0.08);
+}
+.record-detail-ok:hover {
+  background:#1F6FDB;
+}
+.record-detail-ok:active {
+  background:#175CD3;
+}
+.record-detail-win {
+  max-height:560px;
+  padding:16px 18px 0;
+  overflow:auto;
+  box-sizing:border-box;
+}
+.win-detail-summary {
+  display:grid;
+  grid-template-columns:1fr 1.2fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+  padding:10px 12px;
+  border:1px solid #EAECF0;
+  border-radius:6px;
+  background:#F9FAFB;
+  color:#344054;
+  font-size:13px;
+}
+.win-round {
+  margin-bottom:12px;
+  border:1px solid #EAECF0;
+  border-radius:6px;
+  background:#FFFFFF;
+  overflow:hidden;
+}
+.win-round-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  height:38px;
+  padding:0 12px;
+  border-bottom:1px solid #EAECF0;
+  background:#FCFCFD;
+  color:#475467;
+  font-size:13px;
+}
+.win-round-head strong {
+  color:#101828;
+  font-size:14px;
+  font-weight:600;
+}
+.win-layout {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:8px;
+  padding:12px;
+  background:#FFFFFF;
+}
+.win-symbol {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:42px;
+  border:1px solid #E4E7EC;
+  border-radius:6px;
+  background:linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  color:#344054;
+  font-size:13px;
+  font-weight:600;
+  box-sizing:border-box;
+}
+.win-symbol img {
+  display:block;
+  width:34px;
+  height:34px;
+  object-fit:contain;
+}
+.win-symbol.is-win {
+  border-color:#F59E0B;
+  background:#FFF7E6;
+  color:#B54708;
+  box-shadow:inset 0 0 0 1px rgba(245, 158, 11, .28);
+}
+.win-symbol.is-win img {
+  filter:drop-shadow(0 2px 4px rgba(180, 83, 9, .22));
+}
+.win-round-metrics {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  border-top:1px solid #EAECF0;
+  background:#F9FAFB;
+}
+.win-round-metrics span {
+  min-width:0;
+  padding:9px 12px;
+  border-right:1px solid #EAECF0;
+  color:#667085;
+  font-size:13px;
+}
+.win-round-metrics span:last-child {
+  border-right:0;
+}
+.win-round-metrics b {
+  margin-left:6px;
+  color:#101828;
+  font-weight:600;
+}
