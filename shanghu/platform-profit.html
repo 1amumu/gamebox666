@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>平台盈亏 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar"><div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><span>游戏数据</span><span>/</span><strong>平台盈亏</strong></div></div><div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div></header>
+      <section class="content report-data-page">
+        <div class="card report-card">
+          <div class="report-toolbar report-toolbar-stacked">
+            <div class="report-filter-grid platform-profit-filters">
+              <label class="report-filter">
+                <span>游戏品牌</span>
+                <select class="report-control"><option>请选择</option><option>BOX</option></select>
+              </label>
+              <label class="report-filter">
+                <span>游戏</span>
+                <select class="report-control"><option>请选择</option><option>Avlator</option></select>
+              </label>
+              <label class="report-filter">
+                <span>高倍返奖倍数</span>
+                <input class="report-control" type="text" placeholder="请输入" />
+              </label>
+              <label class="report-filter report-date-filter">
+                <span>日期</span>
+                <span class="report-date-range">
+                  <input type="text" value="2026-05-07" aria-label="开始日期" readonly />
+                  <em>-</em>
+                  <input type="text" value="2026-05-07" aria-label="结束日期" readonly />
+                </span>
+              </label>
+              <div class="report-actions">
+                <button class="profit-btn primary report-search-btn" type="button"><span class="report-search-icon"></span>查询</button>
+                <button class="profit-btn" type="button">重置</button>
+              </div>
+            </div>
+            <button class="profit-btn primary report-export-btn" type="button">导出</button>
+          </div>
+          <div class="report-table-wrap">
+            <div class="report-table platform-profit-table">
+              <div class="report-row header">
+                <div><span class="help-dot">?</span>游戏名称</div>
+                <div><span class="help-dot">?</span>投注金额</div>
+                <div><span class="help-dot">?</span>返奖金额</div>
+                <div><span class="help-dot">?</span>平台盈亏</div>
+                <div><span class="help-dot">?</span>历史平台盈亏</div>
+                <div><span class="help-dot">?</span>投注用户数</div>
+                <div><span class="help-dot">?</span>游戏次数</div>
+                <div><span class="help-dot">?</span>高倍返奖总人数</div>
+                <div><span class="help-dot">?</span>RTP</div>
+                <div><span class="help-dot">?</span>历史RTP</div>
+              </div>
+              <div class="report-row">
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>Avlator</span></div>
+                <div class="profit-num">89,850,919.22</div>
+                <div class="profit-num">87,377,389.69</div>
+                <div class="profit-num">2,473,529.53</div>
+                <div class="profit-num neg">96,706,924.00</div>
+                <div>18145</div>
+                <div class="profit-num">963,919</div>
+                <div>-</div>
+                <div>97.25%</div>
+                <div>94.09%</div>
+              </div>
+            </div>
+          </div>
+          <div class="profit-pagination report-pagination">
+            <div>共 1 条</div>
+            <div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div>
+            <div class="profit-pages"><div class="profit-page-btn disabled">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn disabled">›</div></div>
+            <div class="profit-page-jump"><span>前往</span><input class="profit-page-input" value="1" /><span>页</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+</body>
+</html>

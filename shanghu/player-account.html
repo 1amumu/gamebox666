@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>玩家账号 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><strong>玩家账号</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content player-account-page">
+        <div class="player-profit-tabs">
+          <a class="profit-tab active" href="player-account.html"><span class="dot">●</span>用户账号</a>
+          <a class="profit-tab" href="game-report.html">游戏数据</a>
+          <a class="profit-tab" href="player-today-profit-loss.html">今日玩家盈亏</a>
+        </div>
+        <div class="card account-card">
+          <div class="account-toolbar">
+            <div class="account-filters">
+              <label class="account-filter"><span>平台ID</span><input class="account-input" type="text" placeholder="请输入平台ID" data-account-platform /></label>
+              <label class="account-filter"><span>平台昵称</span><input class="account-input" type="text" placeholder="请输入昵称" data-account-name /></label>
+              <label class="account-filter"><span>状态</span><select class="account-input account-select" data-account-status><option value="">全部状态</option><option value="online">在线</option><option value="offline">离线</option><option value="risk">风险</option><option value="locked">冻结</option></select></label>
+              <label class="account-filter"><span>登录IP</span><input class="account-input" type="text" placeholder="请输入IP" data-account-ip /></label>
+              <div class="account-date-filter">
+                <span>最后登录</span>
+                <label class="date-field"><span class="date-field-label">开始</span><input class="profit-input date" type="date" value="2026-05-06" aria-label="最后登录开始日期" data-login-from /></label>
+                <span class="profit-date-range-sep">至</span>
+                <label class="date-field"><span class="date-field-label">结束</span><input class="profit-input date" type="date" value="2026-05-07" aria-label="最后登录结束日期" data-login-to /></label>
+              </div>
+            </div>
+            <div class="account-actions">
+              <button class="profit-btn primary" type="button" data-account-search>查询</button>
+              <button class="profit-btn" type="button" data-account-reset>重置</button>
+            </div>
+          </div>
+          <div class="account-table-wrap">
+            <div class="account-table">
+              <div class="account-row header">
+                <div>玩家标签</div><div>平台ID</div><div>平台昵称</div><div>状态</div><div>今日下注</div><div>历史输赢</div><div>余额</div><div>今日登录</div><div>最后登录</div><div>登录IP</div>
+              </div>
+              <div class="account-row" data-platform="10470001344450" data-name="kraken_850" data-status="online" data-ip="103.48.12.16" data-login-date="2026-05-07">
+                <div><span class="player-tag tag-low">低端玩家</span></div><div><span class="profit-player">10470001344450 <button class="profit-copy" type="button" data-copy="10470001344450" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>kraken_850</div><div><span class="account-status online">在线</span></div><div class="profit-num">327,270.00</div><div class="profit-num neg">-113,623.40</div><div class="profit-num">0.00</div><div>0</div><div><span class="profit-date">2026-05-07<br/>14:05:32</span></div><div>103.48.12.16</div>
+              </div>
+              <div class="account-row" data-platform="10470007305040" data-name="vip_royal" data-status="online" data-ip="172.21.8.90" data-login-date="2026-05-07">
+                <div><span class="player-tag tag-premium">优质玩家</span></div><div><span class="profit-player">10470007305040 <button class="profit-copy" type="button" data-copy="10470007305040" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>vip_royal</div><div><span class="account-status online">在线</span></div><div class="profit-num">428,720.00</div><div class="profit-num">246,318.52</div><div class="profit-num">90.16</div><div>3</div><div><span class="profit-date">2026-05-07<br/>13:52:18</span></div><div>172.21.8.90</div>
+              </div>
+              <div class="account-row" data-platform="10470004414669" data-name="gems_4469" data-status="offline" data-ip="45.67.19.201" data-login-date="2026-05-06">
+                <div><span class="player-tag tag-mid">中端玩家</span></div><div><span class="profit-player">10470004414669 <button class="profit-copy" type="button" data-copy="10470004414669" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>gems_4469</div><div><span class="account-status offline">离线</span></div><div class="profit-num">161,024.00</div><div class="profit-num neg">-24,220.90</div><div class="profit-num">400.00</div><div>0</div><div><span class="profit-date">2026-05-06<br/>21:44:09</span></div><div>45.67.19.201</div>
+              </div>
+              <div class="account-row" data-platform="10470004889926" data-name="fast_score" data-status="risk" data-ip="103.48.12.16" data-login-date="2026-05-07">
+                <div><span class="player-tag tag-risk">疑似刷分</span></div><div><span class="profit-player">10470004889926 <button class="profit-copy" type="button" data-copy="10470004889926" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>fast_score</div><div><span class="account-status risk">风险</span></div><div class="profit-num">202,265.06</div><div class="profit-num neg">-30,650.13</div><div class="profit-num">109.12</div><div>8</div><div><span class="profit-date">2026-05-07<br/>12:18:45</span></div><div>103.48.12.16</div>
+              </div>
+              <div class="account-row" data-platform="10410001538841" data-name="maya_blue" data-status="online" data-ip="61.144.22.8" data-login-date="2026-05-07">
+                <div><span class="player-tag tag-premium">优质玩家</span></div><div><span class="profit-player">10410001538841 <button class="profit-copy" type="button" data-copy="10410001538841" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>maya_blue</div><div><span class="account-status online">在线</span></div><div class="profit-num">161,662.16</div><div class="profit-num">82,441.20</div><div class="profit-num">1,280.00</div><div>2</div><div><span class="profit-date">2026-05-07<br/>11:08:20</span></div><div>61.144.22.8</div>
+              </div>
+              <div class="account-row" data-platform="10470000804108" data-name="mid_4108" data-status="offline" data-ip="119.29.77.42" data-login-date="2026-05-06">
+                <div><span class="player-tag tag-mid">中端玩家</span></div><div><span class="profit-player">10470000804108 <button class="profit-copy" type="button" data-copy="10470000804108" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>mid_4108</div><div><span class="account-status offline">离线</span></div><div class="profit-num">210,356.00</div><div class="profit-num neg">-14,458.92</div><div class="profit-num">0.16</div><div>0</div><div><span class="profit-date">2026-05-06<br/>18:26:59</span></div><div>119.29.77.42</div>
+              </div>
+              <div class="account-row" data-platform="10470001601623" data-name="locked_1623" data-status="locked" data-ip="38.54.102.17" data-login-date="2026-05-06">
+                <div><span class="player-tag tag-risk">疑似刷分</span></div><div><span class="profit-player">10470001601623 <button class="profit-copy" type="button" data-copy="10470001601623" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>locked_1623</div><div><span class="account-status locked">冻结</span></div><div class="profit-num">268,073.00</div><div class="profit-num neg">-16,803.67</div><div class="profit-num">0.00</div><div>0</div><div><span class="profit-date">2026-05-06<br/>10:35:44</span></div><div>38.54.102.17</div>
+              </div>
+              <div class="account-row" data-platform="10470001978708" data-name="low_8708" data-status="online" data-ip="14.18.66.205" data-login-date="2026-05-07">
+                <div><span class="player-tag tag-low">低端玩家</span></div><div><span class="profit-player">10470001978708 <button class="profit-copy" type="button" data-copy="10470001978708" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div>low_8708</div><div><span class="account-status online">在线</span></div><div class="profit-num">64,750.00</div><div class="profit-num neg">-21,312.70</div><div class="profit-num">56.80</div><div>1</div><div><span class="profit-date">2026-05-07<br/>09:55:02</span></div><div>14.18.66.205</div>
+              </div>
+            </div>
+          </div>
+          <div class="profit-pagination">
+            <div>共 165002 条</div>
+            <div class="profit-page-size"><span>每页</span><select class="profit-size-select"><option>20</option><option selected>50</option><option>100</option><option>500</option></select><span>条</span></div>
+            <div class="profit-pages"><div class="profit-page-btn">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn">2</div><div class="profit-page-btn">3</div><div class="profit-page-btn">4</div><div class="profit-page-btn">5</div><div class="profit-page-btn ellipsis">…</div><div class="profit-page-btn">3301</div><div class="profit-page-btn">›</div></div>
+            <div class="profit-page-jump"><span>前往</span><input class="profit-page-input" type="text" value="1" /><span>页</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    const accountRows = Array.from(document.querySelectorAll(".account-row[data-platform]"));
+    const platformFilter = document.querySelector("[data-account-platform]");
+    const nameFilter = document.querySelector("[data-account-name]");
+    const statusFilter = document.querySelector("[data-account-status]");
+    const ipFilter = document.querySelector("[data-account-ip]");
+    const loginFrom = document.querySelector("[data-login-from]");
+    const loginTo = document.querySelector("[data-login-to]");
+    const searchAccount = document.querySelector("[data-account-search]");
+    const resetAccount = document.querySelector("[data-account-reset]");
+
+    function applyAccountFilters() {
+      const platform = platformFilter.value.trim();
+      const name = nameFilter.value.trim().toLowerCase();
+      const status = statusFilter.value;
+      const ip = ipFilter.value.trim();
+      const from = loginFrom.value;
+      const to = loginTo.value;
+      accountRows.forEach((row) => {
+        const matchPlatform = !platform || row.dataset.platform.includes(platform);
+        const matchName = !name || row.dataset.name.toLowerCase().includes(name);
+        const matchStatus = !status || row.dataset.status === status;
+        const matchIp = !ip || row.dataset.ip.includes(ip);
+        const matchFrom = !from || row.dataset.loginDate >= from;
+        const matchTo = !to || row.dataset.loginDate <= to;
+        row.hidden = !(matchPlatform && matchName && matchStatus && matchIp && matchFrom && matchTo);
+      });
+    }
+
+    searchAccount.addEventListener("click", applyAccountFilters);
+    [platformFilter, nameFilter, ipFilter].forEach((input) => {
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") applyAccountFilters();
+      });
+    });
+    resetAccount.addEventListener("click", () => {
+      platformFilter.value = "";
+      nameFilter.value = "";
+      statusFilter.value = "";
+      ipFilter.value = "";
+      loginFrom.value = "2026-05-06";
+      loginTo.value = "2026-05-07";
+      applyAccountFilters();
+    });
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const value = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch (_) {
+          const textarea = document.createElement("textarea");
+          textarea.value = value;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+        }
+        button.classList.add("copied");
+        setTimeout(() => button.classList.remove("copied"), 900);
+      });
+    });
+
+    applyAccountFilters();
+  </script>
+</body>
+</html>

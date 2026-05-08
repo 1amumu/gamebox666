@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>商户报表 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><strong>商户报表</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content merchant-report-page">
+        <div class="card merchant-report-card">
+          <div class="merchant-toolbar">
+            <div class="merchant-filter-grid">
+              <label class="report-filter report-date-filter merchant-date-filter">
+                <span>月份</span>
+                <span class="merchant-month-control">
+                  <input type="month" value="2026-04" aria-label="选择月份" data-merchant-month />
+                </span>
+              </label>
+              <div class="merchant-search-actions">
+                <button class="profit-btn merchant-reset-btn" type="button" data-merchant-reset>重置</button>
+                <button class="profit-btn primary" type="button">搜索</button>
+              </div>
+            </div>
+            <div class="merchant-periods" aria-label="快捷时间">
+              <button class="merchant-period-btn" type="button" data-month="2026-05">本月</button>
+              <button class="merchant-period-btn active" type="button" data-month="2026-04">上月</button>
+              <button class="merchant-period-btn" type="button" data-month="2026-03">3月</button>
+              <button class="merchant-period-btn" type="button" data-month="2026-02">2月</button>
+              <button class="merchant-period-btn" type="button" data-month="2026-01">1月</button>
+            </div>
+          </div>
+          <div class="merchant-table-section">
+            <div class="merchant-table-head">
+              <div>
+                <h2>商户数据明细</h2>
+                <p>按当前筛选条件统计商户投注、输赢和平台费用</p>
+              </div>
+              <div class="merchant-tool-row">
+                <button class="merchant-export-btn" type="button" data-tip="导出报表" aria-label="导出报表">
+                  <svg class="merchant-export-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 3h7v7" />
+                    <path d="M10 14 21 3" />
+                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="merchant-table-wrap">
+              <div class="merchant-table">
+                <div class="merchant-row header">
+                  <div>日期</div>
+                  <div>国家</div>
+                  <div>投注用户</div>
+                  <div>总投注(USDT)</div>
+                  <div>商户输赢(USDT)</div>
+                  <div>平台费(USDT)</div>
+                  <div>操作</div>
+                </div>
+                <div class="merchant-row">
+                  <div><span class="merchant-date-text" data-merchant-row-month>2026-04</span></div>
+                  <div>美国</div>
+                  <div>53</div>
+                  <div class="profit-num merchant-money">2,519,139.00</div>
+                  <div class="profit-num merchant-money pos">1,686,494.25</div>
+                  <div class="profit-num merchant-money fee">50,594.83</div>
+                  <div><button class="profit-btn primary merchant-detail-btn" type="button">查看详情</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="profit-pagination merchant-pagination">
+            <div>共 1 条记录</div>
+            <div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div>
+            <div class="profit-pages">
+              <div class="profit-page-btn disabled">‹</div>
+              <div class="profit-page-btn active">1</div>
+              <div class="profit-page-btn disabled">›</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    (() => {
+      const monthInput = document.querySelector("[data-merchant-month]");
+      const rowMonth = document.querySelector("[data-merchant-row-month]");
+      const periodButtons = Array.from(document.querySelectorAll(".merchant-period-btn"));
+      const resetButton = document.querySelector("[data-merchant-reset]");
+
+      function setMonth(month, activeButton) {
+        monthInput.value = month;
+        rowMonth.textContent = month;
+        periodButtons.forEach((button) => button.classList.toggle("active", button === activeButton));
+      }
+
+      periodButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setMonth(button.dataset.month, button);
+        });
+      });
+
+      monthInput.addEventListener("change", () => {
+        const activeButton = periodButtons.find((button) => button.dataset.month === monthInput.value);
+        setMonth(monthInput.value, activeButton);
+      });
+
+      resetButton.addEventListener("click", () => {
+        const defaultButton = periodButtons.find((button) => button.textContent.trim() === "上月") || periodButtons[0];
+        setMonth(defaultButton.dataset.month, defaultButton);
+      });
+    })();
+  </script>
+</body>
+</html>

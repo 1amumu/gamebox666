@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>站点统计 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar"><div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><span>数据统计</span><span>/</span><strong>站点统计</strong></div></div><div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div></header>
+      <section class="content stats-page">
+        <div class="card stats-card">
+          <div class="stats-toolbar">
+            <label class="stats-filter"><span>游戏</span><select class="stats-input"><option>请选择</option><option>Avlator</option></select></label>
+            <label class="stats-filter"><span>时间</span><input class="stats-input" type="date" value="2026-05-07" /></label>
+            <button class="profit-btn primary" type="button">查询</button>
+            <button class="profit-btn" type="button">重置</button>
+          </div>
+          <div class="stats-table-wrap">
+            <div class="stats-table site">
+              <div class="stats-row header"><div>序号</div><div>站点ID</div><div>游戏名称</div><div>总投注</div><div>总返奖</div><div>总输赢</div><div>有效投注额</div><div>投注人数</div><div>RTP</div><div>有效投注比</div><div>注单数</div><div>日期</div></div>
+              <div class="stats-row"><div>1</div><div>1041</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">7,716,040.42</div><div class="profit-num">7,565,392.45</div><div class="profit-num neg">150,647.97</div><div class="profit-num">7,343,818.30</div><div>1027</div><div>1.95%</div><div>95.18%</div><div>65,294</div><div>2026-05-07</div></div>
+              <div class="stats-row"><div>2</div><div>1047</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">16,933,980.32</div><div class="profit-num">16,452,266.90</div><div class="profit-num neg">481,713.42</div><div class="profit-num">16,339,719.85</div><div>2411</div><div>2.84%</div><div>96.49%</div><div>170,285</div><div>2026-05-07</div></div>
+              <div class="stats-row"><div>3</div><div>1095</div><div><span class="game-name-cell"><span class="game-avatar"></span>Avlator</span></div><div class="profit-num">5,083,650.53</div><div class="profit-num">4,922,510.46</div><div class="profit-num neg">161,140.07</div><div class="profit-num">4,770,516.37</div><div>2521</div><div>3.17%</div><div>93.84%</div><div>79,131</div><div>2026-05-07</div></div>
+            </div>
+          </div>
+          <div class="profit-pagination"><div>共 3 条</div><div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div><div class="profit-pages"><div class="profit-page-btn">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn">›</div></div><div class="profit-page-jump"><span>前往</span><input class="profit-page-input" value="1" /><span>页</span></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+</body>
+</html>

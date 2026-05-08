@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API接入配置 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><strong>API接入配置</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content api-access-page">
+        <section class="api-card">
+          <div class="api-card-head">
+            <div><h2>API对接配置</h2><p>配置第三方域名、秘钥与返回大厅跳转地址</p></div>
+          </div>
+          <div class="api-form">
+            <label class="api-field">
+              <span>API模式</span>
+              <div class="api-control-group">
+                <input class="api-input" type="text" value="单一钱包" readonly />
+              </div>
+            </label>
+            <label class="api-field">
+              <span>商户ID</span>
+              <div class="api-control-group">
+                <input class="api-input" type="text" value="21383" readonly />
+                <button class="api-btn ghost" type="button" data-copy="21383">复制</button>
+              </div>
+            </label>
+            <label class="api-field">
+              <span>秘钥</span>
+              <div class="api-control-group">
+                <input class="api-input mono" type="text" value="3c04d1d116a94db592f1b5f7288927d8" readonly />
+                <button class="api-btn ghost" type="button" data-copy="3c04d1d116a94db592f1b5f7288927d8">复制</button>
+                <button class="api-btn warning" type="button">重置</button>
+              </div>
+            </label>
+            <div class="api-field api-doc-row">
+              <span>对接文档</span>
+              <div class="api-doc-actions">
+                <button class="api-link-btn" type="button">查看英文版</button>
+                <button class="api-link-btn" type="button">查看中文版</button>
+              </div>
+            </div>
+            <label class="api-field api-callback-field">
+              <span>获取玩家信息接口地址</span>
+              <div class="api-control-group">
+                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/getPlayer" />
+                <button class="api-btn warning" type="button">编辑</button>
+                <button class="api-btn primary" type="button">保存</button>
+                <em class="api-field-note">商户接口地址，平台方回调</em>
+              </div>
+            </label>
+            <label class="api-field api-callback-field">
+              <span>获取玩家余额接口地址</span>
+              <div class="api-control-group">
+                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/getBalance" />
+                <button class="api-btn warning" type="button">编辑</button>
+                <button class="api-btn primary" type="button">保存</button>
+                <em class="api-field-note">商户接口地址，平台方回调</em>
+              </div>
+            </label>
+            <label class="api-field api-callback-field">
+              <span>改变玩家余额接口地址</span>
+              <div class="api-control-group">
+                <input class="api-input" type="url" value="http://47.236.180.151/api/gamebox/player/changeBalance" />
+                <button class="api-btn warning" type="button">编辑</button>
+                <button class="api-btn primary" type="button">保存</button>
+                <em class="api-field-note">商户接口地址，平台方回调</em>
+              </div>
+            </label>
+            <label class="api-field return-url-field">
+              <span>返回大厅跳转地址</span>
+              <div class="api-control-group">
+                <input class="api-input" type="url" placeholder="请输入完整跳转链接地址，例如：https://www.xx.com" />
+                <button class="api-btn primary" type="button">保存</button>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <section class="api-card">
+          <div class="api-card-head">
+            <div><h2>API域名地址参考</h2><p>按接口场景分组展示 URL 与请求方式，点击地址可复制</p></div>
+          </div>
+          <div class="api-accordion">
+            <details class="api-group" open>
+              <summary><span>公共</span><em>2 个接口</em></summary>
+              <div class="api-endpoints">
+                <div class="api-endpoint"><div><strong>GameBox平台接口域名地址</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game">https://api.gamebox.game</button></div><span>POST</span></div>
+                <div class="api-endpoint"><div><strong>获取游戏列表请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/game/getList">https://api.gamebox.game/game/getList</button></div><span>POST</span></div>
+              </div>
+            </details>
+            <details class="api-group" open>
+              <summary><span>单一钱包</span><em>1 个接口</em></summary>
+              <div class="api-endpoints">
+                <div class="api-endpoint"><div><strong>进入游戏请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/game/enter">https://api.gamebox.game/game/enter</button></div><span>POST</span></div>
+              </div>
+            </details>
+            <details class="api-group">
+              <summary><span>转账钱包</span><em>5 个接口</em></summary>
+              <div class="api-endpoints">
+                <div class="api-endpoint"><div><strong>获取玩家鉴权Token请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/auth/createToken">https://api.gamebox.game/auth/createToken</button></div><span>POST</span></div>
+                <div class="api-endpoint"><div><strong>玩家转账请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/player/transfer">https://api.gamebox.game/player/transfer</button></div><span>POST</span></div>
+                <div class="api-endpoint"><div><strong>进入游戏链接请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/game/enter">https://api.gamebox.game/game/enter</button></div><span>POST</span></div>
+                <div class="api-endpoint"><div><strong>查询玩家余额请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/player/getBalance">https://api.gamebox.game/player/getBalance</button></div><span>POST</span></div>
+                <div class="api-endpoint"><div><strong>查询转账状态URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/player/getTransferStatus">https://api.gamebox.game/player/getTransferStatus</button></div><span>POST</span></div>
+              </div>
+            </details>
+            <details class="api-group">
+              <summary><span>报表相关</span><em>1 个接口</em></summary>
+              <div class="api-endpoints">
+                <div class="api-endpoint"><div><strong>注单记录报表请求URL</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/game/getRecords">https://api.gamebox.game/game/getRecords</button></div><span>POST</span></div>
+              </div>
+            </details>
+            <details class="api-group">
+              <summary><span>功能相关</span><em>1 个接口</em></summary>
+              <div class="api-endpoints">
+                <div class="api-endpoint"><div><strong>玩家注册账户</strong><button class="api-url" type="button" data-copy="https://api.gamebox.game/player/register">https://api.gamebox.game/player/register</button></div><span>POST</span></div>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="api-card">
+          <div class="api-card-head">
+            <div><h2>签名算法校验工具</h2><p>输入 body JSON 字符串后，使用当前秘钥生成 MD5 签名结果</p></div>
+          </div>
+          <div class="api-sign-tool">
+            <label class="api-field">
+              <span>body中的json字符串</span>
+              <div class="api-control-group">
+                <textarea class="api-input api-textarea" placeholder='请输入body中的json字符串，例如：{"merchantId":21383,"timestamp":1715060000}' data-sign-body></textarea>
+                <button class="api-btn primary" type="button" data-sign-check>校验</button>
+              </div>
+            </label>
+            <label class="api-field">
+              <span>签名秘钥key</span>
+              <input class="api-input mono" type="text" value="3c04d1d116a94db592f1b5f7288927d8" readonly data-sign-key />
+            </label>
+            <label class="api-field">
+              <span>输出md5字符串</span>
+              <textarea class="api-input api-textarea output" placeholder="输出md5字符串" readonly data-sign-output></textarea>
+            </label>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const value = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(value);
+          button.classList.add("copied");
+          const originalText = button.textContent;
+          button.textContent = "已复制";
+          setTimeout(() => {
+            button.classList.remove("copied");
+            button.textContent = originalText || value;
+          }, 1200);
+        } catch (_) {}
+      });
+    });
+
+    function md5(input) {
+      function add32(a, b) {
+        return (a + b) & 0xffffffff;
+      }
+      function rotateLeft(value, shift) {
+        return (value << shift) | (value >>> (32 - shift));
+      }
+      function cmn(q, a, b, x, s, t) {
+        return add32(rotateLeft(add32(add32(a, q), add32(x, t)), s), b);
+      }
+      function ff(a, b, c, d, x, s, t) {
+        return cmn((b & c) | (~b & d), a, b, x, s, t);
+      }
+      function gg(a, b, c, d, x, s, t) {
+        return cmn((b & d) | (c & ~d), a, b, x, s, t);
+      }
+      function hh(a, b, c, d, x, s, t) {
+        return cmn(b ^ c ^ d, a, b, x, s, t);
+      }
+      function ii(a, b, c, d, x, s, t) {
+        return cmn(c ^ (b | ~d), a, b, x, s, t);
+      }
+      function md5Block(words) {
+        let a = 1732584193;
+        let b = -271733879;
+        let c = -1732584194;
+        let d = 271733878;
+        for (let index = 0; index < words.length; index += 16) {
+          const oldA = a;
+          const oldB = b;
+          const oldC = c;
+          const oldD = d;
+          a = ff(a, b, c, d, words[index], 7, -680876936);
+          d = ff(d, a, b, c, words[index + 1], 12, -389564586);
+          c = ff(c, d, a, b, words[index + 2], 17, 606105819);
+          b = ff(b, c, d, a, words[index + 3], 22, -1044525330);
+          a = ff(a, b, c, d, words[index + 4], 7, -176418897);
+          d = ff(d, a, b, c, words[index + 5], 12, 1200080426);
+          c = ff(c, d, a, b, words[index + 6], 17, -1473231341);
+          b = ff(b, c, d, a, words[index + 7], 22, -45705983);
+          a = ff(a, b, c, d, words[index + 8], 7, 1770035416);
+          d = ff(d, a, b, c, words[index + 9], 12, -1958414417);
+          c = ff(c, d, a, b, words[index + 10], 17, -42063);
+          b = ff(b, c, d, a, words[index + 11], 22, -1990404162);
+          a = ff(a, b, c, d, words[index + 12], 7, 1804603682);
+          d = ff(d, a, b, c, words[index + 13], 12, -40341101);
+          c = ff(c, d, a, b, words[index + 14], 17, -1502002290);
+          b = ff(b, c, d, a, words[index + 15], 22, 1236535329);
+          a = gg(a, b, c, d, words[index + 1], 5, -165796510);
+          d = gg(d, a, b, c, words[index + 6], 9, -1069501632);
+          c = gg(c, d, a, b, words[index + 11], 14, 643717713);
+          b = gg(b, c, d, a, words[index], 20, -373897302);
+          a = gg(a, b, c, d, words[index + 5], 5, -701558691);
+          d = gg(d, a, b, c, words[index + 10], 9, 38016083);
+          c = gg(c, d, a, b, words[index + 15], 14, -660478335);
+          b = gg(b, c, d, a, words[index + 4], 20, -405537848);
+          a = gg(a, b, c, d, words[index + 9], 5, 568446438);
+          d = gg(d, a, b, c, words[index + 14], 9, -1019803690);
+          c = gg(c, d, a, b, words[index + 3], 14, -187363961);
+          b = gg(b, c, d, a, words[index + 8], 20, 1163531501);
+          a = gg(a, b, c, d, words[index + 13], 5, -1444681467);
+          d = gg(d, a, b, c, words[index + 2], 9, -51403784);
+          c = gg(c, d, a, b, words[index + 7], 14, 1735328473);
+          b = gg(b, c, d, a, words[index + 12], 20, -1926607734);
+          a = hh(a, b, c, d, words[index + 5], 4, -378558);
+          d = hh(d, a, b, c, words[index + 8], 11, -2022574463);
+          c = hh(c, d, a, b, words[index + 11], 16, 1839030562);
+          b = hh(b, c, d, a, words[index + 14], 23, -35309556);
+          a = hh(a, b, c, d, words[index + 1], 4, -1530992060);
+          d = hh(d, a, b, c, words[index + 4], 11, 1272893353);
+          c = hh(c, d, a, b, words[index + 7], 16, -155497632);
+          b = hh(b, c, d, a, words[index + 10], 23, -1094730640);
+          a = hh(a, b, c, d, words[index + 13], 4, 681279174);
+          d = hh(d, a, b, c, words[index], 11, -358537222);
+          c = hh(c, d, a, b, words[index + 3], 16, -722521979);
+          b = hh(b, c, d, a, words[index + 6], 23, 76029189);
+          a = hh(a, b, c, d, words[index + 9], 4, -640364487);
+          d = hh(d, a, b, c, words[index + 12], 11, -421815835);
+          c = hh(c, d, a, b, words[index + 15], 16, 530742520);
+          b = hh(b, c, d, a, words[index + 2], 23, -995338651);
+          a = ii(a, b, c, d, words[index], 6, -198630844);
+          d = ii(d, a, b, c, words[index + 7], 10, 1126891415);
+          c = ii(c, d, a, b, words[index + 14], 15, -1416354905);
+          b = ii(b, c, d, a, words[index + 5], 21, -57434055);
+          a = ii(a, b, c, d, words[index + 12], 6, 1700485571);
+          d = ii(d, a, b, c, words[index + 3], 10, -1894986606);
+          c = ii(c, d, a, b, words[index + 10], 15, -1051523);
+          b = ii(b, c, d, a, words[index + 1], 21, -2054922799);
+          a = ii(a, b, c, d, words[index + 8], 6, 1873313359);
+          d = ii(d, a, b, c, words[index + 15], 10, -30611744);
+          c = ii(c, d, a, b, words[index + 6], 15, -1560198380);
+          b = ii(b, c, d, a, words[index + 13], 21, 1309151649);
+          a = ii(a, b, c, d, words[index + 4], 6, -145523070);
+          d = ii(d, a, b, c, words[index + 11], 10, -1120210379);
+          c = ii(c, d, a, b, words[index + 2], 15, 718787259);
+          b = ii(b, c, d, a, words[index + 9], 21, -343485551);
+          a = add32(a, oldA);
+          b = add32(b, oldB);
+          c = add32(c, oldC);
+          d = add32(d, oldD);
+        }
+        return [a, b, c, d];
+      }
+      function toWords(value) {
+        const bytes = new TextEncoder().encode(value);
+        const words = [];
+        for (let index = 0; index < bytes.length; index += 1) {
+          words[index >> 2] |= bytes[index] << ((index % 4) * 8);
+        }
+        words[bytes.length >> 2] |= 0x80 << ((bytes.length % 4) * 8);
+        words[(((bytes.length + 8) >> 6) << 4) + 14] = bytes.length * 8;
+        const totalWords = (((bytes.length + 8) >> 6) + 1) * 16;
+        for (let index = 0; index < totalWords; index += 1) {
+          words[index] = words[index] || 0;
+        }
+        return words;
+      }
+      function toHex(value) {
+        let output = "";
+        for (let index = 0; index < 4; index += 1) {
+          output += ((value >> (index * 8)) & 255).toString(16).padStart(2, "0");
+        }
+        return output;
+      }
+      return md5Block(toWords(input)).map(toHex).join("");
+    }
+
+    document.querySelector("[data-sign-check]")?.addEventListener("click", () => {
+      const body = document.querySelector("[data-sign-body]").value.trim();
+      const key = document.querySelector("[data-sign-key]").value.trim();
+      const output = document.querySelector("[data-sign-output]");
+      const source = `${body}${key}`;
+      if (!body) {
+        output.value = "请先输入body中的json字符串";
+        return;
+      }
+      output.value = md5(source);
+    });
+  </script>
+</body>
+</html>
