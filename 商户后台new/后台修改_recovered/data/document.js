@@ -71,6 +71,16 @@ return _creator();
     return wrapper;
   }
 
+  function buildBrand(left, top) {
+    var wrapper = document.createElement('a');
+    wrapper.className = 'unified-brand';
+    wrapper.href = '首页仪表盘.html';
+    wrapper.style.left = Math.round(left) + 'px';
+    wrapper.style.top = Math.round(top) + 'px';
+    wrapper.textContent = 'GB总后台';
+    return wrapper;
+  }
+
   function isHeaderGroup(element) {
     var text = element.textContent || '';
     var directChildren = Array.prototype.filter.call(element.children, function(child) {
@@ -114,6 +124,39 @@ return _creator();
       group.style.display = 'none';
       base.appendChild(buildTopbar(bounds.left, bounds.top));
     });
+  }
+
+  function applyUnifiedBrand() {
+    var base = document.getElementById('base');
+    if (!base || base.querySelector('.unified-brand')) return;
+
+    var root = document.querySelector('.treeroot');
+    var candidates = Array.prototype.map.call(document.querySelectorAll('img[src="images/page_1/u4.png"]'), function(image) {
+      var host = image.closest('div[id^="u"]') || image.parentElement;
+      if (!host) return null;
+      var box = visibleBox(host);
+      return { host: host, box: box };
+    }).filter(function(item) {
+      return item && item.box.width > 0 && item.box.height > 0 && item.box.left < 260 && item.box.top < 180;
+    }).sort(function(a, b) {
+      if (a.box.top !== b.box.top) return a.box.top - b.box.top;
+      return a.box.left - b.box.left;
+    });
+
+    if (!candidates.length) return;
+
+    candidates.forEach(function(item) {
+      item.host.style.display = 'none';
+    });
+
+    if (root) {
+      var rootBox = visibleBox(root);
+      base.appendChild(buildBrand(rootBox.left, Math.max(18, rootBox.top - 38)));
+      return;
+    }
+
+    var anchor = candidates[0].box;
+    base.appendChild(buildBrand(anchor.left, anchor.top));
   }
 
   document.addEventListener('click', function() {
@@ -253,6 +296,7 @@ return _creator();
   }
 
   onReady(function() {
+    applyUnifiedBrand();
     applyUnifiedTopbar();
     applyUnifiedSidebar();
   });

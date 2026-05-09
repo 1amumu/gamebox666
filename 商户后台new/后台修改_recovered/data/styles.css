@@ -102,6 +102,31 @@
 }
 textarea, select, input, button { outline: none; }
 
+.unified-brand {
+  position:absolute;
+  display:block;
+  min-width:120px;
+  height:28px;
+  padding:0;
+  border:none;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  text-decoration:none;
+  z-index:9999;
+  color:#0F172A;
+  font-family:'Arial Normal', 'Arial', sans-serif;
+  font-size:20px;
+  font-weight:700;
+  line-height:28px;
+  letter-spacing:0;
+  white-space:nowrap;
+  transition:opacity 140ms ease;
+}
+.unified-brand:hover {
+  opacity:.88;
+}
+
 .unified-topbar {
   position:absolute;
   width:248px;

@@ -3343,3 +3343,464 @@
   white-space:nowrap;
   text-transform:none;
 }
+body {
+  left:0 !important;
+  width:1920px !important;
+  min-height:1080px;
+  margin-left:0;
+  margin-right:0;
+  overflow:auto;
+  background:#EEF2F7;
+  color:#1F2937;
+}
+#base {
+  min-width:1920px;
+  min-height:1080px;
+}
+#u1137,
+#u1137_div {
+  width:1696px !important;
+  height:936px !important;
+}
+#u1137 {
+  left:100px !important;
+  top:82px !important;
+}
+#u1137_div {
+  border:none !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+#u1138 {
+  left:148px !important;
+  top:104px !important;
+}
+#u1139 {
+  left:252px !important;
+  top:72px !important;
+  height:840px !important;
+}
+#u1170 {
+  left:42px !important;
+  top:88px !important;
+  width:178px !important;
+  height:960px !important;
+}
+.unified-topbar {
+  left:auto !important;
+  right:32px !important;
+  top:22px !important;
+}
+.today-profit-page {
+  position:absolute;
+  left:280px;
+  top:48px;
+  width:1608px;
+  min-height:980px;
+  z-index:20;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+}
+.today-profit-titlebar {
+  height:32px;
+  margin-bottom:12px;
+}
+.today-profit-titlebar h1 {
+  margin:0;
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  line-height:32px;
+}
+.today-profit-filters {
+  display:grid;
+  grid-template-columns:240px 320px 1fr auto;
+  gap:12px;
+  align-items:end;
+  padding:14px 16px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 8px 20px rgba(15, 23, 42, 0.05);
+}
+.today-profit-filter-field {
+  display:grid;
+  gap:8px;
+}
+.today-profit-filter-field > span {
+  color:#475467;
+  font-size:13px;
+  line-height:18px;
+}
+.today-profit-filter-field input[type="text"],
+.today-profit-filter-field input[type="date"],
+.today-profit-selector-input {
+  width:100%;
+  height:40px;
+  padding:0 12px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.today-profit-filter-field input[type="text"]:focus,
+.today-profit-filter-field input[type="date"]:focus,
+.today-profit-selector-input:focus {
+  border-color:#2F80ED;
+  box-shadow:0 0 0 3px rgba(47, 128, 237, 0.12);
+}
+.today-profit-filter-field--selector,
+.today-profit-filter-field--dates {
+  align-self:start;
+}
+.today-profit-date-fields {
+  display:grid;
+  grid-template-columns:138px 12px 138px;
+  align-items:center;
+  gap:6px;
+}
+.today-profit-date-fields em {
+  color:#667085;
+  font-style:normal;
+  font-size:12px;
+  text-align:center;
+}
+.today-profit-filter-actions {
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  gap:10px;
+  min-width:0;
+  white-space:nowrap;
+}
+.today-profit-filter-actions button {
+  height:38px;
+  padding:0 16px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+.today-profit-filter-actions .is-primary {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
+.today-profit-selector {
+  position:relative;
+  min-width:0;
+}
+.today-profit-selector-trigger {
+  position:relative;
+}
+.today-profit-selector-input {
+  padding-right:40px;
+}
+.today-profit-selector-arrow {
+  position:absolute;
+  right:8px;
+  top:8px;
+  width:24px;
+  height:24px;
+  border:0;
+  border-radius:6px;
+  background:transparent;
+  cursor:pointer;
+}
+.today-profit-selector-arrow::before {
+  content:"";
+  position:absolute;
+  left:7px;
+  top:8px;
+  width:8px;
+  height:8px;
+  border-right:2px solid #667085;
+  border-bottom:2px solid #667085;
+  transform:rotate(45deg);
+  transition:transform .18s ease;
+}
+.today-profit-selector.is-open .today-profit-selector-arrow::before {
+  top:12px;
+  transform:rotate(-135deg);
+}
+.today-profit-selector-menu {
+  position:absolute;
+  left:0;
+  right:0;
+  top:46px;
+  max-height:352px;
+  padding:8px;
+  border:1px solid #D0D5DD;
+  border-radius:10px;
+  background:#FFFFFF;
+  box-shadow:0 18px 40px rgba(15, 23, 42, 0.14);
+  overflow:auto;
+  display:none;
+  z-index:360;
+}
+.today-profit-selector.is-open .today-profit-selector-menu {
+  display:block;
+}
+.today-profit-tree-row {
+  display:flex;
+  align-items:center;
+  min-height:34px;
+  border-radius:8px;
+  box-sizing:border-box;
+}
+.today-profit-tree-row label,
+.today-profit-tree-item {
+  flex:1;
+}
+.today-profit-tree-group {
+  padding:0 6px 0 2px;
+}
+.today-profit-tree-item {
+  padding:0 8px 0 34px;
+}
+.today-profit-tree-group.level-1 {
+  padding-left:22px;
+}
+.today-profit-tree-item.level-2 {
+  padding-left:52px;
+}
+.today-profit-tree-item.level-3 {
+  padding-left:72px;
+}
+.today-profit-tree-group label,
+.today-profit-tree-item {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#344054;
+  font-size:13px;
+  cursor:pointer;
+}
+.today-profit-tree-group:hover,
+.today-profit-tree-item:hover {
+  background:#F8FAFC;
+}
+.today-profit-tree-group input[type="checkbox"],
+.today-profit-tree-item input[type="checkbox"] {
+  width:14px;
+  height:14px;
+  margin:0;
+  accent-color:#2F80ED;
+}
+.today-profit-tree-caret {
+  position:relative;
+  width:18px;
+  height:18px;
+  margin-right:4px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.today-profit-tree-caret::before {
+  content:"";
+  position:absolute;
+  left:4px;
+  top:5px;
+  width:7px;
+  height:7px;
+  border-right:2px solid #98A2B3;
+  border-bottom:2px solid #98A2B3;
+  transform:rotate(-45deg);
+  transition:transform .16s ease;
+}
+.today-profit-tree-caret.is-open::before {
+  left:5px;
+  top:4px;
+  transform:rotate(45deg);
+}
+.today-profit-tree-children.is-collapsed {
+  display:none;
+}
+.today-profit-tree-item--all {
+  margin-bottom:6px;
+  padding-bottom:6px;
+  border-bottom:1px solid #EEF2F6;
+}
+.today-profit-table-card {
+  margin-top:14px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  overflow:hidden;
+}
+.today-profit-table-wrap {
+  overflow:hidden;
+}
+.today-profit-table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.today-profit-table th,
+.today-profit-table td {
+  padding:0 10px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-sizing:border-box;
+}
+.today-profit-table th {
+  height:46px;
+  border-bottom:1px solid #E5E7EB;
+  background:#F8FAFC;
+  color:#475467;
+  font-size:12px;
+  font-weight:700;
+}
+.today-profit-table td {
+  height:48px;
+  border-bottom:1px solid #EEF2F6;
+  color:#1F2937;
+  font-size:13px;
+}
+.today-profit-table tr:hover td {
+  background:#F8FBFF;
+}
+.today-profit-table th:nth-child(1),
+.today-profit-table td:nth-child(1) {
+  width:112px;
+}
+.today-profit-table th:nth-child(2),
+.today-profit-table td:nth-child(2) {
+  width:136px;
+}
+.today-profit-table th:nth-child(3),
+.today-profit-table td:nth-child(3) {
+  width:176px;
+}
+.today-profit-table th:nth-child(4),
+.today-profit-table td:nth-child(4) {
+  width:88px;
+}
+.today-profit-table th:nth-child(5),
+.today-profit-table td:nth-child(5),
+.today-profit-table th:nth-child(6),
+.today-profit-table td:nth-child(6),
+.today-profit-table th:nth-child(7),
+.today-profit-table td:nth-child(7),
+.today-profit-table th:nth-child(8),
+.today-profit-table td:nth-child(8),
+.today-profit-table th:nth-child(9),
+.today-profit-table td:nth-child(9) {
+  width:126px;
+}
+.today-profit-table th:nth-child(10),
+.today-profit-table td:nth-child(10) {
+  width:178px;
+}
+.today-profit-link {
+  border:0;
+  background:transparent;
+  color:#175CD3;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.today-profit-link:hover {
+  color:#1D4ED8;
+}
+.today-profit-empty {
+  height:84px !important;
+  color:#98A2B3 !important;
+}
+.is-positive {
+  color:#15803D !important;
+  font-weight:700;
+}
+.is-negative {
+  color:#DC2626 !important;
+  font-weight:700;
+}
+.today-profit-modal {
+  position:fixed;
+  inset:0;
+  z-index:30000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15, 23, 42, 0.28);
+}
+.today-profit-modal[hidden] {
+  display:none !important;
+}
+.today-profit-modal-panel {
+  width:780px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 28px 60px rgba(15, 23, 42, 0.2);
+  overflow:hidden;
+}
+.today-profit-modal-header {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  padding:18px 20px 14px;
+  border-bottom:1px solid #E5E7EB;
+}
+.today-profit-modal-header h2 {
+  margin:0;
+  color:#111827;
+  font-size:20px;
+  line-height:28px;
+}
+.today-profit-modal-header p {
+  margin:4px 0 0;
+  color:#667085;
+  font-size:13px;
+  line-height:20px;
+}
+.today-profit-modal-close {
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:8px;
+  background:#F8FAFC;
+  color:#667085;
+  font-size:22px;
+  line-height:34px;
+  cursor:pointer;
+}
+.today-profit-modal-body {
+  padding:18px 20px 20px;
+}
+.today-profit-detail-grid {
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+}
+.today-profit-detail-item {
+  display:grid;
+  gap:6px;
+  padding:14px 16px;
+  border:1px solid #E5E7EB;
+  border-radius:10px;
+  background:#F8FAFC;
+}
+.today-profit-detail-item--wide {
+  grid-column:1 / -1;
+}
+.today-profit-detail-item span {
+  color:#667085;
+  font-size:12px;
+  line-height:18px;
+}
+.today-profit-detail-item strong {
+  color:#111827;
+  font-size:15px;
+  line-height:22px;
+}
