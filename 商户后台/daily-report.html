@@ -14,11 +14,11 @@
       <header class="topbar"><div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><span>游戏数据</span><span>/</span><strong>每日报告</strong></div></div><div class="topbar-right"><span class="top-icon">↻</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div></header>
       <section class="content report-data-page">
         <div class="card report-card">
-          <div class="report-toolbar report-toolbar-stacked">
+          <div class="report-toolbar daily-report-toolbar">
             <div class="report-filter-grid daily-report-filters">
               <label class="report-filter">
                 <span>游戏</span>
-                <select class="report-control"><option>请选择</option><option>Avlator</option></select>
+                <select class="report-control"><option>请选择</option><option selected>Avlator</option><option>PowerOfTheKraken</option><option>Fortune Gems</option><option>eKraken</option></select>
               </label>
               <label class="report-filter report-date-filter">
                 <span>时间</span>
@@ -28,17 +28,17 @@
                   <input type="text" value="2026-05-07" aria-label="结束日期" readonly />
                 </span>
               </label>
-              <div class="report-periods">
+              <div class="report-actions daily-report-actions">
+                <button class="profit-btn primary report-search-btn" type="button"><span class="report-search-icon"></span>查询</button>
+                <button class="profit-btn" type="button">重置</button>
+                <button class="profit-btn primary report-export-btn" type="button">导出</button>
+              </div>
+              <div class="report-periods daily-report-periods">
                 <button class="profit-btn primary" type="button">当日</button>
                 <button class="profit-btn" type="button">当周</button>
                 <button class="profit-btn" type="button">当月</button>
               </div>
-              <div class="report-actions">
-                <button class="profit-btn primary report-search-btn" type="button"><span class="report-search-icon"></span>查询</button>
-                <button class="profit-btn" type="button">重置</button>
-              </div>
             </div>
-            <button class="profit-btn primary report-export-btn" type="button">导出</button>
           </div>
           <div class="report-table-wrap">
             <div class="report-table daily-report-table">
@@ -66,12 +66,90 @@
                 <div class="profit-num">28,799,497.22</div>
                 <div>95.71%</div>
                 <div class="profit-num">317,799</div>
-                <div>5997</div>
+                <div>5,997</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>PowerOfTheKraken</span></div>
+                <div>2026-05-07</div>
+                <div class="profit-num">12,486,220.00</div>
+                <div class="profit-num">11,972,408.40</div>
+                <div class="profit-num neg">513,811.60</div>
+                <div>4.11%</div>
+                <div class="profit-num">11,804,317.60</div>
+                <div>94.54%</div>
+                <div class="profit-num">182,044</div>
+                <div>3,728</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>Fortune Gems</span></div>
+                <div>2026-05-07</div>
+                <div class="profit-num">9,206,518.66</div>
+                <div class="profit-num">8,964,181.18</div>
+                <div class="profit-num neg">242,337.48</div>
+                <div>2.63%</div>
+                <div class="profit-num">8,771,300.00</div>
+                <div>95.27%</div>
+                <div class="profit-num">126,882</div>
+                <div>2,514</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>eKraken</span></div>
+                <div>2026-05-06</div>
+                <div class="profit-num">16,834,205.42</div>
+                <div class="profit-num">16,201,944.22</div>
+                <div class="profit-num neg">632,261.20</div>
+                <div>3.76%</div>
+                <div class="profit-num">15,998,260.19</div>
+                <div>95.04%</div>
+                <div class="profit-num">221,540</div>
+                <div>4,132</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>Maya Gold</span></div>
+                <div>2026-05-06</div>
+                <div class="profit-num">7,628,430.19</div>
+                <div class="profit-num">7,491,822.10</div>
+                <div class="profit-num neg">136,608.09</div>
+                <div>1.79%</div>
+                <div class="profit-num">7,320,118.45</div>
+                <div>95.96%</div>
+                <div class="profit-num">98,462</div>
+                <div>1,816</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>Star Gems</span></div>
+                <div>2026-05-05</div>
+                <div class="profit-num">5,944,880.00</div>
+                <div class="profit-num">5,712,213.67</div>
+                <div class="profit-num neg">232,666.33</div>
+                <div>3.91%</div>
+                <div class="profit-num">5,540,117.90</div>
+                <div>93.19%</div>
+                <div class="profit-num">77,305</div>
+                <div>1,492</div>
+              </div>
+              <div class="report-row">
+                <div class="report-expand">›</div>
+                <div class="report-game-cell"><span class="report-game-thumb"></span><span>Dragon Treasure</span></div>
+                <div>2026-05-05</div>
+                <div class="profit-num">4,386,752.15</div>
+                <div class="profit-num">4,275,915.30</div>
+                <div class="profit-num neg">110,836.85</div>
+                <div>2.53%</div>
+                <div class="profit-num">4,118,663.10</div>
+                <div>93.89%</div>
+                <div class="profit-num">58,290</div>
+                <div>1,164</div>
               </div>
             </div>
           </div>
           <div class="profit-pagination report-pagination">
-            <div>共 1 条</div>
+            <div>共7条</div>
             <div class="profit-page-size"><select class="profit-size-select"><option>20条/页</option></select></div>
             <div class="profit-pages"><div class="profit-page-btn disabled">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn disabled">›</div></div>
             <div class="profit-page-jump"><span>前往</span><input class="profit-page-input" value="1" /><span>页</span></div>
