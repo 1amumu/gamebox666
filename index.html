@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>后台入口</title>
+    <title>后台访问保护</title>
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f4f7fb;
-        --panel: #ffffff;
-        --text: #18212f;
-        --muted: #667085;
-        --line: #d9e2f0;
+        --bg: #eef3fb;
+        --panel: rgba(255, 255, 255, 0.96);
+        --panel-border: #d7e1f0;
+        --text: #172033;
+        --muted: #6b7280;
         --primary: #2563eb;
         --primary-hover: #1d4ed8;
         --secondary: #0f172a;
         --secondary-hover: #1e293b;
+        --danger: #dc2626;
       }
 
       * {
@@ -30,22 +30,22 @@
         justify-content: center;
         padding: 24px;
         font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-        background:
-          radial-gradient(circle at top, #ffffff 0%, #f4f7fb 48%, #e8eef8 100%);
         color: var(--text);
+        background:
+          radial-gradient(circle at top, #ffffff 0%, #eef3fb 50%, #dfe8f7 100%);
       }
 
       .shell {
         width: min(960px, 100%);
-        padding: 40px;
-        background: rgba(255, 255, 255, 0.92);
-        border: 1px solid var(--line);
+        padding: 32px;
+        border: 1px solid var(--panel-border);
         border-radius: 20px;
+        background: var(--panel);
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
       }
 
-      .header {
-        margin-bottom: 32px;
+      .hero {
+        margin-bottom: 28px;
       }
 
       .title {
@@ -56,71 +56,96 @@
 
       .desc {
         margin: 0;
-        font-size: 16px;
-        line-height: 1.7;
         color: var(--muted);
+        line-height: 1.7;
+        font-size: 15px;
       }
 
-      .grid {
+      .lock-panel {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
         gap: 20px;
+        align-items: stretch;
       }
 
-      .entry {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
+      .form-card,
+      .portal {
         padding: 24px;
-        background: var(--panel);
-        border: 1px solid var(--line);
+        border: 1px solid var(--panel-border);
         border-radius: 16px;
+        background: #ffffff;
       }
 
-      .entry-tag {
-        width: fit-content;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: #eff6ff;
-        color: var(--primary);
-        font-size: 13px;
+      .section-title {
+        margin: 0 0 8px;
+        font-size: 22px;
+      }
+
+      .section-text {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      .field-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
         font-weight: 600;
       }
 
-      .entry-title {
-        margin: 0;
-        font-size: 24px;
+      .input {
+        width: 100%;
+        height: 48px;
+        padding: 0 14px;
+        border: 1px solid #c9d4e5;
+        border-radius: 12px;
+        outline: none;
+        font-size: 16px;
       }
 
-      .entry-text {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.7;
+      .input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
       }
 
       .actions {
-        margin-top: auto;
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
       }
 
-      .button {
+      .button,
+      .link-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 156px;
-        padding: 12px 18px;
+        min-width: 120px;
+        height: 46px;
+        padding: 0 18px;
+        border: 0;
         border-radius: 12px;
-        color: #ffffff;
         text-decoration: none;
+        cursor: pointer;
         font-size: 15px;
         font-weight: 600;
-        transition: background-color 0.2s ease, transform 0.2s ease;
+        transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
       }
 
-      .button:hover {
+      .button:hover,
+      .link-button:hover {
         transform: translateY(-1px);
       }
 
+      .button:disabled {
+        cursor: wait;
+        opacity: 0.7;
+        transform: none;
+      }
+
       .button-primary {
+        color: #ffffff;
         background: var(--primary);
       }
 
@@ -129,6 +154,7 @@
       }
 
       .button-secondary {
+        color: #ffffff;
         background: var(--secondary);
       }
 
@@ -136,17 +162,79 @@
         background: var(--secondary-hover);
       }
 
-      @media (max-width: 720px) {
+      .message {
+        min-height: 22px;
+        margin-top: 14px;
+        font-size: 14px;
+      }
+
+      .message-error {
+        color: var(--danger);
+      }
+
+      .message-ok {
+        color: #15803d;
+      }
+
+      .portal[hidden] {
+        display: none;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .entry {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+        border: 1px solid var(--panel-border);
+        border-radius: 14px;
+        background: #fbfdff;
+      }
+
+      .entry-tag {
+        width: fit-content;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .entry-title {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .entry-text {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 760px) {
         .shell {
           padding: 24px;
           border-radius: 16px;
         }
 
+        .lock-panel,
         .grid {
           grid-template-columns: 1fr;
         }
 
-        .button {
+        .actions {
+          flex-direction: column;
+        }
+
+        .button,
+        .link-button {
           width: 100%;
         }
       }
@@ -154,30 +242,155 @@
   </head>
   <body>
     <main class="shell">
-      <header class="header">
-        <h1 class="title">后台入口</h1>
-        <p class="desc">请选择要进入的系统入口。这里仅作为根目录导航页，不会改动管理后台和商户后台内部页面。</p>
+      <header class="hero">
+        <h1 class="title">后台访问保护</h1>
+        <p class="desc">请输入访问密码后，再进入管理后台或商户后台。</p>
       </header>
 
-      <section class="grid">
-        <article class="entry">
-          <span class="entry-tag">Admin</span>
-          <h2 class="entry-title">管理后台</h2>
-          <p class="entry-text">进入 `管理后台/index.html`。</p>
-          <div class="actions">
-            <a class="button button-primary" href="./管理后台/index.html">进入管理后台</a>
-          </div>
-        </article>
+      <section class="lock-panel">
+        <section class="form-card">
+          <h2 class="section-title">访问验证</h2>
+          <p class="section-text">通过验证后，当前浏览器会获得访问权限，未验证时无法直接打开后台页面地址。</p>
+          <form id="loginForm">
+            <label class="field-label" for="password">访问密码</label>
+            <input
+              id="password"
+              class="input"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="请输入访问密码"
+              required
+            />
+            <div class="actions">
+              <button id="submitButton" class="button button-primary" type="submit">进入系统</button>
+              <button id="logoutButton" class="button button-secondary" type="button">退出授权</button>
+            </div>
+            <div id="message" class="message" aria-live="polite"></div>
+          </form>
+        </section>
 
-        <article class="entry">
-          <span class="entry-tag">Merchant</span>
-          <h2 class="entry-title">商户后台</h2>
-          <p class="entry-text">进入 `商户后台/index.html`。</p>
-          <div class="actions">
-            <a class="button button-secondary" href="./商户后台/index.html">进入商户后台</a>
+        <section id="portal" class="portal" hidden>
+          <h2 class="section-title">后台入口</h2>
+          <p class="section-text">验证通过后，可从这里进入对应系统。</p>
+          <div class="grid">
+            <article class="entry">
+              <span class="entry-tag">Admin</span>
+              <h3 class="entry-title">管理后台</h3>
+              <p class="entry-text">进入 `管理后台/index.html`。</p>
+              <a class="link-button button-primary" href="/管理后台/index.html">进入管理后台</a>
+            </article>
+
+            <article class="entry">
+              <span class="entry-tag">Merchant</span>
+              <h3 class="entry-title">商户后台</h3>
+              <p class="entry-text">进入 `商户后台/index.html`。</p>
+              <a class="link-button button-secondary" href="/商户后台/index.html">进入商户后台</a>
+            </article>
           </div>
-        </article>
+        </section>
       </section>
     </main>
+
+    <script>
+      const form = document.getElementById("loginForm");
+      const passwordInput = document.getElementById("password");
+      const submitButton = document.getElementById("submitButton");
+      const logoutButton = document.getElementById("logoutButton");
+      const message = document.getElementById("message");
+      const portal = document.getElementById("portal");
+
+      function setMessage(text, type) {
+        message.textContent = text;
+        message.className = "message" + (type ? " message-" + type : "");
+      }
+
+      function setAuthenticated(authenticated) {
+        portal.hidden = !authenticated;
+        passwordInput.disabled = authenticated;
+        submitButton.disabled = authenticated;
+        submitButton.textContent = authenticated ? "已授权" : "进入系统";
+        if (!authenticated) {
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      }
+
+      async function refreshSession() {
+        try {
+          const response = await fetch("/__session", {
+            credentials: "same-origin",
+            cache: "no-store",
+          });
+          const data = await response.json();
+          if (data.authenticated) {
+            setAuthenticated(true);
+            setMessage("验证通过，可以进入后台。", "ok");
+          } else {
+            setAuthenticated(false);
+          }
+        } catch (error) {
+          setAuthenticated(false);
+          setMessage("无法连接到保护服务，请确认是通过服务端地址访问。", "error");
+        }
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const password = passwordInput.value.trim();
+        if (!password) {
+          setMessage("请输入访问密码。", "error");
+          return;
+        }
+
+        submitButton.disabled = true;
+        setMessage("正在验证...", "");
+
+        try {
+          const response = await fetch("/__auth", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({ password }),
+          });
+
+          const data = await response.json();
+          if (!response.ok || !data.ok) {
+            setAuthenticated(false);
+            setMessage(data.message || "密码错误。", "error");
+            return;
+          }
+
+          setAuthenticated(true);
+          setMessage("验证通过，可以进入后台。", "ok");
+        } catch (error) {
+          setAuthenticated(false);
+          setMessage("验证失败，请稍后重试。", "error");
+        } finally {
+          if (!portal.hidden) {
+            submitButton.disabled = true;
+          } else {
+            submitButton.disabled = false;
+          }
+        }
+      });
+
+      logoutButton.addEventListener("click", async () => {
+        try {
+          await fetch("/__logout", {
+            method: "POST",
+            credentials: "same-origin",
+          });
+        } catch (error) {
+        }
+
+        setAuthenticated(false);
+        setMessage("已退出授权。", "");
+      });
+
+      refreshSession();
+    </script>
   </body>
 </html>
