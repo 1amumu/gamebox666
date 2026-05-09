@@ -276,7 +276,7 @@ function renderPreviewTabs() {
   if (!frame.contentDocument || !state.selected) return;
 
   const doc = frame.contentDocument;
-  const titlebar = doc.querySelector(".game-records-titlebar");
+  const titlebar = doc.querySelector(".game-records-titlebar, .operations-data-titlebar");
   if (!titlebar) {
     window.setTimeout(renderPreviewTabs, 120);
     return;
