@@ -27,10 +27,6 @@
                 <div class="game-picker-panel" data-game-panel hidden>
                   <div class="game-brand-tabs" data-game-brand-tabs>
                     <button class="game-brand-tab active" type="button" data-game-brand value="">全部品牌</button>
-                    <label class="game-all-check" title="勾选后选择全部游戏">
-                      <input type="checkbox" data-game-all />
-                      <span>选择全部游戏</span>
-                    </label>
                     <button class="game-brand-tab" type="button" data-game-brand value="PG">PG</button>
                     <button class="game-brand-tab" type="button" data-game-brand value="PP">PP</button>
                     <button class="game-brand-tab" type="button" data-game-brand value="JILI">JILI</button>
@@ -81,8 +77,6 @@
     const gameLabel = document.querySelector("[data-game-label]");
     const gameIcon = document.querySelector("[data-game-icon]");
     const gameSearch = document.querySelector("[data-game-search]");
-    const gameAllCheck = document.querySelector("[data-game-all]");
-    const gameAllCheckWrap = gameAllCheck?.closest(".game-all-check");
     const gameBrandTabs = Array.from(document.querySelectorAll("[data-game-brand]"));
     const gameOptions = Array.from(document.querySelectorAll("[data-game-option]"));
     const gamePrev = document.querySelector("[data-game-prev]");
@@ -123,6 +117,11 @@
       return gameOptions.map((item) => item.dataset.value);
     }
 
+    function selectedBrandGameValues() {
+      if (!selectedBrand) return [];
+      return gameOptions.filter((item) => item.dataset.brand === selectedBrand).map((item) => item.dataset.value);
+    }
+
     function hasEveryGameSelected() {
       return selectedGames.length === gameOptions.length && gameOptions.every((item) => selectedGames.includes(item.dataset.value));
     }
@@ -156,7 +155,10 @@
         isAllGameExplicit = false;
       }
 
-      if (!selectedGames.length || isAllGameExplicit) {
+      if (!selectedGames.length && selectedBrand) {
+        gameIcon.textContent = selectedBrand;
+        gameLabel.textContent = `${selectedBrand} 全部游戏`;
+      } else if (!selectedGames.length || isAllGameExplicit) {
         gameIcon.textContent = "ALL";
         gameLabel.textContent = "全部游戏";
       } else if (selectedGames.length === 1) {
@@ -167,8 +169,6 @@
         gameIcon.textContent = selectedGames.length;
         gameLabel.textContent = `已选 ${selectedGames.length} 款游戏`;
       }
-      if (gameAllCheck) gameAllCheck.checked = isAllGameExplicit;
-      gameAllCheckWrap?.classList.toggle("active", isAllGameExplicit);
       gameOptions.forEach((item) => item.classList.toggle("active", selectedGames.includes(item.dataset.value)));
     }
 
@@ -201,10 +201,11 @@
     }
 
     function getFilteredRows() {
+      const brandGames = selectedBrandGameValues();
       return rows.filter((row) => {
         const matchSite = !siteInput.value || row.siteId === siteInput.value;
         const matchDate = !dateInput.value || row.date === dateInput.value;
-        const matchGame = !selectedGames.length || selectedGames.includes(row.game);
+        const matchGame = selectedGames.length ? selectedGames.includes(row.game) : (!selectedBrand || brandGames.includes(row.game));
         return matchSite && matchDate && matchGame;
       });
     }
@@ -226,8 +227,8 @@
     }
 
     function renderTable() {
-      const explicitGameSelection = isAllGameExplicit || selectedGames.length > 0;
-      const multiGame = isAllGameExplicit || selectedGames.length > 1;
+      const explicitGameSelection = isAllGameExplicit || selectedBrand || selectedGames.length > 0;
+      const multiGame = isAllGameExplicit || selectedBrand || selectedGames.length > 1;
       statsTable.classList.toggle("hide-game-name", multiGame);
       statsHead.innerHTML = multiGame
         ? "<div>序号</div><div>站点ID</div><div>总投注</div><div>总返奖</div><div>总输赢</div><div>有效投注额</div><div>投注人数</div><div>RTP</div><div>有效投注比</div><div>注单数</div><div>日期</div>"
@@ -252,16 +253,33 @@
       }
     });
     gameSearch.addEventListener("input", filterGameOptions);
-    gameAllCheck?.addEventListener("change", () => {
-      isAllGameExplicit = gameAllCheck.checked;
-      selectedGames = isAllGameExplicit ? allGameValues() : [];
-      updateGameLabel();
-    });
     gameBrandTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        selectedBrand = tab.value;
-        gameBrandTabs.forEach((item) => item.classList.toggle("active", item === tab));
+      if (!tab.querySelector(".game-brand-tab-check")) {
+        const label = tab.textContent.trim();
+        tab.textContent = "";
+        const check = document.createElement("span");
+        check.className = "game-brand-tab-check";
+        check.setAttribute("aria-hidden", "true");
+        const text = document.createElement("span");
+        text.className = "game-brand-tab-label";
+        text.textContent = label;
+        tab.append(check, text);
+      }
+      tab.addEventListener("click", (event) => {
+        if (!event.target.closest(".game-brand-tab-check")) return;
+        const shouldClearBrand = tab.value && tab.classList.contains("active");
+        selectedBrand = shouldClearBrand ? "" : tab.value;
+        if (selectedBrand) {
+          selectedGames = [];
+          isAllGameExplicit = false;
+        }
+        gameBrandTabs.forEach((item) => {
+          const isActive = selectedBrand ? item === tab : item.value === "";
+          item.classList.toggle("active", isActive);
+        });
         filterGameOptions();
+        updateGameLabel();
+        renderTable();
       });
     });
     gamePrev.addEventListener("click", () => {
@@ -278,6 +296,7 @@
         selectedGames = selectedGames.includes(value) ? selectedGames.filter((item) => item !== value) : [...selectedGames, value];
         isAllGameExplicit = hasEveryGameSelected();
         updateGameLabel();
+        renderTable();
       });
     });
     document.querySelector("[data-search-btn]").addEventListener("click", renderTable);
