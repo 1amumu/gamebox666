@@ -295,9 +295,114 @@ return _creator();
     base.appendChild(sidebar);
   }
 
+  function pageFileName() {
+    var path = decodeURIComponent((window.location.pathname || '').split('/').pop() || '');
+    return path || 'index.html';
+  }
+
+  function pageTitleFromFile(file) {
+    return file.replace(/\.html$/i, '');
+  }
+
+  function titlebarForTabs() {
+    return document.querySelector('.game-records-titlebar, .operations-data-titlebar, .today-profit-titlebar, .crash-point-titlebar');
+  }
+
+  function readPageTabs() {
+    var current = pageFileName();
+    var files = [];
+    try {
+      files = JSON.parse(localStorage.getItem('codex-workbench-open-tabs') || '[]');
+    } catch (error) {
+      files = [];
+    }
+    if (!Array.isArray(files)) files = [];
+    files = files.filter(function(file, index) {
+      return file && files.indexOf(file) === index;
+    });
+    if (files.indexOf(current) === -1) files.push(current);
+    return files;
+  }
+
+  function writePageTabs(files) {
+    localStorage.setItem('codex-workbench-open-tabs', JSON.stringify(files));
+  }
+
+  function applyStandalonePageTabs() {
+    if (window.top !== window.self) return;
+
+    var titlebar = titlebarForTabs();
+    if (!titlebar) {
+      window.setTimeout(applyStandalonePageTabs, 120);
+      return;
+    }
+    if (document.querySelector('.codex-page-tabs')) return;
+
+    var current = pageFileName();
+    var tabs = document.createElement('div');
+    tabs.className = 'codex-page-tabs';
+
+    function render() {
+      var files = readPageTabs();
+      tabs.innerHTML = '';
+      files.forEach(function(file) {
+        var tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'codex-page-tab' + (file === current ? ' is-active' : '');
+
+        var dot = document.createElement('span');
+        dot.className = 'codex-page-tab-dot';
+        tab.appendChild(dot);
+
+        var label = document.createElement('span');
+        label.className = 'codex-page-tab-title';
+        label.textContent = pageTitleFromFile(file);
+        tab.appendChild(label);
+
+        var close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'codex-page-tab-close';
+        close.textContent = '×';
+        close.addEventListener('click', function(event) {
+          event.stopPropagation();
+          var nextFiles = readPageTabs().filter(function(item) { return item !== file; });
+          if (!nextFiles.length) nextFiles = [current];
+          writePageTabs(nextFiles);
+          if (file === current && nextFiles[0] !== current) {
+            window.location.href = nextFiles[0];
+          } else {
+            render();
+          }
+        });
+        tab.appendChild(close);
+
+        tab.addEventListener('click', function() {
+          if (file !== current) window.location.href = file;
+        });
+        tabs.appendChild(tab);
+      });
+    }
+
+    titlebar.insertAdjacentElement('afterend', tabs);
+    render();
+
+    document.addEventListener('click', function(event) {
+      var link = event.target.closest && event.target.closest('a[href$=".html"]');
+      if (!link) return;
+      var href = decodeURIComponent(link.getAttribute('href') || '').split('/').pop();
+      if (!href) return;
+      var files = readPageTabs();
+      if (files.indexOf(href) === -1) {
+        files.push(href);
+        writePageTabs(files);
+      }
+    }, true);
+  }
+
   onReady(function() {
     applyUnifiedBrand();
     applyUnifiedTopbar();
     applyUnifiedSidebar();
+    applyStandalonePageTabs();
   });
 })();
