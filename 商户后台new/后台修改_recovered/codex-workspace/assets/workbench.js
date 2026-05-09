@@ -1,7 +1,8 @@
 const state = {
   pages: [],
   selected: null,
-  query: ""
+  query: "",
+  tabs: []
 };
 
 const nav = document.getElementById("pageNav");
@@ -12,6 +13,7 @@ const meta = document.getElementById("previewMeta");
 const frame = document.getElementById("previewFrame");
 const openRaw = document.getElementById("openRaw");
 const sidebar = document.querySelector(".sidebar");
+const tabStorageKey = "codex-workbench-open-tabs";
 
 const groupLabels = {
   "main-entry": "入口",
@@ -155,6 +157,170 @@ function matchesQuery(page) {
   return `${page.title} ${page.file} ${page.group}`.toLowerCase().includes(query);
 }
 
+function persistTabs() {
+  localStorage.setItem(tabStorageKey, JSON.stringify(state.tabs.map((page) => page.file)));
+}
+
+function restoreTabs() {
+  let files = [];
+  try {
+    files = JSON.parse(localStorage.getItem(tabStorageKey) || "[]");
+  } catch (error) {
+    files = [];
+  }
+
+  state.tabs = files
+    .map((file) => state.pages.find((page) => page.file === file))
+    .filter(Boolean);
+}
+
+function ensureTab(page) {
+  if (!state.tabs.some((item) => item.file === page.file)) {
+    state.tabs.push(page);
+    persistTabs();
+  }
+}
+
+function closeTab(page) {
+  const index = state.tabs.findIndex((item) => item.file === page.file);
+  if (index === -1) return;
+
+  state.tabs.splice(index, 1);
+  persistTabs();
+
+  if (state.selected && state.selected.file === page.file) {
+    const next = state.tabs[index] || state.tabs[index - 1] || state.pages[0];
+    if (next) {
+      selectPage(next);
+      return;
+    }
+  }
+
+  renderPreviewTabs();
+}
+
+function injectTabStyles(doc) {
+  if (doc.getElementById("codex-page-tabs-style")) return;
+
+  const style = doc.createElement("style");
+  style.id = "codex-page-tabs-style";
+  style.textContent = `
+    .codex-page-tabs {
+      display:flex;
+      align-items:flex-end;
+      gap:4px;
+      height:34px;
+      margin:0 0 12px 0;
+      border-bottom:1px solid #D0D5DD;
+      overflow:hidden;
+    }
+    .codex-page-tab {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      height:30px;
+      min-width:96px;
+      max-width:150px;
+      padding:0 9px;
+      border:1px solid #D0D5DD;
+      border-bottom:0;
+      border-radius:0;
+      background:#FFFFFF;
+      color:#344054;
+      font:13px/30px Arial, "Microsoft YaHei", sans-serif;
+      cursor:pointer;
+      box-sizing:border-box;
+      white-space:nowrap;
+    }
+    .codex-page-tab.is-active {
+      border-color:#3B8BFF;
+      background:#3B8BFF;
+      color:#FFFFFF;
+    }
+    .codex-page-tab-dot {
+      display:none;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:currentColor;
+      flex:0 0 auto;
+    }
+    .codex-page-tab.is-active .codex-page-tab-dot {
+      display:block;
+    }
+    .codex-page-tab-title {
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .codex-page-tab-close {
+      width:14px;
+      height:14px;
+      border:0;
+      padding:0;
+      background:transparent;
+      color:inherit;
+      font:16px/14px Arial, sans-serif;
+      cursor:pointer;
+      opacity:.72;
+    }
+    .codex-page-tab-close:hover {
+      opacity:1;
+    }
+  `;
+  doc.head.appendChild(style);
+}
+
+function renderPreviewTabs() {
+  if (!frame.contentDocument || !state.selected) return;
+
+  const doc = frame.contentDocument;
+  const titlebar = doc.querySelector(".game-records-titlebar");
+  if (!titlebar) {
+    window.setTimeout(renderPreviewTabs, 120);
+    return;
+  }
+
+  injectTabStyles(doc);
+
+  let tabs = doc.querySelector(".codex-page-tabs");
+  if (!tabs) {
+    tabs = doc.createElement("div");
+    tabs.className = "codex-page-tabs";
+    titlebar.insertAdjacentElement("afterend", tabs);
+  }
+
+  tabs.innerHTML = "";
+  state.tabs.forEach((page) => {
+    const tab = doc.createElement("button");
+    tab.type = "button";
+    tab.className = `codex-page-tab${page.file === state.selected.file ? " is-active" : ""}`;
+
+    const dot = doc.createElement("span");
+    dot.className = "codex-page-tab-dot";
+    tab.appendChild(dot);
+
+    const label = doc.createElement("span");
+    label.className = "codex-page-tab-title";
+    label.textContent = page.title || page.file.replace(/\.html$/i, "");
+    tab.appendChild(label);
+
+    const close = doc.createElement("button");
+    close.type = "button";
+    close.className = "codex-page-tab-close";
+    close.textContent = "×";
+    close.addEventListener("click", (event) => {
+      event.stopPropagation();
+      closeTab(page);
+    });
+    tab.appendChild(close);
+
+    tab.addEventListener("click", () => selectPage(page));
+    tabs.appendChild(tab);
+  });
+}
+
 function renderNav() {
   nav.innerHTML = "";
   const filtered = state.pages.filter(matchesQuery);
@@ -184,12 +350,14 @@ function renderNav() {
 
 function selectPage(page) {
   state.selected = page;
+  ensureTab(page);
   title.textContent = page.title;
   meta.textContent = `${groupLabels[page.group] || page.group} / ${page.file} / ${page.status}`;
   frame.src = page.source;
   openRaw.href = new URL(page.source, window.location.href).href;
   window.location.hash = encodeURIComponent(page.file);
   renderNav();
+  renderPreviewTabs();
 }
 
 function selectInitialPage() {
@@ -212,6 +380,7 @@ fetch("data/pages.json")
   })
   .then((manifest) => {
     state.pages = normalizePages(manifest.pages);
+    restoreTabs();
     count.textContent = `${manifest.pageCount} 个页面`;
     renderNav();
     selectInitialPage();
@@ -224,6 +393,11 @@ fetch("data/pages.json")
 search.addEventListener("input", (event) => {
   state.query = event.target.value;
   renderNav();
+});
+
+frame.addEventListener("load", () => {
+  renderPreviewTabs();
+  window.setTimeout(renderPreviewTabs, 120);
 });
 
 sidebar.addEventListener("wheel", (event) => {
