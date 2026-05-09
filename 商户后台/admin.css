@@ -352,15 +352,21 @@ select.stats-input { appearance: none; padding-right: 32px; background-image: li
 .api-basic-mode { gap: 6px; }
 .api-basic-mode > span { display: inline-flex; align-items: center; gap: 8px; width: fit-content; margin-bottom: 2px; color: #344054; }
 .api-basic-mode > span::after { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #1677ff; box-shadow: 0 0 0 4px rgba(22, 119, 255, .12); }
-.api-basic-mode .api-control-group { grid-template-columns: minmax(0, 1fr); max-width: 260px; }
+.api-basic-mode .api-control-group { grid-template-columns: minmax(0, 1fr) 76px 76px; max-width: 520px; }
 .api-basic-mode .api-input, .api-basic-merchant .api-input { width: 100%; max-width: 100%; }
 .api-basic-key .api-input { width: 100%; min-width: 0; }
 .api-config-basic .api-basic-field .api-control-group { justify-self: center; width: min(100%, 430px); }
-.api-config-basic .api-basic-mode .api-control-group { justify-self: start; width: min(100%, 260px); }
+.api-config-basic .api-basic-mode .api-control-group { justify-self: start; width: min(100%, 520px); }
+.api-config-basic .api-basic-mode .api-input { grid-column: 1 / 3; }
 .api-config-basic .api-basic-merchant .api-control-group,
 .api-config-basic .api-basic-key .api-control-group { width: min(100%, 520px); }
 .api-config-basic .api-basic-merchant .api-input { grid-column: 1 / 3; }
 .api-config-basic .api-basic-merchant .api-btn { grid-column: 3; }
+.api-config-basic .api-basic-field .api-control-group { justify-self: start; width: min(100%, 520px); }
+.api-config-basic .api-basic-field .api-input { grid-column: 1; }
+.api-config-basic .api-basic-mode .api-input,
+.api-config-basic .api-basic-merchant .api-input,
+.api-config-basic .api-basic-key .api-input { width: 100%; }
 .api-input { width: 100%; height: 40px; border: 1px solid #d8e0ec; border-radius: 8px; padding: 0 13px; color: #344054; font-size: 14px; background: #fff; outline: none; transition: border-color .15s ease, box-shadow .15s ease; }
 .api-input:focus { border-color: #1677ff; box-shadow: 0 0 0 3px rgba(22, 119, 255, .12); }
 .api-input[readonly] { background: #f7f9fc; color: #5d6677; }
