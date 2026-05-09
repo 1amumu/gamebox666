@@ -5424,3 +5424,20 @@ body {
   color:#101828;
   font-weight:600;
 }
+
+/* Final browser fit pass for standalone game records page. */
+.game-records-page {
+  width:1576px !important;
+}
+.game-records-table,
+.game-records-table th,
+.game-records-table td,
+.game-record-link,
+.game-record-strategy {
+  font-size:13px !important;
+}
+.game-records-table th,
+.game-records-table td {
+  padding-left:5px !important;
+  padding-right:5px !important;
+}
