@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="925" height="194" viewBox="0 0 925 194">
+  <rect width="925" height="194" fill="#fff"/>
+  <g font-family="Arial, Microsoft YaHei, sans-serif" font-size="11" fill="#667085">
+    <text x="18" y="19">指数</text>
+    <text x="52" y="184">00:00</text>
+    <text x="262" y="184">06:00</text>
+    <text x="472" y="184">12:00</text>
+    <text x="682" y="184">18:00</text>
+    <text x="866" y="184">23:00</text>
+    <text x="40" y="44">100</text>
+    <text x="46" y="87">75</text>
+    <text x="46" y="130">50</text>
+    <text x="46" y="169">25</text>
+  </g>
+  <g stroke="#E5E7EB" stroke-width="1">
+    <line x1="68" y1="39" x2="900" y2="39"/>
+    <line x1="68" y1="82" x2="900" y2="82"/>
+    <line x1="68" y1="125" x2="900" y2="125"/>
+    <line x1="68" y1="166" x2="900" y2="166"/>
+    <line x1="68" y1="24" x2="68" y2="166"/>
+    <line x1="276" y1="24" x2="276" y2="166"/>
+    <line x1="484" y1="24" x2="484" y2="166"/>
+    <line x1="692" y1="24" x2="692" y2="166"/>
+    <line x1="900" y1="24" x2="900" y2="166"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M68 145 L104 143 L140 144 L176 147 L212 139 L248 132 L284 121 L320 111 L356 101 L392 90 L428 78 L464 64 L500 51 L536 44 L572 49 L608 41 L644 32 L680 27 L716 22 L752 25 L788 18 L824 12 L860 17 L900 8" stroke="#2563EB" stroke-width="3"/>
+    <path d="M68 127 L104 129 L140 132 L176 135 L212 124 L248 122 L284 118 L320 112 L356 105 L392 109 L428 99 L464 93 L500 88 L536 91 L572 85 L608 79 L644 69 L680 73 L716 62 L752 67 L788 56 L824 47 L860 52 L900 42" stroke="#16A34A" stroke-width="3"/>
+    <path d="M68 150 L104 153 L140 157 L176 159 L212 155 L248 143 L284 128 L320 111 L356 96 L392 87 L428 82 L464 77 L500 71 L536 66 L572 69 L608 63 L644 56 L680 49 L716 42 L752 46 L788 52 L824 63 L860 78 L900 93" stroke="#F59E0B" stroke-width="3"/>
+  </g>
+  <g>
+    <circle cx="900" cy="8" r="4" fill="#2563EB"/>
+    <circle cx="900" cy="42" r="4" fill="#16A34A"/>
+    <circle cx="900" cy="93" r="4" fill="#F59E0B"/>
+  </g>
+  <g font-family="Arial, Microsoft YaHei, sans-serif" font-size="12" fill="#333">
+    <rect x="650" y="7" width="244" height="24" rx="5" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <circle cx="666" cy="19" r="4" fill="#2563EB"/>
+    <text x="676" y="23">投注金额</text>
+    <circle cx="744" cy="19" r="4" fill="#16A34A"/>
+    <text x="754" y="23">平台盈亏</text>
+    <circle cx="832" cy="19" r="4" fill="#F59E0B"/>
+    <text x="842" y="23">在线人数</text>
+  </g>
+</svg>

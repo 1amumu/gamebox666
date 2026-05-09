@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商户游戏库存管理系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; min-height: 100vh; }
+
+        /* 全局样式 */
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+            --border: #e2e8f0;
+            --bg-light: #f1f5f9;
+            --text-secondary: #64748b;
+        }
+        .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-outline { background: #fff; border: 1px solid var(--border); color: #333; }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        .tag { padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+        .tag-success { background: #dcfce7; color: var(--success); }
+        .tag-warning { background: #fef3c7; color: var(--warning); }
+        .tag-secondary { background: var(--bg-light); color: var(--text-secondary); }
+        .tag-primary { background: #eff6ff; color: var(--primary); }
+        .tag-rtp { background: #f0f9ff; color: #0369a1; }
+        .tag-currency { background: #f0fdf4; color: #166534; }
+        /* 关键词高亮样式 */
+        .highlight { color: var(--danger); font-weight: 600; background: #fef2f2; padding: 0 2px; border-radius: 2px; }
+
+        /* 顶部导航栏 */
+        .top-nav { height: 64px; background: #fff; border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: flex-end; position: sticky; top: 0; z-index: 100; }
+        
+        /* 数据概览看板（降低高度） */
+        .overview-board { padding: 12px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1200px; margin: 0 auto; }
+        .overview-card { background: #fff; border-radius: 8px; padding: 12px 16px; border: 1px solid var(--border); text-align: center; }
+        .overview-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+        .overview-value { font-size: 26px; font-weight: 600; color: var(--primary); }
+
+        /* 面包屑导航 */
+        .breadcrumb { padding: 8px 24px; max-width: 1920px; margin: 0 auto; font-size: 14px; color: var(--text-secondary); }
+        .breadcrumb span { cursor: pointer; }
+        .breadcrumb span:hover { color: var(--primary); }
+        .breadcrumb .separator { margin: 0 6px; color: #cbd5e1; cursor: default; }
+        .breadcrumb .current { color: #1e293b; font-weight: 500; cursor: default; }
+
+        /* 筛选操作栏 */
+        .filter-bar { padding: 8px 24px 16px; max-width: 1920px; margin: 0 auto; display: flex; gap: 12px; align-items: center; justify-content: flex-start; flex-wrap: wrap; }
+        .filter-left { display: flex; gap: 12px; align-items: center; }
+        .filter-input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; width: 300px; }
+        .filter-select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+        .global-search { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; width: 360px; font-size: 14px; }
+
+        /* 核心内容容器 */
+        .content-container { max-width: 1920px; margin: 0 auto; padding: 0 24px 30px; }
+
+        /* 商户列表网格 */
+        .merchant-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .merchant-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: all 0.2s; cursor: pointer; }
+        .merchant-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: var(--primary); }
+        .merchant-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .merchant-name { font-size: 16px; font-weight: 600; }
+        .merchant-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .merchant-top-game { font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
+        .merchant-btn { width: 100%; }
+
+        /* 站点列表网格 */
+        .site-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .site-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: all 0.2s; cursor: pointer; }
+        .site-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); }
+        .site-card.rank-1 { border-color: var(--success); }
+        .site-card.rank-5 { border-color: var(--border); opacity: 0.85; }
+        .site-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .site-name { font-size: 16px; font-weight: 600; }
+        .site-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .site-top-game { font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4; }
+        .site-btn { width: 100%; }
+
+        /* 游戏列表表格 */
+        .game-table { width: 100%; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-collapse: separate; border-spacing: 0; overflow: hidden; }
+        .game-table thead { background: var(--bg-light); position: sticky; top: 64px; z-index: 10; }
+        .game-table th { padding: 12px 16px; text-align: left; font-size: 14px; font-weight: 600; color: #333; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+        .game-table th:hover { color: var(--primary); }
+        .game-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+        .game-table tbody tr { transition: background 0.2s; }
+        .game-table tbody tr:hover { background: #f8fafc; }
+        .game-table tbody tr.high-stock { background: #f0fdf4; }
+        .game-name { font-weight: 500; }
+        .game-stock { font-weight: 600; color: var(--primary); }
+
+        /* 游戏搜索结果表格 */
+        .search-result-header {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .search-result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .search-result-total {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 空状态 */
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
+        .empty-state h3 { font-size: 16px; margin-bottom: 8px; }
+
+        /* 响应式适配 */
+        @media (max-width: 1400px) {
+            .merchant-grid, .site-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .overview-board { grid-template-columns: 1fr; gap: 12px; }
+            .merchant-grid, .site-grid { grid-template-columns: repeat(2, 1fr); }
+            .global-search { width: 200px; }
+            .game-table th, .game-table td { padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+    </div>
+
+    <!-- 数据概览看板 -->
+    <div class="overview-board">
+        <div class="overview-card">
+            <div class="overview-label">总商户数</div>
+            <div class="overview-value">10</div>
+        </div>
+        <div class="overview-card">
+            <div class="overview-label">总站点数</div>
+            <div class="overview-value">50</div>
+        </div>
+        <div class="overview-card">
+            <div class="overview-label">总游戏数</div>
+            <div class="overview-value">5000</div>
+        </div>
+    </div>
+
+    <!-- 面包屑导航 -->
+    <div class="breadcrumb" id="breadcrumb">
+        <span id="homeLink">首页</span>
+        <span class="separator">/</span>
+        <span class="current">全部商户</span>
+    </div>
+
+    <!-- 筛选操作栏 -->
+    <div class="filter-bar" id="filterBar">
+        <div class="filter-left">
+            <input type="text" class="global-search" id="globalSearch" placeholder="模糊搜索游戏/商户/站点，支持关键词片段（如：001、游戏1）">
+            <input type="text" class="filter-input" id="filterName" placeholder="搜索当前列表内容">
+            <select class="filter-select" id="filterSort">
+                <option value="stockDesc">库存从高到低</option>
+                <option value="stockAsc">库存从低到高</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 核心内容区 -->
+    <div class="content-container" id="contentContainer"></div>
+
+    <script>
+        // -------------------------- 配置参数 --------------------------
+        const MERCHANT_COUNT = 10;
+        const SITE_PER_MERCHANT = 5;
+        const GAME_PER_SITE = 100;
+        const STOCK_MIN = 10000;
+        const STOCK_MAX = 1000001;
+        const INIT_STOCK = 500000; // 初始库存固定500000
+
+        // 全局状态
+        let currentPage = 'merchant';
+        let currentMerchantId = null;
+        let currentSiteId = null;
+        let currentSearchKeyword = null;
+        let fullData = [];
+
+        // -------------------------- 工具函数 --------------------------
+        function getRandomNumber(min, max, decimal = 0) {
+            const num = Math.random() * (max - min) + min;
+            return decimal === 0 ? Math.floor(num) : num.toFixed(decimal);
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function debounce(func, delay = 300) {
+            let timer;
+            return function (...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        function highlightKeyword(text, keyword) {
+            if (!keyword) return text;
+            const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function fuzzyMatch(text, keyword) {
+            if (!keyword) return { match: true, score: 100 };
+            const textLower = text.toLowerCase().replace(/\s+/g, '');
+            const keywordLower = keyword.toLowerCase().replace(/\s+/g, '');
+            
+            if (textLower === keywordLower) return { match: true, score: 100 };
+            if (textLower.startsWith(keywordLower)) return { match: true, score: 80 };
+            if (textLower.includes(keywordLower)) return { match: false, score: 0 };
+            return { match: false, score: 0 };
+        }
+
+        // -------------------------- 生成模拟数据 --------------------------
+        function initData() {
+            fullData = [];
+            const currencyList = ['美元', '卢比'];
+            for (let merchantId = 1; merchantId <= MERCHANT_COUNT; merchantId++) {
+                const currency = currencyList[Math.floor(Math.random() * currencyList.length)];
+                const merchant = {
+                    id: merchantId,
+                    name: `合作商户${merchantId}`,
+                    currency: currency,
+                    siteList: [],
+                    totalStock: 0,
+                    rtp: getRandomNumber(90, 97, 2)
+                };
+
+                for (let siteId = 1; siteId <= SITE_PER_MERCHANT; siteId++) {
+                    const site = {
+                        id: siteId,
+                        name: `${getRandomNumber(1001, 9999)}站点`,
+                        currency: currency,
+                        gameList: [],
+                        totalStock: 0,
+                        rtp: getRandomNumber(90, 97, 2)
+                    };
+
+                    for (let gameId = 1; gameId <= GAME_PER_SITE; gameId++) {
+                        const stock = getRandomNumber(STOCK_MIN, STOCK_MAX);
+                        const game = {
+                            id: gameId,
+                            name: `游戏${String(gameId).padStart(3, '0')}`,
+                            stock: stock,
+                            initStock: INIT_STOCK,
+                            rtp: getRandomNumber(90, 97, 2)
+                        };
+                        site.gameList.push(game);
+                        site.totalStock += stock;
+                    }
+
+                    site.gameList.sort((a, b) => b.stock - a.stock);
+                    merchant.siteList.push(site);
+                    merchant.totalStock += site.totalStock;
+                }
+
+                merchant.siteList.sort((a, b) => b.totalStock - a.totalStock);
+                fullData.push(merchant);
+            }
+        }
+
+        // -------------------------- 面包屑导航更新 --------------------------
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            let html = '<span class="nav-home">首页</span><span class="separator">/</span>';
+
+            if (currentPage === 'merchant') {
+                html += '<span class="current">全部商户</span>';
+            } else if (currentPage === 'site') {
+                const merchant = fullData.find(m => m.id === currentMerchantId);
+                html += `<span class="nav-merchant" data-id="${merchant.id}">${merchant.name}</span><span class="separator">/</span><span class="current">站点列表</span>`;
+            } else if (currentPage === 'game') {
+                const merchant = fullData.find(m => m.id === currentMerchantId);
+                const site = merchant.siteList.find(s => s.id === currentSiteId);
+                html += `<span class="nav-merchant" data-id="${merchant.id}">${merchant.name}</span><span class="separator">/</span>`;
+                html += `<span class="current">${site.name} - 游戏列表</span>`;
+            } else if (currentPage === 'search') {
+                html += `<span class="current">搜索结果：${currentSearchKeyword}</span>`;
+            }
+
+            breadcrumb.innerHTML = html;
+
+            document.querySelectorAll('.nav-home').forEach(el => {
+                el.addEventListener('click', () => {
+                    document.getElementById('globalSearch').value = '';
+                    document.getElementById('filterName').value = '';
+                    renderMerchantList();
+                });
+            });
+            document.querySelectorAll('.nav-merchant').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = parseInt(el.dataset.id);
+                    document.getElementById('filterName').value = '';
+                    renderSiteList(id);
+                });
+            });
+        }
+
+        // -------------------------- 渲染商户列表 --------------------------
+        function renderMerchantList() {
+            currentPage = 'merchant';
+            currentMerchantId = null;
+            currentSiteId = null;
+            currentSearchKeyword = null;
+            const container = document.getElementById('contentContainer');
+            updateBreadcrumb();
+
+            const searchKeyword = document.getElementById('filterName').value.trim();
+            const sortType = document.getElementById('filterSort').value;
+            let filteredData = [...fullData];
+
+            if (searchKeyword) {
+                filteredData = filteredData.filter(merchant => fuzzyMatch(merchant.name, searchKeyword).match);
+            }
+
+            sortType === 'stockDesc' 
+                ? filteredData.sort((a, b) => b.totalStock - a.totalStock)
+                : filteredData.sort((a, b) => a.totalStock - b.totalStock);
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="empty-state"><h3>暂无匹配的商户</h3><p>请更换搜索关键词后重试</p></div>';
+                return;
+            }
+
+            let html = '<div class="merchant-grid">';
+            filteredData.forEach(merchant => {
+                const nameHtml = highlightKeyword(merchant.name, searchKeyword);
+                html += `
+                    <div class="merchant-card" data-id="${merchant.id}">
+                        <div class="merchant-header">
+                            <span class="merchant-name">${nameHtml}</span>
+                            <span class="tag tag-currency">${merchant.currency}</span>
+                        </div>
+                        <div class="merchant-meta">
+                            <span class="tag tag-rtp">RTP ${merchant.rtp}%</span>
+                            <span class="tag tag-secondary">5个站点</span>
+                            <span class="tag tag-secondary">500款游戏</span>
+                        </div>
+                        <div class="merchant-top-game">
+                            高库存TOP游戏：${merchant.siteList[0].gameList[0].name}
+                        </div>
+                        <button class="btn btn-primary merchant-btn" data-id="${merchant.id}">查看站点</button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            document.querySelectorAll('.merchant-card, .merchant-btn').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const id = parseInt(el.dataset.id);
+                    document.getElementById('filterName').value = '';
+                    renderSiteList(id);
+                    e.stopPropagation();
+                });
+            });
+        }
+
+        // -------------------------- 渲染站点列表 --------------------------
+        function renderSiteList(merchantId) {
+            currentPage = 'site';
+            currentMerchantId = merchantId;
+            currentSiteId = null;
+            currentSearchKeyword = null;
+            const container = document.getElementById('contentContainer');
+            const merchant = fullData.find(m => m.id === merchantId);
+            updateBreadcrumb();
+
+            const searchKeyword = document.getElementById('filterName').value.trim();
+            const sortType = document.getElementById('filterSort').value;
+            let filteredData = [...merchant.siteList];
+
+            if (searchKeyword) {
+                filteredData = filteredData.filter(site => fuzzyMatch(site.name, searchKeyword).match);
+            }
+
+            sortType === 'stockDesc'
+                ? filteredData.sort((a, b) => b.totalStock - a.totalStock)
+                : filteredData.sort((a, b) => a.totalStock - a.totalStock);
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="empty-state"><h3>暂无匹配的站点</h3><p>请更换搜索关键词后重试</p></div>';
+                return;
+            }
+
+            let html = '<div class="site-grid">';
+            filteredData.forEach((site, idx) => {
+                const nameHtml = highlightKeyword(site.name, searchKeyword);
+                html += `
+                    <div class="site-card rank-${idx+1}" data-id="${site.id}">
+                        <div class="site-header">
+                            <span class="site-name">${nameHtml}</span>
+                            <span class="tag tag-currency">${site.currency}</span>
+                        </div>
+                        <div class="site-meta">
+                            <span class="tag tag-rtp">RTP ${site.rtp}%</span>
+                            <span class="tag tag-secondary">100款游戏</span>
+                            <span class="tag ${idx===0 ? 'tag-success' : 'tag-secondary'}">第${idx+1}名</span>
+                        </div>
+                        <div class="site-top-game">
+                            高库存TOP游戏：${site.gameList[0].name}
+                        </div>
+                        <button class="btn btn-primary site-btn" data-id="${site.id}">查看游戏</button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            document.querySelectorAll('.site-card, .site-btn').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const id = parseInt(el.dataset.id);
+                    document.getElementById('filterName').value = '';
+                    renderGameList(merchantId, id);
+                    e.stopPropagation();
+                });
+            });
+        }
+
+        // -------------------------- 修改库存函数 --------------------------
+        function modifyStock(merchantId, siteId, gameId) {
+            const merchant = fullData.find(m => m.id === merchantId);
+            const site = merchant.siteList.find(s => s.id === siteId);
+            const game = site.gameList.find(g => g.id === gameId);
+            
+            const newStock = prompt(`请输入新的库存量（当前：${game.stock}）`, game.stock);
+            if (newStock === null || isNaN(newStock) || newStock < 0) return;
+            
+            const numStock = parseInt(newStock);
+            const oldStock = game.stock;
+            game.stock = numStock;
+            
+            // 更新站点总库存
+            site.totalStock = site.totalStock - oldStock + numStock;
+            // 更新商户总库存
+            merchant.totalStock = merchant.totalStock - oldStock + numStock;
+            
+            // 刷新页面
+            renderGameList(merchantId, siteId);
+            alert('库存修改成功！');
+        }
+
+        // -------------------------- 渲染游戏列表 --------------------------
+        function renderGameList(merchantId, siteId) {
+            currentPage = 'game';
+            currentMerchantId = merchantId;
+            currentSiteId = siteId;
+            currentSearchKeyword = null;
+            const container = document.getElementById('contentContainer');
+            const merchant = fullData.find(m => m.id === merchantId);
+            const site = merchant.siteList.find(s => s.id === siteId);
+            updateBreadcrumb();
+
+            const searchKeyword = document.getElementById('filterName').value.trim();
+            const sortType = document.getElementById('filterSort').value;
+            let filteredData = [...site.gameList];
+
+            if (searchKeyword) {
+                filteredData = filteredData.filter(game => fuzzyMatch(game.name, searchKeyword).match);
+            }
+
+            sortType === 'stockDesc'
+                ? filteredData.sort((a, b) => b.stock - a.stock)
+                : filteredData.sort((a, b) => a.stock - b.stock);
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="empty-state"><h3>暂无匹配的游戏</h3><p>请更换搜索关键词后重试</p></div>';
+                return;
+            }
+
+            const sortIcon = sortType === 'stockDesc' ? '▼' : '▲';
+            let html = `
+                <table class="game-table">
+                    <thead>
+                        <tr>
+                            <th width="60">序号</th>
+                            <th>游戏名称</th>
+                            <th id="sortStock">库存 ${sortIcon}</th>
+                            <th>库存(高)</th>
+                            <th>初始库存</th>
+                            <th>RTP</th>
+                            <th width="100">站内排名</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            filteredData.forEach((game, idx) => {
+                const nameHtml = highlightKeyword(game.name, searchKeyword);
+                const high = game.stock > 500000;
+                
+                html += `
+                    <tr class="${high ? 'high-stock' : ''}">
+                        <td>${idx+1}</td>
+                        <td class="game-name">${nameHtml}</td>
+                        <td class="game-stock">${formatNumber(game.stock)}</td>
+                        <td class="game-stock">${formatNumber(game.stock)}</td>
+                        <td>${formatNumber(game.initStock)}</td>
+                        <td><span class="tag tag-rtp">${game.rtp}%</span></td>
+                        <td><span class="tag ${idx<10 ? 'tag-success' : 'tag-secondary'}">第${idx+1}名</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="modifyStock(${merchantId},${siteId},${game.id})">修改库存</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+
+            document.getElementById('sortStock').onclick = () => {
+                const sel = document.getElementById('filterSort');
+                sel.value = sel.value === 'stockDesc' ? 'stockAsc' : 'stockDesc';
+                renderGameList(merchantId, siteId);
+            };
+        }
+
+        // -------------------------- 全局搜索结果 --------------------------
+        function renderGameSearchResults(keyword) {
+            currentPage = 'search';
+            currentSearchKeyword = keyword;
+            currentMerchantId = currentSiteId = null;
+            const container = document.getElementById('contentContainer');
+            updateBreadcrumb();
+
+            let results = [];
+            for (let m of fullData) for (let s of m.siteList) for (let g of s.gameList) {
+                const res = fuzzyMatch(g.name, keyword);
+                if (res.match) results.push({
+                    mname: m.name, mid: m.id, currency: m.currency,
+                    sname: s.name, sid: s.id,
+                    gname: g.name, stock: g.stock, rtp: g.rtp,
+                    score: res.score
+                });
+            }
+
+            results.sort((a,b) => b.score - a.score || b.stock - a.stock);
+            const total = results.length;
+
+            if (!total) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>未找到匹配游戏</h3><p>支持片段搜索：001、游戏5等</p>
+                        <button class="btn btn-primary" style="margin-top:16px" onclick="renderMerchantList()">返回首页</button>
+                    </div>`;
+                return;
+            }
+
+            let html = `
+                <div class="search-result-header">
+                    <div class="search-result-title">游戏「${keyword}」全平台库存</div>
+                    <div class="search-result-total">共 ${total} 条</div>
+                </div>
+                <table class="game-table">
+                    <thead><tr><th>序号</th><th>商户</th><th>站点</th><th>游戏</th><th>货币</th><th>RTP</th><th>库存</th><th>操作</th></tr></thead><tbody>`;
+
+            results.forEach((item,i)=>{
+                const gHtml = highlightKeyword(item.gname, keyword);
+                html += `
+                    <tr>
+                        <td>${i+1}</td>
+                        <td>${item.mname}</td>
+                        <td>${item.sname}</td>
+                        <td class="game-name">${gHtml}</td>
+                        <td><span class="tag tag-currency">${item.currency}</span></td>
+                        <td><span class="tag tag-rtp">${item.rtp}%</span></td>
+                        <td class="game-stock">${formatNumber(item.stock)}</td>
+                        <td><button class="btn btn-outline btn-sm" onclick="jumpToGame(${item.mid},${item.sid})">查看详情</button></td>
+                    </tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function jumpToGame(mid, sid) {
+            document.getElementById('filterName').value = '';
+            document.getElementById('globalSearch').value = '';
+            renderGameList(mid, sid);
+        }
+
+        // -------------------------- 事件绑定 --------------------------
+        function initEvent() {
+            document.getElementById('filterName').addEventListener('input', debounce(() => {
+                if (currentPage === 'merchant') renderMerchantList();
+                else if (currentPage === 'site') renderSiteList(currentMerchantId);
+                else if (currentPage === 'game') renderGameList(currentMerchantId, currentSiteId);
+            }));
+
+            document.getElementById('filterSort').addEventListener('change', () => {
+                if (currentPage === 'merchant') renderMerchantList();
+                else if (currentPage === 'site') renderSiteList(currentMerchantId);
+                else if (currentPage === 'game') renderGameList(currentMerchantId, currentSiteId);
+            });
+
+            document.getElementById('globalSearch').addEventListener('input', debounce(e => {
+                const kw = e.target.value.trim();
+                kw ? renderGameSearchResults(kw) : renderMerchantList();
+            }));
+        }
+
+        // 启动
+        window.onload = () => { initData(); renderMerchantList(); initEvent(); };
+    </script>
+</body>
+</html>
