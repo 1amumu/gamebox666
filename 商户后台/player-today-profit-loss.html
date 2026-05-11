@@ -288,14 +288,27 @@
       panel.style.maxHeight = `${Math.max(260, window.innerHeight - panelTop - 18)}px`;
     }
 
+    function selectedBrandGameValues() {
+      if (!selectedBrand) return [];
+      return gameOptions.filter((item) => item.dataset.brand === selectedBrand).map((item) => item.dataset.value);
+    }
+
+    function updateBrandGameLabel() {
+      if (selectedGame) return;
+      const icon = trigger.querySelector(".game-choice-icon");
+      icon.textContent = selectedBrand || "ALL";
+      gameLabel.textContent = selectedBrand ? `${selectedBrand} 全部游戏` : "全部游戏";
+    }
+
     function applyFilters() {
       const platformKeyword = platformInput.value.trim();
       const dateFrom = dateFromInput.value;
       const dateTo = dateToInput.value;
+      const brandGames = selectedBrandGameValues();
       let shownCount = 0;
       dataRows.forEach((row) => {
         const rowDate = row.dataset.date || "";
-        const matchGame = !selectedGame || row.dataset.game === selectedGame;
+        const matchGame = selectedGame ? row.dataset.game === selectedGame : (!selectedBrand || brandGames.includes(row.dataset.game));
         const matchPlatform = !platformKeyword || row.dataset.platform.includes(platformKeyword);
         const matchDateFrom = !dateFrom || rowDate >= dateFrom;
         const matchDateTo = !dateTo || rowDate <= dateTo;
@@ -344,10 +357,32 @@
 
     gameSearch.addEventListener("input", filterGameOptions);
     gameBrandTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        selectedBrand = tab.value;
-        gameBrandTabs.forEach((item) => item.classList.toggle("active", item === tab));
+      if (!tab.querySelector(".game-brand-tab-check")) {
+        const label = tab.textContent.trim();
+        tab.textContent = "";
+        const check = document.createElement("span");
+        check.className = "game-brand-tab-check";
+        check.setAttribute("aria-hidden", "true");
+        const text = document.createElement("span");
+        text.className = "game-brand-tab-label";
+        text.textContent = label;
+        tab.append(check, text);
+      }
+      tab.addEventListener("click", (event) => {
+        if (!event.target.closest(".game-brand-tab-check")) return;
+        const shouldClearBrand = tab.value && tab.classList.contains("active");
+        selectedBrand = shouldClearBrand ? "" : tab.value;
+        if (selectedBrand) {
+          selectedGame = "";
+          gameOptions.forEach((item) => item.classList.remove("active"));
+        }
+        gameBrandTabs.forEach((item) => {
+          const isActive = selectedBrand ? item === tab : item.value === "";
+          item.classList.toggle("active", isActive);
+        });
         filterGameOptions();
+        updateBrandGameLabel();
+        applyFilters();
       });
     });
 
@@ -369,9 +404,6 @@
         gameOptions.forEach((item) => item.classList.toggle("active", item === option));
         panel.hidden = true;
         gameSearch.value = "";
-        selectedBrand = "";
-        gameBrandTabs.forEach((item) => item.classList.toggle("active", item.value === ""));
-        filteredGameOptions = gameOptions;
         gamePage = 1;
         renderGamePage();
         applyFilters();
