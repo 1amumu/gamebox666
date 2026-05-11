@@ -290,6 +290,215 @@
     }));
   }
 
+  function buildFlightRoomOpsData() {
+    const rooms = [
+      {
+        id: "all",
+        name: "全部房间",
+        count: 34,
+        tag: "GLOBAL",
+        status: "stable",
+        favorite: true,
+        children: [
+          {
+            id: "inr",
+            name: "INR大厅",
+            count: 34,
+            tag: "INR",
+            status: "stable",
+            favorite: true,
+            children: [
+              { id: "inr-1", name: "1号房", count: 10, tag: "低波", status: "stable", favorite: true },
+              { id: "inr-2", name: "2号房", count: 8, tag: "中波", status: "warning", favorite: false },
+              { id: "inr-3", name: "3号房", count: 6, tag: "高波", status: "danger", favorite: false },
+              { id: "inr-4", name: "4号房", count: 10, tag: "扩容", status: "stable", favorite: false },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const currencies = [
+      { country: "印度", code: "INR", name: "Indian Rupee" },
+      { country: "美国", code: "USD", name: "US Dollar" },
+      { country: "巴西", code: "BRL", name: "Brazilian Real" },
+      { country: "菲律宾", code: "PHP", name: "Philippine Peso" },
+      { country: "越南", code: "VND", name: "Vietnamese Dong" },
+      { country: "泰国", code: "THB", name: "Thai Baht" },
+    ];
+
+    return { rooms, currencies, defaultRoomId: "inr-1" };
+  }
+
+  function buildFlightRoomOpsData() {
+    const siteGroups = [
+      {
+        id: "country-inr",
+        name: "印度 INR",
+        count: 100,
+        traffic: 100,
+        status: "stable",
+        tag: "COUNTRY",
+        children: [
+          { id: "sites-all", name: "全部站点", count: 100, traffic: 100, status: "stable", tag: "ALL" },
+          { id: "sites-vip", name: "VIP站点", count: 12, traffic: 24, status: "vip", tag: "VIP" },
+          { id: "sites-high-rtp", name: "高RTP站点", count: 20, traffic: 26, status: "warning", tag: "HIGH RTP" },
+          { id: "sites-campaign", name: "活动站点", count: 10, traffic: 14, status: "active", tag: "CAMPAIGN" },
+          { id: "sites-normal", name: "普通站点", count: 58, traffic: 36, status: "stable", tag: "NORMAL" },
+        ],
+      },
+    ];
+
+    const rooms = [
+      {
+        id: "inr-1",
+        name: "1号房",
+        alias: "新手房",
+        tag: "新手房",
+        tone: "stable",
+        online: 12840,
+        inventory: 2860000,
+        rtp: 96.4,
+        volatility: "低波动",
+        statusText: "运行中",
+        sites: 42,
+        winLoss: 184200,
+        maxCrash: "128.6x",
+        risk: 22,
+        traffic: 70,
+        heat: 84,
+        autoRisk: "自动放水保护",
+        source: "普通站点 58% / 活动站点 24%",
+      },
+      {
+        id: "inr-2",
+        name: "2号房",
+        alias: "VIP房",
+        tag: "VIP房",
+        tone: "vip",
+        online: 4210,
+        inventory: 1240000,
+        rtp: 97.8,
+        volatility: "中高波动",
+        statusText: "VIP流量",
+        sites: 12,
+        winLoss: -68200,
+        maxCrash: "342.8x",
+        risk: 48,
+        traffic: 20,
+        heat: 61,
+        autoRisk: "大额下注追踪",
+        source: "VIP站点 82% / 高RTP站点 18%",
+      },
+      {
+        id: "inr-3",
+        name: "3号房",
+        alias: "高爆房",
+        tag: "高爆房",
+        tone: "danger",
+        online: 1960,
+        inventory: 420000,
+        rtp: 101.9,
+        volatility: "极高波动",
+        statusText: "危险库存",
+        sites: 8,
+        winLoss: -156900,
+        maxCrash: "998.4x",
+        risk: 86,
+        traffic: 10,
+        heat: 43,
+        autoRisk: "强制风控保护",
+        source: "高RTP站点 60% / 活动站点 40%",
+      },
+      {
+        id: "inr-4",
+        name: "4号房",
+        alias: "活动房",
+        tag: "活动房",
+        tone: "active",
+        online: 6380,
+        inventory: 1710000,
+        rtp: 95.7,
+        volatility: "中波动",
+        statusText: "活动加权",
+        sites: 18,
+        winLoss: 92800,
+        maxCrash: "76.3x",
+        risk: 35,
+        traffic: 34,
+        heat: 73,
+        autoRisk: "活动预算守卫",
+        source: "活动站点 54% / 普通站点 46%",
+      },
+      {
+        id: "inr-5",
+        name: "5号房",
+        alias: "风控房",
+        tag: "风控房",
+        tone: "risk",
+        online: 880,
+        inventory: 910000,
+        rtp: 92.6,
+        volatility: "受控波动",
+        statusText: "风控保护",
+        sites: 6,
+        winLoss: 248600,
+        maxCrash: "24.9x",
+        risk: 58,
+        traffic: 6,
+        heat: 28,
+        autoRisk: "黑名单隔离",
+        source: "风控玩家池 100%",
+      },
+      {
+        id: "inr-6",
+        name: "6号房",
+        alias: "放水房",
+        tag: "放水房",
+        tone: "warning",
+        online: 3020,
+        inventory: 760000,
+        rtp: 99.2,
+        volatility: "轻微放水",
+        statusText: "轻微放水",
+        sites: 14,
+        winLoss: -35400,
+        maxCrash: "188.2x",
+        risk: 52,
+        traffic: 16,
+        heat: 55,
+        autoRisk: "库存回撤阈值",
+        source: "高RTP站点 70% / 活动站点 30%",
+      },
+    ];
+
+    const currencies = [
+      { country: "印度", code: "INR", name: "Indian Rupee" },
+      { country: "美国", code: "USD", name: "US Dollar" },
+      { country: "巴西", code: "BRL", name: "Brazilian Real" },
+      { country: "菲律宾", code: "PHP", name: "Philippine Peso" },
+      { country: "越南", code: "VND", name: "Vietnamese Dong" },
+      { country: "泰国", code: "THB", name: "Thai Baht" },
+    ];
+
+    return {
+      rooms,
+      siteGroups,
+      currencies,
+      defaultRoomId: "inr-1",
+      countryStats: {
+        country: "印度",
+        currency: "INR",
+        online: 29310,
+        rtp: 96.8,
+        inventory: 7900000,
+        dangerRooms: 1,
+        openRooms: 10,
+        totalSites: 100,
+      },
+    };
+  }
+
   function buildInventoryRows(count) {
     return range(count, (index) => ({
       warehouse: `库存池 ${1 + (index % 4)}`,
@@ -1001,22 +1210,15 @@
         rows: buildFlightRoomRows(8),
       },
     }),
-    "flight-room-manage": tablePage({
+    "flight-room-manage": {
+      type: "roomOps",
       title: "飞机房间管理",
       section: "游戏管理",
-      description: "查看房间实时状态、基础底注和税率。",
-      columns: [
-        { label: "房间名称", key: "roomName" },
-        { label: "房间编号", key: "roomCode", className: "mono" },
-        { label: "商户", key: "merchant" },
-        { label: "基础底注", render: (row) => renderMoneyCell(row.baseBet) },
-        { label: "税率", key: "taxRate" },
-        { label: "活跃人数", render: (row) => renderNumberCell(row.activeUsers) },
-        { label: "爆点上限", key: "burstCap" },
-        { label: "状态", render: (row) => badge(row.status, row.statusTone) },
-      ],
-      rows: buildFlightRoomRows(20),
-    }),
+      description: "房间树与货币维度保留；站点列表表格设计已作废。",
+      defaultPageSize: 100,
+      pageSizeOptions: [50, 100, 500, 1000],
+      opsData: buildFlightRoomOpsData(),
+    },
     "inventory-manage": tablePage({
       title: "库存管理",
       section: "游戏管理",
@@ -1451,12 +1653,43 @@
 
   function getCurrentPageKey() {
     const params = new URLSearchParams(window.location.search);
-    const key = params.get("page") || "dashboard";
+    const path = (window.location.pathname || "").toLowerCase();
+    const key =
+      params.get("page") ||
+      (path.endsWith("/plane-room-management.html") || path.endsWith("\\plane-room-management.html")
+        ? "flight-room-manage"
+        : "dashboard");
     return pageConfigs[key] ? key : "dashboard";
   }
 
   function cloneValue(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function getRoomOpsOrderStorageKey() {
+    return "management-room-ops-country-order";
+  }
+
+  function loadRoomOpsCountryOrder(countries) {
+    try {
+      const raw = localStorage.getItem(getRoomOpsOrderStorageKey());
+      const parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed) || !parsed.length) return countries.map((country) => country.code);
+      const known = new Set(countries.map((country) => country.code));
+      const ordered = parsed.filter((code) => known.has(code));
+      countries.forEach((country) => {
+        if (!ordered.includes(country.code)) ordered.push(country.code);
+      });
+      return ordered;
+    } catch (_) {
+      return countries.map((country) => country.code);
+    }
+  }
+
+  function persistRoomOpsCountryOrder(order) {
+    try {
+      localStorage.setItem(getRoomOpsOrderStorageKey(), JSON.stringify(order));
+    } catch (_) {}
   }
 
   function getPageState(pageKey, page) {
@@ -1471,6 +1704,23 @@
         pageSize: page.defaultPageSize || 20,
         form: cloneValue(page.formDefaults || {}),
       };
+      if (page.type === "roomOps") {
+        pageStates[pageKey].activeCountryCode = "";
+        pageStates[pageKey].pendingCountryCode = "";
+        pageStates[pageKey].roomFilters = {
+          countryKeyword: "",
+          countrySearch: "",
+          siteSearch: "",
+        };
+        pageStates[pageKey].expandedRooms = {};
+        pageStates[pageKey].roomPages = {};
+        pageStates[pageKey].selectedRoomIds = {};
+        pageStates[pageKey].modal = null;
+        pageStates[pageKey].bulkAction = "";
+        pageStates[pageKey].countryPickerOpen = false;
+        pageStates[pageKey].selectedRoomId = "";
+        pageStates[pageKey].currencyOrder = loadRoomOpsCountryOrder(page.opsData.countries);
+      }
     }
     return pageStates[pageKey];
   }
@@ -1500,6 +1750,11 @@
 
     if (page.type === "form") {
       root.innerHTML = renderFormPage(pageKey, page, state);
+      return;
+    }
+
+    if (page.type === "roomOps") {
+      root.innerHTML = renderFlightRoomOpsPage(page, state);
       return;
     }
 
@@ -1630,6 +1885,413 @@
           </tbody>
         </table>
       </div>
+    `;
+  }
+
+  function getRoomStatusTone(status) {
+    return { stable: "success", warning: "warning", danger: "danger", muted: "neutral" }[status] || "neutral";
+  }
+
+  function findRoomById(rooms, roomId) {
+    for (const room of rooms) {
+      if (room.id === roomId) return room;
+      if (room.children) {
+        const child = findRoomById(room.children, roomId);
+        if (child) return child;
+      }
+    }
+    return rooms[0];
+  }
+
+  function flattenRooms(rooms) {
+    return rooms.flatMap((room) => [room, ...(room.children ? flattenRooms(room.children) : [])]);
+  }
+
+  function renderRoomTree(nodes, state, depth = 0) {
+    const query = ((state.roomFilters && state.roomFilters.roomSearch) || "").trim().toLowerCase();
+    return nodes
+      .map((room) => {
+        const childHtml = room.children ? renderRoomTree(room.children, state, depth + 1) : "";
+        const matchSelf = !query || room.name.toLowerCase().includes(query) || (room.tag || "").toLowerCase().includes(query);
+        const matchChild = childHtml.trim().length > 0;
+        if (!matchSelf && !matchChild) return "";
+        const active = state.selectedRoomId === room.id ? " active" : "";
+        const collapsed = state.collapsedRooms?.[room.id] ? " collapsed" : "";
+        return `
+          <div class="room-tree-node depth-${depth}${active}${collapsed}">
+            <div class="room-tree-item" style="--tree-depth:${depth}">
+              ${
+                room.children
+                  ? `<button class="room-tree-toggle" type="button" data-action="room-toggle" data-room-id="${room.id}" title="折叠/展开">${collapsed ? "+" : "-"}</button>`
+                  : `<span class="room-tree-toggle placeholder"></span>`
+              }
+              <button class="room-tree-main" type="button" data-action="room-select" data-room-id="${room.id}">
+                <span class="room-status-dot ${room.status}"></span>
+                <span class="room-name">${escapeHtml(room.name)}</span>
+                <span class="room-count">${formatNumber(room.count)}</span>
+              </button>
+            </div>
+            ${room.children ? `<div class="room-tree-children">${childHtml}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function getOrderedCurrencies(page, state) {
+    const byCode = new Map(page.opsData.currencies.map((currency) => [currency.code, currency]));
+    const ordered = (state.currencyOrder || [])
+      .map((code) => byCode.get(code))
+      .filter(Boolean);
+    page.opsData.currencies.forEach((currency) => {
+      if (!ordered.some((item) => item.code === currency.code)) {
+        ordered.push(currency);
+      }
+    });
+    return ordered;
+  }
+
+  function renderCurrencySelector(page, state) {
+    const currencies = getOrderedCurrencies(page, state);
+    const current = currencies[0];
+    return `
+      <section class="ops-currency-bar" aria-label="国家货币选择">
+        <div class="ops-currency-title">
+          <span>国家货币</span>
+          <strong>${escapeHtml(current.country)}-${escapeHtml(current.code)}</strong>
+        </div>
+        <div class="ops-currency-list">
+          ${currencies
+            .map(
+              (currency, index) => `
+                <button
+                  class="ops-currency-chip${index === 0 ? " active" : ""}"
+                  type="button"
+                  draggable="true"
+                  data-currency-code="${escapeHtml(currency.code)}"
+                  title="${escapeHtml(currency.name)}"
+                >
+                  <span>${escapeHtml(currency.country)}-${escapeHtml(currency.code)}</span>
+                  ${index === 0 ? "<em>当前</em>" : ""}
+                </button>
+              `,
+            )
+            .join("")}
+        </div>
+        <span class="ops-currency-hint">拖拽国家可调整展示顺序</span>
+      </section>
+    `;
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const filters = state.roomFilters || {};
+    const roomTotal = flattenRooms(page.opsData.rooms).filter((room) => !room.children || !room.children.length).length;
+
+    return `
+      <section class="room-ops-page">
+        <div class="ops-hero page-heading room-ops-heading">
+          <div>
+            <span class="ops-eyebrow">ROOM ALLOCATION & OPERATIONS</span>
+            <h1 class="page-title">${escapeHtml(page.title)}</h1>
+            <div class="page-subtitle">${escapeHtml(page.section)} / ${escapeHtml(page.title)}</div>
+            <p class="page-description">${escapeHtml(page.description)}</p>
+          </div>
+          <div class="ops-live-tools">
+            <span class="ops-live-dot"></span>
+            <span>实时刷新 5s</span>
+            <button type="button" data-action="room-refresh">刷新数据</button>
+          </div>
+        </div>
+        ${renderCurrencySelector(page, state)}
+        <div class="room-ops-layout">
+          <aside class="ops-room-tree-panel">
+            <div class="ops-panel-head compact">
+              <div>
+                <span class="ops-eyebrow">ROOM TREE</span>
+                <h2>房间树</h2>
+              </div>
+              <span class="ops-count-pill">${formatNumber(roomTotal)}</span>
+            </div>
+            <label class="ops-search-field">
+              <span>搜索房间</span>
+              <input type="text" value="${escapeHtml(filters.roomSearch || "")}" placeholder="房间 / 标签 / 状态" data-room-filter="roomSearch" />
+            </label>
+            <div class="ops-room-tree">${renderRoomTree(page.opsData.rooms, state)}</div>
+          </aside>
+          <main class="ops-table-panel room-ops-void-main">
+            <div class="ops-empty">站点数据表已下线（设计作废）。</div>
+          </main>
+        </div>
+      </section>
+    `;
+  }
+
+  function getToneLabel(tone) {
+    return {
+      stable: "正常",
+      warning: "轻微放水",
+      danger: "危险库存",
+      vip: "VIP流量",
+      active: "活动房",
+      risk: "风控保护",
+    }[tone] || "运行中";
+  }
+
+  function renderMiniBars(values, className = "") {
+    return values
+      .map((value, index) => `<i style="height:${value}%" class="${index > values.length - 4 ? "hot" : ""}"></i>`)
+      .join("");
+  }
+
+  function renderOpsMetric(label, value, hint, tone = "") {
+    return `
+      <div class="ops-country-metric ${tone}">
+        <span>${escapeHtml(label)}</span>
+        <strong>${value}</strong>
+        <em>${escapeHtml(hint)}</em>
+      </div>
+    `;
+  }
+
+  function renderSiteOpsTree(nodes, state, depth = 0) {
+    const query = ((state.roomFilters && state.roomFilters.roomSearch) || "").trim().toLowerCase();
+    return nodes
+      .map((site) => {
+        const childHtml = site.children ? renderSiteOpsTree(site.children, state, depth + 1) : "";
+        const matchSelf = !query || site.name.toLowerCase().includes(query) || (site.tag || "").toLowerCase().includes(query);
+        if (!matchSelf && !childHtml.trim()) return "";
+        const collapsed = state.collapsedRooms?.[site.id] ? " collapsed" : "";
+        return `
+          <div class="room-tree-node depth-${depth}${collapsed}">
+            <div class="site-tree-item" style="--tree-depth:${depth}">
+              ${
+                site.children
+                  ? `<button class="room-tree-toggle" type="button" data-action="room-toggle" data-room-id="${site.id}" title="折叠/展开">${collapsed ? "+" : "-"}</button>`
+                  : `<span class="room-tree-toggle placeholder"></span>`
+              }
+              <button class="site-tree-main" type="button">
+                <span class="room-status-dot ${site.status}"></span>
+                <span class="site-tree-copy">
+                  <strong>${escapeHtml(site.name)}</strong>
+                  <em>${escapeHtml(site.tag)} · ${formatNumber(site.traffic)}%流量</em>
+                </span>
+                <span class="room-count">${formatNumber(site.count)}</span>
+              </button>
+            </div>
+            ${site.children ? `<div class="room-tree-children">${childHtml}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRoomOpsCards(rooms, state) {
+    return rooms
+      .map((room) => {
+        const active = state.selectedRoomId === room.id ? " active" : "";
+        const winTone = room.winLoss >= 0 ? "positive" : "negative";
+        return `
+          <article class="ops-room-card ${room.tone}${active}" data-action="room-select" data-room-id="${room.id}">
+            <div class="ops-room-card-head">
+              <div>
+                <span class="ops-room-tag">${escapeHtml(room.tag)}</span>
+                <h3>${escapeHtml(room.name)} <em>${escapeHtml(room.alias)}</em></h3>
+              </div>
+              <span class="ops-room-state">${getToneLabel(room.tone)}</span>
+            </div>
+            <div class="ops-room-card-grid">
+              <div><span>当前在线</span><strong>${formatNumber(room.online)}</strong></div>
+              <div><span>当前库存</span><strong>${formatMoney(room.inventory)}</strong></div>
+              <div><span>RTP</span><strong>${room.rtp.toFixed(1)}%</strong></div>
+              <div><span>倍率波动</span><strong>${escapeHtml(room.volatility)}</strong></div>
+              <div><span>绑定站点</span><strong>${formatNumber(room.sites)}</strong></div>
+              <div><span>今日输赢</span><strong class="${winTone}">${formatSignedMoney(room.winLoss)}</strong></div>
+            </div>
+            <div class="ops-room-card-foot">
+              <span>最大爆点 <b>${escapeHtml(room.maxCrash)}</b></span>
+              <span>危险指数 <b>${room.risk}</b></span>
+            </div>
+            <div class="ops-risk-meter"><i style="width:${room.risk}%"></i></div>
+            <div class="ops-room-actions">
+              <button type="button">查看详情</button>
+              <button type="button">编辑策略</button>
+              <button type="button">分配站点</button>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderTrafficAllocator(rooms) {
+    const topRooms = rooms.slice(0, 3);
+    return `
+      <section class="ops-traffic-card">
+        <div class="ops-section-head">
+          <div>
+            <span class="ops-eyebrow">TRAFFIC WEIGHT</span>
+            <h2>流量权重分房</h2>
+          </div>
+          <button type="button">批量应用</button>
+        </div>
+        <div class="ops-traffic-stack">
+          ${topRooms
+            .map(
+              (room) => `
+                <div class="ops-traffic-row">
+                  <span>${escapeHtml(room.name)}</span>
+                  <div class="ops-traffic-track"><i class="${room.tone}" style="width:${room.traffic}%"></i></div>
+                  <strong>${room.traffic}%</strong>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomDrawer(room) {
+    const trend = [38, 62, 45, 73, 54, 82, 66, 91, 48, 76, 58, 88, 69, 95, 72, 64];
+    const heat = [42, 66, 81, 58, 74, 92, 63, 49, 88, 71, 53, 97];
+    return `
+      <aside class="ops-room-drawer">
+        <div class="ops-drawer-head">
+          <span class="ops-eyebrow">ROOM DETAIL</span>
+          <h2>${escapeHtml(room.name)} · ${escapeHtml(room.alias)}</h2>
+          <p>${escapeHtml(room.source)}</p>
+        </div>
+        <div class="ops-drawer-controls">
+          <label><span>RTP设置</span><input type="text" value="${room.rtp.toFixed(1)}%" /></label>
+          <label><span>库存阈值</span><input type="text" value="${formatMoney(room.inventory)}" /></label>
+        </div>
+        <div class="ops-drawer-kpis">
+          <div><span>玩家人数</span><strong>${formatNumber(room.online)}</strong></div>
+          <div><span>实时输赢</span><strong>${formatSignedMoney(room.winLoss)}</strong></div>
+          <div><span>自动风控</span><strong>${escapeHtml(room.autoRisk)}</strong></div>
+        </div>
+        <div class="ops-drawer-chart">
+          <span>最近100局倍率走势</span>
+          <div class="ops-sparkline-bars">${renderMiniBars(trend)}</div>
+        </div>
+        <div class="ops-heat-grid">
+          <span>当前下注热力图</span>
+          <div>${heat.map((value) => `<i style="opacity:${Math.max(value / 100, 0.35)}"></i>`).join("")}</div>
+        </div>
+        <div class="ops-danger-list">
+          <span>危险玩家监控</span>
+          <strong>3个大额追投玩家</strong>
+          <em>建议降低该房流量权重或开启爆点保护。</em>
+        </div>
+        <div class="ops-drawer-actions">
+          <button type="button">修改RTP</button>
+          <button type="button">调整库存</button>
+          <button type="button" class="danger">停用房间</button>
+        </div>
+      </aside>
+    `;
+  }
+
+  function renderBottomOpsCharts(rooms) {
+    const rtp = [48, 52, 57, 54, 61, 68, 65, 72, 78, 74, 83, 79, 86, 82, 90, 88];
+    const inventory = [70, 66, 73, 62, 58, 64, 55, 49, 53, 46, 42, 48, 39, 44, 36, 41];
+    return `
+      <section class="ops-bottom-grid">
+        <div class="ops-chart-card wide">
+          <div class="ops-chart-head"><span>REALTIME CRASH</span><strong>实时倍率走势图 / RTP曲线</strong></div>
+          <div class="ops-line-chart">
+            <div class="ops-sparkline-bars">${renderMiniBars(rtp)}</div>
+            <div class="ops-chart-gridline"></div>
+          </div>
+        </div>
+        <div class="ops-chart-card">
+          <div class="ops-chart-head"><span>INVENTORY</span><strong>库存变化曲线</strong></div>
+          <div class="ops-sparkline-bars green">${renderMiniBars(inventory)}</div>
+        </div>
+        <div class="ops-chart-card">
+          <div class="ops-chart-head"><span>ROOM HEAT</span><strong>房间热度排行</strong></div>
+          ${rooms
+            .slice(0, 4)
+            .map(
+              (room) => `
+                <div class="ops-rank-row">
+                  <span>${escapeHtml(room.name)}</span>
+                  <div class="ops-traffic-track"><i class="${room.tone}" style="width:${room.heat}%"></i></div>
+                  <b>${room.heat}</b>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const filters = state.roomFilters || {};
+    const stats = page.opsData.countryStats;
+    const selectedRoom = findRoomById(page.opsData.rooms, state.selectedRoomId) || page.opsData.rooms[0];
+
+    return `
+      <section class="room-ops-page">
+        <div class="ops-country-bar">
+          <div class="ops-country-title">
+            <span class="ops-eyebrow">COUNTRY ROOM COMMAND</span>
+            <h1>飞机游戏国家分房运营台</h1>
+            <p>${escapeHtml(page.section)} / ${escapeHtml(page.title)} · Crash/Aviator Traffic Allocation</p>
+          </div>
+          <div class="ops-country-actions">
+            <select aria-label="国家切换"><option>${escapeHtml(stats.country)}-${escapeHtml(stats.currency)}</option><option>巴西-BRL</option><option>越南-VND</option></select>
+            <button type="button">创建国家</button>
+            <button type="button">创建房间</button>
+            <button type="button">批量分配</button>
+            <button type="button" data-action="room-refresh"><span class="ops-live-dot"></span>实时刷新</button>
+          </div>
+        </div>
+        <div class="ops-country-metrics">
+          ${renderOpsMetric("当前国家", `${stats.country}-${stats.currency}`, "国家房间池")}
+          ${renderOpsMetric("今日在线人数", formatNumber(stats.online), "较昨日 +12.4%", "good")}
+          ${renderOpsMetric("今日RTP", `${stats.rtp.toFixed(1)}%`, "目标 96.5%", "blue")}
+          ${renderOpsMetric("当前库存", formatMoney(stats.inventory), "安全水位 72%", "good")}
+          ${renderOpsMetric("危险房间", formatNumber(stats.dangerRooms), "需处理", "danger")}
+          ${renderOpsMetric("开启房间", formatNumber(stats.openRooms), `${stats.totalSites} 个站点`, "blue")}
+        </div>
+        ${renderCurrencySelector(page, state)}
+        <div class="room-ops-layout">
+          <aside class="ops-room-tree-panel">
+            <div class="ops-panel-head compact">
+              <div>
+                <span class="ops-eyebrow">SITE OPS TREE</span>
+                <h2>站点运营树</h2>
+              </div>
+              <span class="ops-count-pill">${formatNumber(stats.totalSites)}</span>
+            </div>
+            <label class="ops-search-field">
+              <span>搜索站点</span>
+              <input type="text" value="${escapeHtml(filters.roomSearch || "")}" placeholder="站点 / 标签 / 状态" data-room-filter="roomSearch" />
+            </label>
+            <div class="ops-filter-pills">
+              <button type="button">多选</button>
+              <button type="button">标签筛选</button>
+              <button type="button">批量移动</button>
+            </div>
+            <div class="ops-room-tree">${renderSiteOpsTree(page.opsData.siteGroups, state)}</div>
+          </aside>
+          <main class="ops-room-command">
+            <div class="ops-section-head">
+              <div>
+                <span class="ops-eyebrow">ROOM OPERATIONS</span>
+                <h2>房间运营卡片</h2>
+              </div>
+              <div class="ops-room-tabs"><span>新手房</span><span>VIP房</span><span>高爆房</span><span>风控房</span></div>
+            </div>
+            <div class="ops-room-card-grid-wrap">${renderRoomOpsCards(page.opsData.rooms, state)}</div>
+            ${renderTrafficAllocator(page.opsData.rooms)}
+          </main>
+          ${renderRoomDrawer(selectedRoom)}
+        </div>
+        ${renderBottomOpsCharts(page.opsData.rooms)}
+      </section>
     `;
   }
 
@@ -1971,6 +2633,16 @@
     state.filters = nextFilters;
   }
 
+  function syncRoomOpsFiltersFromDom(state) {
+    const nextFilters = cloneValue(state.roomFilters || {});
+    document.querySelectorAll("[data-room-filter]").forEach((input) => {
+      const key = input.dataset.roomFilter;
+      if (!key) return;
+      nextFilters[key] = input.value;
+    });
+    state.roomFilters = nextFilters;
+  }
+
   function syncFormFromDom(page, state) {
     const nextForm = cloneValue(state.form);
     (page.sections || []).forEach((section) => {
@@ -2018,6 +2690,653 @@
     }, 16);
   }
 
+  function buildFlightRoomOpsData() {
+    function createSite(id, name, todayBet, todayProfit, online, overrideRtp = "") {
+      return { id, name, todayBet, todayProfit, online, overrideRtp, maskedIp: "103.2.*.*" };
+    }
+
+    function createRoom(id, code, name, rtp, inventory, note, sites) {
+      return { id, code, name, rtp, inventory, note, enabled: true, sites };
+    }
+
+    function createCountry(country, code, currencyName, symbol, rooms, unassignedSites) {
+      return { country, code, currencyName, symbol, rooms, unassignedSites };
+    }
+
+    return {
+      defaultRoomId: "inr-room-001",
+      countries: [
+        createCountry(
+          "印度",
+          "INR",
+          "Indian Rupee",
+          "₹",
+          [
+            createRoom("inr-room-001", "INR-房间001", "新手厅", 95.2, 2860000, "默认兜底房间", [
+              createSite("IN-10**", "印度站点A", 1250000, 120000, 320),
+              createSite("IN-12**", "印度站点B", 860000, 92000, 248),
+              createSite("IN-18**", "印度站点C", 620000, -38000, 172, "95.80"),
+            ]),
+            createRoom("inr-room-002", "INR-房间002", "高RTP厅", 96.8, 1920000, "活动拉新房间", [
+              createSite("IN-21**", "印度站点D", 980000, 86000, 204),
+              createSite("IN-25**", "印度站点E", 760000, 54000, 196),
+            ]),
+            createRoom("inr-room-003", "INR-房间003", "VIP厅", 94.5, 3180000, "高价值玩家池", [
+              createSite("IN-30**", "印度站点F", 1680000, 164000, 428, "94.10"),
+              createSite("IN-33**", "印度站点G", 1140000, 112000, 286),
+            ]),
+          ],
+          [
+            createSite("IN-40**", "印度站点H", 420000, 26000, 108),
+            createSite("IN-48**", "印度站点I", 510000, -18000, 132),
+            createSite("IN-56**", "印度站点J", 370000, 21000, 94),
+          ],
+        ),
+        createCountry(
+          "印尼",
+          "IDR",
+          "Indonesian Rupiah",
+          "Rp",
+          [
+            createRoom("idr-room-001", "IDR-房间001", "标准厅", 95.0, 860000000, "印尼默认房", [
+              createSite("ID-11**", "印尼站点A", 268000000, 22400000, 412),
+              createSite("ID-16**", "印尼站点B", 184000000, 9800000, 238),
+            ]),
+            createRoom("idr-room-002", "IDR-房间002", "高波动厅", 96.4, 530000000, "高活跃房间", [
+              createSite("ID-24**", "印尼站点C", 224000000, -16200000, 276),
+            ]),
+          ],
+          [
+            createSite("ID-31**", "印尼站点D", 108000000, 7200000, 144),
+            createSite("ID-39**", "印尼站点E", 126000000, -5600000, 126),
+          ],
+        ),
+        createCountry(
+          "巴西",
+          "BRL",
+          "Brazilian Real",
+          "R$",
+          [
+            createRoom("brl-room-001", "BRL-房间001", "促活厅", 95.6, 1420000, "巴西活动房", [
+              createSite("BR-10**", "巴西站点A", 348000, 42000, 162),
+              createSite("BR-18**", "巴西站点B", 286000, 18000, 118),
+            ]),
+            createRoom("brl-room-002", "BRL-房间002", "常规厅", 94.9, 1980000, "巴西常规房", [
+              createSite("BR-27**", "巴西站点C", 524000, 36000, 214),
+              createSite("BR-35**", "巴西站点D", 466000, -28000, 186, "95.30"),
+            ]),
+          ],
+          [createSite("BR-44**", "巴西站点E", 192000, 12000, 88)],
+        ),
+        createCountry(
+          "泰国",
+          "THB",
+          "Thai Baht",
+          "฿",
+          [
+            createRoom("thb-room-001", "THB-房间001", "标准厅", 95.1, 3220000, "泰国默认房", [
+              createSite("TH-10**", "泰国站点A", 880000, 64000, 202),
+              createSite("TH-19**", "泰国站点B", 760000, 52000, 176),
+            ]),
+            createRoom("thb-room-002", "THB-房间002", "活动厅", 96.2, 2140000, "泰国活动房", [
+              createSite("TH-28**", "泰国站点C", 690000, -22000, 148),
+            ]),
+          ],
+          [
+            createSite("TH-39**", "泰国站点D", 320000, 14000, 102),
+            createSite("TH-45**", "泰国站点E", 280000, 6000, 86),
+          ],
+        ),
+      ],
+    };
+  }
+
+  function getRoomOpsCountry(page, state) {
+    return page.opsData.countries.find((item) => item.code === state.activeCountryCode) || page.opsData.countries[0];
+  }
+
+  function getRoomOpsRoom(country, roomId) {
+    return country.rooms.find((room) => room.id === roomId) || country.rooms[0] || null;
+  }
+
+  function getRoomOpsMetrics(room) {
+    return {
+      online: room.sites.reduce((sum, site) => sum + Number(site.online || 0), 0),
+      todayBet: room.sites.reduce((sum, site) => sum + Number(site.todayBet || 0), 0),
+      todayProfit: room.sites.reduce((sum, site) => sum + Number(site.todayProfit || 0), 0),
+      siteCount: room.sites.length,
+    };
+  }
+
+  function getRoomOpsSummary(country) {
+    const totalOnline = country.rooms.reduce((sum, room) => sum + getRoomOpsMetrics(room).online, 0);
+    const totalInventory = country.rooms.reduce((sum, room) => sum + Number(room.inventory || 0), 0);
+    const weightedBase = country.rooms.reduce((sum, room) => sum + getRoomOpsMetrics(room).todayBet, 0) || 1;
+    const weightedRtp =
+      country.rooms.reduce((sum, room) => sum + Number(room.rtp || 0) * getRoomOpsMetrics(room).todayBet, 0) / weightedBase;
+    return { totalOnline, totalInventory, weightedRtp, roomCount: country.rooms.length };
+  }
+
+  function formatRoomOpsMoney(value, country) {
+    const numeric = Number(value || 0);
+    return `${numeric < 0 ? "-" : ""}${country.symbol}${formatNumber(Math.abs(numeric))}`;
+  }
+
+  function findRoomById(rooms, roomId) {
+    return (rooms || []).find((room) => room.id === roomId) || rooms[0] || null;
+  }
+
+  function getRoomOpsSiteRtp(site, room) {
+    return Number(site.overrideRtp || room.rtp).toFixed(2);
+  }
+
+  function getOrderedCurrencies(page, state) {
+    const byCode = new Map(page.opsData.countries.map((country) => [country.code, country]));
+    const ordered = (state.currencyOrder || []).map((code) => byCode.get(code)).filter(Boolean);
+    page.opsData.countries.forEach((country) => {
+      if (!ordered.some((item) => item.code === country.code)) {
+        ordered.push(country);
+      }
+    });
+    return ordered;
+  }
+
+  function renderCurrencySelector(page, state) {
+    const countries = getOrderedCurrencies(page, state);
+    return `
+      <section class="ops-filter-bar">
+        <div class="ops-filter-field ops-filter-country">
+          <label>国家/货币选择器</label>
+          <input
+            type="text"
+            list="room-country-options"
+            value="${escapeHtml(state.roomFilters.countryKeyword || "")}"
+            placeholder="支持搜索国家名称 / 货币代码"
+            data-room-filter="countryKeyword"
+            data-room-country
+          />
+          <datalist id="room-country-options">
+            ${countries
+              .map((country) => `<option value="${escapeHtml(country.country)}/${escapeHtml(country.code)}">${escapeHtml(country.currencyName)}</option>`)
+              .join("")}
+          </datalist>
+        </div>
+        <div class="ops-filter-field">
+          <label>游戏选择器</label>
+          <select data-room-filter="gameKey" disabled>
+            <option value="crash" selected>飞机游戏 / Crash</option>
+          </select>
+        </div>
+        <div class="ops-filter-field ops-filter-search">
+          <label>房间/站点检索</label>
+          <input
+            type="text"
+            value="${escapeHtml(state.roomFilters.roomSearch || "")}"
+            placeholder="支持房间名称、站点名称、站点ID"
+            data-room-filter="roomSearch"
+          />
+        </div>
+        <div class="ops-filter-actions">
+          <button type="button" class="primary" data-action="query">查询</button>
+          <button type="button" data-action="room-reset">重置</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSummary(country) {
+    const summary = getRoomOpsSummary(country);
+    return `
+      <section class="ops-summary-grid">
+        <article class="ops-summary-card">
+          <span>当前国家</span>
+          <strong>${escapeHtml(country.country)} / ${escapeHtml(country.code)}</strong>
+          <em>${escapeHtml(country.currencyName)}</em>
+        </article>
+        <article class="ops-summary-card">
+          <span>总在线人数</span>
+          <strong>${formatNumber(summary.totalOnline)}</strong>
+          <em>${formatNumber(country.rooms.length)} 个房间</em>
+        </article>
+        <article class="ops-summary-card">
+          <span>今日综合RTP</span>
+          <strong>${summary.weightedRtp.toFixed(2)}%</strong>
+          <em>按今日投注额加权</em>
+        </article>
+        <article class="ops-summary-card">
+          <span>总库存</span>
+          <strong>${formatRoomOpsMoney(summary.totalInventory, country)}</strong>
+          <em>${formatNumber(country.unassignedSites.length)} 个待分配站点</em>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsToolbar(state) {
+    const selectedCount = Object.values(state.selectedRoomIds || {}).filter(Boolean).length;
+    return `
+      <section class="ops-toolbar ops-room-toolbar">
+        <div class="ops-toolbar-actions">
+          <button type="button" class="primary" data-action="room-create-open">创建房间</button>
+          <select data-room-bulk-select>
+            <option value="">房间批量操作</option>
+            <option value="bulk-rtp">批量调整RTP</option>
+            <option value="bulk-assign">批量分配站点</option>
+            <option value="bulk-delete">批量删除</option>
+          </select>
+          <button type="button" data-action="room-bulk-apply">执行</button>
+          <button type="button" data-action="room-export">导出Excel</button>
+        </div>
+        <span class="ops-toolbar-hint">已选择 ${formatNumber(selectedCount)} 个房间</span>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSiteTable(room, country, state) {
+    const pageSize = Number(state.pageSize || 100);
+    const currentPage = Math.max(1, state.roomPages?.[room.id] || 1);
+    const totalPages = Math.max(1, Math.ceil(room.sites.length / pageSize));
+    const page = Math.min(currentPage, totalPages);
+    const sites = room.sites.slice((page - 1) * pageSize, page * pageSize);
+
+    return `
+      <div class="ops-room-site-panel">
+        <div class="ops-room-site-header">
+          <strong>已绑定站点</strong>
+          <span>${formatNumber(room.sites.length)} 条记录</span>
+        </div>
+        <div class="ops-room-site-table-wrap">
+          <table class="ops-room-site-table">
+            <thead>
+              <tr>
+                <th>站点ID</th>
+                <th>站点名称</th>
+                <th>所属房间</th>
+                <th>当前RTP</th>
+                <th>今日投注额</th>
+                <th>今日盈利</th>
+                <th>在线人数</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                sites.length
+                  ? sites
+                      .map(
+                        (site) => `
+                          <tr>
+                            <td class="mono">${escapeHtml(site.id)}</td>
+                            <td>${escapeHtml(site.name)}</td>
+                            <td>${escapeHtml(room.code)}</td>
+                            <td>${getRoomOpsSiteRtp(site, room)}%</td>
+                            <td>${formatRoomOpsMoney(site.todayBet, country)}</td>
+                            <td class="${site.todayProfit >= 0 ? "profit-up" : "profit-down"}">${formatRoomOpsMoney(
+                              site.todayProfit,
+                              country,
+                            )}</td>
+                            <td>${formatNumber(site.online)}</td>
+                            <td><button type="button" data-action="site-rtp-open" data-room-id="${room.id}" data-site-id="${site.id}">调整RTP</button></td>
+                          </tr>
+                        `,
+                      )
+                      .join("")
+                  : `<tr><td colspan="8" class="ops-room-empty">当前房间暂无绑定站点</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar room-ops-pagination">
+          <div class="page-size-select">
+            <span>每页</span>
+            <select data-action="page-size">
+              ${(pageConfigs["flight-room-manage"].pageSizeOptions || [])
+                .map((option) => `<option value="${option}"${pageSize === option ? " selected" : ""}>${option}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="pager">
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.max(page - 1, 1)}"${
+              page <= 1 ? " disabled" : ""
+            }>上一页</button>
+            <span class="pager-summary">${page} / ${totalPages}</span>
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.min(
+              page + 1,
+              totalPages,
+            )}"${page >= totalPages ? " disabled" : ""}>下一页</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsCards(country, state) {
+    const query = (state.roomFilters.roomSearch || "").trim().toLowerCase();
+    const rooms = country.rooms.filter((room) => {
+      if (!query) return true;
+      if (room.code.toLowerCase().includes(query) || room.name.toLowerCase().includes(query)) return true;
+      return room.sites.some((site) => site.name.toLowerCase().includes(query) || site.id.toLowerCase().includes(query));
+    });
+
+    return rooms
+      .map((room) => {
+        const metrics = getRoomOpsMetrics(room);
+        const expanded = state.expandedRooms?.[room.id];
+        return `
+          <article class="ops-room-card light${state.selectedRoomId === room.id ? " active" : ""}">
+            <div class="ops-room-card-top">
+              <label class="ops-room-check">
+                <input type="checkbox" ${state.selectedRoomIds?.[room.id] ? "checked" : ""} data-room-select-id="${room.id}" />
+                <span></span>
+              </label>
+              <div class="ops-room-heading" data-action="room-select" data-room-id="${room.id}">
+                <strong>${escapeHtml(room.code)}</strong>
+                <span>${escapeHtml(room.name)}</span>
+              </div>
+              <button type="button" class="ops-expand-btn" data-action="room-expand" data-room-id="${room.id}">${expanded ? "收起站点" : "展开站点"}</button>
+            </div>
+            <div class="ops-room-metrics-grid">
+              <div><span>房间RTP</span><strong>${Number(room.rtp).toFixed(2)}%</strong></div>
+              <div><span>房间在线人数</span><strong>${formatNumber(metrics.online)}</strong></div>
+              <div><span>房间库存</span><strong>${formatRoomOpsMoney(room.inventory, country)}</strong></div>
+              <div><span>累计投注量</span><strong>${formatRoomOpsMoney(metrics.todayBet, country)}</strong></div>
+            </div>
+            <div class="ops-room-card-note">${escapeHtml(room.note || "未设置备注")}</div>
+            <div class="ops-room-card-actions">
+              <button type="button" data-action="room-rtp-open" data-room-id="${room.id}">编辑RTP</button>
+              <button type="button" data-action="room-assign-open" data-room-id="${room.id}">分配站点</button>
+              <button type="button" class="danger" data-action="room-delete" data-room-id="${room.id}">删除</button>
+            </div>
+            ${expanded ? renderRoomOpsSiteTable(room, country, state) : ""}
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRoomOpsAssignModal(state, country, room) {
+    const modal = state.modal || {};
+    const query = (modal.search || "").trim().toLowerCase();
+    const sourcePool = country.rooms
+      .filter((item) => item.id !== room.id)
+      .flatMap((item) => item.sites.map((site) => ({ ...site, sourceRoomCode: item.code })))
+      .concat(country.unassignedSites.map((site) => ({ ...site, sourceRoomCode: "未分配" })));
+    const sourceSites = sourcePool.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    const targetSites = room.sites.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+
+    return `
+      <div class="ops-modal-backdrop">
+        <div class="ops-modal ops-modal-wide">
+          <div class="ops-modal-head">
+            <div>
+              <h2>分配站点</h2>
+              <p>${escapeHtml(room.code)} / ${escapeHtml(room.name)}</p>
+            </div>
+            <button type="button" data-action="room-modal-close">关闭</button>
+          </div>
+          <div class="ops-modal-note">左侧为未分配站点与其他房间站点；移入后自动归属当前房间，并默认同步房间 RTP。</div>
+          <div class="ops-transfer-search">
+            <input type="text" value="${escapeHtml(modal.search || "")}" placeholder="按站点ID / 名称搜索" data-room-modal-search />
+          </div>
+          <div class="ops-transfer-layout">
+            <section class="ops-transfer-panel">
+              <header>待分配/其他房间站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  sourceSites.length
+                    ? sourceSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="source" data-site-id="${site.id}" ${
+                                state.modal?.selectedSourceSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${escapeHtml(site.sourceRoomCode)} · ${formatRoomOpsMoney(site.todayBet, country)} · ${formatNumber(site.online)} 在线</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">没有可分配站点</div>`
+                }
+              </div>
+            </section>
+            <div class="ops-transfer-actions">
+              <button type="button" data-action="assign-move-in" data-room-id="${room.id}">移入 &gt;&gt;</button>
+              <button type="button" data-action="assign-move-out" data-room-id="${room.id}">&lt;&lt; 移出</button>
+            </div>
+            <section class="ops-transfer-panel">
+              <header>当前房间站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  targetSites.length
+                    ? targetSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="target" data-site-id="${site.id}" ${
+                                state.modal?.selectedTargetSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${getRoomOpsSiteRtp(site, room)}% · ${formatRoomOpsMoney(site.todayBet, country)} · ${formatNumber(site.online)} 在线</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">当前房间暂无站点</div>`
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsModal(page, state, country) {
+    const modal = state.modal || null;
+    if (!modal) return "";
+
+    if (modal.type === "create-room") {
+      const nextIndex = String(country.rooms.length + 1).padStart(3, "0");
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>创建房间</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>房间名称</span>
+              <input type="text" value="${escapeHtml(modal.roomName || `${country.code}-房间${nextIndex}`)}" data-room-form="roomName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>房间RTP</span>
+                <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.roomRtp || "95.00")}" data-room-form="roomRtp" />
+              </label>
+              <label class="ops-modal-field">
+                <span>初始库存</span>
+                <input type="number" min="0" step="1" value="${escapeHtml(modal.roomInventory || "1000000")}" data-room-form="roomInventory" />
+              </label>
+            </div>
+            <div class="ops-modal-field">
+              <span>备注</span>
+              <input type="text" value="${escapeHtml(modal.roomNote || "")}" data-room-form="roomNote" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-create-submit">确认创建</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (modal.type === "edit-room-rtp") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${modal.roomIds?.length > 1 ? "批量调整RTP" : "编辑房间RTP"}</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>RTP 范围 90%-99%</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || "95.00")}" data-room-form="roomRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-rtp-save">保存</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (modal.type === "edit-site-rtp") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      const site = room?.sites.find((item) => item.id === modal.siteId);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>调整站点RTP</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-note">留空表示恢复继承房间 RTP，站点单独 RTP 优先级高于房间设置。</div>
+            <div class="ops-modal-field">
+              <span>${escapeHtml(site?.id || "")} / ${escapeHtml(site?.name || "")}</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || site?.overrideRtp || "")}" data-room-form="siteRtpValue" placeholder="留空=继承房间RTP" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="site-rtp-save">保存</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (modal.type === "assign-sites") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      return room ? renderRoomOpsAssignModal(state, country, room) : "";
+    }
+
+    return "";
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const country = getRoomOpsCountry(page, state);
+    if (!getRoomOpsRoom(country, state.selectedRoomId) && country.rooms[0]) {
+      state.selectedRoomId = country.rooms[0].id;
+    }
+
+    return `
+      <section class="room-ops-page room-ops-page-light">
+        <div class="page-heading room-ops-heading">
+          <h1 class="page-title">${escapeHtml(page.title)}</h1>
+          <div class="page-subtitle">${escapeHtml(page.section)} / ${escapeHtml(page.title)}</div>
+          <p class="page-description">基于国家和货币维度统一管理飞机房间、站点归属与 RTP 配置，示例金额已按国家货币符号脱敏展示。</p>
+        </div>
+        ${renderCurrencySelector(page, state)}
+        ${renderRoomOpsSummary(country)}
+        ${renderRoomOpsToolbar(state)}
+        <section class="ops-room-list-grid">${renderRoomOpsCards(country, state)}</section>
+        ${renderRoomOpsModal(page, state, country)}
+      </section>
+    `;
+  }
+
+  function downloadRoomOpsExport(country) {
+    const rows = [["国家", "货币", "房间编码", "房间名称", "房间RTP", "站点ID", "站点名称", "当前RTP", "今日投注额", "今日盈利", "在线人数"]];
+    country.rooms.forEach((room) => {
+      room.sites.forEach((site) => {
+        rows.push([
+          country.country,
+          country.code,
+          room.code,
+          room.name,
+          `${Number(room.rtp).toFixed(2)}%`,
+          site.id,
+          site.name,
+          `${getRoomOpsSiteRtp(site, room)}%`,
+          `${country.symbol}${formatNumber(site.todayBet)}`,
+          `${country.symbol}${formatNumber(site.todayProfit)}`,
+          formatNumber(site.online),
+        ]);
+      });
+    });
+    const csv = `\uFEFF${rows.map((row) => row.join(",")).join("\n")}`;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `plane-room-management-${country.code}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 300);
+  }
+
+  function takeRoomOpsSite(country, siteId) {
+    const unassignedIndex = country.unassignedSites.findIndex((site) => site.id === siteId);
+    if (unassignedIndex >= 0) {
+      return country.unassignedSites.splice(unassignedIndex, 1)[0];
+    }
+    for (const room of country.rooms) {
+      const index = room.sites.findIndex((site) => site.id === siteId);
+      if (index >= 0) {
+        return room.sites.splice(index, 1)[0];
+      }
+    }
+    return null;
+  }
+
+  function moveSitesIntoRoom(country, roomId, siteIds) {
+    const room = getRoomOpsRoom(country, roomId);
+    if (!room) return 0;
+    let moved = 0;
+    siteIds.forEach((siteId) => {
+      const site = takeRoomOpsSite(country, siteId);
+      if (site) {
+        room.sites.push(site);
+        moved += 1;
+      }
+    });
+    room.sites.sort((a, b) => a.id.localeCompare(b.id));
+    return moved;
+  }
+
+  function moveSitesOutOfRoom(country, roomId, siteIds) {
+    const room = getRoomOpsRoom(country, roomId);
+    if (!room) return 0;
+    let moved = 0;
+    siteIds.forEach((siteId) => {
+      const index = room.sites.findIndex((site) => site.id === siteId);
+      if (index >= 0) {
+        country.unassignedSites.push(room.sites.splice(index, 1)[0]);
+        moved += 1;
+      }
+    });
+    country.unassignedSites.sort((a, b) => a.id.localeCompare(b.id));
+    return moved;
+  }
+
+  function refreshRoomOpsCountry(country) {
+    country.rooms.forEach((room) => {
+      room.sites.forEach((site) => {
+        site.online = Math.max(0, Number(site.online) + Math.round((Math.random() - 0.35) * 18));
+        site.todayBet = Math.max(0, Number(site.todayBet) + Math.round(Math.random() * 12000));
+        site.todayProfit = Number(site.todayProfit) + Math.round((Math.random() - 0.45) * 8000);
+      });
+      room.inventory = Math.max(0, Number(room.inventory) + Math.round((Math.random() - 0.5) * 12000));
+    });
+  }
+
   function handleRootClick(event) {
     const actionTarget = event.target.closest("[data-action]");
     if (!actionTarget) return;
@@ -2026,6 +3345,34 @@
     const page = pageConfigs[pageKey];
     const state = getPageState(pageKey, page);
     const action = actionTarget.dataset.action;
+
+    if (page.type === "roomOps") {
+      if (action === "room-select") {
+        state.selectedRoomId = actionTarget.dataset.roomId;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-toggle") {
+        const roomId = actionTarget.dataset.roomId;
+        state.collapsedRooms[roomId] = !state.collapsedRooms[roomId];
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-favorite") {
+        const roomId = actionTarget.dataset.roomId;
+        const room = findRoomById(page.opsData.rooms, roomId);
+        state.favoriteRooms[roomId] = !(state.favoriteRooms[roomId] ?? room?.favorite);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-refresh") {
+        showToast("房间实时数据已刷新");
+        return;
+      }
+    }
 
     if (action === "query") {
       syncTableFiltersFromDom(page, state);
@@ -2079,6 +3426,16 @@
 
   function handleRootChange(event) {
     const actionTarget = event.target;
+    if (actionTarget.matches("[data-room-filter]")) {
+      const pageKey = getCurrentPageKey();
+      const page = pageConfigs[pageKey];
+      if (page.type === "roomOps") {
+        const state = getPageState(pageKey, page);
+        syncRoomOpsFiltersFromDom(state);
+        renderCurrentPage();
+      }
+    }
+
     if (actionTarget.matches('[data-action="page-size"]')) {
       const pageKey = getCurrentPageKey();
       const page = pageConfigs[pageKey];
@@ -2089,6 +3446,3202 @@
     }
   }
 
+  function handleRootDragStart(event) {
+    const chip = event.target.closest("[data-currency-code]");
+    if (!chip) return;
+    const code = chip.dataset.currencyCode;
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", code);
+    chip.classList.add("is-dragging");
+  }
+
+  function handleRootDragOver(event) {
+    const chip = event.target.closest("[data-currency-code]");
+    if (!chip) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+
+  function handleRootDrop(event) {
+    const targetChip = event.target.closest("[data-currency-code]");
+    if (!targetChip) return;
+    event.preventDefault();
+
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    if (page.type !== "roomOps") return;
+
+    const state = getPageState(pageKey, page);
+    const sourceCode = event.dataTransfer.getData("text/plain");
+    const targetCode = targetChip.dataset.currencyCode;
+    if (!sourceCode || !targetCode || sourceCode === targetCode) return;
+
+    const orderedCodes = getOrderedCurrencies(page, state).map((currency) => currency.code);
+    const nextOrder = orderedCodes.filter((code) => code !== sourceCode);
+    const targetIndex = nextOrder.indexOf(targetCode);
+    nextOrder.splice(Math.max(targetIndex, 0), 0, sourceCode);
+    state.currencyOrder = nextOrder;
+    renderCurrentPage();
+  }
+
+  function handleRootDragEnd(event) {
+    const chip = event.target.closest("[data-currency-code]");
+    if (chip) chip.classList.remove("is-dragging");
+  }
+
+  function handleRootClick(event) {
+    const actionTarget = event.target.closest("[data-action]");
+    if (!actionTarget) return;
+
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    const state = getPageState(pageKey, page);
+    const action = actionTarget.dataset.action;
+
+    if (page.type === "roomOps") {
+      const country = getRoomOpsCountry(page, state);
+
+      if (action === "room-select") {
+        state.selectedRoomId = actionTarget.dataset.roomId;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-expand") {
+        const roomId = actionTarget.dataset.roomId;
+        state.expandedRooms[roomId] = !state.expandedRooms[roomId];
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-page") {
+        state.roomPages[actionTarget.dataset.roomId] = Number(actionTarget.dataset.page || 1);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-refresh") {
+        refreshRoomOpsCountry(country);
+        showToast("已刷新当前国家房间与站点演示数据");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-reset") {
+        const defaultCountry = page.opsData.countries[0];
+        state.activeCountryCode = defaultCountry.code;
+        state.selectedRoomId = defaultCountry.rooms[0]?.id || page.opsData.defaultRoomId;
+        state.roomFilters = {
+          roomSearch: "",
+          siteSearch: "",
+          countryKeyword: `${defaultCountry.country}/${defaultCountry.code}`,
+          gameKey: "crash",
+        };
+        state.expandedRooms = {};
+        state.selectedRoomIds = {};
+        state.modal = null;
+        state.pageSize = page.defaultPageSize || 100;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "query") {
+        const keyword = (state.roomFilters.countryKeyword || "").toLowerCase();
+        const matched = page.opsData.countries.find(
+          (item) =>
+            `${item.country}/${item.code}`.toLowerCase() === keyword ||
+            item.country.toLowerCase() === keyword ||
+            item.code.toLowerCase() === keyword,
+        );
+        if (matched) {
+          state.activeCountryCode = matched.code;
+          state.selectedRoomId = matched.rooms[0]?.id || "";
+        }
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-open") {
+        state.modal = { type: "create-room" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-modal-close") {
+        state.modal = null;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-submit") {
+        const roomName = document.querySelector('[data-room-form="roomName"]')?.value?.trim() || `${country.code}-房间001`;
+        const roomRtp = Number(document.querySelector('[data-room-form="roomRtp"]')?.value || 95);
+        const roomInventory = Number(document.querySelector('[data-room-form="roomInventory"]')?.value || 1000000);
+        const roomNote = document.querySelector('[data-room-form="roomNote"]')?.value?.trim() || "";
+        const nextIndex = String(country.rooms.length + 1).padStart(3, "0");
+        const roomId = `${country.code.toLowerCase()}-room-${nextIndex}`;
+        country.rooms.push({
+          id: roomId,
+          code: `${country.code}-房间${nextIndex}`,
+          name: roomName,
+          rtp: Number(Math.min(99, Math.max(90, roomRtp)).toFixed(2)),
+          inventory: Math.max(0, roomInventory),
+          note: roomNote,
+          enabled: true,
+          sites: [],
+        });
+        state.modal = null;
+        state.selectedRoomId = roomId;
+        showToast("房间已创建");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-open") {
+        const room = getRoomOpsRoom(country, actionTarget.dataset.roomId);
+        state.modal = {
+          type: "edit-room-rtp",
+          roomIds: room ? [room.id] : [],
+          value: room ? Number(room.rtp).toFixed(2) : "95.00",
+        };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-save") {
+        const nextValue = Number(
+          Math.min(99, Math.max(90, Number(document.querySelector('[data-room-form="roomRtpValue"]')?.value || 95))).toFixed(2),
+        );
+        (state.modal?.roomIds || []).forEach((roomId) => {
+          const room = getRoomOpsRoom(country, roomId);
+          if (room) room.rtp = nextValue;
+        });
+        state.modal = null;
+        showToast("房间 RTP 已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-open") {
+        state.modal = {
+          type: "edit-site-rtp",
+          roomId: actionTarget.dataset.roomId,
+          siteId: actionTarget.dataset.siteId,
+        };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-save") {
+        const modal = state.modal || {};
+        const room = getRoomOpsRoom(country, modal.roomId);
+        const site = room?.sites.find((item) => item.id === modal.siteId);
+        if (site) {
+          const raw = document.querySelector('[data-room-form="siteRtpValue"]')?.value?.trim() || "";
+          site.overrideRtp = raw ? Number(Math.min(99, Math.max(90, Number(raw)))).toFixed(2) : "";
+        }
+        state.modal = null;
+        showToast("站点 RTP 已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-assign-open") {
+        state.modal = {
+          type: "assign-sites",
+          roomId: actionTarget.dataset.roomId,
+          search: "",
+          selectedSourceSiteIds: {},
+          selectedTargetSiteIds: {},
+        };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-in") {
+        const selectedIds = Object.keys(state.modal?.selectedSourceSiteIds || {}).filter(
+          (key) => state.modal.selectedSourceSiteIds[key],
+        );
+        const moved = moveSitesIntoRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移入 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-out") {
+        const selectedIds = Object.keys(state.modal?.selectedTargetSiteIds || {}).filter(
+          (key) => state.modal.selectedTargetSiteIds[key],
+        );
+        const moved = moveSitesOutOfRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移出 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-delete") {
+        const roomId = actionTarget.dataset.roomId;
+        const roomIndex = country.rooms.findIndex((room) => room.id === roomId);
+        if (roomIndex >= 0) {
+          const [room] = country.rooms.splice(roomIndex, 1);
+          country.unassignedSites.push(...room.sites);
+          delete state.selectedRoomIds[roomId];
+          delete state.expandedRooms[roomId];
+          state.selectedRoomId = country.rooms[0]?.id || "";
+          showToast("房间已删除，站点已回收至未分配池");
+          renderCurrentPage();
+        }
+        return;
+      }
+
+      if (action === "room-bulk-apply") {
+        const selectedRoomIds = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]);
+        if (!state.bulkAction) {
+          showToast("请先选择批量操作");
+          return;
+        }
+        if (!selectedRoomIds.length) {
+          showToast("请先勾选房间");
+          return;
+        }
+        if (state.bulkAction === "bulk-rtp") {
+          state.modal = { type: "edit-room-rtp", roomIds: selectedRoomIds, value: "95.00" };
+          renderCurrentPage();
+          return;
+        }
+        if (state.bulkAction === "bulk-assign") {
+          if (selectedRoomIds.length !== 1) {
+            showToast("批量分配站点时请选择一个目标房间");
+            return;
+          }
+          state.modal = {
+            type: "assign-sites",
+            roomId: selectedRoomIds[0],
+            search: "",
+            selectedSourceSiteIds: {},
+            selectedTargetSiteIds: {},
+          };
+          renderCurrentPage();
+          return;
+        }
+        if (state.bulkAction === "bulk-delete") {
+          selectedRoomIds.forEach((roomId) => {
+            const roomIndex = country.rooms.findIndex((room) => room.id === roomId);
+            if (roomIndex >= 0) {
+              const [room] = country.rooms.splice(roomIndex, 1);
+              country.unassignedSites.push(...room.sites);
+            }
+          });
+          state.selectedRoomIds = {};
+          state.selectedRoomId = country.rooms[0]?.id || "";
+          showToast("已批量删除选中房间");
+          renderCurrentPage();
+          return;
+        }
+      }
+
+      if (action === "room-export") {
+        downloadRoomOpsExport(country);
+        showToast("当前国家房间与站点数据已导出");
+        return;
+      }
+    }
+
+    if (action === "query") {
+      syncTableFiltersFromDom(page, state);
+      state.page = 1;
+      renderCurrentPage();
+      return;
+    }
+
+    if (action === "reset") {
+      resetTableState(page, state);
+      renderCurrentPage();
+      return;
+    }
+
+    if (action === "page-prev") {
+      if (state.page > 1) {
+        state.page -= 1;
+        renderCurrentPage();
+      }
+      return;
+    }
+
+    if (action === "page-next") {
+      state.page += 1;
+      renderCurrentPage();
+      return;
+    }
+
+    if (action === "page-number") {
+      state.page = Number(actionTarget.dataset.page);
+      renderCurrentPage();
+      return;
+    }
+
+    if (action === "export") {
+      showToast("已准备导出当前页面数据");
+      return;
+    }
+
+    if (action === "form-save") {
+      syncFormFromDom(page, state);
+      showToast(`${page.title} 已保存`);
+      return;
+    }
+
+    if (action === "form-reset") {
+      resetFormState(page, state);
+      renderCurrentPage();
+    }
+  }
+
+  function handleRootChange(event) {
+    const actionTarget = event.target;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+
+    if (page.type === "roomOps") {
+      const state = getPageState(pageKey, page);
+
+      if (actionTarget.matches("[data-room-filter]")) {
+        syncRoomOpsFiltersFromDom(state);
+        if (actionTarget.matches("[data-room-country]")) {
+          const keyword = (state.roomFilters.countryKeyword || "").toLowerCase();
+          const matched = page.opsData.countries.find(
+            (item) =>
+              `${item.country}/${item.code}`.toLowerCase() === keyword ||
+              item.country.toLowerCase() === keyword ||
+              item.code.toLowerCase() === keyword,
+          );
+          if (matched) {
+            state.activeCountryCode = matched.code;
+            state.selectedRoomId = matched.rooms[0]?.id || "";
+          }
+        }
+        renderCurrentPage();
+        return;
+      }
+
+      if (actionTarget.matches("[data-room-bulk-select]")) {
+        state.bulkAction = actionTarget.value;
+        return;
+      }
+
+      if (actionTarget.matches("[data-room-select-id]")) {
+        state.selectedRoomIds[actionTarget.dataset.roomSelectId] = actionTarget.checked;
+        return;
+      }
+
+      if (actionTarget.matches('[data-action="page-size"]')) {
+        state.pageSize = Number(actionTarget.value);
+        renderCurrentPage();
+        return;
+      }
+
+      if (actionTarget.matches("[data-assign-side]")) {
+        const side = actionTarget.dataset.assignSide;
+        if (!state.modal) return;
+        if (side === "source") {
+          state.modal.selectedSourceSiteIds = state.modal.selectedSourceSiteIds || {};
+          state.modal.selectedSourceSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+        } else {
+          state.modal.selectedTargetSiteIds = state.modal.selectedTargetSiteIds || {};
+          state.modal.selectedTargetSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+        }
+        return;
+      }
+
+      if (actionTarget.matches("[data-room-modal-search]")) {
+        state.modal = { ...(state.modal || {}), search: actionTarget.value };
+        renderCurrentPage();
+        return;
+      }
+    }
+
+    if (actionTarget.matches("[data-room-filter]")) {
+      const state = getPageState(pageKey, page);
+      syncRoomOpsFiltersFromDom(state);
+      renderCurrentPage();
+      return;
+    }
+
+    if (actionTarget.matches('[data-action="page-size"]')) {
+      const state = getPageState(pageKey, page);
+      state.pageSize = Number(actionTarget.value);
+      state.page = 1;
+      renderCurrentPage();
+    }
+  }
+
+  function buildFlightRoomOpsData() {
+    function createSite(id, name, todayBet, todayProfit, online, overrideRtp = "") {
+      return { id, name, todayBet, todayProfit, online, overrideRtp };
+    }
+
+    function createRoom(id, code, name, rtp, inventory, sites) {
+      return { id, code, name, rtp, inventory, sites };
+    }
+
+    function createCountry(country, code, symbol, rooms, unassignedSites) {
+      return { country, code, symbol, rooms, unassignedSites };
+    }
+
+    return {
+      countries: [
+        createCountry("印度", "INR", "₹", [
+          createRoom("inr-room-001", "INR-房间001", "新手房", 95, 1000000, [
+            createSite("1001", "印度站点A", 1250000, 120000, 320, "95.20"),
+            createSite("1002", "印度站点B", 860000, 92000, 248),
+          ]),
+          createRoom("inr-room-002", "INR-房间002", "高RTP房", 96.4, 1000000, [
+            createSite("1003", "印度站点C", 980000, -36000, 204, "96.90"),
+            createSite("1004", "印度站点D", 760000, 54000, 196),
+          ]),
+        ], [createSite("1005", "印度站点E", 420000, 26000, 108)]),
+        createCountry("美国", "USD", "$", [
+          createRoom("usd-room-001", "USD-房间001", "标准房", 95, 1000000, [
+            createSite("2001", "美国站点A", 860000, 84000, 188),
+            createSite("2002", "美国站点B", 640000, -26000, 136, "94.60"),
+          ]),
+        ], [createSite("2003", "美国站点C", 380000, 12000, 92)]),
+        createCountry("印尼", "IDR", "Rp", [
+          createRoom("idr-room-001", "IDR-房间001", "标准房", 95, 1000000, [
+            createSite("3001", "印尼站点A", 268000000, 22400000, 412),
+          ]),
+        ], [createSite("3002", "印尼站点B", 108000000, 7200000, 144)]),
+        createCountry("巴西", "BRL", "R$", [
+          createRoom("brl-room-001", "BRL-房间001", "促活房", 95.6, 1000000, [
+            createSite("4001", "巴西站点A", 348000, 42000, 162),
+          ]),
+        ], [createSite("4002", "巴西站点B", 192000, 12000, 88)]),
+        createCountry("泰国", "THB", "฿", [], []),
+      ],
+    };
+  }
+
+  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+  pageConfigs["flight-room-manage"].defaultPageSize = 100;
+  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+
+  function getRoomOpsCountryOptionLabel(country) {
+    return `${country.country}-${country.code}`;
+  }
+
+  function getRoomOpsCountry(page, state) {
+    return page.opsData.countries.find((item) => item.code === state.activeCountryCode) || null;
+  }
+
+  function getRoomOpsRoom(country, roomId) {
+    return country?.rooms.find((room) => room.id === roomId) || null;
+  }
+
+  function getNextRoomSequence(country) {
+    const maxIndex = (country?.rooms || []).reduce((max, room) => {
+      const matched = String(room.code || room.id || "").match(/(\d{3,})$/);
+      const value = matched ? Number(matched[1]) : 0;
+      return Math.max(max, Number.isFinite(value) ? value : 0);
+    }, 0);
+    return String(maxIndex + 1).padStart(3, "0");
+  }
+
+  function getRoomOpsMetrics(room) {
+    return {
+      online: room.sites.reduce((sum, site) => sum + Number(site.online || 0), 0),
+      todayBet: room.sites.reduce((sum, site) => sum + Number(site.todayBet || 0), 0),
+      todayProfit: room.sites.reduce((sum, site) => sum + Number(site.todayProfit || 0), 0),
+      siteCount: room.sites.length,
+    };
+  }
+
+  function getRoomOpsSummary(country) {
+    const totals = (country?.rooms || []).reduce(
+      (acc, room) => {
+        const metrics = getRoomOpsMetrics(room);
+        acc.online += metrics.online;
+        acc.inventory += Number(room.inventory || 0);
+        acc.weightBase += metrics.todayBet;
+        acc.weightedRtp += Number(room.rtp || 0) * metrics.todayBet;
+        return acc;
+      },
+      { online: 0, inventory: 0, weightBase: 0, weightedRtp: 0 },
+    );
+    return {
+      totalOnline: totals.online,
+      totalInventory: totals.inventory,
+      weightedRtp: totals.weightBase ? totals.weightedRtp / totals.weightBase : 0,
+    };
+  }
+
+  function formatRoomOpsMoney(value, country) {
+    const numeric = Number(value || 0);
+    return `${numeric < 0 ? "-" : ""}${country?.symbol || ""}${formatNumber(Math.abs(numeric), 2)}`;
+  }
+
+  function formatRoomOpsPlainMoney(value) {
+    const numeric = Number(value || 0);
+    return `${numeric < 0 ? "-" : ""}${formatNumber(Math.abs(numeric), 2)}`;
+  }
+
+  function getRoomOpsSiteRtp(site, room) {
+    return Number(site.overrideRtp || room.rtp).toFixed(2);
+  }
+
+  function getOrderedCurrencies(page, state) {
+    const byCode = new Map(page.opsData.countries.map((country) => [country.code, country]));
+    const ordered = (state.currencyOrder || []).map((code) => byCode.get(code)).filter(Boolean);
+    page.opsData.countries.forEach((country) => {
+      if (!ordered.some((item) => item.code === country.code)) ordered.push(country);
+    });
+    return ordered;
+  }
+
+  function renderCurrencySelector(page, state) {
+    const countries = getOrderedCurrencies(page, state);
+    const pendingCountry = countries.find((item) => item.code === state.pendingCountryCode) || null;
+    const keyword = (state.roomFilters.countrySearch || "").trim().toLowerCase();
+    const visibleCountries = countries.filter((country) => {
+      if (!keyword) return true;
+      return country.country.toLowerCase().includes(keyword) || country.code.toLowerCase().includes(keyword);
+    });
+    return `
+      <section class="ops-filter-bar ops-filter-bar-compact">
+        <div class="ops-country-picker">
+          <label>国家/币种选择器</label>
+          <button type="button" class="ops-country-trigger" data-action="country-picker-toggle">
+            <span>${pendingCountry ? escapeHtml(getRoomOpsCountryOptionLabel(pendingCountry)) : "请选择国家/币种"}</span>
+          </button>
+          ${
+            state.countryPickerOpen
+              ? `
+                <div class="ops-country-panel">
+                  <div class="ops-country-panel-search">
+                    <input
+                      type="text"
+                      value="${escapeHtml(state.roomFilters.countrySearch || "")}"
+                      placeholder="搜索国家名 / 币种代码"
+                      data-room-filter="countrySearch"
+                    />
+                  </div>
+                  <div class="ops-country-panel-list">
+                    ${
+                      visibleCountries.length
+                        ? visibleCountries
+                            .map(
+                              (country) => `
+                                <button
+                                  type="button"
+                                  class="ops-country-option${state.pendingCountryCode === country.code ? " active" : ""}"
+                                  draggable="true"
+                                  data-currency-code="${escapeHtml(country.code)}"
+                                  data-action="country-select"
+                                  data-country-code="${escapeHtml(country.code)}"
+                                >
+                                  <span>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</span>
+                                  <em>${escapeHtml(country.symbol || "")}</em>
+                                </button>
+                              `,
+                            )
+                            .join("")
+                        : `<div class="ops-room-empty">没有匹配的国家/币种</div>`
+                    }
+                  </div>
+                  <button type="button" class="ops-country-add" data-action="country-add-open">+ 添加国家币种</button>
+                </div>
+              `
+              : ""
+          }
+        </div>
+        <div class="ops-filter-actions">
+          <button type="button" class="primary" data-action="query">查询</button>
+          <button type="button" data-action="room-reset">重置</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSummary(country) {
+    const summary = getRoomOpsSummary(country);
+    return `
+      <section class="ops-summary-grid">
+        <article class="ops-summary-card">
+          <span>当前国家</span>
+          <strong>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>总在线人数</span>
+          <strong>${formatNumber(summary.totalOnline, 2)}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>今日综合RTP</span>
+          <strong>${summary.weightedRtp.toFixed(2)}%</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>总库存</span>
+          <strong>${formatRoomOpsMoney(summary.totalInventory, country)}</strong>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsToolbar(state) {
+    const selectedCount = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]).length;
+    return `
+      <section class="ops-toolbar ops-room-toolbar">
+        <button type="button" class="primary" data-action="room-create-open">创建房间</button>
+        <div class="ops-toolbar-actions">
+          <button type="button" data-action="room-bulk-rtp-open">批量调整RTP</button>
+          <button type="button" data-action="room-export">导出数据</button>
+        </div>
+        <span class="ops-toolbar-hint">已选择 ${formatNumber(selectedCount)} 个房间</span>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSiteTable(room, country, state) {
+    const pageSize = Number(state.pageSize || 100);
+    const currentPage = Math.max(1, state.roomPages?.[room.id] || 1);
+    const totalPages = Math.max(1, Math.ceil(room.sites.length / pageSize));
+    const page = Math.min(currentPage, totalPages);
+    const sites = room.sites.slice((page - 1) * pageSize, page * pageSize);
+    return `
+      <div class="ops-room-site-panel">
+        <div class="ops-room-site-header">
+          <strong>房间绑定站点明细</strong>
+          <span>${formatNumber(room.sites.length)} 条</span>
+        </div>
+        <div class="ops-room-site-table-wrap">
+          <table class="ops-room-site-table">
+            <thead>
+              <tr>
+                <th>站点ID</th>
+                <th>站点名称</th>
+                <th>当前RTP</th>
+                <th>今日投注额</th>
+                <th>今日盈利</th>
+                <th>在线人数</th>
+                <th>调整RTP</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                sites.length
+                  ? sites
+                      .map((site) => {
+                        const mismatch = Number(getRoomOpsSiteRtp(site, room)) !== Number(room.rtp).toFixed(2) * 1;
+                        return `
+                          <tr>
+                            <td class="mono">${escapeHtml(site.id)}</td>
+                            <td>${escapeHtml(site.name)}</td>
+                            <td><span class="${mismatch ? "rtp-warning" : ""}">${getRoomOpsSiteRtp(site, room)}%</span></td>
+                            <td>${formatRoomOpsMoney(site.todayBet, country)}</td>
+                            <td class="${site.todayProfit >= 0 ? "profit-up" : "profit-down"}">${formatRoomOpsMoney(site.todayProfit, country)}</td>
+                            <td>${formatNumber(site.online, 2)}</td>
+                            <td><button type="button" data-action="site-rtp-open" data-room-id="${room.id}" data-site-id="${site.id}">调整RTP</button></td>
+                          </tr>
+                        `;
+                      })
+                      .join("")
+                  : `<tr><td colspan="7" class="ops-room-empty">当前房间暂无绑定站点</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar room-ops-pagination">
+          <div class="page-size-select">
+            <span>每页</span>
+            <select data-action="page-size">
+              ${(pageConfigs["flight-room-manage"].pageSizeOptions || [])
+                .map((option) => `<option value="${option}"${pageSize === option ? " selected" : ""}>${option}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="pager">
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.max(page - 1, 1)}"${
+              page <= 1 ? " disabled" : ""
+            }>上一页</button>
+            <span class="pager-summary">${page} / ${totalPages}</span>
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.min(page + 1, totalPages)}"${
+              page >= totalPages ? " disabled" : ""
+            }>下一页</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsCards(country, state) {
+    return country.rooms
+      .map((room) => {
+        const metrics = getRoomOpsMetrics(room);
+        const expanded = state.expandedRooms?.[room.id];
+        return `
+          <article class="ops-room-card light${state.selectedRoomId === room.id ? " active" : ""}">
+            <div class="ops-room-card-top">
+              <label class="ops-room-check">
+                <input type="checkbox" ${state.selectedRoomIds?.[room.id] ? "checked" : ""} data-room-select-id="${room.id}" />
+                <span></span>
+              </label>
+              <div class="ops-room-heading" data-action="room-expand" data-room-id="${room.id}">
+                <strong>${escapeHtml(room.name)}</strong>
+                <span>${escapeHtml(room.code)}</span>
+              </div>
+              <div class="ops-room-card-actions inline">
+                <button type="button" data-action="room-rtp-open" data-room-id="${room.id}">调整RTP</button>
+                <button type="button" data-action="room-assign-open" data-room-id="${room.id}">分配站点</button>
+                <button type="button" class="danger" data-action="room-delete" data-room-id="${room.id}">删除</button>
+              </div>
+            </div>
+            <div class="ops-room-metrics-grid room-card-metrics-5">
+              <div><span>房间RTP</span><strong>${Number(room.rtp).toFixed(2)}%</strong></div>
+              <div><span>在线人数</span><strong>${formatNumber(metrics.online, 2)}</strong></div>
+              <div><span>房间库存</span><strong>${formatRoomOpsMoney(room.inventory, country)}</strong></div>
+              <div><span>绑定站点数</span><strong>${formatNumber(metrics.siteCount, 2)}</strong></div>
+              <div><span>累计投注额</span><strong>${formatRoomOpsMoney(metrics.todayBet, country)}</strong></div>
+            </div>
+            ${expanded ? renderRoomOpsSiteTable(room, country, state) : ""}
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRoomOpsAssignModal(state, country, room) {
+    const modal = state.modal || {};
+    const query = (modal.search || "").trim().toLowerCase();
+    const sourcePool = country.rooms
+      .filter((item) => item.id !== room.id)
+      .flatMap((item) => item.sites.map((site) => ({ ...site, sourceRoomCode: item.code })))
+      .concat(country.unassignedSites.map((site) => ({ ...site, sourceRoomCode: "未分配" })));
+    const sourceSites = sourcePool.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    const targetSites = room.sites.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    return `
+      <div class="ops-modal-backdrop">
+        <div class="ops-modal ops-modal-wide">
+          <div class="ops-modal-head">
+            <div>
+              <h2>分配站点</h2>
+              <p>${escapeHtml(room.name)} / ${escapeHtml(room.code)}</p>
+            </div>
+            <button type="button" data-action="room-modal-close">关闭</button>
+          </div>
+          <div class="ops-modal-note">同一站点仅能归属一个房间；移入后默认继承所属房间 RTP。</div>
+          <div class="ops-transfer-search">
+            <input type="text" value="${escapeHtml(modal.search || "")}" placeholder="按站点ID / 名称搜索" data-room-modal-search />
+          </div>
+          <div class="ops-transfer-layout">
+            <section class="ops-transfer-panel">
+              <header>可分配站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  sourceSites.length
+                    ? sourceSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="source" data-site-id="${site.id}" ${
+                                state.modal?.selectedSourceSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${escapeHtml(site.sourceRoomCode)} · ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">没有可分配站点</div>`
+                }
+              </div>
+            </section>
+            <div class="ops-transfer-actions">
+              <button type="button" data-action="assign-move-in" data-room-id="${room.id}">移入</button>
+              <button type="button" data-action="assign-move-out" data-room-id="${room.id}">移出</button>
+            </div>
+            <section class="ops-transfer-panel">
+              <header>当前房间站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  targetSites.length
+                    ? targetSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="target" data-site-id="${site.id}" ${
+                                state.modal?.selectedTargetSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${getRoomOpsSiteRtp(site, room)}% · ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">当前房间暂无站点</div>`
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsModal(page, state, country) {
+    const modal = state.modal || null;
+    if (!modal) return "";
+    if (modal.type === "create-room") {
+      const nextIndex = String((country?.rooms.length || 0) + 1).padStart(3, "0");
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>创建房间</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>房间名称</span>
+              <input type="text" value="${escapeHtml(modal.roomName || `${country.code}-房间${nextIndex}`)}" data-room-form="roomName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>房间RTP</span>
+                <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.roomRtp || "95.00")}" data-room-form="roomRtp" />
+              </label>
+              <label class="ops-modal-field">
+                <span>初始库存</span>
+                <input type="number" min="0" step="0.01" value="${escapeHtml(modal.roomInventory || "1000000.00")}" data-room-form="roomInventory" />
+              </label>
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-create-submit">确认创建</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-room-rtp") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${modal.roomIds?.length > 1 ? "批量调整RTP" : "调整房间RTP"}</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>RTP 范围 90%-99%</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || "95.00")}" data-room-form="roomRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-rtp-save">确认调整</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-site-rtp") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      const site = room?.sites.find((item) => item.id === modal.siteId);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>调整站点RTP</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-note">站点单独 RTP 优先级高于房间 RTP；留空则恢复继承房间 RTP。</div>
+            <div class="ops-modal-field">
+              <span>${escapeHtml(site?.id || "")} / ${escapeHtml(site?.name || "")}</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || site?.overrideRtp || "")}" data-room-form="siteRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="site-rtp-save">确认调整</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "move-site") {
+      const fromRoom = getRoomOpsRoom(country, modal.roomId);
+      const site = fromRoom?.sites.find((item) => item.id === modal.siteId);
+      const targetRooms = (country?.rooms || []).filter((room) => room.id !== modal.roomId);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${roomOpsText.moveSiteTitle}</h2>
+              <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+            </div>
+            <div class="ops-modal-note">${escapeHtml(site?.merchantId || "")} / ${escapeHtml(site?.id || "")} / ${escapeHtml(site?.name || "")}</div>
+            <div class="ops-modal-field">
+              <span>${roomOpsText.targetRoom}</span>
+              <select data-room-form="targetRoomId">
+                <option value="">${roomOpsText.targetRoom}</option>
+                ${targetRooms
+                  .map(
+                    (room) =>
+                      `<option value="${room.id}"${modal.targetRoomId === room.id ? " selected" : ""}>${escapeHtml(room.name)} / ${escapeHtml(room.code)}</option>`,
+                  )
+                  .join("")}
+              </select>
+            </div>
+            ${
+              targetRooms.length
+                ? ""
+                : `<div class="ops-modal-note">${roomOpsText.noTargetRooms}</div>`
+            }
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">${roomOpsText.cancel}</button>
+              <button type="button" class="primary" data-action="site-move-save"${targetRooms.length ? "" : " disabled"}>${roomOpsText.confirmAdjust}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "assign-sites") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      return room ? renderRoomOpsAssignModal(state, country, room) : "";
+    }
+    if (modal.type === "add-country") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>添加国家币种</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>国家名称</span>
+              <input type="text" value="${escapeHtml(modal.countryName || "")}" data-room-form="countryName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>3位大写币种代码</span>
+                <input type="text" value="${escapeHtml(modal.countryCode || "")}" maxlength="3" data-room-form="countryCode" />
+              </label>
+              <label class="ops-modal-field">
+                <span>币种符号</span>
+                <input type="text" value="${escapeHtml(modal.countrySymbol || "")}" data-room-form="countrySymbol" />
+              </label>
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="country-add-submit">确认添加</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    return "";
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const country = getRoomOpsCountry(page, state);
+    if (country && !state.selectedRoomId && country.rooms[0]) state.selectedRoomId = country.rooms[0].id;
+    return `
+      <section class="room-ops-page room-ops-page-light">
+        <div class="page-heading room-ops-heading">
+          <h1 class="page-title">${escapeHtml(page.title)}</h1>
+          <div class="page-subtitle">${escapeHtml(page.section)} / ${escapeHtml(page.title)}</div>
+        </div>
+        ${renderCurrencySelector(page, state)}
+        ${
+          !country
+            ? `<div class="ops-empty-state">请先选择国家/币种查看对应房间数据</div>`
+            : `
+              ${renderRoomOpsSummary(country)}
+              ${renderRoomOpsToolbar(state)}
+              ${
+                country.rooms.length
+                  ? `<section class="ops-room-list-grid">${renderRoomOpsCards(country, state)}</section>`
+                  : `<div class="ops-empty-state">当前国家暂无房间，请点击上方「创建房间」按钮添加</div>`
+              }
+              ${renderRoomOpsModal(page, state, country)}
+            `
+        }
+      </section>
+    `;
+  }
+
+  function downloadRoomOpsExport(country) {
+    const rows = [["国家", "币种", "房间名称", "房间RTP", "站点ID", "站点名称", "当前RTP", "今日投注额", "今日盈利", "在线人数"]];
+    country.rooms.forEach((room) => {
+      room.sites.forEach((site) => {
+        rows.push([
+          country.country,
+          country.code,
+          room.name,
+          `${Number(room.rtp).toFixed(2)}%`,
+          site.id,
+          site.name,
+          `${getRoomOpsSiteRtp(site, room)}%`,
+          formatRoomOpsMoney(site.todayBet, country),
+          formatRoomOpsMoney(site.todayProfit, country),
+          formatNumber(site.online, 2),
+        ]);
+      });
+    });
+    const csv = `\uFEFF${rows.map((row) => row.join(",")).join("\n")}`;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `plane-room-management-${country.code}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 300);
+  }
+
+  function takeRoomOpsSite(country, siteId) {
+    const unassignedIndex = country.unassignedSites.findIndex((site) => site.id === siteId);
+    if (unassignedIndex >= 0) return country.unassignedSites.splice(unassignedIndex, 1)[0];
+    for (const room of country.rooms) {
+      const index = room.sites.findIndex((site) => site.id === siteId);
+      if (index >= 0) return room.sites.splice(index, 1)[0];
+    }
+    return null;
+  }
+
+  function moveSitesIntoRoom(country, roomId, siteIds) {
+    const room = getRoomOpsRoom(country, roomId);
+    if (!room) return 0;
+    let moved = 0;
+    siteIds.forEach((siteId) => {
+      const site = takeRoomOpsSite(country, siteId);
+      if (site) {
+        room.sites.push(site);
+        moved += 1;
+      }
+    });
+    room.sites.sort((a, b) => a.id.localeCompare(b.id));
+    return moved;
+  }
+
+  function moveSitesOutOfRoom(country, roomId, siteIds) {
+    const room = getRoomOpsRoom(country, roomId);
+    if (!room) return 0;
+    let moved = 0;
+    siteIds.forEach((siteId) => {
+      const index = room.sites.findIndex((site) => site.id === siteId);
+      if (index >= 0) {
+        country.unassignedSites.push(room.sites.splice(index, 1)[0]);
+        moved += 1;
+      }
+    });
+    country.unassignedSites.sort((a, b) => a.id.localeCompare(b.id));
+    return moved;
+  }
+
+  function handleRootDrop(event) {
+    const targetChip = event.target.closest("[data-currency-code]");
+    if (!targetChip) return;
+    event.preventDefault();
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    if (page.type !== "roomOps") return;
+    const state = getPageState(pageKey, page);
+    const sourceCode = event.dataTransfer.getData("text/plain");
+    const targetCode = targetChip.dataset.currencyCode;
+    if (!sourceCode || !targetCode || sourceCode === targetCode) return;
+    const orderedCodes = getOrderedCurrencies(page, state).map((country) => country.code);
+    const nextOrder = orderedCodes.filter((code) => code !== sourceCode);
+    const targetIndex = nextOrder.indexOf(targetCode);
+    nextOrder.splice(Math.max(targetIndex, 0), 0, sourceCode);
+    state.currencyOrder = nextOrder;
+    persistRoomOpsCountryOrder(nextOrder);
+    renderCurrentPage();
+  }
+
+  function handleRootClick(event) {
+    const actionTarget = event.target.closest("[data-action]");
+    if (!actionTarget) return;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    const state = getPageState(pageKey, page);
+    const action = actionTarget.dataset.action;
+
+    if (page.type === "roomOps") {
+      const country = getRoomOpsCountry(page, state);
+
+      if (action === "country-picker-toggle") {
+        state.countryPickerOpen = !state.countryPickerOpen;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-select") {
+        state.pendingCountryCode = actionTarget.dataset.countryCode;
+        const selected = page.opsData.countries.find((item) => item.code === state.pendingCountryCode);
+        state.roomFilters.countryKeyword = selected ? getRoomOpsCountryOptionLabel(selected) : "";
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-open") {
+        state.modal = { type: "add-country" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "query") {
+        state.activeCountryCode = state.pendingCountryCode;
+        state.selectedRoomId = getRoomOpsCountry(page, state)?.rooms[0]?.id || "";
+        state.countryPickerOpen = false;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-reset") {
+        state.activeCountryCode = "";
+        state.pendingCountryCode = "";
+        state.selectedRoomId = "";
+        state.roomFilters.countryKeyword = "";
+        state.roomFilters.countrySearch = "";
+        state.expandedRooms = {};
+        state.selectedRoomIds = {};
+        state.countryPickerOpen = false;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-expand") {
+        const roomId = actionTarget.dataset.roomId;
+        state.selectedRoomId = roomId;
+        state.expandedRooms[roomId] = !state.expandedRooms[roomId];
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-page") {
+        state.roomPages[actionTarget.dataset.roomId] = Number(actionTarget.dataset.page || 1);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-open" && country) {
+        state.modal = { type: "create-room" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-modal-close") {
+        state.modal = null;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-submit") {
+        const countryName = (document.querySelector('[data-room-form="countryName"]')?.value || "").trim();
+        const countryCode = ((document.querySelector('[data-room-form="countryCode"]')?.value || "").trim()).toUpperCase();
+        const countrySymbol = (document.querySelector('[data-room-form="countrySymbol"]')?.value || "").trim();
+        if (!countryName || !/^[A-Z]{3}$/.test(countryCode)) {
+          showToast("请填写国家名称和3位大写币种代码");
+          return;
+        }
+        if (!window.confirm(`确认添加国家币种 ${countryName}-${countryCode} 吗？`)) return;
+        page.opsData.countries.push({ country: countryName, code: countryCode, symbol: countrySymbol, rooms: [], unassignedSites: [] });
+        state.currencyOrder = [...state.currencyOrder, countryCode];
+        persistRoomOpsCountryOrder(state.currencyOrder);
+        state.pendingCountryCode = countryCode;
+        state.roomFilters.countryKeyword = `${countryName}-${countryCode}`;
+        state.modal = null;
+        state.countryPickerOpen = true;
+        showToast("国家币种已添加");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-submit" && country) {
+        if (!window.confirm("确认创建该房间吗？")) return;
+        const roomName = (document.querySelector('[data-room-form="roomName"]')?.value || "").trim() || `${country.code}-房间001`;
+        const roomRtp = Number(document.querySelector('[data-room-form="roomRtp"]')?.value || 95);
+        const roomInventory = Number(document.querySelector('[data-room-form="roomInventory"]')?.value || 1000000);
+        const nextIndex = String(country.rooms.length + 1).padStart(3, "0");
+        const roomId = `${country.code.toLowerCase()}-room-${nextIndex}`;
+        country.rooms.push({
+          id: roomId,
+          code: `${country.code}-房间${nextIndex}`,
+          name: roomName,
+          rtp: Number(Math.min(99, Math.max(90, roomRtp)).toFixed(2)),
+          inventory: Number(Math.max(0, roomInventory).toFixed(2)),
+          sites: [],
+        });
+        state.modal = null;
+        state.selectedRoomId = roomId;
+        showToast("房间已创建");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-open" && country) {
+        const room = getRoomOpsRoom(country, actionTarget.dataset.roomId);
+        state.modal = { type: "edit-room-rtp", roomIds: room ? [room.id] : [], value: room ? Number(room.rtp).toFixed(2) : "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-bulk-rtp-open" && country) {
+        const selectedRoomIds = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]);
+        if (!selectedRoomIds.length) {
+          showToast("请先勾选房间");
+          return;
+        }
+        state.modal = { type: "edit-room-rtp", roomIds: selectedRoomIds, value: "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-save" && country) {
+        if (!window.confirm("确认调整选中房间RTP吗？")) return;
+        const nextValue = Number(Math.min(99, Math.max(90, Number(document.querySelector('[data-room-form="roomRtpValue"]')?.value || 95))).toFixed(2));
+        (state.modal?.roomIds || []).forEach((roomId) => {
+          const room = getRoomOpsRoom(country, roomId);
+          if (room) room.rtp = nextValue;
+        });
+        state.modal = null;
+        showToast("房间RTP已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-open") {
+        state.modal = { type: "edit-site-rtp", roomId: actionTarget.dataset.roomId, siteId: actionTarget.dataset.siteId };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-move-open" && country) {
+        state.modal = { type: "move-site", roomId: actionTarget.dataset.roomId, siteId: actionTarget.dataset.siteId, targetRoomId: "" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-save" && country) {
+        if (!window.confirm("确认调整该站点RTP吗？")) return;
+        const modal = state.modal || {};
+        const room = getRoomOpsRoom(country, modal.roomId);
+        const site = room?.sites.find((item) => item.id === modal.siteId);
+        if (site) {
+          const raw = (document.querySelector('[data-room-form="siteRtpValue"]')?.value || "").trim();
+          site.overrideRtp = raw ? Number(Math.min(99, Math.max(90, Number(raw)))).toFixed(2) : "";
+        }
+        state.modal = null;
+        showToast("站点RTP已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-assign-open" && country) {
+        state.modal = { type: "assign-sites", roomId: actionTarget.dataset.roomId, search: "", selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-in" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedSourceSiteIds || {}).filter((key) => state.modal.selectedSourceSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast("请先选择站点");
+          return;
+        }
+        if (!window.confirm(`确认移入 ${selectedIds.length} 个站点吗？`)) return;
+        const moved = moveSitesIntoRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移入 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-out" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedTargetSiteIds || {}).filter((key) => state.modal.selectedTargetSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast("请先选择站点");
+          return;
+        }
+        if (!window.confirm(`确认移出 ${selectedIds.length} 个站点吗？`)) return;
+        const moved = moveSitesOutOfRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移出 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-delete" && country) {
+        if (!window.confirm("确认删除该房间并解绑其下所有站点吗？")) return;
+        const roomId = actionTarget.dataset.roomId;
+        const roomIndex = country.rooms.findIndex((room) => room.id === roomId);
+        if (roomIndex >= 0) {
+          const [room] = country.rooms.splice(roomIndex, 1);
+          country.unassignedSites.push(...room.sites);
+          delete state.selectedRoomIds[roomId];
+          delete state.expandedRooms[roomId];
+          if (state.selectedRoomId === roomId) state.selectedRoomId = country.rooms[0]?.id || "";
+          showToast("房间已删除，站点已解绑");
+          renderCurrentPage();
+        }
+        return;
+      }
+
+      if (action === "room-export" && country) {
+        if (!window.confirm(`确认导出 ${getRoomOpsCountryOptionLabel(country)} 的房间数据吗？`)) return;
+        downloadRoomOpsExport(country);
+        showToast("导出完成");
+        return;
+      }
+    }
+  }
+
+  function handleRootChange(event) {
+    const actionTarget = event.target;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    if (page.type !== "roomOps") return;
+    const state = getPageState(pageKey, page);
+
+    if (actionTarget.matches("[data-room-filter]")) {
+      syncRoomOpsFiltersFromDom(state);
+      renderCurrentPage();
+      return;
+    }
+
+    if (actionTarget.matches("[data-room-select-id]")) {
+      state.selectedRoomIds[actionTarget.dataset.roomSelectId] = actionTarget.checked;
+      return;
+    }
+
+    if (actionTarget.matches('[data-action="page-size"]')) {
+      state.pageSize = Number(actionTarget.value);
+      renderCurrentPage();
+      return;
+    }
+
+    if (actionTarget.matches("[data-assign-side]")) {
+      if (!state.modal) return;
+      if (actionTarget.dataset.assignSide === "source") {
+        state.modal.selectedSourceSiteIds = state.modal.selectedSourceSiteIds || {};
+        state.modal.selectedSourceSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+      } else {
+        state.modal.selectedTargetSiteIds = state.modal.selectedTargetSiteIds || {};
+        state.modal.selectedTargetSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+      }
+      return;
+    }
+
+    if (actionTarget.matches("[data-room-modal-search]")) {
+      state.modal = { ...(state.modal || {}), search: actionTarget.value };
+      renderCurrentPage();
+    }
+  }
+
+  function renderCurrencySelector(page, state) {
+    const countries = getOrderedCurrencies(page, state);
+    const pendingCountry = countries.find((item) => item.code === state.pendingCountryCode) || null;
+    const keyword = (state.roomFilters.countrySearch || "").trim().toLowerCase();
+    const visibleCountries = countries.filter((country) => {
+      if (!keyword) return true;
+      return country.country.toLowerCase().includes(keyword) || country.code.toLowerCase().includes(keyword);
+    });
+    return `
+      <section class="ops-filter-bar ops-filter-bar-compact">
+        <div class="ops-country-picker">
+          <label>国家/币种</label>
+          <button type="button" class="ops-country-trigger" data-action="country-picker-toggle">
+            <span>${pendingCountry ? escapeHtml(getRoomOpsCountryOptionLabel(pendingCountry)) : "请选择国家/币种"}</span>
+            <em>${pendingCountry ? escapeHtml(pendingCountry.symbol || "") : ""}</em>
+          </button>
+          ${
+            state.countryPickerOpen
+              ? `
+                <div class="ops-country-panel">
+                  <div class="ops-country-panel-search">
+                    <input
+                      type="text"
+                      value="${escapeHtml(state.roomFilters.countrySearch || "")}"
+                      placeholder="搜索国家名称 / 币种代码"
+                      data-room-filter="countrySearch"
+                    />
+                  </div>
+                  <div class="ops-country-panel-list">
+                    ${
+                      visibleCountries.length
+                        ? visibleCountries
+                            .map(
+                              (country) => `
+                                <button
+                                  type="button"
+                                  class="ops-country-option${state.pendingCountryCode === country.code ? " active" : ""}"
+                                  draggable="true"
+                                  data-currency-code="${escapeHtml(country.code)}"
+                                  data-action="country-select"
+                                  data-country-code="${escapeHtml(country.code)}"
+                                >
+                                  <span>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</span>
+                                  <em>${escapeHtml(country.symbol || "")}</em>
+                                </button>
+                              `,
+                            )
+                            .join("")
+                        : `<div class="ops-room-empty">没有匹配的国家/币种</div>`
+                    }
+                  </div>
+                  <button type="button" class="ops-country-add" data-action="country-add-open">+ 添加国家币种</button>
+                </div>
+              `
+              : ""
+          }
+        </div>
+        <div class="ops-filter-actions">
+          <button type="button" class="primary" data-action="query">查询</button>
+          <button type="button" data-action="room-reset">重置</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSummary(country) {
+    const summary = getRoomOpsSummary(country);
+    return `
+      <section class="ops-summary-grid">
+        <article class="ops-summary-card">
+          <span>当前国家</span>
+          <strong>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>总在线人数</span>
+          <strong>${formatNumber(summary.totalOnline, 2)}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>今日综合RTP</span>
+          <strong>${summary.weightedRtp.toFixed(2)}%</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>总库存</span>
+          <strong>${formatRoomOpsMoney(summary.totalInventory, country)}</strong>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsToolbar(state) {
+    const selectedCount = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]).length;
+    return `
+      <section class="ops-toolbar ops-room-toolbar">
+        <button type="button" class="primary" data-action="room-create-open">创建房间</button>
+        <div class="ops-toolbar-actions">
+          <button type="button" data-action="room-bulk-rtp-open">批量调整RTP</button>
+          <button type="button" data-action="room-export">导出数据</button>
+        </div>
+        <span class="ops-toolbar-hint">已选择 ${formatNumber(selectedCount)} 个房间</span>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSiteTable(room, country, state) {
+    const pageSize = Number(state.pageSize || 100);
+    const currentPage = Math.max(1, state.roomPages?.[room.id] || 1);
+    const totalPages = Math.max(1, Math.ceil(room.sites.length / pageSize));
+    const page = Math.min(currentPage, totalPages);
+    const sites = room.sites.slice((page - 1) * pageSize, page * pageSize);
+    return `
+      <div class="ops-room-site-panel">
+        <div class="ops-room-site-header">
+          <strong>房间绑定站点明细</strong>
+          <span>${formatNumber(room.sites.length)} 条</span>
+        </div>
+        <div class="ops-room-site-table-wrap">
+          <table class="ops-room-site-table">
+            <thead>
+              <tr>
+                <th>站点ID</th>
+                <th>站点名称</th>
+                <th>当前RTP</th>
+                <th>今日投注额</th>
+                <th>今日盈利</th>
+                <th>在线人数</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                sites.length
+                  ? sites
+                      .map((site) => {
+                        const mismatch = Number(getRoomOpsSiteRtp(site, room)) !== Number(Number(room.rtp).toFixed(2));
+                        return `
+                          <tr>
+                            <td class="mono">${escapeHtml(site.id)}</td>
+                            <td>${escapeHtml(site.name)}</td>
+                            <td><span class="${mismatch ? "rtp-warning" : ""}">${getRoomOpsSiteRtp(site, room)}%</span></td>
+                            <td>${formatRoomOpsMoney(site.todayBet, country)}</td>
+                            <td class="${site.todayProfit >= 0 ? "profit-up" : "profit-down"}">${formatRoomOpsMoney(site.todayProfit, country)}</td>
+                            <td>${formatNumber(site.online, 2)}</td>
+                            <td><button type="button" data-action="site-rtp-open" data-room-id="${room.id}" data-site-id="${site.id}">调整RTP</button></td>
+                          </tr>
+                        `;
+                      })
+                      .join("")
+                  : `<tr><td colspan="7" class="ops-room-empty">当前房间暂无绑定站点</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar room-ops-pagination">
+          <div class="page-size-select">
+            <span>每页</span>
+            <select data-action="page-size">
+              ${(pageConfigs["flight-room-manage"].pageSizeOptions || [])
+                .map((option) => `<option value="${option}"${pageSize === option ? " selected" : ""}>${option}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="pager">
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.max(page - 1, 1)}"${
+              page <= 1 ? " disabled" : ""
+            }>上一页</button>
+            <span class="pager-summary">${page} / ${totalPages}</span>
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.min(page + 1, totalPages)}"${
+              page >= totalPages ? " disabled" : ""
+            }>下一页</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsCards(country, state) {
+    return country.rooms
+      .map((room) => {
+        const metrics = getRoomOpsMetrics(room);
+        const expanded = state.expandedRooms?.[room.id];
+        return `
+          <article class="ops-room-card light${state.selectedRoomId === room.id ? " active" : ""}">
+            <div class="ops-room-card-top">
+              <label class="ops-room-check">
+                <input type="checkbox" ${state.selectedRoomIds?.[room.id] ? "checked" : ""} data-room-select-id="${room.id}" />
+                <span></span>
+              </label>
+              <div class="ops-room-heading" data-action="room-expand" data-room-id="${room.id}">
+                <strong>${escapeHtml(room.name)}</strong>
+                <span>${escapeHtml(room.code)}</span>
+              </div>
+              <div class="ops-room-card-actions inline">
+                <button type="button" data-action="room-rtp-open" data-room-id="${room.id}">调整RTP</button>
+                <button type="button" data-action="room-assign-open" data-room-id="${room.id}">分配站点</button>
+                <button type="button" class="danger" data-action="room-delete" data-room-id="${room.id}">删除</button>
+              </div>
+            </div>
+            <div class="ops-room-metrics-grid room-card-metrics-5" data-action="room-expand" data-room-id="${room.id}">
+              <div><span>房间RTP</span><strong>${Number(room.rtp).toFixed(2)}%</strong></div>
+              <div><span>在线人数</span><strong>${formatNumber(metrics.online, 2)}</strong></div>
+              <div><span>房间库存</span><strong>${formatRoomOpsMoney(room.inventory, country)}</strong></div>
+              <div><span>绑定站点数</span><strong>${formatNumber(metrics.siteCount, 2)}</strong></div>
+              <div><span>累计投注额</span><strong>${formatRoomOpsMoney(metrics.todayBet, country)}</strong></div>
+            </div>
+            ${expanded ? renderRoomOpsSiteTable(room, country, state) : ""}
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRoomOpsAssignModal(state, country, room) {
+    const modal = state.modal || {};
+    const query = (modal.search || "").trim().toLowerCase();
+    const sourcePool = country.rooms
+      .filter((item) => item.id !== room.id)
+      .flatMap((item) => item.sites.map((site) => ({ ...site, sourceRoomCode: item.code })))
+      .concat(country.unassignedSites.map((site) => ({ ...site, sourceRoomCode: "未分配" })));
+    const sourceSites = sourcePool.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    const targetSites = room.sites.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    return `
+      <div class="ops-modal-backdrop">
+        <div class="ops-modal ops-modal-wide">
+          <div class="ops-modal-head">
+            <div>
+              <h2>分配站点</h2>
+              <p>${escapeHtml(room.name)} / ${escapeHtml(room.code)}</p>
+            </div>
+            <button type="button" data-action="room-modal-close">关闭</button>
+          </div>
+          <div class="ops-modal-note">同一站点仅能归属一个房间；站点移入后默认同步当前房间 RTP。</div>
+          <div class="ops-transfer-search">
+            <input type="text" value="${escapeHtml(modal.search || "")}" placeholder="按站点 ID / 名称搜索" data-room-modal-search />
+          </div>
+          <div class="ops-transfer-layout">
+            <section class="ops-transfer-panel">
+              <header>可分配站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  sourceSites.length
+                    ? sourceSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="source" data-site-id="${site.id}" ${
+                                state.modal?.selectedSourceSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${escapeHtml(site.sourceRoomCode)} | ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">没有可分配站点</div>`
+                }
+              </div>
+            </section>
+            <div class="ops-transfer-actions">
+              <button type="button" data-action="assign-move-in" data-room-id="${room.id}">移入</button>
+              <button type="button" data-action="assign-move-out" data-room-id="${room.id}">移出</button>
+            </div>
+            <section class="ops-transfer-panel">
+              <header>当前房间站点</header>
+              <div class="ops-transfer-list">
+                ${
+                  targetSites.length
+                    ? targetSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="target" data-site-id="${site.id}" ${
+                                state.modal?.selectedTargetSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${getRoomOpsSiteRtp(site, room)}% | ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">当前房间暂无站点</div>`
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsModal(page, state, country) {
+    const modal = state.modal || null;
+    if (!modal) return "";
+    if (modal.type === "create-room") {
+      const nextIndex = getNextRoomSequence(country);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>创建房间</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>房间名称</span>
+              <input type="text" value="${escapeHtml(modal.roomName || `${country.code}-房间${nextIndex}`)}" data-room-form="roomName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>房间RTP</span>
+                <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.roomRtp || "95.00")}" data-room-form="roomRtp" />
+              </label>
+              <label class="ops-modal-field">
+                <span>初始库存</span>
+                <input type="number" min="0" step="0.01" value="${escapeHtml(modal.roomInventory || "1000000.00")}" data-room-form="roomInventory" />
+              </label>
+            </div>
+            <div class="ops-modal-note">默认继承当前国家币种：${escapeHtml(country?.symbol || "")} ${escapeHtml(country?.code || "")}</div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-create-submit">确认创建</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-room-rtp") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${modal.roomIds?.length > 1 ? "批量调整RTP" : "调整房间RTP"}</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>RTP 范围 90% - 99%</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || "95.00")}" data-room-form="roomRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="room-rtp-save">确认调整</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-site-rtp") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      const site = room?.sites.find((item) => item.id === modal.siteId);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>调整站点RTP</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-note">站点单独 RTP 的优先级高于所属房间 RTP；留空则恢复继承房间 RTP。</div>
+            <div class="ops-modal-field">
+              <span>${escapeHtml(site?.id || "")} / ${escapeHtml(site?.name || "")}</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || site?.overrideRtp || "")}" data-room-form="siteRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="site-rtp-save">确认调整</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "assign-sites") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      return room ? renderRoomOpsAssignModal(state, country, room) : "";
+    }
+    if (modal.type === "add-country") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>添加国家币种</h2>
+              <button type="button" data-action="room-modal-close">关闭</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>国家名称</span>
+              <input type="text" value="${escapeHtml(modal.countryName || "")}" data-room-form="countryName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>3位大写币种代码</span>
+                <input type="text" value="${escapeHtml(modal.countryCode || "")}" maxlength="3" data-room-form="countryCode" />
+              </label>
+              <label class="ops-modal-field">
+                <span>币种符号</span>
+                <input type="text" value="${escapeHtml(modal.countrySymbol || "")}" data-room-form="countrySymbol" />
+              </label>
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">取消</button>
+              <button type="button" class="primary" data-action="country-add-submit">确认添加</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    return "";
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const country = getRoomOpsCountry(page, state);
+    if (country && !state.selectedRoomId && country.rooms[0]) state.selectedRoomId = country.rooms[0].id;
+    return `
+      <section class="room-ops-page room-ops-page-light">
+        <div class="page-heading room-ops-heading">
+          <h1 class="page-title">${escapeHtml(page.title)}</h1>
+          <div class="page-subtitle">${escapeHtml(page.section)} / ${escapeHtml(page.title)}</div>
+        </div>
+        ${renderCurrencySelector(page, state)}
+        ${
+          !country
+            ? `<div class="ops-empty-state">请先选择国家/币种查看对应房间数据</div>`
+            : `
+              ${renderRoomOpsSummary(country)}
+              ${renderRoomOpsToolbar(state)}
+              ${
+                country.rooms.length
+                  ? `<section class="ops-room-list-grid">${renderRoomOpsCards(country, state)}</section>`
+                  : `<div class="ops-empty-state">当前国家暂无房间，请点击上方「创建房间」按钮添加</div>`
+              }
+              ${renderRoomOpsModal(page, state, country)}
+            `
+        }
+      </section>
+    `;
+  }
+
+  function downloadRoomOpsExport(country) {
+    const rows = [["国家", "币种", "房间名称", "房间RTP", "房间库存", "站点ID", "站点名称", "当前RTP", "今日投注额", "今日盈利", "在线人数"]];
+    country.rooms.forEach((room) => {
+      const sites = room.sites.length ? room.sites : [null];
+      sites.forEach((site) => {
+        rows.push([
+          country.country,
+          country.code,
+          room.name,
+          `${Number(room.rtp).toFixed(2)}%`,
+          formatRoomOpsMoney(room.inventory, country),
+          site?.id || "",
+          site?.name || "",
+          site ? `${getRoomOpsSiteRtp(site, room)}%` : "",
+          site ? formatRoomOpsMoney(site.todayBet, country) : "",
+          site ? formatRoomOpsMoney(site.todayProfit, country) : "",
+          site ? formatNumber(site.online, 2) : "",
+        ]);
+      });
+    });
+    const csv = `\uFEFF${rows
+      .map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(","))
+      .join("\n")}`;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `plane-room-management-${country.code}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 300);
+  }
+
+  function moveSitesIntoRoom(country, roomId, siteIds) {
+    const room = getRoomOpsRoom(country, roomId);
+    if (!room) return 0;
+    let moved = 0;
+    siteIds.forEach((siteId) => {
+      const site = takeRoomOpsSite(country, siteId);
+      if (site) {
+        site.overrideRtp = "";
+        room.sites.push(site);
+        moved += 1;
+      }
+    });
+    room.sites.sort((a, b) => a.id.localeCompare(b.id));
+    return moved;
+  }
+
+  function queueRoomOpsInputFocus(selector) {
+    requestAnimationFrame(() => {
+      const input = document.querySelector(selector);
+      if (input) {
+        input.focus();
+        if (typeof input.setSelectionRange === "function") {
+          const length = String(input.value || "").length;
+          input.setSelectionRange(length, length);
+        }
+      }
+    });
+  }
+
+  function handleRootClick(event) {
+    const actionTarget = event.target.closest("[data-action]");
+    if (!actionTarget) return;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    const state = getPageState(pageKey, page);
+    const action = actionTarget.dataset.action;
+
+    if (page.type === "roomOps") {
+      const country = getRoomOpsCountry(page, state);
+
+      if (action === "country-picker-toggle") {
+        state.countryPickerOpen = !state.countryPickerOpen;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-select") {
+        state.pendingCountryCode = actionTarget.dataset.countryCode;
+        const selected = page.opsData.countries.find((item) => item.code === state.pendingCountryCode);
+        state.roomFilters.countryKeyword = selected ? getRoomOpsCountryOptionLabel(selected) : "";
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-open") {
+        state.modal = { type: "add-country" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "query") {
+        state.activeCountryCode = state.pendingCountryCode;
+        state.selectedRoomIds = {};
+        state.expandedRooms = {};
+        state.roomPages = {};
+        state.selectedRoomId = getRoomOpsCountry(page, state)?.rooms[0]?.id || "";
+        state.countryPickerOpen = false;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-reset") {
+        state.activeCountryCode = "";
+        state.pendingCountryCode = "";
+        state.selectedRoomId = "";
+        state.roomFilters.countryKeyword = "";
+        state.roomFilters.countrySearch = "";
+        state.expandedRooms = {};
+        state.selectedRoomIds = {};
+        state.roomPages = {};
+        state.countryPickerOpen = false;
+        state.modal = null;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-expand") {
+        const roomId = actionTarget.dataset.roomId;
+        state.selectedRoomId = roomId;
+        state.expandedRooms[roomId] = !state.expandedRooms[roomId];
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-page") {
+        state.roomPages[actionTarget.dataset.roomId] = Number(actionTarget.dataset.page || 1);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-open" && country) {
+        state.modal = { type: "create-room" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-modal-close") {
+        state.modal = null;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-submit") {
+        const countryName = (document.querySelector('[data-room-form="countryName"]')?.value || "").trim();
+        const countryCode = ((document.querySelector('[data-room-form="countryCode"]')?.value || "").trim()).toUpperCase();
+        const countrySymbol = (document.querySelector('[data-room-form="countrySymbol"]')?.value || "").trim();
+        if (!countryName || !/^[A-Z]{3}$/.test(countryCode)) {
+          showToast("请填写国家名称和 3 位大写币种代码");
+          return;
+        }
+        if (page.opsData.countries.some((item) => item.code === countryCode)) {
+          showToast("该币种代码已存在，请更换后重试");
+          return;
+        }
+        if (!window.confirm(`确认添加国家币种 ${countryName}-${countryCode} 吗？`)) return;
+        page.opsData.countries.push({ country: countryName, code: countryCode, symbol: countrySymbol, rooms: [], unassignedSites: [] });
+        state.currencyOrder = [...new Set([...(state.currencyOrder || []), countryCode])];
+        persistRoomOpsCountryOrder(state.currencyOrder);
+        state.pendingCountryCode = countryCode;
+        state.roomFilters.countryKeyword = `${countryName}-${countryCode}`;
+        state.roomFilters.countrySearch = "";
+        state.modal = null;
+        state.countryPickerOpen = true;
+        showToast("国家币种已添加");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-submit" && country) {
+        if (!window.confirm("确认创建该房间吗？")) return;
+        const nextIndex = getNextRoomSequence(country);
+        const roomName = (document.querySelector('[data-room-form="roomName"]')?.value || "").trim() || `${country.code}-房间${nextIndex}`;
+        const roomRtp = Number(document.querySelector('[data-room-form="roomRtp"]')?.value || 95);
+        const roomInventory = Number(document.querySelector('[data-room-form="roomInventory"]')?.value || 1000000);
+        const roomId = `${country.code.toLowerCase()}-room-${nextIndex}`;
+        country.rooms.push({
+          id: roomId,
+          code: `${country.code}-房间${nextIndex}`,
+          name: roomName,
+          rtp: Number(Math.min(99, Math.max(90, roomRtp)).toFixed(2)),
+          inventory: Number(Math.max(0, roomInventory).toFixed(2)),
+          sites: [],
+        });
+        state.modal = null;
+        state.selectedRoomId = roomId;
+        showToast("房间已创建");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-open" && country) {
+        const room = getRoomOpsRoom(country, actionTarget.dataset.roomId);
+        state.modal = { type: "edit-room-rtp", roomIds: room ? [room.id] : [], value: room ? Number(room.rtp).toFixed(2) : "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-bulk-rtp-open" && country) {
+        const selectedRoomIds = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]);
+        if (!selectedRoomIds.length) {
+          showToast("请先勾选房间");
+          return;
+        }
+        state.modal = { type: "edit-room-rtp", roomIds: selectedRoomIds, value: "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-save" && country) {
+        if (!window.confirm("确认调整选中房间 RTP 吗？")) return;
+        const nextValue = Number(Math.min(99, Math.max(90, Number(document.querySelector('[data-room-form="roomRtpValue"]')?.value || 95))).toFixed(2));
+        (state.modal?.roomIds || []).forEach((roomId) => {
+          const room = getRoomOpsRoom(country, roomId);
+          if (room) room.rtp = nextValue;
+        });
+        state.modal = null;
+        showToast("房间 RTP 已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-open") {
+        state.modal = { type: "edit-site-rtp", roomId: actionTarget.dataset.roomId, siteId: actionTarget.dataset.siteId };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-save" && country) {
+        if (!window.confirm("确认调整该站点 RTP 吗？")) return;
+        const modal = state.modal || {};
+        const room = getRoomOpsRoom(country, modal.roomId);
+        const site = room?.sites.find((item) => item.id === modal.siteId);
+        if (site) {
+          const raw = (document.querySelector('[data-room-form="siteRtpValue"]')?.value || "").trim();
+          site.overrideRtp = raw ? Number(Math.min(99, Math.max(90, Number(raw)))).toFixed(2) : "";
+        }
+        state.modal = null;
+        showToast("站点 RTP 已更新");
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-assign-open" && country) {
+        state.modal = { type: "assign-sites", roomId: actionTarget.dataset.roomId, search: "", selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-in" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedSourceSiteIds || {}).filter((key) => state.modal.selectedSourceSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast("请先选择站点");
+          return;
+        }
+        if (!window.confirm(`确认移入 ${selectedIds.length} 个站点吗？`)) return;
+        const moved = moveSitesIntoRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移入 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-out" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedTargetSiteIds || {}).filter((key) => state.modal.selectedTargetSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast("请先选择站点");
+          return;
+        }
+        if (!window.confirm(`确认移出 ${selectedIds.length} 个站点吗？`)) return;
+        const moved = moveSitesOutOfRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`已移出 ${moved} 个站点`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-delete" && country) {
+        if (!window.confirm("确认删除该房间并解绑其下所有站点吗？")) return;
+        const roomId = actionTarget.dataset.roomId;
+        const roomIndex = country.rooms.findIndex((room) => room.id === roomId);
+        if (roomIndex >= 0) {
+          const [room] = country.rooms.splice(roomIndex, 1);
+          country.unassignedSites.push(...room.sites);
+          delete state.selectedRoomIds[roomId];
+          delete state.expandedRooms[roomId];
+          delete state.roomPages[roomId];
+          if (state.selectedRoomId === roomId) state.selectedRoomId = country.rooms[0]?.id || "";
+          showToast("房间已删除，站点已解绑");
+          renderCurrentPage();
+        }
+        return;
+      }
+
+      if (action === "room-export" && country) {
+        if (!window.confirm(`确认导出 ${getRoomOpsCountryOptionLabel(country)} 的房间数据吗？`)) return;
+        downloadRoomOpsExport(country);
+        showToast("导出完成");
+        return;
+      }
+    }
+  }
+
+  function handleRootChange(event) {
+    const actionTarget = event.target;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    if (page.type !== "roomOps") return;
+    const state = getPageState(pageKey, page);
+
+    if (actionTarget.matches("[data-room-country-select]")) {
+      state.pendingCountryCode = actionTarget.value;
+      const selected = page.opsData.countries.find((item) => item.code === state.pendingCountryCode);
+      state.roomFilters.countryKeyword = selected ? getRoomOpsCountryOptionLabel(selected) : "";
+      return;
+    }
+
+    if (actionTarget.matches("[data-room-select-id]")) {
+      state.selectedRoomIds[actionTarget.dataset.roomSelectId] = actionTarget.checked;
+      renderCurrentPage();
+      return;
+    }
+
+    if (actionTarget.matches('[data-action="page-size"]')) {
+      state.pageSize = Number(actionTarget.value);
+      renderCurrentPage();
+      return;
+    }
+
+    if (actionTarget.matches("[data-assign-side]")) {
+      if (!state.modal) return;
+      if (actionTarget.dataset.assignSide === "source") {
+        state.modal.selectedSourceSiteIds = state.modal.selectedSourceSiteIds || {};
+        state.modal.selectedSourceSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+      } else {
+        state.modal.selectedTargetSiteIds = state.modal.selectedTargetSiteIds || {};
+        state.modal.selectedTargetSiteIds[actionTarget.dataset.siteId] = actionTarget.checked;
+      }
+      return;
+    }
+  }
+
+  function handleRootInput(event) {
+    const actionTarget = event.target;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    if (page.type !== "roomOps") return;
+    const state = getPageState(pageKey, page);
+
+    if (actionTarget.matches("[data-room-filter]")) {
+      syncRoomOpsFiltersFromDom(state);
+      renderCurrentPage();
+      queueRoomOpsInputFocus(`[data-room-filter="${actionTarget.dataset.roomFilter}"]`);
+      return;
+    }
+
+    if (actionTarget.matches("[data-room-modal-search]")) {
+      state.modal = { ...(state.modal || {}), search: actionTarget.value };
+      renderCurrentPage();
+      queueRoomOpsInputFocus("[data-room-modal-search]");
+    }
+  }
+
+  const roomOpsText = {
+    section: "\u6e38\u620f\u7ba1\u7406",
+    title: "\u98de\u673a\u623f\u95f4\u7ba1\u7406",
+    countryCurrency: "\u56fd\u5bb6/\u5e01\u79cd",
+    selectCountryCurrency: "\u8bf7\u9009\u62e9\u56fd\u5bb6/\u5e01\u79cd",
+    searchCountryCurrency: "\u641c\u7d22\u56fd\u5bb6\u540d\u79f0 / \u5e01\u79cd\u4ee3\u7801",
+    noMatchedCountryCurrency: "\u6ca1\u6709\u5339\u914d\u7684\u56fd\u5bb6/\u5e01\u79cd",
+    addCountryCurrency: "+ \u6dfb\u52a0\u56fd\u5bb6\u5e01\u79cd",
+    query: "\u67e5\u8be2",
+    reset: "\u91cd\u7f6e",
+    currentCountry: "\u5f53\u524d\u56fd\u5bb6",
+    totalOnline: "\u603b\u5728\u7ebf\u4eba\u6570",
+    todayWeightedRtp: "\u4eca\u65e5\u7efc\u5408RTP",
+    totalInventory: "\u603b\u5e93\u5b58",
+    createRoom: "\u521b\u5efa\u623f\u95f4",
+    batchAdjustRtp: "\u6279\u91cf\u8c03\u6574RTP",
+    exportData: "\u5bfc\u51fa\u6570\u636e",
+    roomSelectedPrefix: "\u5df2\u9009\u62e9 ",
+    roomSelectedSuffix: " \u4e2a\u623f\u95f4",
+    roomSiteDetail: "\u623f\u95f4\u7ed1\u5b9a\u7ad9\u70b9\u660e\u7ec6",
+    countrySiteDetail: "\u5168\u90e8\u623f\u95f4\u7ad9\u70b9\u660e\u7ec6",
+    rowUnit: " \u6761",
+    merchantId: "\u5546\u6237ID",
+    siteId: "\u7ad9\u70b9ID",
+    siteName: "\u5546\u6237\u540d\u79f0",
+    roomNameColumn: "\u6240\u5c5e\u623f\u95f4",
+    siteSearchPlaceholder: "\u641c\u7d22\u623f\u95f4 / \u7ad9\u70b9ID / \u5546\u6237ID",
+    currentRtp: "\u5f53\u524dRTP",
+    todayBet: "\u4eca\u65e5\u6295\u6ce8\u989d",
+    todayProfit: "\u4eca\u65e5\u76c8\u5229",
+    onlineUsers: "\u5728\u7ebf\u4eba\u6570",
+    action: "\u64cd\u4f5c",
+    adjustRtp: "\u8c03\u6574RTP",
+    moveSite: "\u79fb\u52a8\u7ad9\u70b9",
+    moveSiteTitle: "\u79fb\u52a8\u7ad9\u70b9",
+    targetRoom: "\u76ee\u6807\u623f\u95f4",
+    noTargetRooms: "\u6682\u65e0\u53ef\u79fb\u52a8\u7684\u5176\u4ed6\u623f\u95f4",
+    noBoundSites: "\u5f53\u524d\u623f\u95f4\u6682\u65e0\u7ed1\u5b9a\u7ad9\u70b9",
+    pageSize: "\u6bcf\u9875",
+    prevPage: "\u4e0a\u4e00\u9875",
+    nextPage: "\u4e0b\u4e00\u9875",
+    assignSites: "\u5206\u914d\u7ad9\u70b9",
+    delete: "\u5220\u9664",
+    roomRtp: "\u623f\u95f4RTP",
+    roomInventory: "\u623f\u95f4\u5e93\u5b58",
+    boundSiteCount: "\u7ed1\u5b9a\u7ad9\u70b9\u6570",
+    totalBet: "\u7d2f\u8ba1\u6295\u6ce8\u989d",
+    unassigned: "\u672a\u5206\u914d",
+    close: "\u5173\u95ed",
+    assignNote: "\u540c\u4e00\u7ad9\u70b9\u4ec5\u80fd\u5f52\u5c5e\u4e00\u4e2a\u623f\u95f4\uff1b\u7ad9\u70b9\u79fb\u5165\u540e\u9ed8\u8ba4\u540c\u6b65\u5f53\u524d\u623f\u95f4 RTP\u3002",
+    searchSite: "\u6309\u7ad9\u70b9 ID / \u540d\u79f0\u641c\u7d22",
+    availableSites: "\u53ef\u5206\u914d\u7ad9\u70b9",
+    noAvailableSites: "\u6ca1\u6709\u53ef\u5206\u914d\u7ad9\u70b9",
+    moveIn: "\u79fb\u5165",
+    moveOut: "\u79fb\u51fa",
+    currentRoomSites: "\u5f53\u524d\u623f\u95f4\u7ad9\u70b9",
+    noCurrentRoomSites: "\u5f53\u524d\u623f\u95f4\u6682\u65e0\u7ad9\u70b9",
+    createRoomTitle: "\u521b\u5efa\u623f\u95f4",
+    roomName: "\u623f\u95f4\u540d\u79f0",
+    initialInventory: "\u521d\u59cb\u5e93\u5b58",
+    inheritCurrency: "\u9ed8\u8ba4\u7ee7\u627f\u5f53\u524d\u56fd\u5bb6\u5e01\u79cd\uff1a",
+    cancel: "\u53d6\u6d88",
+    confirmCreate: "\u786e\u8ba4\u521b\u5efa",
+    editRoomRtp: "\u8c03\u6574\u623f\u95f4RTP",
+    editRoomRtpBatch: "\u6279\u91cf\u8c03\u6574RTP",
+    rtpRange: "RTP \u8303\u56f4 90% - 99%",
+    confirmAdjust: "\u786e\u8ba4\u8c03\u6574",
+    editSiteRtp: "\u8c03\u6574\u7ad9\u70b9RTP",
+    siteRtpNote:
+      "\u7ad9\u70b9\u5355\u72ec RTP \u7684\u4f18\u5148\u7ea7\u9ad8\u4e8e\u6240\u5c5e\u623f\u95f4 RTP\uff1b\u7559\u7a7a\u5219\u6062\u590d\u7ee7\u627f\u623f\u95f4 RTP\u3002",
+    addCountryTitle: "\u6dfb\u52a0\u56fd\u5bb6\u5e01\u79cd",
+    createCountry: "\u521b\u5efa\u56fd\u5bb6",
+    countryName: "\u56fd\u5bb6\u540d\u79f0",
+    currencyCode: "3\u4f4d\u5927\u5199\u5e01\u79cd\u4ee3\u7801",
+    currencySymbol: "\u5e01\u79cd\u7b26\u53f7",
+    confirmAdd: "\u786e\u8ba4\u6dfb\u52a0",
+    emptyNeedCountry: "\u8bf7\u5148\u9009\u62e9\u56fd\u5bb6/\u5e01\u79cd\u67e5\u770b\u5bf9\u5e94\u623f\u95f4\u6570\u636e",
+    emptyNoRooms: "\u5f53\u524d\u56fd\u5bb6\u6682\u65e0\u623f\u95f4\uff0c\u8bf7\u70b9\u51fb\u4e0a\u65b9\u300c\u521b\u5efa\u623f\u95f4\u300d\u6309\u94ae\u6dfb\u52a0",
+    toastFillCountry: "\u8bf7\u586b\u5199\u56fd\u5bb6\u540d\u79f0\u548c 3 \u4f4d\u5927\u5199\u5e01\u79cd\u4ee3\u7801",
+    toastDuplicateCode: "\u8be5\u5e01\u79cd\u4ee3\u7801\u5df2\u5b58\u5728\uff0c\u8bf7\u66f4\u6362\u540e\u91cd\u8bd5",
+    toastCountryAdded: "\u56fd\u5bb6\u5e01\u79cd\u5df2\u6dfb\u52a0",
+    toastRoomCreated: "\u623f\u95f4\u5df2\u521b\u5efa",
+    toastNeedRoom: "\u8bf7\u5148\u52fe\u9009\u623f\u95f4",
+    toastRoomRtpUpdated: "\u623f\u95f4 RTP \u5df2\u66f4\u65b0",
+    toastSiteRtpUpdated: "\u7ad9\u70b9 RTP \u5df2\u66f4\u65b0",
+    toastSiteMoved: "\u7ad9\u70b9\u5df2\u79fb\u52a8",
+    toastNeedSite: "\u8bf7\u5148\u9009\u62e9\u7ad9\u70b9",
+    toastNeedTargetRoom: "\u8bf7\u5148\u9009\u62e9\u76ee\u6807\u623f\u95f4",
+    toastMoveInPrefix: "\u5df2\u79fb\u5165 ",
+    toastMoveOutPrefix: "\u5df2\u79fb\u51fa ",
+    toastSiteCountSuffix: " \u4e2a\u7ad9\u70b9",
+    toastRoomDeleted: "\u623f\u95f4\u5df2\u5220\u9664\uff0c\u7ad9\u70b9\u5df2\u89e3\u7ed1",
+    toastExportDone: "\u5bfc\u51fa\u5b8c\u6210",
+    confirmAddCountryPrefix: "\u786e\u8ba4\u6dfb\u52a0\u56fd\u5bb6\u5e01\u79cd ",
+    confirmSuffix: " \u5417\uff1f",
+    confirmCreateRoom: "\u786e\u8ba4\u521b\u5efa\u8be5\u623f\u95f4\u5417\uff1f",
+    confirmAdjustRooms: "\u786e\u8ba4\u8c03\u6574\u9009\u4e2d\u623f\u95f4 RTP \u5417\uff1f",
+    confirmAdjustSite: "\u786e\u8ba4\u8c03\u6574\u8be5\u7ad9\u70b9 RTP \u5417\uff1f",
+    confirmMoveSite: "\u786e\u8ba4\u79fb\u52a8\u8be5\u7ad9\u70b9\u5417\uff1f",
+    confirmMoveInPrefix: "\u786e\u8ba4\u79fb\u5165 ",
+    confirmMoveOutPrefix: "\u786e\u8ba4\u79fb\u51fa ",
+    confirmDeleteRoom: "\u786e\u8ba4\u5220\u9664\u8be5\u623f\u95f4\u5e76\u89e3\u7ed1\u5176\u4e0b\u6240\u6709\u7ad9\u70b9\u5417\uff1f",
+    confirmExportPrefix: "\u786e\u8ba4\u5bfc\u51fa ",
+    confirmExportSuffix: " \u7684\u623f\u95f4\u6570\u636e\u5417\uff1f",
+  };
+
+  function buildFlightRoomOpsData() {
+    const createSite = (id, name, todayBet, todayProfit, online, overrideRtp = "", merchantId = "") => ({
+      merchantId: merchantId || `M${id}`,
+      id,
+      name,
+      todayBet,
+      todayProfit,
+      online,
+      overrideRtp,
+    });
+    const createRoom = (id, code, name, rtp, inventory, sites = []) => ({ id, code, name, rtp, inventory, sites });
+    const createCountry = (country, code, symbol, rooms = [], unassignedSites = []) => ({ country, code, symbol, rooms, unassignedSites });
+    const indiaRooms = [
+      createRoom("inr-room-001", "INR-\u623f\u95f4001", "\u65b0\u624b\u623f", 95, 1000000, [
+        createSite("1001", "\u5370\u5ea6\u7ad9\u70b9A", 1250000, 120000, 320),
+        createSite("1002", "\u5370\u5ea6\u7ad9\u70b9B", 860000, -64000, 188, "94.80"),
+      ]),
+      createRoom("inr-room-002", "INR-\u623f\u95f4002", "\u6807\u51c6\u623f", 95.2, 1000000, [
+        createSite("1003", "\u5370\u5ea6\u7ad9\u70b9C", 910000, 86000, 256),
+        createSite("1004", "\u5370\u5ea6\u7ad9\u70b9D", 760000, 54000, 196),
+      ]),
+      ...range(18, (index) => {
+        const roomIndex = index + 3;
+        const roomNo = String(roomIndex).padStart(3, "0");
+        const baseBet = 540000 + index * 62000;
+        const roomRtp = Number((94.9 + (index % 6) * 0.07).toFixed(2));
+        return createRoom(`inr-room-${roomNo}`, `INR-\u623f\u95f4${roomNo}`, `\u623f\u95f4${roomNo}`, roomRtp, 1000000 + index * 222222, [
+          createSite(
+            `1${roomNo}1`,
+            `\u5370\u5ea6\u7ad9\u70b9${String.fromCharCode(69 + index * 2)}`,
+            baseBet,
+            index % 3 === 0 ? 42000 + index * 2200 : -18000 + index * 1600,
+            110 + (index % 7) * 23,
+            index % 4 === 0 ? Number((roomRtp - 0.18).toFixed(2)).toFixed(2) : "",
+          ),
+          createSite(
+            `1${roomNo}2`,
+            `\u5370\u5ea6\u7ad9\u70b9${String.fromCharCode(70 + index * 2)}`,
+            baseBet + 185000,
+            index % 2 === 0 ? 26000 + index * 1700 : -9000 + index * 1400,
+            90 + (index % 5) * 19,
+          ),
+        ]);
+      }),
+    ];
+    return {
+      countries: [
+        createCountry("\u5370\u5ea6", "INR", "\u20b9", indiaRooms, [createSite("1005", "\u5370\u5ea6\u7ad9\u70b9E", 420000, 26000, 108)]),
+        createCountry("\u5370\u5c3c", "IDR", "Rp", [
+          createRoom("idr-room-001", "IDR-\u623f\u95f4001", "\u6807\u51c6\u623f", 95, 1000000, [
+            createSite("3001", "\u5370\u5c3c\u7ad9\u70b9A", 268000000, 22400000, 412),
+          ]),
+        ], [createSite("3002", "\u5370\u5c3c\u7ad9\u70b9B", 108000000, 7200000, 144)]),
+        createCountry("\u5df4\u897f", "BRL", "R$", [
+          createRoom("brl-room-001", "BRL-\u623f\u95f4001", "\u6d3b\u52a8\u623f", 95.6, 1000000, [
+            createSite("4001", "\u5df4\u897f\u7ad9\u70b9A", 348000, 42000, 162),
+          ]),
+        ], [createSite("4002", "\u5df4\u897f\u7ad9\u70b9B", 192000, 12000, 88)]),
+        createCountry("\u6cf0\u56fd", "THB", "\u0e3f", [], []),
+        createCountry("\u7f8e\u56fd", "USD", "$", [
+          createRoom("usd-room-001", "USD-\u623f\u95f4001", "VIP \u623f", 95.4, 1000000, [
+            createSite("2001", "\u7f8e\u56fd\u7ad9\u70b9A", 860000, 84000, 188),
+            createSite("2002", "\u7f8e\u56fd\u7ad9\u70b9B", 640000, -26000, 136, "94.60"),
+          ]),
+        ], [createSite("2003", "\u7f8e\u56fd\u7ad9\u70b9C", 380000, 12000, 92)]),
+      ],
+    };
+  }
+
+  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+  pageConfigs["flight-room-manage"].defaultPageSize = 100;
+  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+  pageConfigs["flight-room-manage"].section = roomOpsText.section;
+  pageConfigs["flight-room-manage"].title = roomOpsText.title;
+
+  function renderCurrencySelector(page, state) {
+    const countries = getOrderedCurrencies(page, state);
+    const hasCountry = countries.length > 0;
+    return `
+      <section class="ops-filter-bar ops-filter-bar-compact">
+        <div class="ops-country-picker">
+          <label>${roomOpsText.countryCurrency}</label>
+          <div class="ops-country-chip-row">
+            ${
+              countries.length
+                ? countries
+                    .map(
+                      (country) => `
+                        <button
+                          type="button"
+                          class="ops-country-chip${state.pendingCountryCode === country.code ? " active" : ""}"
+                          draggable="true"
+                          data-currency-code="${escapeHtml(country.code)}"
+                          data-action="country-select"
+                          data-country-code="${escapeHtml(country.code)}"
+                        >
+                          <span>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</span>
+                          <em>${escapeHtml(country.symbol || "")}</em>
+                        </button>
+                      `,
+                    )
+                    .join("")
+                : `<div class="ops-room-empty">${roomOpsText.noMatchedCountryCurrency}</div>`
+            }
+            <button type="button" class="ops-country-action ops-country-create" data-action="country-add-open">${roomOpsText.createCountry}</button>
+            <button type="button" class="ops-country-action ops-room-create-top" data-action="room-create-open"${hasCountry ? "" : " disabled"}>${roomOpsText.createRoom}</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSummary(country) {
+    const summary = getRoomOpsSummary(country);
+    return `
+      <section class="ops-summary-grid">
+        <article class="ops-summary-card">
+          <span>${roomOpsText.currentCountry}</span>
+          <strong>${escapeHtml(getRoomOpsCountryOptionLabel(country))}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>${roomOpsText.totalOnline}</span>
+          <strong>${formatNumber(summary.totalOnline)}</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>${roomOpsText.todayWeightedRtp}</span>
+          <strong>${summary.weightedRtp.toFixed(2)}%</strong>
+        </article>
+        <article class="ops-summary-card">
+          <span>${roomOpsText.totalInventory}</span>
+          <strong>${formatRoomOpsMoney(summary.totalInventory, country)}</strong>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsToolbar(state) {
+    const selectedCount = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]).length;
+    return `
+      <section class="ops-toolbar ops-room-toolbar">
+        <button type="button" class="primary" data-action="room-create-open">${roomOpsText.createRoom}</button>
+        <div class="ops-toolbar-actions">
+          <button type="button" data-action="room-bulk-rtp-open">${roomOpsText.batchAdjustRtp}</button>
+          <button type="button" data-action="room-export">${roomOpsText.exportData}</button>
+        </div>
+        <span class="ops-toolbar-hint">${roomOpsText.roomSelectedPrefix}${formatNumber(selectedCount)}${roomOpsText.roomSelectedSuffix}</span>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsSiteTable(room, country, state) {
+    const pageSize = Number(state.pageSize || 100);
+    const currentPage = Math.max(1, state.roomPages?.[room.id] || 1);
+    const totalPages = Math.max(1, Math.ceil(room.sites.length / pageSize));
+    const page = Math.min(currentPage, totalPages);
+    const sites = room.sites.slice((page - 1) * pageSize, page * pageSize);
+    return `
+      <div class="ops-room-site-panel">
+        <div class="ops-room-site-header">
+          <strong>${roomOpsText.roomSiteDetail}</strong>
+          <span>${formatNumber(room.sites.length)}${roomOpsText.rowUnit}</span>
+        </div>
+        <div class="ops-room-site-table-wrap">
+          <table class="ops-room-site-table">
+            <thead>
+              <tr>
+                <th>${roomOpsText.merchantId}</th>
+                <th>${roomOpsText.siteId}</th>
+                <th>${roomOpsText.siteName}</th>
+                <th>${roomOpsText.currentRtp}</th>
+                <th>${roomOpsText.todayBet}</th>
+                <th>${roomOpsText.todayProfit}</th>
+                <th>${roomOpsText.onlineUsers}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                sites.length
+                  ? sites
+                      .map((site) => {
+                        const mismatch = Number(getRoomOpsSiteRtp(site, room)) !== Number(Number(room.rtp).toFixed(2));
+                        return `
+                          <tr>
+                            <td class="mono">${escapeHtml(site.merchantId || "")}</td>
+                            <td class="mono">${escapeHtml(site.id)}</td>
+                            <td>${escapeHtml(site.name)}</td>
+                            <td><span class="${mismatch ? "rtp-warning" : ""}">${getRoomOpsSiteRtp(site, room)}%</span></td>
+                            <td>${formatRoomOpsMoney(site.todayBet, country)}</td>
+                            <td class="${site.todayProfit >= 0 ? "profit-up" : "profit-down"}">${formatRoomOpsMoney(site.todayProfit, country)}</td>
+                            <td>${formatNumber(site.online)}</td>
+                          </tr>
+                        `;
+                      })
+                      .join("")
+                  : `<tr><td colspan="7" class="ops-room-empty">${roomOpsText.noBoundSites}</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar room-ops-pagination">
+          <div class="page-size-select">
+            <span>${roomOpsText.pageSize}</span>
+            <select data-action="page-size">
+              ${(pageConfigs["flight-room-manage"].pageSizeOptions || [])
+                .map((option) => `<option value="${option}"${pageSize === option ? " selected" : ""}>${option}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="pager">
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.max(page - 1, 1)}"${
+              page <= 1 ? " disabled" : ""
+            }>${roomOpsText.prevPage}</button>
+            <span class="pager-summary">${page} / ${totalPages}</span>
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${room.id}" data-page="${Math.min(page + 1, totalPages)}"${
+              page >= totalPages ? " disabled" : ""
+            }>${roomOpsText.nextPage}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsCountrySiteTable(country, state) {
+    const pageSize = Number(state.pageSize || 100);
+    const pageKey = "__all-room-sites__";
+    const keyword = (state.roomFilters?.siteSearch || "").trim().toLowerCase();
+    const allSites = (country.rooms || []).flatMap((room) =>
+      room.sites.map((site) => ({
+        ...site,
+        roomId: room.id,
+        roomName: room.name,
+        roomCode: room.code,
+        roomRtp: room.rtp,
+      })),
+    );
+    const filteredSites = allSites.filter((site) => {
+      if (!keyword) return true;
+      return [
+        site.merchantId,
+        site.id,
+        site.roomName,
+        site.roomCode,
+      ].some((value) => String(value || "").toLowerCase().includes(keyword));
+    });
+    const currentPage = Math.max(1, state.roomPages?.[pageKey] || 1);
+    const totalPages = Math.max(1, Math.ceil(filteredSites.length / pageSize));
+    const page = Math.min(currentPage, totalPages);
+    const sites = filteredSites.slice((page - 1) * pageSize, page * pageSize);
+    return `
+      <section class="ops-room-site-panel ops-room-site-panel-global">
+        <div class="ops-room-site-header">
+          <strong>${roomOpsText.countrySiteDetail}</strong>
+          <span>${formatNumber(filteredSites.length)}${roomOpsText.rowUnit}</span>
+        </div>
+        <div class="ops-room-site-toolbar">
+          <input
+            type="text"
+            value="${escapeHtml(state.roomFilters?.siteSearch || "")}"
+            placeholder="${roomOpsText.siteSearchPlaceholder}"
+            data-room-filter="siteSearch"
+          />
+        </div>
+        <div class="ops-room-site-table-wrap">
+          <table class="ops-room-site-table">
+            <thead>
+              <tr>
+                <th>${roomOpsText.merchantId}</th>
+                <th>${roomOpsText.siteId}</th>
+                <th>${roomOpsText.siteName}</th>
+                <th>${roomOpsText.roomNameColumn}</th>
+                <th>${roomOpsText.currentRtp}</th>
+                <th>${roomOpsText.todayBet}</th>
+                <th>${roomOpsText.todayProfit}</th>
+                <th>${roomOpsText.onlineUsers}</th>
+                <th>${roomOpsText.action}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${
+                sites.length
+                  ? sites
+                      .map((site) => {
+                        const mismatch = Number(site.overrideRtp || site.roomRtp).toFixed(2) !== Number(site.roomRtp).toFixed(2);
+                        return `
+                          <tr>
+                            <td class="mono">${escapeHtml(site.merchantId || "")}</td>
+                            <td class="mono">${escapeHtml(site.id)}</td>
+                            <td>${escapeHtml(site.name)}</td>
+                            <td>${escapeHtml(site.roomName)} <span class="ops-room-site-roomcode">${escapeHtml(site.roomCode)}</span></td>
+                            <td><span class="${mismatch ? "rtp-warning" : ""}">${Number(site.overrideRtp || site.roomRtp).toFixed(2)}%</span></td>
+                            <td>${formatRoomOpsMoney(site.todayBet, country)}</td>
+                            <td class="${site.todayProfit >= 0 ? "profit-up" : "profit-down"}">${formatRoomOpsMoney(site.todayProfit, country)}</td>
+                            <td>${formatNumber(site.online)}</td>
+                            <td>
+                              <button
+                                type="button"
+                                data-action="site-move-open"
+                                data-room-id="${site.roomId}"
+                                data-site-id="${site.id}"
+                                ${country.rooms.length > 1 ? "" : "disabled"}
+                              >${roomOpsText.moveSite}</button>
+                            </td>
+                          </tr>
+                        `;
+                      })
+                      .join("")
+                  : `<tr><td colspan="9" class="ops-room-empty">${roomOpsText.noBoundSites}</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar room-ops-pagination">
+          <div class="page-size-select">
+            <span>${roomOpsText.pageSize}</span>
+            <select data-action="page-size">
+              ${(pageConfigs["flight-room-manage"].pageSizeOptions || [])
+                .map((option) => `<option value="${option}"${pageSize === option ? " selected" : ""}>${option}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="pager">
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${pageKey}" data-page="${Math.max(page - 1, 1)}"${
+              page <= 1 ? " disabled" : ""
+            }>${roomOpsText.prevPage}</button>
+            <span class="pager-summary">${page} / ${totalPages}</span>
+            <button class="pager-btn" type="button" data-action="room-page" data-room-id="${pageKey}" data-page="${Math.min(page + 1, totalPages)}"${
+              page >= totalPages ? " disabled" : ""
+            }>${roomOpsText.nextPage}</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderRoomOpsCards(country, state) {
+    return country.rooms
+      .map((room) => {
+        const metrics = getRoomOpsMetrics(room);
+        return `
+          <article class="ops-room-card light${state.selectedRoomId === room.id ? " active" : ""}">
+            <div class="ops-room-card-top">
+              <div class="ops-room-heading" data-action="room-expand" data-room-id="${room.id}">
+                <strong>${escapeHtml(room.name)}</strong>
+                <span>${escapeHtml(room.code)}</span>
+              </div>
+              <span class="ops-room-site-badge">${formatNumber(metrics.siteCount)}${roomOpsText.rowUnit}</span>
+            </div>
+            <div class="ops-room-kpi-list" data-action="room-expand" data-room-id="${room.id}">
+              <div class="ops-room-kpi-row">
+                <span>${roomOpsText.roomRtp}：</span>
+                <strong>${Number(room.rtp).toFixed(2)}%</strong>
+              </div>
+              <div class="ops-room-kpi-row">
+                <span>${roomOpsText.onlineUsers}：</span>
+                <strong>${formatNumber(metrics.online)}</strong>
+              </div>
+              <div class="ops-room-kpi-row">
+                <span>${roomOpsText.roomInventory}：</span>
+                <strong>${formatRoomOpsPlainMoney(room.inventory)}</strong>
+              </div>
+              <div class="ops-room-kpi-row">
+                <span>${roomOpsText.totalBet}：</span>
+                <strong>${formatRoomOpsPlainMoney(metrics.todayBet)}</strong>
+              </div>
+            </div>
+            <div class="ops-room-card-actions inline">
+              <button type="button" data-action="room-rtp-open" data-room-id="${room.id}">${roomOpsText.adjustRtp}</button>
+              <button type="button" data-action="room-assign-open" data-room-id="${room.id}">${roomOpsText.assignSites}</button>
+              <button type="button" class="danger" data-action="room-delete" data-room-id="${room.id}">${roomOpsText.delete}</button>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRoomOpsAssignModal(state, country, room) {
+    const modal = state.modal || {};
+    const query = (modal.search || "").trim().toLowerCase();
+    const sourcePool = country.rooms
+      .filter((item) => item.id !== room.id)
+      .flatMap((item) => item.sites.map((site) => ({ ...site, sourceRoomCode: item.code })))
+      .concat(country.unassignedSites.map((site) => ({ ...site, sourceRoomCode: roomOpsText.unassigned })));
+    const sourceSites = sourcePool.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    const targetSites = room.sites.filter((site) => !query || site.id.toLowerCase().includes(query) || site.name.toLowerCase().includes(query));
+    return `
+      <div class="ops-modal-backdrop">
+        <div class="ops-modal ops-modal-wide">
+          <div class="ops-modal-head">
+            <div>
+              <h2>${roomOpsText.assignSites}</h2>
+              <p>${escapeHtml(room.name)} / ${escapeHtml(room.code)}</p>
+            </div>
+            <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+          </div>
+          <div class="ops-modal-note">${roomOpsText.assignNote}</div>
+          <div class="ops-transfer-search">
+            <input type="text" value="${escapeHtml(modal.search || "")}" placeholder="${roomOpsText.searchSite}" data-room-modal-search />
+          </div>
+          <div class="ops-transfer-layout">
+            <section class="ops-transfer-panel">
+              <header>${roomOpsText.availableSites}</header>
+              <div class="ops-transfer-list">
+                ${
+                  sourceSites.length
+                    ? sourceSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="source" data-site-id="${site.id}" ${
+                                state.modal?.selectedSourceSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${escapeHtml(site.sourceRoomCode)} | ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">${roomOpsText.noAvailableSites}</div>`
+                }
+              </div>
+            </section>
+            <div class="ops-transfer-actions">
+              <button type="button" data-action="assign-move-in" data-room-id="${room.id}">${roomOpsText.moveIn}</button>
+              <button type="button" data-action="assign-move-out" data-room-id="${room.id}">${roomOpsText.moveOut}</button>
+            </div>
+            <section class="ops-transfer-panel">
+              <header>${roomOpsText.currentRoomSites}</header>
+              <div class="ops-transfer-list">
+                ${
+                  targetSites.length
+                    ? targetSites
+                        .map(
+                          (site) => `
+                            <label class="ops-transfer-item">
+                              <input type="checkbox" data-assign-side="target" data-site-id="${site.id}" ${
+                                state.modal?.selectedTargetSiteIds?.[site.id] ? "checked" : ""
+                              } />
+                              <span>
+                                <strong>${escapeHtml(site.id)} / ${escapeHtml(site.name)}</strong>
+                                <em>${getRoomOpsSiteRtp(site, room)}% | ${formatRoomOpsMoney(site.todayBet, country)}</em>
+                              </span>
+                            </label>
+                          `,
+                        )
+                        .join("")
+                    : `<div class="ops-room-empty">${roomOpsText.noCurrentRoomSites}</div>`
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoomOpsModal(page, state, country) {
+    const modal = state.modal || null;
+    if (!modal) return "";
+    if (modal.type === "create-room") {
+      const nextIndex = getNextRoomSequence(country);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${roomOpsText.createRoomTitle}</h2>
+              <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>${roomOpsText.roomName}</span>
+              <input type="text" value="${escapeHtml(modal.roomName || `${country.code}-\u623f\u95f4${nextIndex}`)}" data-room-form="roomName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>${roomOpsText.roomRtp}</span>
+                <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.roomRtp || "95.00")}" data-room-form="roomRtp" />
+              </label>
+              <label class="ops-modal-field">
+                <span>${roomOpsText.initialInventory}</span>
+                <input type="number" min="0" step="0.01" value="${escapeHtml(modal.roomInventory || "1000000.00")}" data-room-form="roomInventory" />
+              </label>
+            </div>
+            <div class="ops-modal-note">${roomOpsText.inheritCurrency} ${escapeHtml(country?.symbol || "")} ${escapeHtml(country?.code || "")}</div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">${roomOpsText.cancel}</button>
+              <button type="button" class="primary" data-action="room-create-submit">${roomOpsText.confirmCreate}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-room-rtp") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${modal.roomIds?.length > 1 ? roomOpsText.editRoomRtpBatch : roomOpsText.editRoomRtp}</h2>
+              <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>${roomOpsText.rtpRange}</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || "95.00")}" data-room-form="roomRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">${roomOpsText.cancel}</button>
+              <button type="button" class="primary" data-action="room-rtp-save">${roomOpsText.confirmAdjust}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "edit-site-rtp") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      const site = room?.sites.find((item) => item.id === modal.siteId);
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${roomOpsText.editSiteRtp}</h2>
+              <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+            </div>
+            <div class="ops-modal-note">${roomOpsText.siteRtpNote}</div>
+            <div class="ops-modal-field">
+              <span>${escapeHtml(site?.id || "")} / ${escapeHtml(site?.name || "")}</span>
+              <input type="number" min="90" max="99" step="0.01" value="${escapeHtml(modal.value || site?.overrideRtp || "")}" data-room-form="siteRtpValue" />
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">${roomOpsText.cancel}</button>
+              <button type="button" class="primary" data-action="site-rtp-save">${roomOpsText.confirmAdjust}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    if (modal.type === "assign-sites") {
+      const room = getRoomOpsRoom(country, modal.roomId);
+      return room ? renderRoomOpsAssignModal(state, country, room) : "";
+    }
+    if (modal.type === "add-country") {
+      return `
+        <div class="ops-modal-backdrop">
+          <div class="ops-modal">
+            <div class="ops-modal-head">
+              <h2>${roomOpsText.addCountryTitle}</h2>
+              <button type="button" data-action="room-modal-close">${roomOpsText.close}</button>
+            </div>
+            <div class="ops-modal-field">
+              <span>${roomOpsText.countryName}</span>
+              <input type="text" value="${escapeHtml(modal.countryName || "")}" data-room-form="countryName" />
+            </div>
+            <div class="ops-modal-grid">
+              <label class="ops-modal-field">
+                <span>${roomOpsText.currencyCode}</span>
+                <input type="text" value="${escapeHtml(modal.countryCode || "")}" maxlength="3" data-room-form="countryCode" />
+              </label>
+              <label class="ops-modal-field">
+                <span>${roomOpsText.currencySymbol}</span>
+                <input type="text" value="${escapeHtml(modal.countrySymbol || "")}" data-room-form="countrySymbol" />
+              </label>
+            </div>
+            <div class="ops-modal-actions">
+              <button type="button" data-action="room-modal-close">${roomOpsText.cancel}</button>
+              <button type="button" class="primary" data-action="country-add-submit">${roomOpsText.confirmAdd}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    return "";
+  }
+
+  function renderFlightRoomOpsPage(page, state) {
+    const countries = getOrderedCurrencies(page, state);
+    if (!state.activeCountryCode && countries[0]) {
+      state.activeCountryCode = countries[0].code;
+      state.pendingCountryCode = countries[0].code;
+    } else if (!state.pendingCountryCode && state.activeCountryCode) {
+      state.pendingCountryCode = state.activeCountryCode;
+    }
+    const country = getRoomOpsCountry(page, state);
+    if (country && !state.selectedRoomId && country.rooms[0]) state.selectedRoomId = country.rooms[0].id;
+    return `
+      <section class="room-ops-page room-ops-page-light">
+        <div class="page-heading room-ops-heading">
+          <h1 class="page-title">${escapeHtml(page.title)}</h1>
+          <div class="page-subtitle">${escapeHtml(page.section)} / ${escapeHtml(page.title)}</div>
+        </div>
+        ${
+          !country
+            ? `
+              ${renderCurrencySelector(page, state)}
+              <div class="ops-empty-state">${roomOpsText.emptyNeedCountry}</div>
+            `
+            : `
+              ${renderRoomOpsSummary(country)}
+              ${renderCurrencySelector(page, state)}
+              ${
+                country.rooms.length
+                  ? `
+                    <section class="ops-room-list-grid">${renderRoomOpsCards(country, state)}</section>
+                    ${renderRoomOpsCountrySiteTable(country, state)}
+                  `
+                  : `<div class="ops-empty-state">${roomOpsText.emptyNoRooms}</div>`
+              }
+              ${renderRoomOpsModal(page, state, country)}
+            `
+        }
+      </section>
+    `;
+  }
+
+  function downloadRoomOpsExport(country) {
+    const rows = [[
+      roomOpsText.currentCountry,
+      roomOpsText.countryCurrency,
+      roomOpsText.roomName,
+      roomOpsText.roomRtp,
+      roomOpsText.roomInventory,
+      roomOpsText.merchantId,
+      roomOpsText.siteId,
+      roomOpsText.siteName,
+      roomOpsText.currentRtp,
+      roomOpsText.todayBet,
+      roomOpsText.todayProfit,
+      roomOpsText.onlineUsers,
+    ]];
+    country.rooms.forEach((room) => {
+      const sites = room.sites.length ? room.sites : [null];
+      sites.forEach((site) => {
+        rows.push([
+          country.country,
+          country.code,
+          room.name,
+          `${Number(room.rtp).toFixed(2)}%`,
+          formatRoomOpsMoney(room.inventory, country),
+          site?.merchantId || "",
+          site?.id || "",
+          site?.name || "",
+          site ? `${getRoomOpsSiteRtp(site, room)}%` : "",
+          site ? formatRoomOpsMoney(site.todayBet, country) : "",
+          site ? formatRoomOpsMoney(site.todayProfit, country) : "",
+          site ? formatNumber(site.online) : "",
+        ]);
+      });
+    });
+    const csv = `\uFEFF${rows
+      .map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(","))
+      .join("\n")}`;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `plane-room-management-${country.code}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 300);
+  }
+
+  function handleRootClick(event) {
+    const actionTarget = event.target.closest("[data-action]");
+    if (!actionTarget) return;
+    const pageKey = getCurrentPageKey();
+    const page = pageConfigs[pageKey];
+    const state = getPageState(pageKey, page);
+    const action = actionTarget.dataset.action;
+
+    if (page.type === "roomOps") {
+      const country = getRoomOpsCountry(page, state);
+
+      if (action === "country-picker-toggle") {
+        state.countryPickerOpen = !state.countryPickerOpen;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-select") {
+        state.pendingCountryCode = actionTarget.dataset.countryCode;
+        state.activeCountryCode = state.pendingCountryCode;
+        state.selectedRoomIds = {};
+        state.expandedRooms = {};
+        state.roomPages = {};
+        const selected = page.opsData.countries.find((item) => item.code === state.pendingCountryCode);
+        state.roomFilters.countryKeyword = selected ? getRoomOpsCountryOptionLabel(selected) : "";
+        state.selectedRoomId = selected?.rooms?.[0]?.id || "";
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-open") {
+        state.modal = { type: "add-country" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-expand") {
+        const roomId = actionTarget.dataset.roomId;
+        state.selectedRoomId = roomId;
+        state.expandedRooms[roomId] = !state.expandedRooms[roomId];
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-page") {
+        state.roomPages[actionTarget.dataset.roomId] = Number(actionTarget.dataset.page || 1);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-open" && country) {
+        state.modal = { type: "create-room" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-modal-close") {
+        state.modal = null;
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "country-add-submit") {
+        const countryName = (document.querySelector('[data-room-form="countryName"]')?.value || "").trim();
+        const countryCode = ((document.querySelector('[data-room-form="countryCode"]')?.value || "").trim()).toUpperCase();
+        const countrySymbol = (document.querySelector('[data-room-form="countrySymbol"]')?.value || "").trim();
+        if (!countryName || !/^[A-Z]{3}$/.test(countryCode)) {
+          showToast(roomOpsText.toastFillCountry);
+          return;
+        }
+        if (page.opsData.countries.some((item) => item.code === countryCode)) {
+          showToast(roomOpsText.toastDuplicateCode);
+          return;
+        }
+        if (!window.confirm(`${roomOpsText.confirmAddCountryPrefix}${countryName}-${countryCode}${roomOpsText.confirmSuffix}`)) return;
+        page.opsData.countries.push({ country: countryName, code: countryCode, symbol: countrySymbol, rooms: [], unassignedSites: [] });
+        state.currencyOrder = [...new Set([...(state.currencyOrder || []), countryCode])];
+        persistRoomOpsCountryOrder(state.currencyOrder);
+        state.pendingCountryCode = countryCode;
+        state.roomFilters.countryKeyword = `${countryName}-${countryCode}`;
+        state.roomFilters.countrySearch = "";
+        state.modal = null;
+        state.countryPickerOpen = true;
+        showToast(roomOpsText.toastCountryAdded);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-create-submit" && country) {
+        if (!window.confirm(roomOpsText.confirmCreateRoom)) return;
+        const nextIndex = getNextRoomSequence(country);
+        const roomName = (document.querySelector('[data-room-form="roomName"]')?.value || "").trim() || `${country.code}-\u623f\u95f4${nextIndex}`;
+        const roomRtp = Number(document.querySelector('[data-room-form="roomRtp"]')?.value || 95);
+        const roomInventory = Number(document.querySelector('[data-room-form="roomInventory"]')?.value || 1000000);
+        const roomId = `${country.code.toLowerCase()}-room-${nextIndex}`;
+        country.rooms.push({
+          id: roomId,
+          code: `${country.code}-\u623f\u95f4${nextIndex}`,
+          name: roomName,
+          rtp: Number(Math.min(99, Math.max(90, roomRtp)).toFixed(2)),
+          inventory: Number(Math.max(0, roomInventory).toFixed(2)),
+          sites: [],
+        });
+        state.modal = null;
+        state.selectedRoomId = roomId;
+        showToast(roomOpsText.toastRoomCreated);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-open" && country) {
+        const room = getRoomOpsRoom(country, actionTarget.dataset.roomId);
+        state.modal = { type: "edit-room-rtp", roomIds: room ? [room.id] : [], value: room ? Number(room.rtp).toFixed(2) : "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-bulk-rtp-open" && country) {
+        const selectedRoomIds = Object.keys(state.selectedRoomIds || {}).filter((key) => state.selectedRoomIds[key]);
+        if (!selectedRoomIds.length) {
+          showToast(roomOpsText.toastNeedRoom);
+          return;
+        }
+        state.modal = { type: "edit-room-rtp", roomIds: selectedRoomIds, value: "95.00" };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-rtp-save" && country) {
+        if (!window.confirm(roomOpsText.confirmAdjustRooms)) return;
+        const nextValue = Number(Math.min(99, Math.max(90, Number(document.querySelector('[data-room-form="roomRtpValue"]')?.value || 95))).toFixed(2));
+        (state.modal?.roomIds || []).forEach((roomId) => {
+          const room = getRoomOpsRoom(country, roomId);
+          if (room) room.rtp = nextValue;
+        });
+        state.modal = null;
+        showToast(roomOpsText.toastRoomRtpUpdated);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-open") {
+        state.modal = { type: "edit-site-rtp", roomId: actionTarget.dataset.roomId, siteId: actionTarget.dataset.siteId };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-rtp-save" && country) {
+        if (!window.confirm(roomOpsText.confirmAdjustSite)) return;
+        const modal = state.modal || {};
+        const room = getRoomOpsRoom(country, modal.roomId);
+        const site = room?.sites.find((item) => item.id === modal.siteId);
+        if (site) {
+          const raw = (document.querySelector('[data-room-form="siteRtpValue"]')?.value || "").trim();
+          site.overrideRtp = raw ? Number(Math.min(99, Math.max(90, Number(raw)))).toFixed(2) : "";
+        }
+        state.modal = null;
+        showToast(roomOpsText.toastSiteRtpUpdated);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "site-move-save" && country) {
+        const modal = state.modal || {};
+        const targetRoomId = (document.querySelector('[data-room-form="targetRoomId"]')?.value || "").trim();
+        if (!targetRoomId) {
+          showToast(roomOpsText.toastNeedTargetRoom);
+          return;
+        }
+        if (!window.confirm(roomOpsText.confirmMoveSite)) return;
+        const moved = moveSitesIntoRoom(country, targetRoomId, [modal.siteId]);
+        state.modal = null;
+        showToast(moved ? roomOpsText.toastSiteMoved : roomOpsText.toastNeedSite);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-assign-open" && country) {
+        state.modal = { type: "assign-sites", roomId: actionTarget.dataset.roomId, search: "", selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-in" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedSourceSiteIds || {}).filter((key) => state.modal.selectedSourceSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast(roomOpsText.toastNeedSite);
+          return;
+        }
+        if (!window.confirm(`${roomOpsText.confirmMoveInPrefix}${selectedIds.length}${roomOpsText.toastSiteCountSuffix}${roomOpsText.confirmSuffix}`)) return;
+        const moved = moveSitesIntoRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`${roomOpsText.toastMoveInPrefix}${moved}${roomOpsText.toastSiteCountSuffix}`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "assign-move-out" && country) {
+        const selectedIds = Object.keys(state.modal?.selectedTargetSiteIds || {}).filter((key) => state.modal.selectedTargetSiteIds[key]);
+        if (!selectedIds.length) {
+          showToast(roomOpsText.toastNeedSite);
+          return;
+        }
+        if (!window.confirm(`${roomOpsText.confirmMoveOutPrefix}${selectedIds.length}${roomOpsText.toastSiteCountSuffix}${roomOpsText.confirmSuffix}`)) return;
+        const moved = moveSitesOutOfRoom(country, actionTarget.dataset.roomId, selectedIds);
+        state.modal = { ...state.modal, selectedSourceSiteIds: {}, selectedTargetSiteIds: {} };
+        showToast(`${roomOpsText.toastMoveOutPrefix}${moved}${roomOpsText.toastSiteCountSuffix}`);
+        renderCurrentPage();
+        return;
+      }
+
+      if (action === "room-delete" && country) {
+        if (!window.confirm(roomOpsText.confirmDeleteRoom)) return;
+        const roomId = actionTarget.dataset.roomId;
+        const roomIndex = country.rooms.findIndex((room) => room.id === roomId);
+        if (roomIndex >= 0) {
+          const [room] = country.rooms.splice(roomIndex, 1);
+          country.unassignedSites.push(...room.sites);
+          delete state.selectedRoomIds[roomId];
+          delete state.expandedRooms[roomId];
+          delete state.roomPages[roomId];
+          if (state.selectedRoomId === roomId) state.selectedRoomId = country.rooms[0]?.id || "";
+          showToast(roomOpsText.toastRoomDeleted);
+          renderCurrentPage();
+        }
+        return;
+      }
+
+      if (action === "room-export" && country) {
+        if (!window.confirm(`${roomOpsText.confirmExportPrefix}${getRoomOpsCountryOptionLabel(country)}${roomOpsText.confirmExportSuffix}`)) return;
+        downloadRoomOpsExport(country);
+        showToast(roomOpsText.toastExportDone);
+        return;
+      }
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     window.renderManagementPage = renderCurrentPage;
     renderCurrentPage();
@@ -2096,6 +6649,11 @@
     if (root) {
       root.addEventListener("click", handleRootClick);
       root.addEventListener("change", handleRootChange);
+      root.addEventListener("input", handleRootInput);
+      root.addEventListener("dragstart", handleRootDragStart);
+      root.addEventListener("dragover", handleRootDragOver);
+      root.addEventListener("drop", handleRootDrop);
+      root.addEventListener("dragend", handleRootDragEnd);
     }
   });
 
