@@ -8,24 +8,18 @@
     api: `<svg ${iconAttrs}><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg>`,
     merchant: `<svg ${iconAttrs}><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>`,
     system: `<svg ${iconAttrs}><path d="M12 3l8 4-8 4-8-4 8-4Z"/><path d="M4 11l8 4 8-4"/><path d="M4 15l8 4 8-4"/></svg>`,
+    dashboard: `<svg ${iconAttrs}><path d="M4 13a8 8 0 0 1 16 0"/><path d="M12 13l4-5"/><path d="M5 17h14"/><path d="M7 21h10"/></svg>`,
   };
 
   const menuItems = [
+    { label: "仪表盘", href: "dashboard.html", icon: "dashboard" },
     {
       label: "玩家账号",
       icon: "player",
       children: [
         { label: "用户账号", href: "player-account.html" },
+        { label: "游戏记录", href: "player-game-records.html" },
         { label: "今日玩家盈亏", href: "player-today-profit-loss.html" },
-      ],
-    },
-    {
-      label: "游戏数据",
-      icon: "report",
-      children: [
-        { label: "游戏数据", href: "game-report.html" },
-        { label: "平台盈亏", href: "platform-profit.html" },
-        { label: "每日报告", href: "daily-report.html" },
       ],
     },
     {
@@ -35,6 +29,7 @@
         { label: "游戏留存", href: "game-retention.html" },
         { label: "玩家留存", href: "player-retention.html" },
         { label: "站点统计", href: "data-statistics.html" },
+        { label: "每日报告", href: "daily-report.html" },
       ],
     },
     {
@@ -52,6 +47,7 @@
       children: [
         { label: "账户管理", href: "system-account.html" },
         { label: "角色管理", href: "system-role.html" },
+        { label: "操作日志", href: "system-operation-log.html" },
       ],
     },
   ];
