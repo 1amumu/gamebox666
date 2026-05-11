@@ -79,6 +79,47 @@
           </div>
         </div>
       </section>
+      <div class="account-detail-mask" data-account-detail hidden>
+        <div class="account-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="account-detail-title">
+          <div class="account-detail-head">
+            <div>
+              <h3 id="account-detail-title">会员详情 <span data-detail-id></span></h3>
+              <p>按当前账号列表数据同步展示会员基础信息与游戏输赢概览。</p>
+            </div>
+            <button class="account-detail-close" type="button" data-detail-close aria-label="关闭">×</button>
+          </div>
+          <div class="account-detail-body">
+            <div class="account-detail-grid" data-detail-grid></div>
+            <div class="account-detail-tabs" data-detail-tabs>
+              <button class="active" type="button" data-detail-tab="game">游戏输赢数据</button>
+              <button type="button" data-detail-tab="bet">投注行为</button>
+              <button type="button" data-detail-tab="asset">资产变化走势</button>
+              <button type="button" data-detail-tab="control">点控列表</button>
+            </div>
+            <div class="account-detail-panel active" data-detail-panel="game">
+              <div class="account-detail-filter">
+                <label><span>游戏</span><select><option>全部</option><option>Avlator</option><option>Fortune Gems</option><option>Maya Gold</option></select></label>
+                <div>
+                  <button class="profit-btn" type="button">重置</button>
+                  <button class="profit-btn primary" type="button">搜索</button>
+                </div>
+              </div>
+              <div class="account-detail-table-wrap">
+                <div class="account-detail-table" data-detail-game-table></div>
+              </div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="bet">
+              <div class="account-detail-empty">暂无更多投注行为数据</div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="asset">
+              <div class="account-detail-empty">暂无资产变化走势数据</div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="control">
+              <div class="account-detail-empty">暂无点控记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
   <script src="common.js"></script>
@@ -92,6 +133,13 @@
     const loginTo = document.querySelector("[data-login-to]");
     const searchAccount = document.querySelector("[data-account-search]");
     const resetAccount = document.querySelector("[data-account-reset]");
+    const detailMask = document.querySelector("[data-account-detail]");
+    const detailId = document.querySelector("[data-detail-id]");
+    const detailGrid = document.querySelector("[data-detail-grid]");
+    const detailGameTable = document.querySelector("[data-detail-game-table]");
+    const detailClose = document.querySelector("[data-detail-close]");
+    const detailTabs = Array.from(document.querySelectorAll("[data-detail-tab]"));
+    const detailPanels = Array.from(document.querySelectorAll("[data-detail-panel]"));
 
     function applyAccountFilters() {
       const platform = platformFilter.value.trim();
@@ -128,7 +176,8 @@
     });
 
     document.querySelectorAll("[data-copy]").forEach((button) => {
-      button.addEventListener("click", async () => {
+      button.addEventListener("click", async (event) => {
+        event.stopPropagation();
         const value = button.dataset.copy;
         try {
           await navigator.clipboard.writeText(value);
@@ -142,6 +191,98 @@
         }
         button.classList.add("copied");
         setTimeout(() => button.classList.remove("copied"), 900);
+      });
+    });
+
+    function cellText(row, index) {
+      return row.children[index]?.innerText.trim().replace(/\s+/g, " ") || "-";
+    }
+
+    function moneyNumber(text) {
+      const value = Number(String(text).replace(/,/g, ""));
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function detailItems(row) {
+      const platformId = row.dataset.platform;
+      const balance = cellText(row, 6);
+      const todayBet = cellText(row, 4);
+      const historyWin = cellText(row, 5);
+      const loginCount = cellText(row, 7);
+      const lastLogin = cellText(row, 8);
+      const loginIp = cellText(row, 9);
+      const historyWinValue = moneyNumber(historyWin);
+      const todayBetValue = moneyNumber(todayBet);
+      const rtp = todayBetValue ? Math.max(0, 100 - Math.abs(historyWinValue / todayBetValue) * 100).toFixed(2) : "0.00";
+      return [
+        ["唯一ID", platformId.slice(-7)],
+        ["会员ID", platformId],
+        ["所属商户", "ar518888"],
+        ["商户ID", platformId.slice(0, 6)],
+        ["当前余额", `${balance} USD`],
+        ["创建时间", "2026-04-24 13:16:50"],
+        ["最后登录时间", lastLogin],
+        ["当天投注", `${todayBet} USD`],
+        ["历史投注", `${Math.max(todayBetValue * 1.8, 24).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`],
+        ["今日RTP", `${rtp}%`],
+        ["历史RTP", historyWinValue < 0 ? "32.50%" : "68.80%"],
+        ["三日登录次数", loginCount],
+        ["今日输赢", `${historyWin} USD`],
+        ["历史输赢", `${historyWin} USD`],
+        ["今日局数", loginCount],
+        ["历史局数", String(Math.max(6, Number(loginCount) * 8 || 6))],
+        ["留存天数", row.dataset.loginDate === "2026-05-07" ? "1" : "2"],
+        ["注册IP地址", loginIp],
+        ["登录设备码", "go-resty/2.17.1"],
+        ["登录IP地址", loginIp],
+        ["账号状态", cellText(row, 3)]
+      ];
+    }
+
+    function renderDetail(row) {
+      const platformId = row.dataset.platform;
+      const name = row.dataset.name;
+      const todayBet = cellText(row, 4);
+      const historyWin = cellText(row, 5);
+      const loginCount = cellText(row, 7);
+      const gameName = name.includes("gems") ? "Fortune Gems" : name.includes("maya") ? "Maya Gold" : "Avlator";
+      const brand = gameName === "Maya Gold" ? "JILI" : "PG";
+      detailId.textContent = `[${platformId}]`;
+      detailGrid.innerHTML = detailItems(row).map(([label, value]) => (
+        `<div class="account-detail-cell"><span>${label}</span><strong>${value}</strong></div>`
+      )).join("");
+      detailGameTable.innerHTML = `
+        <div class="account-detail-game-row header"><div>序号</div><div>品牌</div><div>中文游戏名称</div><div>英文游戏名称</div><div>注单额</div><div>注单数</div><div>总输赢</div><div>RTP</div></div>
+        <div class="account-detail-game-row"><div>1</div><div><span class="detail-brand">${brand}</span></div><div>${gameName === "Avlator" ? "飞机游戏" : gameName}</div><div>${gameName}</div><div class="profit-num pos">${todayBet} USD</div><div>${Math.max(1, Number(loginCount) || 1)}</div><div class="profit-num neg">${historyWin} USD</div><div>${moneyNumber(todayBet) ? Math.max(0, 100 - Math.abs(moneyNumber(historyWin) / moneyNumber(todayBet)) * 100).toFixed(2) : "0.00"}%</div></div>
+      `;
+    }
+
+    function openAccountDetail(row) {
+      renderDetail(row);
+      detailMask.hidden = false;
+      document.body.classList.add("modal-open");
+    }
+
+    function closeAccountDetail() {
+      detailMask.hidden = true;
+      document.body.classList.remove("modal-open");
+    }
+
+    accountRows.forEach((row) => {
+      row.querySelector(".profit-player")?.addEventListener("click", () => openAccountDetail(row));
+    });
+
+    detailClose.addEventListener("click", closeAccountDetail);
+    detailMask.addEventListener("click", (event) => {
+      if (event.target === detailMask) closeAccountDetail();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !detailMask.hidden) closeAccountDetail();
+    });
+    detailTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        detailTabs.forEach((item) => item.classList.toggle("active", item === tab));
+        detailPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.detailPanel === tab.dataset.detailTab));
       });
     });
 
