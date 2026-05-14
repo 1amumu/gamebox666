@@ -37,6 +37,7 @@
       icon: "config",
       children: [
         { label: "游戏控制", href: "game-control.html" },
+        { label: "游戏设置", href: "game-setting.html" },
       ],
     },
     { label: "API配置", href: "api-access.html", icon: "api" },
