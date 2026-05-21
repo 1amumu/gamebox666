@@ -54,21 +54,12 @@
                 <option value="待解除">待解除</option>
               </select>
             </label>
-            <label class="controlled-filter">
-              <span>用户标签</span>
-              <select class="account-input account-select" v-model="tagFilter">
-                <option value="">全部</option>
-                <option value="低端玩家">低端玩家</option>
-                <option value="中端玩家">中端玩家</option>
-                <option value="优质玩家">优质玩家</option>
-                <option value="疑似刷分">疑似刷分</option>
-              </select>
-            </label>
             <label class="controlled-filter grow">
               <span>用户ID</span>
               <input class="account-input" v-model.trim="keyword" type="text" placeholder="请输入用户ID" />
             </label>
             <div class="controlled-actions">
+              <button class="profit-btn create" type="button" @click="openControlModal">新增</button>
               <button class="profit-btn primary" type="button" @click="applySearch">查询</button>
               <button class="profit-btn" type="button" @click="resetFilters">重置</button>
             </div>
@@ -95,7 +86,6 @@
                 <div><span class="rtp-value" :class="{ high: player.rtp >= 100, low: player.rtp < 90 }">{{ player.rtp.toFixed(2) }}%</span></div>
                 <div class="profit-num" :class="player.totalProfit >= 0 ? 'pos' : 'neg'">{{ signedMoney(player.totalProfit) }}</div>
                 <div class="controlled-row-actions">
-                  <button type="button" @click="viewPlayer(player)">查看</button>
                   <button type="button" @click="releasePlayer(player)">解除</button>
                 </div>
               </div>
@@ -114,6 +104,154 @@
             <button v-for="item in pageNumbers" :key="item" type="button" :class="{ active: item === page }" @click="page = item">{{ item }}</button>
             <button type="button" :disabled="page >= totalPages" @click="page += 1">›</button>
           </div>
+
+          <div v-if="controlModal" class="admin-control-backdrop" @click.self="closeControlModal">
+            <section class="admin-control-modal">
+              <div class="admin-control-head">
+                <div>
+                  <h2>游戏控制</h2>
+                  <p>按平台、游戏品牌和控制规则配置玩家游戏控制策略。</p>
+                </div>
+                <button type="button" @click="closeControlModal">关闭</button>
+              </div>
+              <div class="admin-control-body">
+                <div class="admin-control-card admin-control-basic-card">
+                  <div class="admin-control-card-head">
+                    <h3>基础信息</h3>
+                    <p>配置控制对象和调控维度。</p>
+                  </div>
+                  <div class="admin-control-form-row admin-control-select-row">
+                    <span class="admin-control-label required">游戏选择</span>
+                    <div class="admin-control-game-picker-field">
+                      <div class="admin-profit-game-picker admin-control-profit-game-picker">
+                        <button class="admin-profit-game-trigger" type="button" @click="toggleControlGamePicker">
+                          <span class="admin-profit-game-choice">{{ controlGameTriggerIcon }}</span>
+                          <span>{{ controlGameTriggerLabel }}</span>
+                          <span class="admin-profit-game-arrow">⌄</span>
+                        </button>
+                        <div v-if="controlModal.controlGamePickerOpen" class="admin-profit-game-panel admin-control-profit-game-panel">
+                          <div class="admin-profit-brand-tabs">
+                            <button
+                              v-for="brand in controlBrands"
+                              :key="brand || 'all'"
+                              :class="['admin-profit-brand-tab', { active: (!brand && !controlSelectedBrands.length) || controlSelectedBrands.includes(brand) }]"
+                              type="button"
+                              @click="toggleControlGameBrand(brand)"
+                            >
+                              {{ brand || "全部品牌" }}
+                            </button>
+                          </div>
+                          <input class="admin-profit-game-search" v-model.trim="controlModal.controlGameSearch" type="text" placeholder="搜索游戏名称 / 英文名 / 游戏ID" @input="resetControlGamePage" />
+                          <div class="admin-profit-game-options">
+                            <button
+                              v-for="game in pagedControlGameItems"
+                              :key="game.value || 'all-game'"
+                              :class="['admin-profit-game-option', { active: controlModal.controlGame === game.value, checked: controlModal.controlGame === game.value }]"
+                              type="button"
+                              :title="game.name || game.label"
+                              @click="selectControlGame(game)"
+                            >
+                              <span class="admin-profit-game-checkmark"></span>
+                              <span :class="['admin-profit-game-thumb', game.tone]"><span>{{ game.icon }}</span></span>
+                            </button>
+                          </div>
+                          <div class="admin-profit-game-pager">
+                            <button class="admin-profit-game-page" type="button" :disabled="currentControlGamePage <= 1" @click="setControlGamePage(currentControlGamePage - 1)">‹</button>
+                            <span>{{ currentControlGamePage }} / {{ totalControlGamePages }}</span>
+                            <button class="admin-profit-game-page" type="button" :disabled="currentControlGamePage >= totalControlGamePages" @click="setControlGamePage(currentControlGamePage + 1)">›</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-control-card">
+                  <div class="admin-control-card-head">
+                    <h3>控制策略</h3>
+                    <p>设置控输/控赢方向、RTP 档位和快捷值。</p>
+                  </div>
+                  <div class="admin-control-form-row">
+                    <span class="admin-control-label">控制输赢</span>
+                    <div class="admin-control-segment">
+                      <button :class="{ active: controlModal.controlDirection === 'loss' }" type="button" @click="setControlDirection('loss')">控输</button>
+                      <button :class="{ active: controlModal.controlDirection === 'win' }" type="button" @click="setControlDirection('win')">控赢</button>
+                    </div>
+                  </div>
+                  <div class="admin-control-form-row">
+                    <span class="admin-control-label">控制RTP</span>
+                    <div class="admin-control-inline">
+                      <input
+                        type="number"
+                        :value="controlModal.controlRtp"
+                        :min="controlModal.controlDirection === 'win' ? 100 : 0"
+                        :max="controlModal.controlDirection === 'loss' ? 90 : null"
+                        @input="updateControlRtp"
+                      />
+                      <span class="admin-control-hint warning">{{ controlRtpLimitText }}</span>
+                    </div>
+                  </div>
+                  <div class="admin-control-form-row">
+                    <span class="admin-control-label">RTP档位</span>
+                    <div class="admin-control-segment">
+                      <button :class="{ active: controlModal.controlLevel === 'low' }" type="button" @click="setControlLevel('low')">低速 {{ controlRtpLevelValues.low }}</button>
+                      <button :class="{ active: controlModal.controlLevel === 'mid' }" type="button" @click="setControlLevel('mid')">中速 {{ controlRtpLevelValues.mid }}</button>
+                      <button :class="{ active: controlModal.controlLevel === 'high' }" type="button" @click="setControlLevel('high')">高速 {{ controlRtpLevelValues.high }}</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-control-card">
+                  <div class="admin-control-card-head">
+                    <h3>解除规则</h3>
+                    <p>设置控制结束条件，可按金额、RTP 或时间解除。</p>
+                  </div>
+                  <div class="admin-control-form-row">
+                    <span class="admin-control-label">解除类型</span>
+                    <div class="admin-control-segment">
+                      <button :class="{ active: controlModal.releaseType === 'amount' }" type="button" @click="setReleaseType('amount')">金额</button>
+                      <button :class="{ active: controlModal.releaseType === 'time' }" type="button" @click="setReleaseType('time')">时间</button>
+                    </div>
+                  </div>
+                  <div v-if="controlModal.releaseType === 'time'" class="admin-control-form-row">
+                    <span class="admin-control-label">解除时间</span>
+                    <div class="admin-control-inline">
+                      <div class="admin-control-time-options">
+                        <button
+                          v-for="item in releaseDayOptions"
+                          :key="item.value"
+                          :class="{ active: String(controlModal.releaseDays || '7') === item.value }"
+                          type="button"
+                          @click="setReleaseDays(item.value)"
+                        >
+                          {{ item.label }}
+                        </button>
+                      </div>
+                      <span class="admin-control-hint">到达所选时间后，控制结束（永久无截止时间）</span>
+                    </div>
+                  </div>
+                  <div v-else class="admin-control-form-row">
+                    <span class="admin-control-label">解除金额</span>
+                    <div class="admin-control-inline">
+                      <input type="number" :value="displayReleaseAmount.toFixed(2)" @input="updateReleaseAmount" />
+                      <span v-for="(amount, index) in controlQuickAmounts" :key="`${amount}-${index}`" class="admin-control-amount-chip-wrap">
+                        <button type="button" class="admin-control-amount-remove" @click="deleteQuickAmount(index)">×</button>
+                        <button type="button" class="admin-control-amount-chip" @click="addReleaseAmount(index)">{{ formatNumber(amount) }}</button>
+                      </span>
+                      <span v-if="controlModal.releaseQuickEditing" class="admin-control-amount-editor">
+                        <input v-model="controlModal.releaseQuickDraft" type="number" placeholder="输入金额" />
+                        <button type="button" class="admin-control-amount-save" @click="saveQuickAmount">保存</button>
+                      </span>
+                      <button v-else type="button" class="admin-control-amount-create" @click="startQuickAmountCreate">+ 自定义金额</button>
+                      <span class="admin-control-hint">累计达到该金额后，控制结束</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="admin-control-footer">
+                <button type="button" @click="closeControlModal">取消</button>
+                <button class="primary" type="button" @click="saveControlModal">保存</button>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </main>
@@ -122,16 +260,42 @@
   <script src="https://unpkg.com/vue@3.4.38/dist/vue.global.prod.js"></script>
   <script src="https://unpkg.com/element-plus@2.8.4/dist/index.full.min.js"></script>
   <script>
-    const { createApp, ref, computed, watch } = Vue;
+        const { createApp, ref, computed, watch } = Vue;
 
     createApp({
       setup() {
         const timezone = ref("+05:30");
         const statusFilter = ref("");
-        const tagFilter = ref("");
         const keyword = ref("");
         const page = ref(1);
         const pageSize = ref(10);
+        const controlModal = ref(null);
+        const controlBrands = ["", "PG", "PP", "JILI", "SPRLBE"];
+        const controlGamePickerPageSize = 18;
+        const releaseDayOptions = [
+          { label: "1天", value: "1" },
+          { label: "7天", value: "7" },
+          { label: "30天", value: "30" },
+          { label: "365天", value: "365" },
+          { label: "永久", value: "forever" },
+        ];
+        const controlGames = [
+          { brand: "PG", id: "1001", value: "PowerOfTheKraken", name: "PowerOfTheKraken 法老牌", icon: "K", tone: "kraken" },
+          { brand: "PG", id: "1002", value: "eKraken", name: "eKraken 海怪传说", icon: "eK", tone: "ek" },
+          { brand: "PG", id: "1003", value: "Fortune Gems", name: "Fortune Gems 宝石热气球", icon: "FG", tone: "gems" },
+          { brand: "PG", id: "1004", value: "Heaven Dynasty", name: "Heaven Dynasty 天竺王朝", icon: "天", tone: "palace" },
+          { brand: "PP", id: "1005", value: "Pharaoh Cards", name: "Pharaoh Cards 法老牌", icon: "法", tone: "pharaoh" },
+          { brand: "PP", id: "1006", value: "Bowling King", name: "Bowling King 保龄球之王", icon: "保", tone: "bowling" },
+          { brand: "PP", id: "1007", value: "Gem Balloon", name: "Gem Balloon 宝石热气球", icon: "宝", tone: "balloon" },
+          { brand: "PP", id: "1008", value: "Sesame Gate", name: "Sesame Gate 芝麻开门", icon: "芝", tone: "sesame" },
+          { brand: "JILI", id: "1009", value: "Sea Monster", name: "Sea Monster 海怪传说", icon: "海", tone: "monster" },
+          { brand: "JILI", id: "1010", value: "Maya Gold", name: "Maya Gold 玛雅黄金", icon: "玛", tone: "maya" },
+          { brand: "JILI", id: "1011", value: "Poker Kingdom", name: "Poker Kingdom 扑克王国", icon: "扑", tone: "crown" },
+          { brand: "JILI", id: "1012", value: "Dragon Treasure", name: "Dragon Treasure 龙之宝藏", icon: "龙", tone: "dragon" },
+          { brand: "SPRLBE", id: "1013", value: "Lucky Candy", name: "Lucky Candy 幸运糖果", icon: "糖", tone: "candy" },
+          { brand: "SPRLBE", id: "1014", value: "Star Gems", name: "Star Gems 星辉宝石", icon: "星", tone: "star" },
+          { brand: "SPRLBE", id: "1015", value: "Golden Train", name: "Golden Train 黄金列车", icon: "金", tone: "train" },
+        ];
         const players = ref([
           { status: "控输中", stateClass: "loss", tag: "低端玩家", tagClass: "tag-low", userId: "10470001344450", todayBet: 327270, todayPayout: 213646.6, rtp: 65.28, totalProfit: -113623.4 },
           { status: "控赢中", stateClass: "win", tag: "优质玩家", tagClass: "tag-premium", userId: "10470007305040", todayBet: 428720, todayPayout: 675038.52, rtp: 157.45, totalProfit: 246318.52 },
@@ -149,9 +313,8 @@
 
         const filteredPlayers = computed(() => players.value.filter((player) => {
           const matchStatus = !statusFilter.value || player.status === statusFilter.value;
-          const matchTag = !tagFilter.value || player.tag === tagFilter.value;
           const matchKeyword = !keyword.value || player.userId.includes(keyword.value);
-          return matchStatus && matchTag && matchKeyword;
+          return matchStatus && matchKeyword;
         }));
         const totalPages = computed(() => Math.max(1, Math.ceil(filteredPlayers.value.length / pageSize.value)));
         const pageNumbers = computed(() => Array.from({ length: totalPages.value }, (_, index) => index + 1));
@@ -165,38 +328,230 @@
         const totalProfitValue = computed(() => filteredPlayers.value.reduce((sum, player) => sum + player.totalProfit, 0));
         const totalBet = computed(() => formatMoney(totalBetValue.value));
         const totalProfit = computed(() => signedMoney(totalProfitValue.value));
+        const controlSelectedBrands = computed(() => {
+          const brands = controlModal.value?.controlGameBrands;
+          return Array.isArray(brands) ? brands : [];
+        });
+        const selectedControlGameMeta = computed(() => {
+          const selectedGame = controlModal.value?.controlGame || "";
+          return controlGames.find((game) => game.value === selectedGame);
+        });
+        const visibleControlGames = computed(() => {
+          const modal = controlModal.value || {};
+          const selectedBrands = controlSelectedBrands.value;
+          const search = String(modal.controlGameSearch || "").trim().toLowerCase();
+          return controlGames.filter((game) => {
+            if (selectedBrands.length && !selectedBrands.includes(game.brand)) return false;
+            if (search && !`${game.name} ${game.value} ${game.id}`.toLowerCase().includes(search)) return false;
+            return true;
+          });
+        });
+        const controlGameItems = computed(() => [
+          { type: "all", value: "", label: "全部游戏", icon: "ALL", tone: "all" },
+          ...visibleControlGames.value.map((game) => ({ type: "game", ...game })),
+        ]);
+        const totalControlGamePages = computed(() => Math.max(1, Math.ceil(controlGameItems.value.length / controlGamePickerPageSize)));
+        const currentControlGamePage = computed(() => {
+          const rawPage = Number(controlModal.value?.controlGamePage || 1);
+          return Math.min(Math.max(1, rawPage), totalControlGamePages.value);
+        });
+        const pagedControlGameItems = computed(() => {
+          const start = (currentControlGamePage.value - 1) * controlGamePickerPageSize;
+          return controlGameItems.value.slice(start, start + controlGamePickerPageSize);
+        });
+        const controlGameTriggerLabel = computed(() => {
+          if (selectedControlGameMeta.value) return selectedControlGameMeta.value.name;
+          if (controlModal.value?.controlGameLabel) return controlModal.value.controlGameLabel;
+          return controlSelectedBrands.value.length ? controlSelectedBrands.value.join("/") : "全部品牌";
+        });
+        const controlGameTriggerIcon = computed(() => {
+          if (selectedControlGameMeta.value) return selectedControlGameMeta.value.icon;
+          if (controlSelectedBrands.value.length === 1) return controlSelectedBrands.value[0].slice(0, 2);
+          if (controlSelectedBrands.value.length) return String(controlSelectedBrands.value.length);
+          return "ALL";
+        });
+        const controlRtpLevelValues = computed(() => (
+          controlModal.value?.controlDirection === "win"
+            ? { low: 120, mid: 180, high: 300 }
+            : { low: 90, mid: 85, high: 50 }
+        ));
+        const controlRtpLimitText = computed(() => (
+          controlModal.value?.controlDirection === "win"
+            ? "控赢状态下，禁止 RTP 低于 100"
+            : "控输状态下，禁止 RTP 高于 90"
+        ));
+        const displayReleaseAmount = computed(() => {
+          const amount = Math.abs(Number(controlModal.value?.releaseAmount ?? 50000));
+          return controlModal.value?.controlDirection === "win" ? amount : -amount;
+        });
+        const controlQuickAmounts = computed(() => {
+          const amounts = controlModal.value?.releaseQuickAmounts;
+          return Array.isArray(amounts) && amounts.length ? amounts : [10000, 50000, 100000];
+        });
 
         function formatMoney(value) {
           return Number(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
+        function formatNumber(value) {
+          return Number(value || 0).toLocaleString("en-US");
+        }
         function signedMoney(value) {
           const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
           return `${prefix}${formatMoney(Math.abs(value))}`;
+        }
+        function openControlModal() {
+          controlModal.value = {
+            controlGame: "",
+            controlGameLabel: "全部品牌",
+            controlGameBrands: [],
+            controlGameSearch: "",
+            controlGamePage: 1,
+            controlGamePickerOpen: false,
+            controlDirection: "loss",
+            controlRtp: 90,
+            controlLevel: "low",
+            releaseType: "amount",
+            releaseDays: "7",
+            releaseAmount: 50000,
+            releaseQuickAmounts: [10000, 50000, 100000],
+            releaseQuickEditing: false,
+            releaseQuickDraft: "",
+          };
+        }
+        function closeControlModal() {
+          controlModal.value = null;
+        }
+        function saveControlModal() {
+          controlModal.value = null;
+          ElementPlus.ElMessage.success("游戏控制策略已保存");
+        }
+        function toggleControlGamePicker() {
+          if (!controlModal.value) return;
+          controlModal.value.controlGamePickerOpen = !controlModal.value.controlGamePickerOpen;
+        }
+        function toggleControlGameBrand(brand) {
+          const modal = controlModal.value;
+          if (!modal) return;
+          let nextBrands = Array.isArray(modal.controlGameBrands) ? [...modal.controlGameBrands] : [];
+          if (!brand) {
+            nextBrands = [];
+          } else if (nextBrands.includes(brand)) {
+            nextBrands = nextBrands.filter((item) => item !== brand);
+          } else if (nextBrands.length >= 2) {
+            ElementPlus.ElMessage.warning("最多同时选择2个厂商");
+          } else {
+            nextBrands.push(brand);
+          }
+          modal.controlGameBrands = nextBrands;
+          modal.controlGame = "";
+          modal.controlGameLabel = nextBrands.length ? nextBrands.join("/") : "全部品牌";
+          modal.controlGamePage = 1;
+          modal.controlGamePickerOpen = true;
+        }
+        function resetControlGamePage() {
+          if (!controlModal.value) return;
+          controlModal.value.controlGamePage = 1;
+          controlModal.value.controlGamePickerOpen = true;
+        }
+        function setControlGamePage(nextPage) {
+          if (!controlModal.value) return;
+          controlModal.value.controlGamePage = Math.min(Math.max(1, Number(nextPage || 1)), totalControlGamePages.value);
+          controlModal.value.controlGamePickerOpen = true;
+        }
+        function selectControlGame(game) {
+          const modal = controlModal.value;
+          if (!modal) return;
+          modal.controlGame = game.value || "";
+          modal.controlGameLabel = game.value
+            ? (game.name || game.label || "请选择游戏")
+            : (modal.controlGameBrands.length ? modal.controlGameBrands.join("/") : "全部品牌");
+          modal.controlGamePickerOpen = true;
+        }
+        function setControlDirection(direction) {
+          if (!controlModal.value) return;
+          controlModal.value.controlDirection = direction;
+          controlModal.value.controlLevel = "low";
+          controlModal.value.controlRtp = direction === "win" ? 120 : 90;
+        }
+        function setControlLevel(level) {
+          if (!controlModal.value) return;
+          controlModal.value.controlLevel = level;
+          controlModal.value.controlRtp = controlRtpLevelValues.value[level] || controlRtpLevelValues.value.low;
+        }
+        function updateControlRtp(event) {
+          if (!controlModal.value) return;
+          let value = Number(event.target.value || 0);
+          if (controlModal.value.controlDirection === "loss" && value > 90) {
+            value = 90;
+            ElementPlus.ElMessage.warning("控输状态下 RTP 不能超过 90");
+          }
+          if (controlModal.value.controlDirection === "win" && value < 100) {
+            value = 100;
+            ElementPlus.ElMessage.warning("控赢状态下 RTP 不能低于 100");
+          }
+          controlModal.value.controlRtp = value;
+          controlModal.value.controlLevel = "";
+        }
+        function setReleaseType(type) {
+          if (!controlModal.value) return;
+          controlModal.value.releaseType = type;
+        }
+        function setReleaseDays(days) {
+          if (!controlModal.value) return;
+          controlModal.value.releaseDays = days;
+        }
+        function updateReleaseAmount(event) {
+          if (!controlModal.value) return;
+          controlModal.value.releaseAmount = Math.abs(Number(event.target.value || 0));
+        }
+        function addReleaseAmount(index) {
+          if (!controlModal.value) return;
+          const amount = Math.abs(Number(controlQuickAmounts.value[index] || 0));
+          const current = Math.abs(Number(controlModal.value.releaseAmount || 0));
+          controlModal.value.releaseAmount = current + amount;
+        }
+        function startQuickAmountCreate() {
+          if (!controlModal.value) return;
+          controlModal.value.releaseQuickEditing = true;
+          controlModal.value.releaseQuickDraft = "";
+        }
+        function saveQuickAmount() {
+          const modal = controlModal.value;
+          if (!modal) return;
+          const amount = Math.abs(Number(modal.releaseQuickDraft || 0));
+          if (!amount) {
+            ElementPlus.ElMessage.warning("请输入自定义金额");
+            return;
+          }
+          modal.releaseQuickAmounts = [...controlQuickAmounts.value, amount];
+          modal.releaseQuickEditing = false;
+          modal.releaseQuickDraft = "";
+        }
+        function deleteQuickAmount(index) {
+          if (!controlModal.value) return;
+          const quickAmounts = [...controlQuickAmounts.value];
+          quickAmounts.splice(index, 1);
+          controlModal.value.releaseQuickAmounts = quickAmounts;
         }
         function applySearch() {
           page.value = 1;
         }
         function resetFilters() {
           statusFilter.value = "";
-          tagFilter.value = "";
           keyword.value = "";
           page.value = 1;
-        }
-        function viewPlayer(player) {
-          ElementPlus.ElMessage.info(`查看 ${player.userId}`);
         }
         function releasePlayer(player) {
           ElementPlus.ElMessage.success(`已解除 ${player.userId}`);
         }
 
-        watch([statusFilter, tagFilter, keyword, pageSize], () => {
+        watch([statusFilter, keyword, pageSize], () => {
           page.value = 1;
         });
 
         return {
           timezone,
           statusFilter,
-          tagFilter,
           keyword,
           page,
           pageSize,
@@ -208,11 +563,42 @@
           totalBet,
           totalProfit,
           totalProfitValue,
+          controlModal,
+          controlBrands,
+          releaseDayOptions,
+          controlSelectedBrands,
+          controlGameTriggerLabel,
+          controlGameTriggerIcon,
+          pagedControlGameItems,
+          totalControlGamePages,
+          currentControlGamePage,
+          controlRtpLevelValues,
+          controlRtpLimitText,
+          displayReleaseAmount,
+          controlQuickAmounts,
           formatMoney,
+          formatNumber,
           signedMoney,
+          openControlModal,
+          closeControlModal,
+          saveControlModal,
+          toggleControlGamePicker,
+          toggleControlGameBrand,
+          resetControlGamePage,
+          setControlGamePage,
+          selectControlGame,
+          setControlDirection,
+          setControlLevel,
+          updateControlRtp,
+          setReleaseType,
+          setReleaseDays,
+          updateReleaseAmount,
+          addReleaseAmount,
+          startQuickAmountCreate,
+          saveQuickAmount,
+          deleteQuickAmount,
           applySearch,
           resetFilters,
-          viewPlayer,
           releasePlayer,
         };
       },

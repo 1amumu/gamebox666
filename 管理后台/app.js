@@ -1727,6 +1727,9 @@
       if (page.type === "playerTodayProfit") {
         pageStates[pageKey].filters = {
           platform: "",
+          merchant: "",
+          merchants: [],
+          merchantSearch: "",
           game: "",
           gameLabel: "全部游戏",
           gameBrand: "",
@@ -1734,6 +1737,7 @@
           dateFrom: "2026-05-06",
           dateTo: "2026-05-07",
         };
+        pageStates[pageKey].merchantPickerOpen = false;
         pageStates[pageKey].gamePickerOpen = false;
         pageStates[pageKey].controlModal = null;
         pageStates[pageKey].page = 1;
@@ -6595,6 +6599,7 @@
       return {
         level: item[0],
         platformId: item[1],
+        merchant: merchants[index % merchants.length],
         date: item[2],
         betCount: item[3],
         todayBet: item[4],
@@ -6635,16 +6640,60 @@
   function getPlayerTodayProfitRows(page, state) {
     const filters = state.filters || {};
     const platform = String(filters.platform || "").trim();
+    const selectedMerchants = Array.isArray(filters.merchants)
+      ? filters.merchants
+      : (filters.merchant ? [filters.merchant] : []);
     const game = String(filters.game || "").trim();
     const dateFrom = filters.dateFrom || "";
     const dateTo = filters.dateTo || "";
     return (page.rows || []).filter((row) => {
       if (platform && !row.platformId.includes(platform)) return false;
+      if (selectedMerchants.length && !selectedMerchants.includes(row.merchant)) return false;
       if (game && row.game !== game) return false;
       if (dateFrom && row.date < dateFrom) return false;
       if (dateTo && row.date > dateTo) return false;
       return true;
     });
+  }
+
+  function renderPlayerProfitMerchantPicker(state) {
+    const filters = state.filters || {};
+    const selectedMerchants = Array.isArray(filters.merchants) ? filters.merchants : [];
+    const merchantSearch = String(filters.merchantSearch || "").trim().toLowerCase();
+    const visibleMerchants = merchants.filter((merchant) => {
+      if (!merchantSearch) return true;
+      return merchant.toLowerCase().includes(merchantSearch);
+    });
+    const selectedText = selectedMerchants.length ? selectedMerchants.join("、") : "全部商户";
+    return `
+      <div class="admin-profit-merchant-picker">
+        <button class="admin-profit-merchant-trigger${selectedMerchants.length ? " has-value" : ""}" type="button" data-action="profit-merchant-toggle" title="${escapeHtml(selectedText)}">
+          <span class="admin-profit-merchant-value">${escapeHtml(selectedText)}</span>
+          <span class="admin-profit-game-arrow">⌄</span>
+        </button>
+        ${state.merchantPickerOpen ? `
+          <div class="admin-profit-merchant-panel">
+            <input class="admin-profit-merchant-search" type="text" value="${escapeHtml(filters.merchantSearch || "")}" placeholder="搜索商户" data-profit-merchant-search />
+            <div class="admin-profit-merchant-options">
+              <button class="admin-profit-merchant-option${selectedMerchants.length ? "" : " active"}" type="button" data-action="profit-merchant-clear">
+                <span class="admin-profit-merchant-check"></span>
+                <span>全部商户</span>
+              </button>
+              ${visibleMerchants.map((merchant) => {
+                const checked = selectedMerchants.includes(merchant);
+                return `
+                  <button class="admin-profit-merchant-option${checked ? " active" : ""}" type="button" data-action="profit-merchant-option" data-merchant="${escapeHtml(merchant)}">
+                    <span class="admin-profit-merchant-check"></span>
+                    <span>${escapeHtml(merchant)}</span>
+                  </button>
+                `;
+              }).join("")}
+              ${visibleMerchants.length ? "" : `<div class="admin-profit-merchant-empty">暂无匹配商户</div>`}
+            </div>
+          </div>
+        ` : ""}
+      </div>
+    `;
   }
 
   function renderPlayerProfitGamePicker(state) {
@@ -6943,6 +6992,10 @@
                 <span>平台ID</span>
                 <input class="admin-profit-input" type="text" value="${escapeHtml(filters.platform || "")}" placeholder="请输入" data-profit-filter="platform" />
               </label>
+              <label class="admin-profit-filter admin-profit-merchant-filter">
+                <span>商户选择</span>
+                ${renderPlayerProfitMerchantPicker(state)}
+              </label>
               <label class="admin-profit-filter">
                 <span>游戏选择</span>
                 ${renderPlayerProfitGamePicker(state)}
@@ -6966,6 +7019,7 @@
               <div class="admin-profit-row header">
                 <div>玩家标签</div>
                 <div>平台ID</div>
+                <div>商户</div>
                 <div>下注次数</div>
                 <div>今日下注</div>
                 <div>今日返奖</div>
@@ -6980,6 +7034,7 @@
                 <div class="admin-profit-row">
                   <div><span class="admin-player-tag ${getProfitTagClass(row.level)}">${escapeHtml(row.level)}</span></div>
                   <div><span class="admin-profit-player">${escapeHtml(row.platformId)} <button class="admin-profit-copy" type="button" data-action="profit-copy" data-copy="${escapeHtml(row.platformId)}" title="复制平台ID"></button></span></div>
+                  <div>${escapeHtml(row.merchant || "")}</div>
                   <div>${formatNumber(row.betCount)}</div>
                   <div><span class="admin-profit-num">${formatProfitPlainMoney(row.todayBet)}</span></div>
                   <div><span class="admin-profit-num">${formatProfitPlainMoney(row.todayPayout)}</span></div>
@@ -8286,10 +8341,54 @@
           return;
         }
       }
+      if (
+        state.merchantPickerOpen &&
+        !event.target.closest(".admin-profit-merchant-picker")
+      ) {
+        state.merchantPickerOpen = false;
+        if (!actionTarget) {
+          renderCurrentPage();
+          return;
+        }
+      }
       if (!actionTarget) return;
       const action = actionTarget.dataset.action;
+      if (action === "profit-merchant-toggle") {
+        state.merchantPickerOpen = !state.merchantPickerOpen;
+        state.gamePickerOpen = false;
+        renderCurrentPage();
+        return;
+      }
+      if (action === "profit-merchant-option") {
+        const merchant = actionTarget.dataset.merchant || "";
+        const selectedMerchants = Array.isArray(state.filters.merchants)
+          ? [...state.filters.merchants]
+          : [];
+        const index = selectedMerchants.indexOf(merchant);
+        if (index >= 0) {
+          selectedMerchants.splice(index, 1);
+        } else if (merchant) {
+          selectedMerchants.push(merchant);
+        }
+        state.filters.merchants = selectedMerchants;
+        state.filters.merchant = "";
+        state.page = 1;
+        state.merchantPickerOpen = true;
+        renderCurrentPage();
+        return;
+      }
+      if (action === "profit-merchant-clear") {
+        state.filters.merchants = [];
+        state.filters.merchant = "";
+        state.filters.merchantSearch = "";
+        state.page = 1;
+        state.merchantPickerOpen = true;
+        renderCurrentPage();
+        return;
+      }
       if (action === "profit-game-toggle") {
         state.gamePickerOpen = !state.gamePickerOpen;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
@@ -8310,12 +8409,16 @@
       if (action === "profit-search") {
         state.page = 1;
         state.gamePickerOpen = false;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
       if (action === "profit-reset") {
         state.filters = {
           platform: "",
+          merchant: "",
+          merchants: [],
+          merchantSearch: "",
           game: "",
           gameLabel: "全部游戏",
           gameBrand: "",
@@ -8325,6 +8428,7 @@
         };
         state.page = 1;
         state.gamePickerOpen = false;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
@@ -8573,6 +8677,21 @@
     const input = event.target.closest("[data-profit-filter]");
     const pageKey = getCurrentPageKey();
     const page = pageConfigs[pageKey];
+    const merchantSearch = event.target.closest("[data-profit-merchant-search]");
+    if (page?.type === "playerTodayProfit" && merchantSearch) {
+      const state = getPageState(pageKey, page);
+      state.filters.merchantSearch = merchantSearch.value;
+      state.merchantPickerOpen = true;
+      state.page = 1;
+      renderCurrentPage();
+      const nextSearch = document.querySelector("[data-profit-merchant-search]");
+      if (nextSearch) {
+        nextSearch.focus();
+        const cursor = nextSearch.value.length;
+        nextSearch.setSelectionRange(cursor, cursor);
+      }
+      return;
+    }
     if (page?.type === "playerTodayProfit" && input) {
       const state = getPageState(pageKey, page);
       state.filters[input.dataset.profitFilter] = input.value;

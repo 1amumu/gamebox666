@@ -337,21 +337,21 @@
     };
     if (!row) return { profile, ...base };
     if (row.matches(".profit-row[data-platform]")) {
-      const bet = row.children[4]?.innerText.trim() || base.bet;
-      const payout = row.children[5]?.innerText.trim() || "0.00";
-      const win = row.children[6]?.innerText.trim() || base.win;
+      const bet = row.dataset.bet || row.children[4]?.innerText.trim() || base.bet;
+      const payout = row.dataset.payout || row.children[5]?.innerText.trim() || "0.00";
+      const win = row.dataset.win || row.children[6]?.innerText.trim() || base.win;
       const rtp = moneyNumber(bet) ? `${((moneyNumber(payout) / moneyNumber(bet)) * 100).toFixed(2)}%` : "0.00%";
       return {
         profile,
         platformId,
         gameCn: row.dataset.game || "",
         gameEn: row.dataset.game || "",
-        brand: "",
+        brand: row.dataset.brand || "",
         bet,
         win,
-        count: row.children[3]?.innerText.trim() || base.count,
+        count: row.dataset.count || row.children[3]?.innerText.trim() || base.count,
         rtp,
-        createdAt: row.children[2]?.innerText.trim() || base.createdAt
+        createdAt: row.dataset.date || row.children[2]?.innerText.trim() || base.createdAt
       };
     }
     if (row.matches(".game-record-row[data-player]")) {

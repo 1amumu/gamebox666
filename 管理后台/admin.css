@@ -4740,7 +4740,7 @@ th.sticky-left {
   flex: 1 1 auto;
   min-width: 0;
   display: grid;
-  grid-template-columns: 220px 250px minmax(360px, 420px);
+  grid-template-columns: 190px 270px 250px minmax(340px, 420px);
   align-items: center;
   gap: 12px;
 }
@@ -4775,6 +4775,142 @@ th.sticky-left {
 .admin-profit-input:focus {
   border-color: #409eff;
   box-shadow: 0 0 0 3px rgba(64, 158, 255, .12);
+}
+
+.admin-profit-merchant-picker {
+  position: relative;
+  width: 230px;
+}
+
+.admin-profit-merchant-trigger {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  border: 1px solid #d9dee8;
+  border-radius: 6px;
+  padding: 0 30px 0 10px;
+  background: #fff;
+  color: #7a8494;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, color .15s ease;
+}
+
+.admin-profit-merchant-trigger:hover,
+.admin-profit-merchant-trigger:focus {
+  border-color: #409eff;
+  box-shadow: 0 0 0 3px rgba(64, 158, 255, .12);
+}
+
+.admin-profit-merchant-trigger.has-value {
+  color: #334155;
+  font-weight: 700;
+}
+
+.admin-profit-merchant-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-profit-merchant-panel {
+  position: absolute;
+  left: 0;
+  top: 44px;
+  z-index: 32;
+  width: 300px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(31, 45, 61, .18);
+}
+
+.admin-profit-merchant-search {
+  width: 100%;
+  height: 34px;
+  margin-bottom: 10px;
+  border: 1px solid #d9dee8;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #3f4b5b;
+  font-size: 13px;
+  outline: none;
+}
+
+.admin-profit-merchant-search:focus {
+  border-color: #409eff;
+  box-shadow: 0 0 0 3px rgba(64, 158, 255, .12);
+}
+
+.admin-profit-merchant-options {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-profit-merchant-option {
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #fff;
+  color: #435066;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.admin-profit-merchant-option:hover,
+.admin-profit-merchant-option.active {
+  border-color: #cfe2ff;
+  background: #f0f7ff;
+  color: #1677ff;
+}
+
+.admin-profit-merchant-check {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #c5cedd;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.admin-profit-merchant-option.active .admin-profit-merchant-check {
+  border-color: #1677ff;
+  background: #1677ff;
+}
+
+.admin-profit-merchant-option.active .admin-profit-merchant-check::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.admin-profit-merchant-empty {
+  padding: 12px 8px;
+  color: #8a93a3;
+  font-size: 13px;
+  text-align: center;
 }
 
 .admin-profit-date-control {
@@ -5053,7 +5189,7 @@ th.sticky-left {
 
 .admin-profit-table {
   width: 100%;
-  min-width: 1580px;
+  min-width: 1720px;
 }
 
 .admin-profit-row {
@@ -5061,7 +5197,7 @@ th.sticky-left {
   border-bottom: 1px solid #e8edf5;
   color: #505a69;
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(190px, 1.35fr) minmax(96px, .7fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(150px, 1.05fr) minmax(140px, .95fr) minmax(100px, .72fr) minmax(120px, .85fr) minmax(96px, .7fr);
+  grid-template-columns: minmax(140px, 1fr) minmax(190px, 1.25fr) minmax(150px, 1fr) minmax(96px, .7fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(150px, 1.05fr) minmax(140px, .95fr) minmax(100px, .72fr) minmax(120px, .85fr) minmax(96px, .7fr);
   align-items: center;
   font-size: 14px;
 }
@@ -6331,10 +6467,14 @@ th.sticky-left {
     flex-direction: column;
   }
   .admin-profit-input,
+  .admin-profit-merchant-picker,
   .admin-profit-game-picker,
   .admin-profit-actions,
   .admin-profit-btn {
     width: 100%;
+  }
+  .admin-profit-merchant-panel {
+    width: min(320px, calc(100vw - 48px));
   }
   .admin-profit-date-control {
     grid-template-columns: 1fr;
