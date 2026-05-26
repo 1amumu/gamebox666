@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="game icon">
+  <defs>
+    <linearGradient id="bg" x1="10" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="card" x1="18" y1="15" x2="46" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EAF2FF"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)"/>
+  <path d="M22 18h20a6 6 0 0 1 6 6v16a6 6 0 0 1-6 6H22a6 6 0 0 1-6-6V24a6 6 0 0 1 6-6Z" fill="url(#card)" stroke="#D0E2FF" stroke-width="2"/>
+  <path d="M24 32h10M29 27v10" stroke="#1D4ED8" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="39" cy="29" r="3" fill="#16A34A"/>
+  <circle cx="43" cy="36" r="3" fill="#F97316"/>
+  <path d="M20 48c4 3 8 4.5 12 4.5S40 51 44 48" stroke="#0F172A" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/>
+</svg>
