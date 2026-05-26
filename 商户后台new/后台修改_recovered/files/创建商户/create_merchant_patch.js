@@ -147,11 +147,54 @@
     return ok;
   }
 
+  function ensureTopbar(base) {
+    if (base.querySelector(".unified-topbar")) return;
+    var wrapper = document.createElement("div");
+    wrapper.className = "unified-topbar";
+    wrapper.style.left = "1034px";
+    wrapper.style.top = "48px";
+    wrapper.innerHTML =
+      "<a class=\"unified-topbar__message\" href=\"消息页.html\" title=\"消息\">" +
+        "<span class=\"unified-topbar__message-icon\" aria-hidden=\"true\"></span>" +
+        "<span class=\"unified-topbar__message-label\">消息</span>" +
+        "<span class=\"unified-topbar__message-badge\">12</span>" +
+      "</a>" +
+      "<select class=\"unified-topbar__language\" aria-label=\"语言\">" +
+        "<option value=\"中文\">中文</option>" +
+        "<option value=\"English\">English</option>" +
+      "</select>" +
+      "<div class=\"unified-topbar__account\">" +
+        "<span class=\"unified-topbar__account-label\">当前账号</span>" +
+        "<span class=\"unified-topbar__account-name\">qq1234567</span>" +
+      "</div>" +
+      "<button class=\"unified-topbar__account-toggle\" type=\"button\" aria-label=\"账号菜单\" aria-expanded=\"false\">" +
+        "<img class=\"unified-topbar__account-arrow\" src=\"images/page_1/u8.svg\" alt=\"\">" +
+      "</button>" +
+      "<div class=\"unified-topbar__account-menu\" role=\"menu\">" +
+        "<button type=\"button\" role=\"menuitem\">个人中心</button>" +
+        "<button type=\"button\" role=\"menuitem\">退出登录</button>" +
+      "</div>";
+    var toggle = wrapper.querySelector(".unified-topbar__account-toggle");
+    var menu = wrapper.querySelector(".unified-topbar__account-menu");
+    toggle.addEventListener("click", function(event) {
+      event.stopPropagation();
+      var isOpen = wrapper.classList.toggle("unified-topbar--menu-open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+    menu.addEventListener("click", function(event) {
+      event.stopPropagation();
+      wrapper.classList.remove("unified-topbar--menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+    base.appendChild(wrapper);
+  }
+
   function buildPage() {
     var base = document.getElementById("base");
     if (!base || document.querySelector(".create-merchant-page")) return;
 
     hideLegacyPanels();
+    ensureTopbar(base);
 
     var page = document.createElement("div");
     page.className = "create-merchant-page";

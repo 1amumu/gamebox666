@@ -109,14 +109,16 @@
 .create-merchant-control > select {
   width:220px;
 }
-.create-merchant-control > input[name="chatId"],
 .create-merchant-control > input[name="playerApi"],
 .create-merchant-control > input[name="balanceApi"],
-.create-merchant-control > input[name="changeApi"],
+.create-merchant-control > input[name="changeApi"] {
+  width:640px;
+  max-width:100%;
+}
 .create-merchant-control input:focus,
 .create-merchant-control select:focus {
-  border-color:#2F80ED;
-  box-shadow:0 0 0 3px rgba(47, 128, 237, 0.12);
+  border-color:#D0D5DD;
+  box-shadow:none;
 }
 .create-merchant-control input:disabled {
   border-color:#E4E7EC;

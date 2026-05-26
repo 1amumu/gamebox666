@@ -16,6 +16,753 @@
   position:absolute;
   z-index:0;
 }
+/* Unified visual refresh for the original Axure merchant profit layout. */
+#u2068_div {
+  border-color:#E5E7EB !important;
+  border-radius:12px !important;
+  background:#F8FAFC !important;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06) !important;
+}
+#u2087 {
+  top:123px !important;
+}
+#u2087_text span {
+  color:#111827 !important;
+  font-size:22px !important;
+  font-weight:700 !important;
+}
+.merchant-profit-tabs {
+  position:absolute;
+  left:336px;
+  top:152px;
+  width:1109px;
+  z-index:30;
+}
+#u2084 {
+  display:none !important;
+}
+#u2078,
+#u2080,
+#u2088 {
+  top:210px !important;
+}
+#u2079,
+#u2081,
+#u2089 {
+  top:232px !important;
+}
+#u2082,
+#u2083 {
+  top:232px !important;
+}
+#u2078 {
+  left:349px !important;
+}
+#u2079 {
+  left:349px !important;
+  width:180px !important;
+}
+#u2079_div {
+  width:180px !important;
+}
+#u2080 {
+  left:545px !important;
+}
+#u2081 {
+  left:545px !important;
+  width:160px !important;
+}
+#u2081_div {
+  width:160px !important;
+}
+#u2088 {
+  left:721px !important;
+}
+#u2089 {
+  left:721px !important;
+  width:150px !important;
+}
+#u2089_div {
+  width:150px !important;
+}
+#u2083 {
+  left:885px !important;
+}
+#u2082 {
+  left:956px !important;
+}
+#u2082_div,
+#u2083_div {
+  width:60px !important;
+  height:38px !important;
+}
+#u2116,
+#u2117,
+#u2118,
+#u2119 {
+  top:232px !important;
+}
+#u2116 {
+  left:1068px !important;
+}
+#u2117 {
+  left:1136px !important;
+}
+#u2118 {
+  left:1204px !important;
+}
+#u2119 {
+  left:1272px !important;
+}
+#u2116_div,
+#u2117_div,
+#u2118_div,
+#u2119_div {
+  width:58px !important;
+  height:38px !important;
+}
+#u2078_text span,
+#u2080_text span,
+#u2088_text span {
+  color:#475467 !important;
+  font-size:13px !important;
+}
+#u2079,
+#u2081,
+#u2089 {
+  height:38px !important;
+  border-radius:8px !important;
+  cursor:pointer;
+}
+#u2079_div,
+#u2081_div,
+#u2089_div {
+  height:38px !important;
+  border-color:#D0D5DD !important;
+  border-radius:8px !important;
+  color:#111827 !important;
+  background:#FFFFFF !important;
+}
+#u2079_text,
+#u2081_text {
+  color:#667085 !important;
+  font-size:13px !important;
+  text-align:left !important;
+  line-height:38px !important;
+}
+#u2079 .text,
+#u2081 .text {
+  align-self:stretch !important;
+  padding:0 12px !important;
+  display:flex !important;
+  align-items:center !important;
+}
+#u2079_text p,
+#u2081_text p {
+  margin:0 !important;
+}
+#u2089_input {
+  width:100% !important;
+  height:38px !important;
+  padding:0 12px !important;
+  border:0 !important;
+  color:#111827 !important;
+  font-size:13px !important;
+  line-height:38px !important;
+}
+#u2082,
+#u2083,
+#u2116,
+#u2117,
+#u2118,
+#u2119 {
+  cursor:pointer;
+}
+#u2082_div,
+#u2083_div,
+#u2116_div,
+#u2117_div,
+#u2118_div,
+#u2119_div {
+  border-color:#D0D5DD !important;
+  border-radius:8px !important;
+  background:#FFFFFF !important;
+  box-shadow:none !important;
+}
+#u2082_text span,
+#u2116_text span,
+#u2117_text span,
+#u2118_text span,
+#u2119_text span {
+  color:#344054 !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+}
+#u2082 .text,
+#u2083 .text,
+#u2116 .text,
+#u2117 .text,
+#u2118 .text,
+#u2119 .text {
+  align-self:stretch !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+#u2082_text p,
+#u2083_text p,
+#u2116_text p,
+#u2117_text p,
+#u2118_text p,
+#u2119_text p {
+  margin:0 !important;
+}
+#u2083_div {
+  border-color:#2F80ED !important;
+  background:#2F80ED !important;
+}
+#u2083_text span {
+  color:#FFFFFF !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+}
+.merchant-profit-range-active > div[id$="_div"] {
+  border-color:#2F80ED !important;
+  background:#2F80ED !important;
+  box-shadow:0 4px 10px rgba(47, 128, 237, 0.18) !important;
+}
+.merchant-profit-range-active span {
+  color:#FFFFFF !important;
+  font-weight:800 !important;
+}
+#u2085,
+#u2086,
+#u2091,
+#u2092,
+#u2093,
+#u2094,
+#u2095,
+#u2096,
+#u2097,
+#u2098,
+#u2099,
+#u2100,
+#u2101,
+#u2102,
+#u2103,
+#u2104,
+#u2105,
+#u2106,
+#u2107,
+#u2108,
+#u2109,
+#u2110,
+#u2111,
+#u2112,
+#u2113,
+#u2114,
+#u2115,
+#u2120 {
+  display:none !important;
+}
+.merchant-profit-axure-table-card {
+  position:absolute;
+  left:336px;
+  top:292px;
+  width:1109px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  overflow:hidden;
+  z-index:25;
+}
+.merchant-profit-axure-table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.merchant-profit-axure-table th,
+.merchant-profit-axure-table td {
+  height:44px;
+  padding:0 8px;
+  border-bottom:1px solid #EEF2F6;
+  color:#1F2937;
+  font-size:13px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-sizing:border-box;
+}
+.merchant-profit-axure-table th {
+  height:44px;
+  background:#F8FAFC;
+  color:#475467;
+  font-weight:700;
+}
+.merchant-profit-axure-table tr:hover td {
+  background:#F8FBFF;
+}
+.merchant-profit-axure-table .is-left {
+  text-align:left;
+}
+.merchant-profit-axure-table .is-positive {
+  color:#027A48;
+  font-weight:700;
+}
+.merchant-profit-axure-table .is-negative {
+  color:#B42318;
+  font-weight:700;
+}
+.merchant-profit-axure-table th:nth-child(1),
+.merchant-profit-axure-table td:nth-child(1) {
+  width:48px;
+}
+.merchant-profit-axure-table th:nth-child(2),
+.merchant-profit-axure-table td:nth-child(2) {
+  width:82px;
+}
+.merchant-profit-axure-table th:nth-child(3),
+.merchant-profit-axure-table td:nth-child(3) {
+  width:116px;
+  text-align:left;
+  padding-left:12px;
+}
+.merchant-profit-axure-table th:nth-child(4),
+.merchant-profit-axure-table td:nth-child(4) {
+  width:58px;
+}
+.merchant-profit-axure-table th:nth-child(5),
+.merchant-profit-axure-table td:nth-child(5),
+.merchant-profit-axure-table th:nth-child(6),
+.merchant-profit-axure-table td:nth-child(6),
+.merchant-profit-axure-table th:nth-child(7),
+.merchant-profit-axure-table td:nth-child(7),
+.merchant-profit-axure-table th:nth-child(11),
+.merchant-profit-axure-table td:nth-child(11) {
+  width:112px;
+}
+.merchant-profit-axure-table th:nth-child(8),
+.merchant-profit-axure-table td:nth-child(8),
+.merchant-profit-axure-table th:nth-child(9),
+.merchant-profit-axure-table td:nth-child(9),
+.merchant-profit-axure-table th:nth-child(10),
+.merchant-profit-axure-table td:nth-child(10) {
+  width:82px;
+}
+
+/* Final Axure override: keep filter controls visually centered. */
+#u2079,
+#u2081,
+#u2089,
+#u2082,
+#u2083,
+#u2116,
+#u2117,
+#u2118,
+#u2119 {
+  top:232px !important;
+  height:38px !important;
+}
+#u2079_div,
+#u2081_div,
+#u2089_div,
+#u2082_div,
+#u2083_div,
+#u2116_div,
+#u2117_div,
+#u2118_div,
+#u2119_div {
+  height:38px !important;
+  border-radius:8px !important;
+  box-sizing:border-box !important;
+}
+#u2079 .text,
+#u2081 .text,
+#u2082 .text,
+#u2083 .text,
+#u2116 .text,
+#u2117 .text,
+#u2118 .text,
+#u2119 .text {
+  position:absolute !important;
+  inset:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 12px !important;
+  box-sizing:border-box !important;
+}
+#u2079 .text,
+#u2081 .text {
+  justify-content:flex-start !important;
+}
+#u2079_text,
+#u2081_text,
+#u2082_text,
+#u2083_text,
+#u2116_text,
+#u2117_text,
+#u2118_text,
+#u2119_text {
+  line-height:38px !important;
+}
+#u2079_text p,
+#u2081_text p,
+#u2082_text p,
+#u2083_text p,
+#u2116_text p,
+#u2117_text p,
+#u2118_text p,
+#u2119_text p {
+  margin:0 !important;
+}
+#u2089_input {
+  display:block !important;
+  height:38px !important;
+  line-height:38px !important;
+  padding:0 12px !important;
+}
+#u2116.merchant-profit-range-active #u2116_div,
+#u2117.merchant-profit-range-active #u2117_div,
+#u2118.merchant-profit-range-active #u2118_div,
+#u2119.merchant-profit-range-active #u2119_div {
+  border-color:#2F80ED !important;
+  background:#2F80ED !important;
+  box-shadow:0 4px 10px rgba(47, 128, 237, 0.22) !important;
+}
+#u2116.merchant-profit-range-active #u2116_text span,
+#u2117.merchant-profit-range-active #u2117_text span,
+#u2118.merchant-profit-range-active #u2118_text span,
+#u2119.merchant-profit-range-active #u2119_text span {
+  color:#FFFFFF !important;
+  font-weight:800 !important;
+}
+
+/* Match data-management work area sizing. */
+body {
+  left:0 !important;
+  width:1920px !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+#u2068 {
+  left:280px !important;
+  top:48px !important;
+  width:1576px !important;
+  height:820px !important;
+}
+#u2068_div {
+  width:1576px !important;
+  height:820px !important;
+}
+#u2087 {
+  left:280px !important;
+  top:48px !important;
+}
+.merchant-profit-tabs {
+  left:280px !important;
+  top:92px !important;
+  width:1576px !important;
+}
+#u2078,
+#u2080,
+#u2088 {
+  top:150px !important;
+}
+#u2079,
+#u2081,
+#u2089,
+#u2082,
+#u2083,
+#u2116,
+#u2117,
+#u2118,
+#u2119 {
+  top:172px !important;
+}
+#u2078,
+#u2079 {
+  left:296px !important;
+}
+#u2079,
+#u2079_div {
+  width:220px !important;
+}
+#u2080,
+#u2081 {
+  left:532px !important;
+}
+#u2081,
+#u2081_div {
+  width:180px !important;
+}
+#u2088,
+#u2089 {
+  left:728px !important;
+}
+#u2089,
+#u2089_div {
+  width:160px !important;
+}
+#u2083 {
+  left:904px !important;
+}
+#u2082 {
+  left:976px !important;
+}
+#u2116 {
+  left:1120px !important;
+}
+#u2117 {
+  left:1190px !important;
+}
+#u2118 {
+  left:1260px !important;
+}
+#u2119 {
+  left:1330px !important;
+}
+#u2116_div,
+#u2117_div,
+#u2118_div,
+#u2119_div {
+  width:60px !important;
+}
+.merchant-profit-axure-table-card {
+  left:280px !important;
+  top:236px !important;
+  width:1576px !important;
+}
+.merchant-profit-axure-table th:nth-child(1),
+.merchant-profit-axure-table td:nth-child(1) {
+  width:70px;
+}
+.merchant-profit-axure-table th:nth-child(2),
+.merchant-profit-axure-table td:nth-child(2) {
+  width:110px;
+}
+.merchant-profit-axure-table th:nth-child(3),
+.merchant-profit-axure-table td:nth-child(3) {
+  width:170px;
+  padding-left:18px;
+}
+.merchant-profit-axure-table th:nth-child(4),
+.merchant-profit-axure-table td:nth-child(4) {
+  width:80px;
+}
+.merchant-profit-axure-table th:nth-child(5),
+.merchant-profit-axure-table td:nth-child(5),
+.merchant-profit-axure-table th:nth-child(6),
+.merchant-profit-axure-table td:nth-child(6),
+.merchant-profit-axure-table th:nth-child(7),
+.merchant-profit-axure-table td:nth-child(7),
+.merchant-profit-axure-table th:nth-child(11),
+.merchant-profit-axure-table td:nth-child(11) {
+  width:150px;
+}
+.merchant-profit-axure-table th:nth-child(8),
+.merchant-profit-axure-table td:nth-child(8),
+.merchant-profit-axure-table th:nth-child(9),
+.merchant-profit-axure-table td:nth-child(9),
+.merchant-profit-axure-table th:nth-child(10),
+.merchant-profit-axure-table td:nth-child(10) {
+  width:110px;
+}
+.merchant-profit-page {
+  position:absolute;
+  left:280px;
+  top:48px;
+  width:1576px;
+  min-height:860px;
+  z-index:20;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+}
+.merchant-profit-titlebar {
+  display:flex;
+  align-items:center;
+  height:32px;
+  margin-bottom:8px;
+}
+.merchant-profit-titlebar h1 {
+  margin:0;
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  line-height:32px;
+}
+.merchant-profit-filters {
+  display:grid;
+  grid-template-columns:220px 130px 150px 150px auto 1fr;
+  gap:12px;
+  align-items:end;
+  padding:14px 16px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 8px 20px rgba(15, 23, 42, 0.05);
+}
+.merchant-profit-filter {
+  display:grid;
+  gap:8px;
+}
+.merchant-profit-filter span {
+  color:#475467;
+  font-size:13px;
+  line-height:18px;
+}
+.merchant-profit-filter input,
+.merchant-profit-filter select {
+  width:100%;
+  height:38px;
+  padding:0 12px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.merchant-profit-filter input:focus,
+.merchant-profit-filter select:focus {
+  border-color:#2F80ED;
+  box-shadow:0 0 0 3px rgba(47, 128, 237, 0.12);
+}
+.merchant-profit-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.merchant-profit-actions button {
+  height:38px;
+  padding:0 16px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.merchant-profit-actions .is-primary {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
+.merchant-profit-summary {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+.merchant-profit-stat {
+  display:grid;
+  gap:8px;
+  padding:14px 16px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 8px 20px rgba(15, 23, 42, 0.05);
+}
+.merchant-profit-stat span {
+  color:#667085;
+  font-size:13px;
+}
+.merchant-profit-stat strong {
+  color:#111827;
+  font-size:20px;
+  font-weight:800;
+  line-height:26px;
+}
+.merchant-profit-stat.is-up strong {
+  color:#027A48;
+}
+.merchant-profit-stat.is-down strong {
+  color:#B42318;
+}
+.merchant-profit-table-card {
+  margin-top:14px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  overflow:hidden;
+}
+.merchant-profit-table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.merchant-profit-table th,
+.merchant-profit-table td {
+  height:46px;
+  padding:0 8px;
+  border-bottom:1px solid #EEF2F6;
+  color:#1F2937;
+  font-size:13px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-sizing:border-box;
+}
+.merchant-profit-table th {
+  height:46px;
+  border-bottom:1px solid #E5E7EB;
+  background:#F8FAFC;
+  color:#475467;
+  font-weight:700;
+}
+.merchant-profit-table tr:hover td {
+  background:#F8FBFF;
+}
+.merchant-profit-table th:nth-child(1),
+.merchant-profit-table td:nth-child(1) {
+  width:58px;
+}
+.merchant-profit-table th:nth-child(2),
+.merchant-profit-table td:nth-child(2) {
+  width:96px;
+}
+.merchant-profit-table th:nth-child(3),
+.merchant-profit-table td:nth-child(3) {
+  width:150px;
+  text-align:left;
+  padding-left:16px;
+}
+.merchant-profit-table th:nth-child(4),
+.merchant-profit-table td:nth-child(4) {
+  width:70px;
+}
+.merchant-profit-table th:nth-child(5),
+.merchant-profit-table td:nth-child(5),
+.merchant-profit-table th:nth-child(6),
+.merchant-profit-table td:nth-child(6),
+.merchant-profit-table th:nth-child(7),
+.merchant-profit-table td:nth-child(7),
+.merchant-profit-table th:nth-child(11),
+.merchant-profit-table td:nth-child(11) {
+  width:132px;
+}
+.merchant-profit-table th:nth-child(8),
+.merchant-profit-table td:nth-child(8),
+.merchant-profit-table th:nth-child(9),
+.merchant-profit-table td:nth-child(9),
+.merchant-profit-table th:nth-child(10),
+.merchant-profit-table td:nth-child(10) {
+  width:92px;
+}
+.merchant-profit-table td.is-positive {
+  color:#027A48;
+  font-weight:700;
+}
+.merchant-profit-table td.is-negative {
+  color:#B42318;
+  font-weight:700;
+}
 #u2068_div {
   border-width:0px;
   position:absolute;
@@ -3917,4 +4664,369 @@
   border-width:0px;
   white-space:nowrap;
   text-transform:none;
+}
+
+/* Rebuilt merchant profit page, aligned with data-management pages. */
+.merchant-profit-page {
+  position:absolute;
+  left:280px;
+  top:22px;
+  width:1608px;
+  min-height:980px;
+  z-index:30;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+}
+.merchant-profit-titlebar {
+  height:32px;
+  margin-bottom:12px;
+}
+.merchant-profit-titlebar h1 {
+  margin:0;
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  line-height:32px;
+}
+.merchant-profit-tabs {
+  width:100%;
+}
+.merchant-profit-filters {
+  display:grid;
+  grid-template-columns:220px 180px 160px auto 1fr;
+  gap:12px;
+  align-items:end;
+  padding:14px 16px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 8px 20px rgba(15, 23, 42, 0.05);
+}
+.merchant-profit-filters label {
+  display:grid;
+  gap:8px;
+}
+.merchant-profit-filters label span {
+  color:#475467;
+  font-size:13px;
+  line-height:18px;
+}
+.merchant-profit-filters input,
+.merchant-profit-filters select {
+  width:100%;
+  height:38px;
+  padding:0 12px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.merchant-profit-actions,
+.merchant-profit-ranges {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.merchant-profit-ranges {
+  justify-content:flex-end;
+}
+.merchant-profit-actions button,
+.merchant-profit-ranges button {
+  height:38px;
+  padding:0 16px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.merchant-profit-actions .is-primary,
+.merchant-profit-ranges .is-active {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
+.merchant-profit-table-card {
+  margin-top:14px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  overflow:hidden;
+}
+.merchant-profit-table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.merchant-profit-table th,
+.merchant-profit-table td {
+  height:46px;
+  padding:0 8px;
+  border-bottom:1px solid #EEF2F6;
+  color:#1F2937;
+  font-size:13px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-sizing:border-box;
+}
+.merchant-profit-table th {
+  background:#F8FAFC;
+  color:#475467;
+  font-weight:700;
+}
+.merchant-profit-table tr:hover td {
+  background:#F8FBFF;
+}
+.merchant-profit-table .is-left {
+  text-align:left;
+}
+.merchant-profit-table .is-positive {
+  color:#027A48;
+  font-weight:700;
+}
+.merchant-profit-table th:nth-child(1),
+.merchant-profit-table td:nth-child(1) {
+  width:70px;
+}
+.merchant-profit-table th:nth-child(2),
+.merchant-profit-table td:nth-child(2) {
+  width:110px;
+}
+.merchant-profit-table th:nth-child(3),
+.merchant-profit-table td:nth-child(3) {
+  width:170px;
+  text-align:left;
+  padding-left:18px;
+}
+
+/* Final safe override: position only rebuilt content, keep sidebar visible. */
+.merchant-profit-page {
+  left:280px !important;
+  top:22px !important;
+  width:1608px !important;
+  min-height:980px !important;
+  position:absolute !important;
+  z-index:10000 !important;
+  background:#FFFFFF;
+}
+.merchant-profit-axure-table-card,
+.merchant-profit-tabs:not(.codex-page-tabs) {
+  display:none !important;
+}
+
+/* Strict final layout: prevent overlap between rebuilt sections. */
+.merchant-profit-page {
+  position:fixed !important;
+  left:280px !important;
+  top:22px !important;
+  width:calc(100vw - 312px) !important;
+  max-width:1608px !important;
+  min-height:980px !important;
+  z-index:10000 !important;
+  display:block !important;
+  background:#FFFFFF !important;
+  font-family:Arial, "Microsoft YaHei", sans-serif !important;
+}
+.merchant-profit-page > .merchant-profit-titlebar {
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  height:32px !important;
+  margin:0 0 12px 0 !important;
+}
+.merchant-profit-page > .merchant-profit-tabs {
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  width:100% !important;
+  margin:0 0 12px 0 !important;
+  z-index:1 !important;
+}
+.merchant-profit-page > .merchant-profit-filters {
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  width:100% !important;
+  margin:0 !important;
+  z-index:1 !important;
+  box-sizing:border-box !important;
+}
+.merchant-profit-page > .merchant-profit-table-card {
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  width:100% !important;
+  margin-top:14px !important;
+  z-index:1 !important;
+  box-sizing:border-box !important;
+}
+.merchant-profit-page .codex-page-tab {
+  position:relative !important;
+}
+.merchant-profit-page .merchant-profit-filters * {
+  box-sizing:border-box !important;
+}
+.merchant-profit-page .merchant-profit-filters {
+  grid-template-columns:220px 180px 160px auto 1fr !important;
+}
+.unified-topbar {
+  position:fixed !important;
+  left:auto !important;
+  right:32px !important;
+  top:22px !important;
+  z-index:20000 !important;
+}
+
+/* Merchant profit page final coordinate reset.
+   This page was exported with a negative Axure body offset; reset it so the
+   unified sidebar and rebuilt content share the same 1920px admin canvas. */
+body {
+  left:0 !important;
+  width:1920px !important;
+  min-width:1920px !important;
+  margin:0 !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  overflow:auto !important;
+  background:#FFFFFF !important;
+}
+#base {
+  left:0 !important;
+  top:0 !important;
+  width:1920px !important;
+  min-width:1920px !important;
+  min-height:1080px !important;
+}
+#u2121 {
+  left:42px !important;
+  top:88px !important;
+  height:960px !important;
+  z-index:9999 !important;
+}
+#base .unified-brand {
+  left:42px !important;
+  top:50px !important;
+  z-index:12000 !important;
+}
+#base .unified-sidebar {
+  z-index:11000 !important;
+}
+.merchant-profit-page {
+  position:absolute !important;
+  left:280px !important;
+  top:48px !important;
+  width:1576px !important;
+  max-width:none !important;
+  min-height:0 !important;
+  z-index:10000 !important;
+  background:#FFFFFF !important;
+}
+.merchant-profit-page > .merchant-profit-titlebar,
+.merchant-profit-page > .merchant-profit-tabs,
+.merchant-profit-page > .merchant-profit-filters,
+.merchant-profit-page > .merchant-profit-table-card {
+  left:auto !important;
+  top:auto !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+}
+.merchant-profit-page > .merchant-profit-titlebar {
+  margin:0 0 12px 0 !important;
+}
+.merchant-profit-page > .merchant-profit-tabs {
+  margin:0 0 12px 0 !important;
+}
+.merchant-profit-page > .merchant-profit-table-card {
+  margin-top:14px !important;
+}
+.merchant-profit-page .merchant-profit-table {
+  width:100% !important;
+}
+.unified-topbar {
+  position:absolute !important;
+  left:auto !important;
+  right:32px !important;
+  top:24px !important;
+  width:322px !important;
+  height:60px !important;
+  min-height:60px !important;
+  display:flex !important;
+  align-items:flex-start !important;
+  justify-content:flex-end !important;
+  gap:12px !important;
+  overflow:visible !important;
+  z-index:20000 !important;
+}
+.merchant-profit-topbar,
+#base .unified-topbar {
+  position:absolute !important;
+  width:322px !important;
+  height:60px !important;
+  min-height:60px !important;
+  overflow:visible !important;
+}
+.merchant-profit-topbar .unified-topbar__account,
+#base .unified-topbar .unified-topbar__account {
+  position:relative !important;
+  display:grid !important;
+  grid-template-rows:16px 20px !important;
+  row-gap:0 !important;
+  left:auto !important;
+  top:-2px !important;
+  width:96px !important;
+  height:48px !important;
+  min-height:48px !important;
+  margin-left:4px !important;
+  padding-top:0 !important;
+  padding-bottom:8px !important;
+  overflow:visible !important;
+  flex:0 0 96px !important;
+  text-align:left !important;
+}
+.merchant-profit-topbar .unified-topbar__account-label,
+.merchant-profit-topbar .unified-topbar__account-name,
+#base .unified-topbar .unified-topbar__account-label,
+#base .unified-topbar .unified-topbar__account-name {
+  display:block !important;
+  width:96px !important;
+  max-width:96px !important;
+  height:auto !important;
+  min-height:18px !important;
+  margin:0 !important;
+  overflow:visible !important;
+  white-space:nowrap !important;
+  line-height:18px !important;
+}
+.merchant-profit-topbar .unified-topbar__account-name,
+#base .unified-topbar .unified-topbar__account-name {
+  margin-top:0 !important;
+  line-height:20px !important;
+  padding-bottom:4px !important;
+}
+.merchant-profit-topbar .unified-topbar__message,
+.merchant-profit-topbar .unified-topbar__language,
+.merchant-profit-topbar .unified-topbar__account-toggle,
+#base .unified-topbar .unified-topbar__message,
+#base .unified-topbar .unified-topbar__language,
+#base .unified-topbar .unified-topbar__account-toggle {
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  flex:0 0 auto !important;
+}
+.merchant-profit-topbar .unified-topbar__account-toggle,
+#base .unified-topbar .unified-topbar__account-toggle {
+  margin-top:4px !important;
+}
+.merchant-profit-topbar .unified-topbar__account-menu,
+#base .unified-topbar .unified-topbar__account-menu {
+  top:42px !important;
+  z-index:21000 !important;
 }
