@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>游戏记录 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="collapse-btn">☰</div>
+          <div class="breadcrumb"><span>玩家账号</span><span>/</span><strong>游戏记录</strong></div>
+        </div>
+        <div class="topbar-right">
+          <span class="top-icon">↗</span>
+          <span class="top-icon">A</span>
+          <span class="time" data-current-time></span>
+          <select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select>
+          <span class="account">ar518888</span>
+          <span class="top-icon">⌄</span>
+        </div>
+      </header>
+      <section class="content player-profit-page game-record-page">
+        <div class="player-profit-tabs">
+          <a class="profit-tab" href="player-account.html">用户账号</a>
+          <a class="profit-tab active" href="player-game-records.html"><span class="dot">●</span>游戏记录</a>
+          <a class="profit-tab" href="player-today-profit-loss.html">今日玩家盈亏</a>
+        </div>
+        <div class="card profit-card">
+          <div class="profit-toolbar">
+            <div class="profit-filters game-record-filters">
+              <div class="profit-filter">
+                <div class="profit-label">玩家ID</div>
+                <input class="profit-input" type="text" placeholder="请输入玩家ID / 平台ID" data-record-id />
+              </div>
+              <div class="profit-filter">
+                <div class="profit-label">游戏选择</div>
+                <div class="game-picker game-record-picker" data-game-picker>
+                  <button class="game-picker-trigger" type="button" data-game-trigger>
+                    <span class="game-choice-icon">ALL</span>
+                    <span data-game-label>全部游戏</span>
+                    <span class="game-picker-arrow">⌄</span>
+                  </button>
+                  <div class="game-picker-panel" data-game-panel hidden>
+                    <div class="game-brand-tabs" data-game-brand-tabs>
+                      <button class="game-brand-tab active" type="button" data-game-brand value="">全部品牌</button>
+                      <button class="game-brand-tab" type="button" data-game-brand value="PG">PG</button>
+                      <button class="game-brand-tab" type="button" data-game-brand value="PP">PP</button>
+                      <button class="game-brand-tab" type="button" data-game-brand value="JILI">JILI</button>
+                      <button class="game-brand-tab" type="button" data-game-brand value="SPRLBE">SPRLBE</button>
+                    </div>
+                    <input class="game-search" type="text" placeholder="搜索游戏名称 / 英文名 / 游戏ID" data-game-search />
+                    <div class="game-options" data-game-options>
+                      <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1001" data-value="PowerOfTheKraken" data-name="PowerOfTheKraken 法老牌" data-icon="K" title="PowerOfTheKraken"><span class="game-thumb kraken"><span>K</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1002" data-value="eKraken" data-name="eKraken 海怪传说" data-icon="eK" title="eKraken"><span class="game-thumb ek"><span>eK</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1003" data-value="Fortune Gems" data-name="Fortune Gems 宝石热气球" data-icon="FG" title="Fortune Gems"><span class="game-thumb gems"><span>FG</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PG" data-id="1004" data-value="Heaven Dynasty" data-name="Heaven Dynasty 天竺王朝" data-icon="天" title="Heaven Dynasty 天竺王朝"><span class="game-thumb palace"><span>天</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1005" data-value="Pharaoh Cards" data-name="Pharaoh Cards 法老牌" data-icon="法" title="Pharaoh Cards 法老牌"><span class="game-thumb pharaoh"><span>法</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1006" data-value="Bowling King" data-name="Bowling King 保龄球之王" data-icon="保" title="Bowling King 保龄球之王"><span class="game-thumb bowling"><span>保</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1007" data-value="Gem Balloon" data-name="Gem Balloon 宝石热气球" data-icon="宝" title="Gem Balloon 宝石热气球"><span class="game-thumb balloon"><span>宝</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="PP" data-id="1008" data-value="Sesame Gate" data-name="Sesame Gate 芝麻开门" data-icon="芝" title="Sesame Gate 芝麻开门"><span class="game-thumb sesame"><span>芝</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1009" data-value="Sea Monster" data-name="Sea Monster 海怪传说" data-icon="海" title="Sea Monster 海怪传说"><span class="game-thumb monster"><span>海</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1010" data-value="Maya Gold" data-name="Maya Gold 玛雅黄金" data-icon="玛" title="Maya Gold 玛雅黄金"><span class="game-thumb maya"><span>玛</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1011" data-value="Poker Kingdom" data-name="Poker Kingdom 扑克王国" data-icon="扑" title="Poker Kingdom 扑克王国"><span class="game-thumb crown"><span>扑</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="JILI" data-id="1012" data-value="Dragon Treasure" data-name="Dragon Treasure 龙之宝藏" data-icon="龙" title="Dragon Treasure 龙之宝藏"><span class="game-thumb dragon"><span>龙</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="SPRLBE" data-id="1013" data-value="Lucky Candy" data-name="Lucky Candy 幸运糖果" data-icon="糖" title="Lucky Candy 幸运糖果"><span class="game-thumb candy"><span>糖</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="SPRLBE" data-id="1014" data-value="Star Gems" data-name="Star Gems 星辰宝石" data-icon="星" title="Star Gems 星辰宝石"><span class="game-thumb star"><span>星</span></span></button>
+                      <button class="game-option" type="button" data-game-option data-brand="SPRLBE" data-id="1015" data-value="Golden Train" data-name="Golden Train 黄金列车" data-icon="金" title="Golden Train 黄金列车"><span class="game-thumb train"><span>金</span></span></button>
+                    </div>
+                    <div class="game-picker-pager">
+                      <button class="game-page-btn" type="button" data-game-prev>‹</button>
+                      <span class="game-page-info" data-game-page-info>1 / 1</span>
+                      <button class="game-page-btn" type="button" data-game-next>›</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profit-filter date-filter">
+                <div class="profit-label">日期选择</div>
+                <div class="profit-date-control">
+                  <label class="date-field"><span class="date-field-label">开始</span><input class="profit-input date" type="date" value="2026-05-06" data-record-from /></label>
+                  <span class="profit-date-range-sep">至</span>
+                  <label class="date-field"><span class="date-field-label">结束</span><input class="profit-input date" type="date" value="2026-05-11" data-record-to /></label>
+                </div>
+              </div>
+            </div>
+            <div class="profit-actions">
+              <button class="profit-btn primary" type="button" data-record-search>查询</button>
+              <button class="profit-btn" type="button" data-record-reset>重置</button>
+            </div>
+          </div>
+          <div class="game-record-table-wrap">
+            <div class="game-record-table">
+              <div class="game-record-row header">
+                <div>序号</div><div>玩家ID</div><div>订单编号</div><div>牌局编号</div><div>中文游戏名名称</div><div>英文游戏名称</div><div>触发方式</div><div>RTP</div><div>返奖倍数</div><div>投注金额</div><div>玩家输赢</div><div>投注前余额</div><div>结算后余额</div><div>创建时间</div>
+              </div>
+              <div class="game-record-row" data-player="10470001344450" data-game="PowerOfTheKraken" data-brand="PG" data-date="2026-05-11">
+                <div>1</div><div class="record-player-id"><span class="profit-player">10470001344450 <button class="profit-copy" type="button" data-copy="10470001344450" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605110001 <button class="profit-copy" type="button" data-copy="GB202605110001" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-61148290 <button class="profit-copy" type="button" data-copy="RPG-61148290" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>海怪之力</div><div>PowerOfTheKraken</div><div>普通投注</div><div>96.20%</div><div class="record-multiple">1.20x</div><div class="profit-num">8,420.00</div><div class="profit-num pos">1,700.00</div><div class="profit-num">54,880.00</div><div class="profit-num">56,580.00</div><div><span class="profit-date">2026-05-11<br/>13:48:22</span></div>
+              </div>
+              <div class="game-record-row" data-player="10470007305040" data-game="eKraken" data-brand="PG" data-date="2026-05-11">
+                <div>2</div><div class="record-player-id"><span class="profit-player">10470007305040 <button class="profit-copy" type="button" data-copy="10470007305040" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605110002 <button class="profit-copy" type="button" data-copy="GB202605110002" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-61148291 <button class="profit-copy" type="button" data-copy="RPG-61148291" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>海怪传说</div><div>eKraken</div><div>免费旋转</div><div>91.40%</div><div class="record-multiple">0.55x</div><div class="profit-num">16,800.00</div><div class="profit-num neg">-7,560.00</div><div class="profit-num">132,640.00</div><div class="profit-num">125,080.00</div><div><span class="profit-date">2026-05-11<br/>12:21:09</span></div>
+              </div>
+              <div class="game-record-row" data-player="10470004414669" data-game="Fortune Gems" data-brand="PG" data-date="2026-05-10">
+                <div>3</div><div class="record-player-id"><span class="profit-player">10470004414669 <button class="profit-copy" type="button" data-copy="10470004414669" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605100128 <button class="profit-copy" type="button" data-copy="GB202605100128" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-61039128 <button class="profit-copy" type="button" data-copy="RPG-61039128" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>宝石财富</div><div>Fortune Gems</div><div>普通投注</div><div>102.80%</div><div class="record-multiple">1.52x</div><div class="profit-num">3,600.00</div><div class="profit-num pos">1,888.00</div><div class="profit-num">26,300.00</div><div class="profit-num">28,188.00</div><div><span class="profit-date">2026-05-10<br/>20:06:13</span></div>
+              </div>
+              <div class="game-record-row" data-player="10470004889926" data-game="Maya Gold" data-brand="JILI" data-date="2026-05-09">
+                <div>4</div><div class="record-player-id"><span class="profit-player">10470004889926 <button class="profit-copy" type="button" data-copy="10470004889926" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605090276 <button class="profit-copy" type="button" data-copy="GB202605090276" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-60988276 <button class="profit-copy" type="button" data-copy="RPG-60988276" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>玛雅黄金</div><div>Maya Gold</div><div>普通投注</div><div>0.00%</div><div class="record-multiple muted">0.00x</div><div class="profit-num">22,000.00</div><div class="profit-num neg">-22,000.00</div><div class="profit-num">18,960.00</div><div class="profit-num neg">-3,040.00</div><div><span class="profit-date">2026-05-09<br/>18:44:30</span></div>
+              </div>
+              <div class="game-record-row" data-player="10410001538841" data-game="Bowling King" data-brand="PP" data-date="2026-05-08">
+                <div>5</div><div class="record-player-id"><span class="profit-player">10410001538841 <button class="profit-copy" type="button" data-copy="10410001538841" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605080318 <button class="profit-copy" type="button" data-copy="GB202605080318" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-60855318 <button class="profit-copy" type="button" data-copy="RPG-60855318" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>保龄球之王</div><div>Bowling King</div><div>普通投注</div><div>120.78%</div><div class="record-multiple">1.21x</div><div class="profit-num">11,260.00</div><div class="profit-num pos">2,340.00</div><div class="profit-num">146,520.00</div><div class="profit-num">148,860.00</div><div><span class="profit-date">2026-05-08<br/>10:32:45</span></div>
+              </div>
+              <div class="game-record-row" data-player="10470000804108" data-game="Lucky Candy" data-brand="SPRLBE" data-date="2026-05-07">
+                <div>6</div><div class="record-player-id"><span class="profit-player">10470000804108 <button class="profit-copy" type="button" data-copy="10470000804108" title="复制平台ID" aria-label="复制平台ID"></button></span></div><div><span class="record-copy-value">GB202605070536 <button class="profit-copy" type="button" data-copy="GB202605070536" title="复制订单编号" aria-label="复制订单编号"></button></span></div><div><span class="record-copy-value">RPG-60770536 <button class="profit-copy" type="button" data-copy="RPG-60770536" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div><div>幸运糖果</div><div>Lucky Candy</div><div>免费旋转</div><div>82.07%</div><div class="record-multiple">0.82x</div><div class="profit-num">7,920.00</div><div class="profit-num neg">-1,420.00</div><div class="profit-num">33,680.00</div><div class="profit-num">32,260.00</div><div><span class="profit-date">2026-05-07<br/>23:12:18</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="profit-pagination game-record-pagination">
+            <div>共 <span data-record-total>6</span> 条记录</div>
+            <div class="profit-page-size"><span>每页</span><select class="profit-size-select"><option selected>100</option><option>500</option><option>1000</option></select><span>条</span></div>
+            <div class="profit-pages"><div class="profit-page-btn disabled">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn disabled">›</div></div>
+          </div>
+        </div>
+      </section>
+      <div class="account-detail-mask" data-record-detail hidden>
+        <div class="account-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="record-detail-title">
+          <div class="account-detail-head">
+            <div>
+              <h3 id="record-detail-title">会员详情 <span data-detail-id></span></h3>
+              <p>按当前游戏记录同步展示会员基础信息与本局投注概览。</p>
+            </div>
+            <button class="account-detail-close" type="button" data-detail-close aria-label="关闭">×</button>
+          </div>
+          <div class="account-detail-body">
+            <div class="account-detail-grid" data-detail-grid></div>
+            <div class="account-detail-tabs" data-detail-tabs>
+              <button class="active" type="button" data-detail-tab="game">游戏输赢数据</button>
+              <button type="button" data-detail-tab="daily">每日数据</button>
+              <button type="button" data-detail-tab="asset">资产变化走势</button>
+              <button type="button" data-detail-tab="control">点控列表</button>
+            </div>
+            <div class="account-detail-panel active" data-detail-panel="game">
+              <div class="account-detail-filter">
+                <label><span>游戏</span><select><option>全部</option><option>PowerOfTheKraken</option><option>eKraken</option><option>Fortune Gems</option><option>Maya Gold</option></select></label>
+                <div>
+                  <button class="profit-btn" type="button">重置</button>
+                  <button class="profit-btn primary" type="button">搜索</button>
+                </div>
+              </div>
+              <div class="account-detail-table-wrap">
+                <div class="account-detail-table" data-detail-game-table></div>
+              </div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="daily">
+              <div class="account-detail-filter daily-data-filter">
+                <label><span>日期</span><input class="profit-input date" type="date" data-daily-from /></label>
+                <span class="profit-date-range-sep">至</span>
+                <label><input class="profit-input date" type="date" data-daily-to aria-label="每日数据结束日期" /></label>
+                <div>
+                  <button class="profit-btn" type="button" data-daily-reset>重置</button>
+                  <button class="profit-btn primary" type="button" data-daily-search>搜索</button>
+                </div>
+              </div>
+              <div class="account-detail-table-wrap">
+                <div class="account-detail-table daily-data-table" data-daily-table></div>
+              </div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="asset">
+              <div class="account-detail-empty">暂无资产变化走势数据</div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="control">
+              <div class="account-detail-empty">暂无点控记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script src="account-detail-shared.js"></script>
+  <script>
+    (() => {
+      const idInput = document.querySelector("[data-record-id]");
+      const fromInput = document.querySelector("[data-record-from]");
+      const toInput = document.querySelector("[data-record-to]");
+      const searchButton = document.querySelector("[data-record-search]");
+      const resetButton = document.querySelector("[data-record-reset]");
+      const total = document.querySelector("[data-record-total]");
+      const rows = Array.from(document.querySelectorAll(".game-record-row[data-player]"));
+      const picker = document.querySelector("[data-game-picker]");
+      const trigger = document.querySelector("[data-game-trigger]");
+      const panel = document.querySelector("[data-game-panel]");
+      const gameLabel = document.querySelector("[data-game-label]");
+      const gameSearch = document.querySelector("[data-game-search]");
+      const gameBrandTabs = Array.from(document.querySelectorAll("[data-game-brand]"));
+      const gameOptions = Array.from(document.querySelectorAll("[data-game-option]"));
+      const gamePrev = document.querySelector("[data-game-prev]");
+      const gameNext = document.querySelector("[data-game-next]");
+      const gamePageInfo = document.querySelector("[data-game-page-info]");
+      const detailMask = document.querySelector("[data-record-detail]");
+      const detailId = document.querySelector("[data-detail-id]");
+      const detailGrid = document.querySelector("[data-detail-grid]");
+      const detailGameTable = document.querySelector("[data-detail-game-table]");
+      const dailyFrom = document.querySelector("[data-daily-from]");
+      const dailyTo = document.querySelector("[data-daily-to]");
+      const dailySearch = document.querySelector("[data-daily-search]");
+      const dailyReset = document.querySelector("[data-daily-reset]");
+      const dailyTable = document.querySelector("[data-daily-table]");
+      const detailClose = document.querySelector("[data-detail-close]");
+      const detailTabs = Array.from(document.querySelectorAll("[data-detail-tab]"));
+      const detailPanels = Array.from(document.querySelectorAll("[data-detail-panel]"));
+      const accountProfiles = {
+        "10470001344450": { name: "kraken_850", status: "在线", originalStatus: "在线", controlStatus: "正常", balance: "0.00", loginCount: "0", lastLogin: "2026-05-07 14:05:32", ip: "103.48.12.16", tag: "低端玩家" },
+        "10470007305040": { name: "vip_royal", status: "在线", originalStatus: "在线", controlStatus: "正常", balance: "90.16", loginCount: "3", lastLogin: "2026-05-07 13:52:18", ip: "172.21.8.90", tag: "优质玩家" },
+        "10470004414669": { name: "gems_4469", status: "离线", originalStatus: "离线", controlStatus: "正常", balance: "400.00", loginCount: "0", lastLogin: "2026-05-06 21:44:09", ip: "45.67.19.201", tag: "中端玩家" },
+        "10470004889926": { name: "fast_score", status: "风险", originalStatus: "风险", controlStatus: "点控中", balance: "109.12", loginCount: "8", lastLogin: "2026-05-07 12:18:45", ip: "103.48.12.16", tag: "疑似刷分" },
+        "10410001538841": { name: "maya_blue", status: "在线", originalStatus: "在线", controlStatus: "点控中", balance: "1,280.00", loginCount: "2", lastLogin: "2026-05-07 11:08:20", ip: "61.144.22.8", tag: "优质玩家" },
+        "10470000804108": { name: "mid_4108", status: "离线", originalStatus: "离线", controlStatus: "正常", balance: "0.16", loginCount: "0", lastLogin: "2026-05-06 18:26:59", ip: "119.29.77.42", tag: "中端玩家" }
+      };
+      let selectedGame = "";
+      let selectedBrand = "";
+      let gamePage = 1;
+      let activeDetailRow = null;
+      const pageSize = 10;
+
+      function positionPanel() {
+        const rect = trigger.getBoundingClientRect();
+        const width = Math.min(760, window.innerWidth - 280);
+        const left = Math.min(Math.max(244, rect.left), window.innerWidth - width - 16);
+        const top = Math.min(rect.bottom + 8, window.innerHeight - Math.min(560, window.innerHeight - 120) - 16);
+        panel.style.left = `${left}px`;
+        panel.style.top = `${top}px`;
+      }
+
+      function openPanel() {
+        panel.hidden = false;
+        positionPanel();
+        renderGameOptions();
+        gameSearch.focus();
+      }
+
+      function closePanel() {
+        panel.hidden = true;
+      }
+
+      function filteredGameOptions() {
+        const keyword = gameSearch.value.trim().toLowerCase();
+        return gameOptions.filter((option) => {
+          const matchBrand = !selectedBrand || option.dataset.brand === selectedBrand;
+          const text = `${option.dataset.value} ${option.dataset.name} ${option.dataset.id}`.toLowerCase();
+          return matchBrand && (!keyword || text.includes(keyword));
+        });
+      }
+
+      function renderGameOptions() {
+        const options = filteredGameOptions();
+        const maxPage = Math.max(1, Math.ceil(options.length / pageSize));
+        gamePage = Math.min(gamePage, maxPage);
+        const start = (gamePage - 1) * pageSize;
+        const visibleOptions = new Set(options.slice(start, start + pageSize));
+        gameOptions.forEach((option) => {
+          option.hidden = !visibleOptions.has(option);
+          option.classList.toggle("active", option.dataset.value === selectedGame);
+          const thumb = option.querySelector(".game-thumb span");
+          if (thumb) thumb.textContent = option.dataset.icon || option.dataset.brand;
+        });
+        gamePageInfo.textContent = `${gamePage} / ${maxPage}`;
+        gamePrev.disabled = gamePage <= 1;
+        gameNext.disabled = gamePage >= maxPage;
+      }
+
+      function applyFilters() {
+        const id = idInput.value.trim();
+        const from = fromInput.value;
+        const to = toInput.value;
+        let count = 0;
+        rows.forEach((row) => {
+          const matchId = !id || row.dataset.player.includes(id);
+          const matchGame = !selectedGame || row.dataset.game === selectedGame;
+          const matchFrom = !from || row.dataset.date >= from;
+          const matchTo = !to || row.dataset.date <= to;
+          const visible = matchId && matchGame && matchFrom && matchTo;
+          row.hidden = !visible;
+          if (visible) count += 1;
+        });
+        total.textContent = count;
+      }
+
+      function cellText(row, index) {
+        return row.children[index]?.innerText.trim().replace(/\s+/g, " ") || "-";
+      }
+
+      function moneyNumber(text) {
+        const value = Number(String(text).replace(/,/g, ""));
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function statusClass(status) {
+        if (status === "封禁") return "banned";
+        if (status === "风险") return "risk";
+        if (status === "在线") return "online";
+        if (status === "离线") return "offline";
+        return "";
+      }
+
+      function renderStatusControl(platformId, profile) {
+        const status = profile.status || "-";
+        const actionText = status === "封禁" ? "解除封禁" : "修改封禁";
+        return `<span class="detail-status-control"><span class="account-status ${statusClass(status)}">${status}</span><button class="detail-ban-btn" type="button" data-ban-toggle="${platformId}">${actionText}</button></span>`;
+      }
+
+      function formatMoney(value) {
+        return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function dateOffset(dateText, offset) {
+        const date = new Date(`${dateText}T00:00:00`);
+        date.setDate(date.getDate() + offset);
+        return date.toISOString().slice(0, 10);
+      }
+
+      function eachDate(from, to) {
+        const dates = [];
+        let cursor = from;
+        while (cursor <= to) {
+          dates.push(cursor);
+          cursor = dateOffset(cursor, 1);
+        }
+        return dates;
+      }
+
+      function renderDailyData(row) {
+        if (!row) return;
+        const platformId = row.dataset.player;
+        const from = dailyFrom.value || dateOffset(toInput.value || "2026-05-11", -29);
+        const to = dailyTo.value || toInput.value || "2026-05-11";
+        const rowsForPlayer = rows.filter((item) => item.dataset.player === platformId);
+        const dailyTotals = rowsForPlayer.reduce((totals, item) => {
+          const date = item.dataset.date;
+          if (!totals[date]) totals[date] = { bet: 0, payout: 0, platformProfit: 0, count: 0 };
+          const bet = moneyNumber(cellText(item, 9));
+          const playerWin = moneyNumber(cellText(item, 10));
+          const payout = Math.max(0, bet + playerWin);
+          totals[date].bet += bet;
+          totals[date].payout += payout;
+          totals[date].platformProfit += -playerWin;
+          totals[date].count += 1;
+          return totals;
+        }, {});
+        const body = eachDate(from, to).map((date) => {
+          const item = dailyTotals[date] || { bet: 0, payout: 0, platformProfit: 0, count: 0 };
+          const effectiveBet = item.bet;
+          const rtp = item.bet ? (item.payout / item.bet) * 100 : 0;
+          const effectiveRatio = item.bet ? (effectiveBet / item.bet) * 100 : 0;
+          const profitClass = item.platformProfit > 0 ? "pos" : item.platformProfit < 0 ? "neg" : "";
+          return `
+            <div class="daily-data-row">
+              <div>${date}</div>
+              <div class="profit-num">${formatMoney(item.bet)}</div>
+              <div class="profit-num">${formatMoney(item.payout)}</div>
+              <div class="profit-num ${profitClass}">${formatMoney(item.platformProfit)}</div>
+              <div>${rtp.toFixed(2)}%</div>
+              <div class="profit-num">${formatMoney(effectiveBet)}</div>
+              <div>${effectiveRatio.toFixed(2)}%</div>
+              <div>${item.count}</div>
+            </div>
+          `;
+        }).join("");
+        dailyTable.innerHTML = `
+          <div class="daily-data-row header"><div>日期</div><div>游戏投注</div><div>游戏返奖</div><div>平台盈亏</div><div>RTP</div><div>有效投注</div><div>有效投注比</div><div>注单数</div></div>
+          ${body}
+        `;
+      }
+
+      function renderDetail(row) {
+        activeDetailRow = row;
+        const platformId = row.dataset.player;
+        const profile = accountProfiles[platformId] || {};
+        const bet = cellText(row, 9);
+        const win = cellText(row, 10);
+        const balanceBefore = cellText(row, 11);
+        const balanceAfter = cellText(row, 12);
+        const gameCn = cellText(row, 4);
+        const gameEn = cellText(row, 5);
+        const brand = row.dataset.brand || "-";
+        const rtp = cellText(row, 7);
+        const roundId = cellText(row, 3);
+        const createdAt = cellText(row, 13);
+        detailId.textContent = `[${platformId}]`;
+        detailGrid.innerHTML = [
+          ["会员ID", platformId],
+          ["平台昵称", profile.name || "-"],
+          ["玩家标签", profile.tag || "-"],
+          ["账号状态", renderStatusControl(platformId, profile), true],
+          ["当前余额", `${profile.balance || balanceAfter} USD`],
+          ["控制状态", `<span class="control-status ${profile.controlStatus === "点控中" ? "active" : "normal"}">${profile.controlStatus || "正常"}</span>`, true],
+          ["本局投注", `${bet} USD`],
+          ["本局输赢", `${win} USD`],
+          ["投注前余额", `${balanceBefore} USD`],
+          ["结算后余额", `${balanceAfter} USD`],
+          ["今日RTP", rtp],
+          ["三日登录次数", profile.loginCount || "-"],
+          ["最后登录时间", profile.lastLogin || "-"],
+          ["注册IP地址", profile.ip || "-"],
+          ["登录IP地址", profile.ip || "-"],
+          ["牌局编号", roundId],
+          ["创建时间", createdAt]
+        ].map(([label, value, html]) => (
+          `<div class="account-detail-cell"><span>${label}</span><strong>${html ? value : String(value)}</strong></div>`
+        )).join("");
+        detailGrid.querySelectorAll("[data-ban-toggle]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const targetProfile = accountProfiles[button.dataset.banToggle];
+            if (!targetProfile) return;
+            targetProfile.status = targetProfile.status === "封禁" ? (targetProfile.originalStatus || "在线") : "封禁";
+            renderDetail(activeDetailRow);
+          });
+        });
+        detailGameTable.innerHTML = `
+          <div class="account-detail-game-row header"><div>序号</div><div>品牌</div><div>中文游戏名称</div><div>英文游戏名称</div><div>注单额</div><div>注单数</div><div>总输赢</div><div>RTP</div></div>
+          <div class="account-detail-game-row"><div>1</div><div><span class="detail-brand">${brand}</span></div><div>${gameCn}</div><div>${gameEn}</div><div class="profit-num">${bet} USD</div><div>${Math.max(1, Math.round(moneyNumber(bet) / 3600))}</div><div class="profit-num ${moneyNumber(win) >= 0 ? "pos" : "neg"}">${win} USD</div><div>${rtp}</div></div>
+        `;
+        dailyTo.value = toInput.value || "2026-05-11";
+        dailyFrom.value = dateOffset(dailyTo.value, -29);
+        renderDailyData(row);
+      }
+
+      function openDetail(row) {
+        renderDetail(row);
+        detailMask.hidden = false;
+        document.body.classList.add("modal-open");
+      }
+
+      function closeDetail() {
+        detailMask.hidden = true;
+        document.body.classList.remove("modal-open");
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          event.stopPropagation();
+          const value = button.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(value);
+          } catch (_) {
+            const textarea = document.createElement("textarea");
+            textarea.value = value;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+          button.classList.add("copied");
+          setTimeout(() => button.classList.remove("copied"), 900);
+        });
+      });
+      rows.forEach((row) => {
+        row.querySelector(".profit-player")?.addEventListener("click", () => openDetail(row));
+      });
+      detailClose.addEventListener("click", closeDetail);
+      detailMask.addEventListener("click", (event) => {
+        if (event.target === detailMask) closeDetail();
+      });
+      dailySearch.addEventListener("click", () => renderDailyData(activeDetailRow));
+      dailyReset.addEventListener("click", () => {
+        dailyTo.value = toInput.value || "2026-05-11";
+        dailyFrom.value = dateOffset(dailyTo.value, -29);
+        renderDailyData(activeDetailRow);
+      });
+      [dailyFrom, dailyTo].forEach((input) => {
+        input.addEventListener("change", () => renderDailyData(activeDetailRow));
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !detailMask.hidden) closeDetail();
+      });
+      detailTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          detailTabs.forEach((item) => item.classList.toggle("active", item === tab));
+          detailPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.detailPanel === tab.dataset.detailTab));
+        });
+      });
+
+      trigger.addEventListener("click", () => {
+        if (panel.hidden) openPanel();
+        else closePanel();
+      });
+      document.addEventListener("click", (event) => {
+        if (!picker.contains(event.target)) closePanel();
+      });
+      window.addEventListener("resize", () => {
+        if (!panel.hidden) positionPanel();
+      });
+      gameBrandTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          selectedBrand = tab.value;
+          selectedGame = "";
+          gameLabel.textContent = selectedBrand ? `${selectedBrand} 全部游戏` : "全部游戏";
+          gameBrandTabs.forEach((item) => item.classList.toggle("active", item === tab));
+          gamePage = 1;
+          renderGameOptions();
+          applyFilters();
+        });
+      });
+      gameSearch.addEventListener("input", () => {
+        gamePage = 1;
+        renderGameOptions();
+      });
+      gameOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          selectedGame = option.dataset.value;
+          selectedBrand = option.dataset.brand;
+          gameLabel.textContent = option.dataset.value;
+          gameBrandTabs.forEach((item) => item.classList.toggle("active", item.value === selectedBrand));
+          renderGameOptions();
+          closePanel();
+          applyFilters();
+        });
+      });
+      gamePrev.addEventListener("click", () => {
+        gamePage -= 1;
+        renderGameOptions();
+      });
+      gameNext.addEventListener("click", () => {
+        gamePage += 1;
+        renderGameOptions();
+      });
+      searchButton.addEventListener("click", applyFilters);
+      resetButton.addEventListener("click", () => {
+        idInput.value = "";
+        fromInput.value = "2026-05-06";
+        toInput.value = "2026-05-11";
+        selectedGame = "";
+        selectedBrand = "";
+        gameSearch.value = "";
+        gameLabel.textContent = "全部游戏";
+        gameBrandTabs.forEach((item) => item.classList.toggle("active", item.value === ""));
+        gamePage = 1;
+        renderGameOptions();
+        applyFilters();
+      });
+      idInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") applyFilters();
+      });
+      [fromInput, toInput].forEach((input) => input.addEventListener("change", applyFilters));
+      renderGameOptions();
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>

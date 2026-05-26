@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>角色管理 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><span>系统管理</span><span>/</span><strong>角色管理</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↗</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content system-page">
+        <div class="system-tabs">
+          <a class="system-tab" href="system-account.html">账户管理</a>
+          <a class="system-tab active" href="system-role.html">角色管理</a>
+          <a class="system-tab" href="system-operation-log.html">操作日志</a>
+        </div>
+
+        <section class="system-card role-card">
+          <div class="system-card-head">
+            <div>
+              <h2>角色权限</h2>
+              <p>创建角色并勾选菜单权限，账户管理中可将角色分配给不同管理员。</p>
+            </div>
+            <button class="profit-btn primary" type="button" data-new-role>新增角色</button>
+          </div>
+          <div class="role-layout">
+            <aside class="role-list" data-role-list></aside>
+            <form class="permission-panel" data-role-form>
+              <div class="permission-head">
+                <div>
+                  <label class="system-form-field compact"><span>角色名称</span><input class="account-input" type="text" required data-role-name /></label>
+                  <label class="system-form-field compact"><span>角色说明</span><input class="account-input" type="text" data-role-desc /></label>
+                </div>
+                <div class="permission-actions">
+                  <button class="profit-btn" type="button" data-check-all>全选</button>
+                  <button class="profit-btn" type="button" data-clear-all>清空</button>
+                  <button class="profit-btn primary" type="submit">保存角色</button>
+                </div>
+              </div>
+              <div class="permission-groups" data-permission-groups></div>
+            </form>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    const permissionGroups = [
+      { name: "玩家账号", permissions: ["用户账号查看", "玩家详情", "今日玩家盈亏", "导出玩家数据"] },
+      { name: "游戏数据", permissions: ["游戏数据查看", "平台盈亏查看", "每日报告查看", "报表导出"] },
+      { name: "数据统计", permissions: ["游戏留存", "玩家留存", "站点统计"] },
+      { name: "游戏配置", permissions: ["游戏控制查看", "提交点控", "解除点控"] },
+      { name: "API配置", permissions: ["查看接入信息", "编辑回调地址", "重置密钥"] },
+      { name: "商户报表", permissions: ["商户报表查看", "财务明细导出"] },
+      { name: "系统管理", permissions: ["账户管理", "角色管理", "分配角色", "启停管理员"] }
+    ];
+    const roles = [
+      { name: "超级管理员", desc: "拥有全部菜单与操作权限", permissions: permissionGroups.flatMap((group) => group.permissions), users: 1 },
+      { name: "运营管理员", desc: "负责玩家与游戏控制运营", permissions: ["用户账号查看", "玩家详情", "今日玩家盈亏", "游戏控制查看", "提交点控", "解除点控", "游戏留存", "玩家留存"], users: 1 },
+      { name: "财务管理员", desc: "查看财务报表与商户账务", permissions: ["游戏数据查看", "平台盈亏查看", "每日报告查看", "报表导出", "商户报表查看", "财务明细导出", "查看接入信息"], users: 1 },
+      { name: "只读审计", desc: "只允许查看报表和统计", permissions: ["游戏数据查看", "平台盈亏查看", "每日报告查看", "游戏留存", "玩家留存", "站点统计", "商户报表查看"], users: 1 }
+    ];
+    const roleList = document.querySelector("[data-role-list]");
+    const groupsWrap = document.querySelector("[data-permission-groups]");
+    const roleName = document.querySelector("[data-role-name]");
+    const roleDesc = document.querySelector("[data-role-desc]");
+    const roleForm = document.querySelector("[data-role-form]");
+    let activeRole = 0;
+
+    function renderRoleList() {
+      roleList.innerHTML = roles.map((role, index) => `
+        <button class="role-item${index === activeRole ? " active" : ""}" type="button" data-role-index="${index}">
+          <strong>${role.name}</strong>
+          <span>${role.desc}</span>
+          <em>${role.users} 个账户</em>
+        </button>
+      `).join("");
+    }
+
+    function renderPermissionGroups() {
+      groupsWrap.innerHTML = permissionGroups.map((group) => `
+        <fieldset class="permission-group">
+          <legend>${group.name}</legend>
+          <div class="permission-options">
+            ${group.permissions.map((permission) => `
+              <label class="permission-option">
+                <input type="checkbox" value="${permission}" data-permission />
+                <span>${permission}</span>
+              </label>
+            `).join("")}
+          </div>
+        </fieldset>
+      `).join("");
+    }
+
+    function syncForm() {
+      const role = roles[activeRole];
+      roleName.value = role.name;
+      roleDesc.value = role.desc;
+      document.querySelectorAll("[data-permission]").forEach((checkbox) => {
+        checkbox.checked = role.permissions.includes(checkbox.value);
+      });
+      renderRoleList();
+    }
+
+    function selectedPermissions() {
+      return Array.from(document.querySelectorAll("[data-permission]:checked")).map((checkbox) => checkbox.value);
+    }
+
+    roleList.addEventListener("click", (event) => {
+      const item = event.target.closest("[data-role-index]");
+      if (!item) return;
+      activeRole = Number(item.dataset.roleIndex);
+      syncForm();
+    });
+
+    document.querySelector("[data-new-role]").addEventListener("click", () => {
+      roles.push({ name: "新建角色", desc: "自定义权限范围", permissions: [], users: 0 });
+      activeRole = roles.length - 1;
+      syncForm();
+      roleName.select();
+    });
+
+    document.querySelector("[data-check-all]").addEventListener("click", () => {
+      document.querySelectorAll("[data-permission]").forEach((checkbox) => { checkbox.checked = true; });
+    });
+
+    document.querySelector("[data-clear-all]").addEventListener("click", () => {
+      document.querySelectorAll("[data-permission]").forEach((checkbox) => { checkbox.checked = false; });
+    });
+
+    roleForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      roles[activeRole] = {
+        ...roles[activeRole],
+        name: roleName.value.trim(),
+        desc: roleDesc.value.trim(),
+        permissions: selectedPermissions()
+      };
+      syncForm();
+    });
+
+    renderPermissionGroups();
+    syncForm();
+  </script>
+</body>
+</html>

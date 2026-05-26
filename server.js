@@ -50,7 +50,9 @@ function serveFile(res, fullPath) {
 http
   .createServer((req, res) => {
     const requestUrl = new URL(req.url, `http://127.0.0.1:${port}`);
-    const relativePath = decodeURIComponent(requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname);
+    const relativePath = decodeURIComponent(
+      requestUrl.pathname === "/" ? "/admin-new/index.html" : requestUrl.pathname
+    );
     const fullPath = path.resolve(root, `.${relativePath}`);
 
     if (!fullPath.startsWith(root)) {

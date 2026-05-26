@@ -7,24 +7,19 @@
     config: `<svg ${iconAttrs}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.3a2 2 0 0 1-4 0V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H2.7a2 2 0 0 1 0-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.6V2.7a2 2 0 0 1 4 0V3a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.3a2 2 0 0 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>`,
     api: `<svg ${iconAttrs}><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg>`,
     merchant: `<svg ${iconAttrs}><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>`,
+    system: `<svg ${iconAttrs}><path d="M12 3l8 4-8 4-8-4 8-4Z"/><path d="M4 11l8 4 8-4"/><path d="M4 15l8 4 8-4"/></svg>`,
+    dashboard: `<svg ${iconAttrs}><path d="M4 13a8 8 0 0 1 16 0"/><path d="M12 13l4-5"/><path d="M5 17h14"/><path d="M7 21h10"/></svg>`,
   };
 
   const menuItems = [
+    { label: "仪表盘", href: "dashboard.html", icon: "dashboard" },
     {
       label: "玩家账号",
       icon: "player",
       children: [
         { label: "用户账号", href: "player-account.html" },
+        { label: "游戏记录", href: "player-game-records.html" },
         { label: "今日玩家盈亏", href: "player-today-profit-loss.html" },
-      ],
-    },
-    {
-      label: "游戏数据",
-      icon: "report",
-      children: [
-        { label: "游戏数据", href: "game-report.html" },
-        { label: "平台盈亏", href: "platform-profit.html" },
-        { label: "每日报告", href: "daily-report.html" },
       ],
     },
     {
@@ -34,6 +29,7 @@
         { label: "游戏留存", href: "game-retention.html" },
         { label: "玩家留存", href: "player-retention.html" },
         { label: "站点统计", href: "data-statistics.html" },
+        { label: "每日报告", href: "daily-report.html" },
       ],
     },
     {
@@ -41,10 +37,20 @@
       icon: "config",
       children: [
         { label: "游戏控制", href: "game-control.html" },
+        { label: "游戏设置", href: "game-setting.html" },
       ],
     },
-    { label: "API接入配置", href: "api-access.html", icon: "api" },
+    { label: "API配置", href: "api-access.html", icon: "api" },
     { label: "商户报表", href: "merchant-report.html", icon: "merchant" },
+    {
+      label: "系统管理",
+      icon: "system",
+      children: [
+        { label: "账户管理", href: "system-account.html" },
+        { label: "角色管理", href: "system-role.html" },
+        { label: "操作日志", href: "system-operation-log.html" },
+      ],
+    },
   ];
 
   const routeAliases = {
@@ -73,7 +79,7 @@
     return `
       <div class="submenu${active ? " has-active-child" : ""}">
         <button class="submenu-title${active ? " active" : ""}" type="button" title="${item.label}" aria-expanded="true">
-          ${renderMenuLeft(item)}<span class="chevron">⌃</span>
+          ${renderMenuLeft(item)}<span class="chevron">⌄</span>
         </button>
         <div class="submenu-list">
           ${item.children.map((child) => `<a class="submenu-item${child.href === currentPage ? " active" : ""}" href="${child.href}">${child.label}</a>`).join("")}
@@ -139,7 +145,7 @@
       function sync() {
         const expanded = !submenu.classList.contains("is-collapsed");
         title.setAttribute("aria-expanded", String(expanded));
-        chevron.textContent = expanded ? "⌃" : "⌄";
+        chevron.textContent = expanded ? "⌄" : "›";
       }
 
       title.addEventListener("click", (event) => {

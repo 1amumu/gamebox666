@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>账户管理 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><span>系统管理</span><span>/</span><strong>账户管理</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↗</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content system-page">
+        <div class="system-tabs">
+          <a class="system-tab active" href="system-account.html">账户管理</a>
+          <a class="system-tab" href="system-role.html">角色管理</a>
+          <a class="system-tab" href="system-operation-log.html">操作日志</a>
+        </div>
+
+        <section class="system-card">
+          <div class="system-card-head">
+            <div>
+              <h2>管理员账户</h2>
+              <p>添加管理员并指定角色，角色权限在角色管理中统一维护。</p>
+            </div>
+            <button class="profit-btn primary" type="button" data-open-account>添加管理员</button>
+          </div>
+          <div class="system-toolbar">
+            <label class="system-filter"><span>账号</span><input class="account-input" type="text" placeholder="请输入管理员账号" data-account-keyword /></label>
+            <label class="system-filter"><span>角色</span><select class="account-input account-select" data-role-filter><option value="">全部角色</option><option>超级管理员</option><option>运营管理员</option><option>财务管理员</option><option>只读审计</option></select></label>
+            <label class="system-filter"><span>状态</span><select class="account-input account-select" data-status-filter><option value="">全部状态</option><option value="enabled">启用</option><option value="disabled">停用</option></select></label>
+            <div class="system-actions"><button class="profit-btn primary" type="button" data-search-account>查询</button><button class="profit-btn" type="button" data-reset-account>重置</button></div>
+          </div>
+          <div class="system-table-wrap">
+            <div class="system-account-table" data-account-table>
+              <div class="system-row account header"><div>管理员账号</div><div>姓名</div><div>绑定角色</div><div>权限范围</div><div>状态</div><div>最近登录</div><div>操作</div></div>
+            </div>
+          </div>
+          <div class="profit-pagination system-pagination"><div>共 <span data-account-total>0</span> 条</div><div class="profit-pages"><div class="profit-page-btn disabled">‹</div><div class="profit-page-btn active">1</div><div class="profit-page-btn disabled">›</div></div></div>
+        </section>
+      </section>
+
+      <div class="system-modal-mask" data-account-modal hidden>
+        <form class="system-modal" data-account-form>
+          <div class="system-modal-head">
+            <div><h3 data-modal-title>添加管理员</h3><p>保存后该管理员将按所选角色获得对应菜单与操作权限。</p></div>
+            <button class="account-detail-close" type="button" data-close-account aria-label="关闭">×</button>
+          </div>
+          <div class="system-modal-body">
+            <label class="system-form-field"><span>管理员账号</span><input class="account-input" type="text" required data-form-username placeholder="例如 ops_admin" /></label>
+            <label class="system-form-field"><span>姓名</span><input class="account-input" type="text" required data-form-name placeholder="请输入姓名" /></label>
+            <label class="system-form-field"><span>登录密码</span><input class="account-input" type="password" data-form-password placeholder="新增时填写，编辑可留空" /></label>
+            <label class="system-form-field"><span>绑定角色</span><select class="account-input account-select" required data-form-role><option value="">请选择角色</option><option>超级管理员</option><option>运营管理员</option><option>财务管理员</option><option>只读审计</option></select></label>
+            <label class="system-form-field full"><span>备注</span><textarea class="system-textarea" data-form-note placeholder="可填写职责说明"></textarea></label>
+          </div>
+          <div class="system-modal-foot">
+            <button class="profit-btn" type="button" data-close-account>取消</button>
+            <button class="profit-btn primary" type="submit">保存</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    const rolePermissions = {
+      "超级管理员": "全菜单 / 全操作",
+      "运营管理员": "玩家账号、游戏配置、数据统计",
+      "财务管理员": "游戏数据、商户报表、API接入",
+      "只读审计": "报表与统计只读"
+    };
+    const accounts = [
+      { username: "admin", name: "主管理员", role: "超级管理员", status: "enabled", login: "2026-05-10 10:28:16" },
+      { username: "ops_chen", name: "陈运营", role: "运营管理员", status: "enabled", login: "2026-05-10 09:42:03" },
+      { username: "finance_lin", name: "林财务", role: "财务管理员", status: "enabled", login: "2026-05-09 18:22:41" },
+      { username: "audit_read", name: "审计查看", role: "只读审计", status: "disabled", login: "2026-05-08 15:03:19" }
+    ];
+    const table = document.querySelector("[data-account-table]");
+    const total = document.querySelector("[data-account-total]");
+    const keyword = document.querySelector("[data-account-keyword]");
+    const roleFilter = document.querySelector("[data-role-filter]");
+    const statusFilter = document.querySelector("[data-status-filter]");
+    const modal = document.querySelector("[data-account-modal]");
+    const form = document.querySelector("[data-account-form]");
+    const modalTitle = document.querySelector("[data-modal-title]");
+    const formUsername = document.querySelector("[data-form-username]");
+    const formName = document.querySelector("[data-form-name]");
+    const formPassword = document.querySelector("[data-form-password]");
+    const formRole = document.querySelector("[data-form-role]");
+    const formNote = document.querySelector("[data-form-note]");
+    let editingIndex = -1;
+
+    function statusLabel(status) {
+      return status === "enabled" ? '<span class="account-status online">启用</span>' : '<span class="account-status locked">停用</span>';
+    }
+
+    function filteredAccounts() {
+      const key = keyword.value.trim().toLowerCase();
+      return accounts.filter((item) => {
+        const matchesKey = !key || item.username.toLowerCase().includes(key) || item.name.toLowerCase().includes(key);
+        const matchesRole = !roleFilter.value || item.role === roleFilter.value;
+        const matchesStatus = !statusFilter.value || item.status === statusFilter.value;
+        return matchesKey && matchesRole && matchesStatus;
+      });
+    }
+
+    function renderAccounts() {
+      const rows = filteredAccounts();
+      table.querySelectorAll(".system-row.account:not(.header)").forEach((row) => row.remove());
+      rows.forEach((item) => {
+        const realIndex = accounts.indexOf(item);
+        const row = document.createElement("div");
+        row.className = "system-row account";
+        row.innerHTML = `<div><strong>${item.username}</strong></div><div>${item.name}</div><div><span class="system-role-pill">${item.role}</span></div><div>${rolePermissions[item.role] || "-"}</div><div>${statusLabel(item.status)}</div><div>${item.login}</div><div class="system-row-actions"><button type="button" data-edit="${realIndex}">编辑</button><button type="button" data-toggle="${realIndex}">${item.status === "enabled" ? "停用" : "启用"}</button><button type="button" data-reset-pass="${realIndex}">重置密码</button></div>`;
+        table.appendChild(row);
+      });
+      total.textContent = rows.length;
+    }
+
+    function openModal(index = -1) {
+      editingIndex = index;
+      const item = accounts[index];
+      modalTitle.textContent = item ? "编辑管理员" : "添加管理员";
+      formUsername.value = item?.username || "";
+      formName.value = item?.name || "";
+      formPassword.value = "";
+      formRole.value = item?.role || "";
+      formNote.value = item?.note || "";
+      formUsername.disabled = Boolean(item);
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+      formUsername.focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+    }
+
+    document.querySelector("[data-open-account]").addEventListener("click", () => openModal());
+    document.querySelectorAll("[data-close-account]").forEach((button) => button.addEventListener("click", closeModal));
+    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
+    document.querySelector("[data-search-account]").addEventListener("click", renderAccounts);
+    document.querySelector("[data-reset-account]").addEventListener("click", () => { keyword.value = ""; roleFilter.value = ""; statusFilter.value = ""; renderAccounts(); });
+    [keyword, roleFilter, statusFilter].forEach((control) => control.addEventListener("change", renderAccounts));
+    keyword.addEventListener("keydown", (event) => { if (event.key === "Enter") renderAccounts(); });
+
+    table.addEventListener("click", (event) => {
+      const editButton = event.target.closest("[data-edit]");
+      const toggleButton = event.target.closest("[data-toggle]");
+      const resetButton = event.target.closest("[data-reset-pass]");
+      if (editButton) openModal(Number(editButton.dataset.edit));
+      if (toggleButton) {
+        const item = accounts[Number(toggleButton.dataset.toggle)];
+        item.status = item.status === "enabled" ? "disabled" : "enabled";
+        renderAccounts();
+      }
+      if (resetButton) {
+        resetButton.textContent = "已重置";
+        setTimeout(() => { resetButton.textContent = "重置密码"; }, 1000);
+      }
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const payload = { username: formUsername.value.trim(), name: formName.value.trim(), role: formRole.value, note: formNote.value.trim() };
+      if (editingIndex >= 0) {
+        accounts[editingIndex] = { ...accounts[editingIndex], ...payload };
+      } else {
+        accounts.unshift({ ...payload, status: "enabled", login: "-" });
+      }
+      closeModal();
+      renderAccounts();
+    });
+
+    renderAccounts();
+  </script>
+</body>
+</html>

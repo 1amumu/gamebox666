@@ -6,8 +6,6 @@
   <title>游戏控制 - API ADMIN</title>
   <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
   <link rel="stylesheet" href="admin.css" />
-  <style>
-  </style>
 </head>
 <body>
   <div id="app" class="admin-layout">
@@ -31,586 +29,192 @@
           <span class="top-icon">⌄</span>
         </div>
       </header>
+
       <section class="content game-control-page">
-        <div class="card game-control-card">
+        <div class="card game-control-card controlled-player-card">
           <div class="control-card-head">
             <div>
               <h2 class="card-title">游戏控制</h2>
-              <p class="control-card-desc">按平台、游戏品牌和控制规则配置玩家游戏控制策略。</p>
+              <p class="control-card-desc">查看所有被控制玩家的控制状态、投注返奖、RTP 和输赢情况。</p>
+            </div>
+            <div class="controlled-summary">
+              <span>控制中 <strong>{{ activeCount }}</strong></span>
+              <span>今日投注 <strong>{{ totalBet }}</strong></span>
+              <span>总输赢 <strong :class="totalProfitValue >= 0 ? 'pos' : 'neg'">{{ totalProfit }}</strong></span>
             </div>
           </div>
-      <el-form ref="formRef" class="control-form" :model="form" :rules="rules" label-width="0" @submit.prevent>
-        <div class="form-block">
-          <div class="form-block-head">
-            <h3 class="form-block-title">基础信息</h3>
-            <div class="form-block-desc">配置控制对象和调控维度。</div>
-          </div>
-          <div class="form-row">
-            <div class="form-label"><span class="req">*</span>平台ID</div>
-            <div class="form-body">
-              <el-form-item prop="platformIds" style="margin-bottom: 0;">
-                <el-input class="control-textarea" v-model="form.platformIds" type="textarea" :rows="3" placeholder="请输入平台ID，多个平台ID用英文逗号分隔" />
-              </el-form-item>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-label">调控功能</div>
-            <div class="form-body">
-              <el-radio-group v-model="form.controlMode">
-                <el-radio label="brand">按游戏品牌调控</el-radio>
-                <el-radio label="game">按游戏调控</el-radio>
-              </el-radio-group>
-            </div>
-          </div>
-          <div class="form-row" v-if="form.controlMode === 'brand'">
-            <div class="form-label"><span class="req">*</span>游戏品牌</div>
-            <div class="form-body">
-              <el-form-item prop="brandIds" style="margin-bottom: 0;">
-                <el-popover placement="bottom-start" trigger="click" width="300" popper-class="brand-check-popper">
-                  <template #reference>
-                    <button class="brand-check-trigger" type="button">
-                      <span v-if="form.brandIds.length" class="brand-check-tags">
-                        <span v-for="brand in form.brandIds" :key="brand" class="brand-check-tag">{{ brand }}</span>
-                      </span>
-                      <span v-else class="brand-check-placeholder">请选择游戏品牌</span>
-                      <span class="brand-check-arrow">⌄</span>
-                    </button>
-                  </template>
-                  <div class="brand-check-panel">
-                    <div class="brand-check-title">选择品牌</div>
-                    <el-checkbox-group v-model="form.brandIds" class="brand-check-group">
-                      <el-checkbox v-for="brand in brandOptions" :key="brand" :label="brand">{{ brand }}</el-checkbox>
-                    </el-checkbox-group>
-                  </div>
-                </el-popover>
-              </el-form-item>
-            </div>
-          </div>
-          <div class="form-row" v-if="form.controlMode === 'game'">
-            <div class="form-label"><span class="req">*</span>游戏选择</div>
-            <div class="form-body">
-              <el-form-item prop="gameId" style="margin-bottom: 0;">
-                <el-popover placement="bottom-start" trigger="click" :width="760" popper-class="control-game-popper">
-                  <template #reference>
-                    <button class="control-game-trigger" type="button">
-                      <span class="game-choice-icon">{{ selectedControlGame ? selectedControlGame.icon : 'ALL' }}</span>
-                      <span class="control-game-label">{{ selectedControlGame ? selectedControlGame.name : '请选择游戏' }}</span>
-                      <span class="brand-check-arrow">⌄</span>
-                    </button>
-                  </template>
-                  <div class="control-game-panel">
-                    <div class="game-brand-tabs">
-                      <button
-                        v-for="brand in gameBrandOptions"
-                        :key="brand.value"
-                        class="game-brand-tab"
-                        :class="{ active: controlGameBrand === brand.value }"
-                        type="button"
-                        @click="setControlGameBrand(brand.value)"
-                      >{{ brand.label }}</button>
-                    </div>
-                    <input class="game-search" v-model="controlGameSearch" type="text" placeholder="搜索游戏名称 / 英文名 / 游戏ID" @input="controlGamePage = 1" />
-                    <div class="game-options control-game-options">
-                      <button
-                        v-for="game in pagedControlGames"
-                        :key="game.id"
-                        class="game-option"
-                        :class="{ active: form.gameId === game.value }"
-                        type="button"
-                        :title="game.name"
-                        @click="selectControlGame(game)"
-                      >
-                        <span class="game-thumb" :class="game.thumb"><span>{{ game.icon }}</span></span>
-                      </button>
-                    </div>
-                    <div class="game-picker-pager">
-                      <button class="game-page-btn" type="button" :disabled="controlGamePage <= 1" @click="controlGamePage -= 1">‹</button>
-                      <span class="game-page-info">{{ controlGamePage }} / {{ controlGameTotalPages }}</span>
-                      <button class="game-page-btn" type="button" :disabled="controlGamePage >= controlGameTotalPages" @click="controlGamePage += 1">›</button>
-                    </div>
-                  </div>
-                </el-popover>
-              </el-form-item>
-            </div>
-          </div>
-        </div>
-        <div class="form-block" v-if="form.releaseType !== 'rtp'">
-          <div class="form-block-head">
-            <h3 class="form-block-title">控制策略</h3>
-            <div class="form-block-desc">设置控输/控赢方向、RTP 档位和快捷值。</div>
-          </div>
-          <div class="form-row">
-            <div class="form-label">控制输赢</div>
-            <div class="form-body">
-              <el-radio-group v-model="form.winLoss">
-                <el-radio-button label="loss">控输</el-radio-button>
-                <el-radio-button label="win">控赢</el-radio-button>
-              </el-radio-group>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-label">控制RTP</div>
-            <div class="form-body rtp-wrap">
-              <div class="rtp-panel">
-                <div class="rtp-gear-row">
-                  <el-input-number class="control-number" v-model="rtpGearValue" :min="rtpMin" :max="rtpMax" :step="1" controls-position="right" />
-                  <el-button size="small" @click="fillRtpQuick(form.rtpGear)">快速{{ rtpQuickVal(form.rtpGear) }}</el-button>
-                </div>
-                <el-radio-group class="control-radio-group" v-model="form.rtpGear">
-                  <el-radio-button label="low">低速</el-radio-button>
-                  <el-radio-button label="mid">中速</el-radio-button>
-                  <el-radio-button label="high">高速</el-radio-button>
-                </el-radio-group>
-              </div>
-              <div v-if="form.winLoss === 'loss'" class="control-hint warning rtp-limit-note">控输状态下，禁止RTP高于90</div>
-              <div v-if="form.winLoss === 'win'" class="control-hint info rtp-limit-note">控赢状态下，禁止RTP低于100</div>
-            </div>
-          </div>
-        </div>
-        <div class="form-block">
-          <div class="form-block-head">
-            <h3 class="form-block-title">解除规则</h3>
-            <div class="form-block-desc">设置控制结束条件，可按金额、RTP 或时间解除。</div>
-          </div>
-          <div class="form-row">
-            <div class="form-label">解除类型</div>
-            <div class="form-body">
-              <el-radio-group v-model="form.releaseType">
-                <el-radio label="amount">金额</el-radio>
-                <el-radio label="rtp">RTP</el-radio>
-                <el-radio label="time">时间</el-radio>
-              </el-radio-group>
-            </div>
-          </div>
-          <div v-if="form.releaseType === 'amount'" class="form-row">
-            <div class="form-label"><span class="req">*</span>解除金额</div>
-            <div class="form-body release-field">
-              <el-form-item prop="releaseAmount" style="margin-bottom: 0;">
-                <el-input-number class="control-number control-number-wide" v-model="releaseAmountValue" :step="1" :precision="2" controls-position="right" @change="onReleaseAmountChange" />
-              </el-form-item>
-              <span class="control-hint">累计达到该金额后，控制结束</span>
-            </div>
-          </div>
-          <div v-else-if="form.releaseType === 'rtp'" class="form-row">
-            <div class="form-label"><span class="req">*</span>解除RTP</div>
-            <div class="form-body release-field">
-              <el-form-item prop="releaseRtp" style="margin-bottom: 0;">
-                <el-input-number class="control-number control-number-wide" v-model="form.releaseRtp" :min="0" :max="100" :step="0.1" :precision="1" controls-position="right" />
-              </el-form-item>
-              <span>%</span>
-              <span class="control-hint">达到该 RTP 后，控制结束</span>
-            </div>
-          </div>
-          <div v-else-if="form.releaseType === 'time'" class="form-row">
-            <div class="form-label"><span class="req">*</span>解除时间</div>
-            <div class="form-body control-stack">
-              <el-form-item prop="releaseTimeKind" style="margin-bottom: 0;">
-                <el-radio-group class="control-radio-group" v-model="form.releaseTimeKind">
-                  <el-radio-button label="d1">1天</el-radio-button>
-                  <el-radio-button label="d7">7天</el-radio-button>
-                  <el-radio-button label="d30">30天</el-radio-button>
-                  <el-radio-button label="d365">365天</el-radio-button>
-                  <el-radio-button label="forever">永久</el-radio-button>
-                </el-radio-group>
-              </el-form-item>
-              <span class="control-hint">到达所选时间后，控制结束（永久无截止时间）</span>
-            </div>
-          </div>
-        </div>
-        <div class="footer control-footer">
-          <el-button @click="onCancel">取消</el-button>
-          <el-button type="primary" @click="onSave">保存</el-button>
-        </div>
-        <section class="control-player-report">
-          <div class="control-report-head">
-            <div>
-              <h3>当前点控玩家报表</h3>
-              <p>根据当前控制规则同步展示被点控玩家状态，方便保存前核对影响范围。</p>
-            </div>
-          </div>
-          <div class="control-report-table-wrap">
-            <div class="control-report-table">
-              <div class="control-report-row header">
-                <div>平台ID</div>
-                <div>控制对象</div>
-                <div>当前RTP</div>
-                <div>今日投注</div>
-                <div>当前输赢</div>
-                <div>总输赢</div>
-                <div>携带金额</div>
-                <div>解除类型</div>
-                <div>解除阈值</div>
-                <div>当前进度</div>
-                <div>状态</div>
-                <div>操作</div>
-              </div>
-              <div class="control-report-row" v-for="player in pagedControlledPlayers" :key="player.platformId">
-                <div class="control-report-id">{{ player.platformId }}</div>
-                <div>{{ player.target }}</div>
-                <div>{{ player.currentRtp }}%</div>
-                <div class="profit-num">{{ player.todayBet }}</div>
-                <div class="profit-num" :class="player.resultClass">{{ player.result }}</div>
-                <div class="profit-num" :class="player.totalResultClass">{{ player.totalResult }}</div>
-                <div class="profit-num">{{ player.carryAmount }}</div>
-                <div>{{ player.releaseTypeLabel }}</div>
-                <div>{{ player.releaseThreshold }}</div>
-                <div>{{ player.releaseProgress }}</div>
-                <div><span class="control-report-status">{{ player.status }}</span></div>
-                <div class="control-report-actions">
-                  <button type="button" @click="releaseControlledPlayer(player)">解除</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="control-report-pagination">
-            <div>共 {{ controlledPlayers.length }} 条</div>
-            <label>
-              <select v-model.number="controlledPlayerPageSize">
-                <option :value="5">5条/页</option>
-                <option :value="10">10条/页</option>
-                <option :value="20">20条/页</option>
-                <option :value="50">50条/页</option>
-                <option :value="100">100条/页</option>
+
+          <div class="controlled-toolbar">
+            <label class="controlled-filter">
+              <span>控制状态</span>
+              <select class="account-input account-select" v-model="statusFilter">
+                <option value="">全部</option>
+                <option value="控输中">控输中</option>
+                <option value="控赢中">控赢中</option>
+                <option value="待解除">待解除</option>
               </select>
             </label>
-            <button type="button" :disabled="controlledPlayerPage <= 1" @click="controlledPlayerPage -= 1">‹</button>
-            <button v-for="page in controlledPlayerPageNumbers" :key="page" type="button" :class="{ active: page === controlledPlayerPage }" @click="controlledPlayerPage = page">{{ page }}</button>
-            <button type="button" :disabled="controlledPlayerPage >= controlledPlayerTotalPages" @click="controlledPlayerPage += 1">›</button>
+            <label class="controlled-filter">
+              <span>用户标签</span>
+              <select class="account-input account-select" v-model="tagFilter">
+                <option value="">全部</option>
+                <option value="低端玩家">低端玩家</option>
+                <option value="中端玩家">中端玩家</option>
+                <option value="优质玩家">优质玩家</option>
+                <option value="疑似刷分">疑似刷分</option>
+              </select>
+            </label>
+            <label class="controlled-filter grow">
+              <span>用户ID</span>
+              <input class="account-input" v-model.trim="keyword" type="text" placeholder="请输入用户ID" />
+            </label>
+            <div class="controlled-actions">
+              <button class="profit-btn primary" type="button" @click="applySearch">查询</button>
+              <button class="profit-btn" type="button" @click="resetFilters">重置</button>
+            </div>
           </div>
-        </section>
-      </el-form>
+
+          <div class="controlled-table-wrap">
+            <div class="controlled-table">
+              <div class="controlled-row header">
+                <div>控制状态</div>
+                <div>用户标签</div>
+                <div>用户ID</div>
+                <div>今日投注</div>
+                <div>今日返奖</div>
+                <div>RTP</div>
+                <div>总输赢</div>
+                <div>操作</div>
+              </div>
+              <div v-for="player in pagedPlayers" :key="player.userId" class="controlled-row">
+                <div><span class="control-state" :class="player.stateClass">{{ player.status }}</span></div>
+                <div><span class="player-tag" :class="player.tagClass">{{ player.tag }}</span></div>
+                <div><span class="profit-player">{{ player.userId }}</span></div>
+                <div class="profit-num">{{ formatMoney(player.todayBet) }}</div>
+                <div class="profit-num">{{ formatMoney(player.todayPayout) }}</div>
+                <div><span class="rtp-value" :class="{ high: player.rtp >= 100, low: player.rtp < 90 }">{{ player.rtp.toFixed(2) }}%</span></div>
+                <div class="profit-num" :class="player.totalProfit >= 0 ? 'pos' : 'neg'">{{ signedMoney(player.totalProfit) }}</div>
+                <div class="controlled-row-actions">
+                  <button type="button" @click="viewPlayer(player)">查看</button>
+                  <button type="button" @click="releasePlayer(player)">解除</button>
+                </div>
+              </div>
+              <div v-if="!pagedPlayers.length" class="controlled-empty">暂无被控制玩家</div>
+            </div>
+          </div>
+
+          <div class="controlled-pagination">
+            <span>共 {{ filteredPlayers.length }} 条</span>
+            <select v-model.number="pageSize">
+              <option :value="10">10条/页</option>
+              <option :value="20">20条/页</option>
+              <option :value="50">50条/页</option>
+            </select>
+            <button type="button" :disabled="page <= 1" @click="page -= 1">‹</button>
+            <button v-for="item in pageNumbers" :key="item" type="button" :class="{ active: item === page }" @click="page = item">{{ item }}</button>
+            <button type="button" :disabled="page >= totalPages" @click="page += 1">›</button>
+          </div>
         </div>
       </section>
     </main>
   </div>
+
   <script src="https://unpkg.com/vue@3.4.38/dist/vue.global.prod.js"></script>
   <script src="https://unpkg.com/element-plus@2.8.4/dist/index.full.min.js"></script>
   <script>
-    const { createApp, reactive, ref, watch, computed } = Vue;
-    const RTP_PRESET = {
-      loss: { low: 90, mid: 80, high: 70 },
-      win: { low: 100, mid: 150, high: 200 },
-    };
+    const { createApp, ref, computed, watch } = Vue;
+
     createApp({
       setup() {
         const timezone = ref("+05:30");
-        const formRef = ref(null);
-        const controlledPlayerPage = ref(1);
-        const controlledPlayerPageSize = ref(20);
-        const brandOptions = ["PG", "PP", "JILI", "SPRLBE"];
-        const gameBrandOptions = [
-          { label: "全部品牌", value: "" },
-          { label: "PG", value: "PG" },
-          { label: "PP", value: "PP" },
-          { label: "JILI", value: "JILI" },
-          { label: "SPRLBE", value: "SPRLBE" },
-        ];
-        const gameOptions = [
-          { id: "1001", brand: "PG", value: "PowerOfTheKraken", name: "PowerOfTheKraken 法老牌", icon: "K", thumb: "kraken" },
-          { id: "1002", brand: "PG", value: "eKraken", name: "eKraken 海怪传说", icon: "eK", thumb: "ek" },
-          { id: "1003", brand: "PG", value: "Fortune Gems", name: "Fortune Gems 宝石热气球", icon: "FG", thumb: "gems" },
-          { id: "1004", brand: "PG", value: "Heaven Dynasty", name: "Heaven Dynasty 天竺王朝", icon: "天", thumb: "palace" },
-          { id: "1005", brand: "PP", value: "Pharaoh Cards", name: "Pharaoh Cards 法老牌", icon: "法", thumb: "pharaoh" },
-          { id: "1006", brand: "PP", value: "Bowling King", name: "Bowling King 保龄球之王", icon: "保", thumb: "bowling" },
-          { id: "1007", brand: "PP", value: "Gem Balloon", name: "Gem Balloon 宝石热气球", icon: "宝", thumb: "balloon" },
-          { id: "1008", brand: "PP", value: "Sesame Gate", name: "Sesame Gate 芝麻开门", icon: "芝", thumb: "sesame" },
-          { id: "1009", brand: "JILI", value: "Sea Monster", name: "Sea Monster 海怪传说", icon: "海", thumb: "monster" },
-          { id: "1010", brand: "JILI", value: "Maya Gold", name: "Maya Gold 玛雅黄金", icon: "玛", thumb: "maya" },
-          { id: "1011", brand: "JILI", value: "Poker Kingdom", name: "Poker Kingdom 扑克王国", icon: "扑", thumb: "crown" },
-          { id: "1012", brand: "JILI", value: "Dragon Treasure", name: "Dragon Treasure 龙之宝藏", icon: "龙", thumb: "dragon" },
-          { id: "1013", brand: "SPRLBE", value: "Lucky Candy", name: "Lucky Candy 幸运糖果", icon: "糖", thumb: "candy" },
-          { id: "1014", brand: "SPRLBE", value: "Star Gems", name: "Star Gems 星辰宝石", icon: "星", thumb: "star" },
-          { id: "1015", brand: "SPRLBE", value: "Golden Train", name: "Golden Train 黄金列车", icon: "金", thumb: "train" },
-          { id: "1016", brand: "SPRLBE", value: "Ocean Pearl", name: "Ocean Pearl 海洋珍珠", icon: "珠", thumb: "monster" },
-        ];
-        const controlGameBrand = ref("");
-        const controlGameSearch = ref("");
-        const controlGamePage = ref(1);
-        const controlGamePageSize = 12;
-        const form = reactive({
-          platformIds: "",
-          controlMode: "brand",
-          brandIds: [],
-          gameId: "",
-          winLoss: "loss",
-          rtpGear: "mid",
-          rtpValueLow: 90,
-          rtpValueMid: 80,
-          rtpValueHigh: 70,
-          releaseType: "amount",
-          releaseAmount: -1,
-          releaseRtp: 97,
-          releaseTimeKind: "d1",
+        const statusFilter = ref("");
+        const tagFilter = ref("");
+        const keyword = ref("");
+        const page = ref(1);
+        const pageSize = ref(10);
+        const players = ref([
+          { status: "控输中", stateClass: "loss", tag: "低端玩家", tagClass: "tag-low", userId: "10470001344450", todayBet: 327270, todayPayout: 213646.6, rtp: 65.28, totalProfit: -113623.4 },
+          { status: "控赢中", stateClass: "win", tag: "优质玩家", tagClass: "tag-premium", userId: "10470007305040", todayBet: 428720, todayPayout: 675038.52, rtp: 157.45, totalProfit: 246318.52 },
+          { status: "控输中", stateClass: "loss", tag: "中端玩家", tagClass: "tag-mid", userId: "10470004414669", todayBet: 161024, todayPayout: 136803.1, rtp: 84.96, totalProfit: -24220.9 },
+          { status: "待解除", stateClass: "pending", tag: "疑似刷分", tagClass: "tag-risk", userId: "10470004889926", todayBet: 202265.06, todayPayout: 171614.93, rtp: 84.85, totalProfit: -30650.13 },
+          { status: "控赢中", stateClass: "win", tag: "优质玩家", tagClass: "tag-premium", userId: "10410001538841", todayBet: 161662.16, todayPayout: 244103.36, rtp: 151, totalProfit: 82441.2 },
+          { status: "控输中", stateClass: "loss", tag: "中端玩家", tagClass: "tag-mid", userId: "10470000804108", todayBet: 210356, todayPayout: 195897.08, rtp: 93.13, totalProfit: -14458.92 },
+          { status: "控输中", stateClass: "loss", tag: "疑似刷分", tagClass: "tag-risk", userId: "10470001601623", todayBet: 268073, todayPayout: 251269.33, rtp: 93.73, totalProfit: -16803.67 },
+          { status: "待解除", stateClass: "pending", tag: "低端玩家", tagClass: "tag-low", userId: "10470001978708", todayBet: 64750, todayPayout: 43437.3, rtp: 67.08, totalProfit: -21312.7 },
+          { status: "控赢中", stateClass: "win", tag: "优质玩家", tagClass: "tag-premium", userId: "10470002945811", todayBet: 356880, todayPayout: 421118.4, rtp: 117.99, totalProfit: 64238.4 },
+          { status: "控输中", stateClass: "loss", tag: "低端玩家", tagClass: "tag-low", userId: "10470009124677", todayBet: 88240, todayPayout: 60218.6, rtp: 68.24, totalProfit: -28021.4 },
+          { status: "控赢中", stateClass: "win", tag: "中端玩家", tagClass: "tag-mid", userId: "10470007880231", todayBet: 194500, todayPayout: 235345, rtp: 121, totalProfit: 40845 },
+          { status: "待解除", stateClass: "pending", tag: "疑似刷分", tagClass: "tag-risk", userId: "10470003415590", todayBet: 119860, todayPayout: 90145.2, rtp: 75.21, totalProfit: -29714.8 },
+        ]);
+
+        const filteredPlayers = computed(() => players.value.filter((player) => {
+          const matchStatus = !statusFilter.value || player.status === statusFilter.value;
+          const matchTag = !tagFilter.value || player.tag === tagFilter.value;
+          const matchKeyword = !keyword.value || player.userId.includes(keyword.value);
+          return matchStatus && matchTag && matchKeyword;
+        }));
+        const totalPages = computed(() => Math.max(1, Math.ceil(filteredPlayers.value.length / pageSize.value)));
+        const pageNumbers = computed(() => Array.from({ length: totalPages.value }, (_, index) => index + 1));
+        const pagedPlayers = computed(() => {
+          if (page.value > totalPages.value) page.value = totalPages.value;
+          const start = (page.value - 1) * pageSize.value;
+          return filteredPlayers.value.slice(start, start + pageSize.value);
         });
-        function applyRtpTierDefaults() {
-          const p = RTP_PRESET[form.winLoss === "win" ? "win" : "loss"];
-          form.rtpValueLow = p.low;
-          form.rtpValueMid = p.mid;
-          form.rtpValueHigh = p.high;
+        const activeCount = computed(() => players.value.filter((player) => player.status !== "待解除").length);
+        const totalBetValue = computed(() => filteredPlayers.value.reduce((sum, player) => sum + player.todayBet, 0));
+        const totalProfitValue = computed(() => filteredPlayers.value.reduce((sum, player) => sum + player.totalProfit, 0));
+        const totalBet = computed(() => formatMoney(totalBetValue.value));
+        const totalProfit = computed(() => signedMoney(totalProfitValue.value));
+
+        function formatMoney(value) {
+          return Number(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
-        function rtpQuickVal(tier) {
-          return RTP_PRESET[form.winLoss === "win" ? "win" : "loss"][tier];
+        function signedMoney(value) {
+          const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
+          return `${prefix}${formatMoney(Math.abs(value))}`;
         }
-        function fillRtpQuick(tier) {
-          const v = normalizeRtpValue(rtpQuickVal(tier));
-          if (tier === "low") form.rtpValueLow = v;
-          else if (tier === "mid") form.rtpValueMid = v;
-          else form.rtpValueHigh = v;
+        function applySearch() {
+          page.value = 1;
         }
-        const rtpMin = computed(() => (form.winLoss === "win" ? 100 : 0));
-        const rtpMax = computed(() => (form.winLoss === "loss" ? 90 : 500));
-        function normalizeRtpValue(v) {
-          if (v === null || v === undefined || v === "") return v;
-          if (form.winLoss === "loss" && v > 90) return 90;
-          if (form.winLoss === "win" && v < 100) return 100;
-          return v;
+        function resetFilters() {
+          statusFilter.value = "";
+          tagFilter.value = "";
+          keyword.value = "";
+          page.value = 1;
         }
-        function syncRtpValues() {
-          form.rtpValueLow = normalizeRtpValue(form.rtpValueLow);
-          form.rtpValueMid = normalizeRtpValue(form.rtpValueMid);
-          form.rtpValueHigh = normalizeRtpValue(form.rtpValueHigh);
+        function viewPlayer(player) {
+          ElementPlus.ElMessage.info(`查看 ${player.userId}`);
         }
-        const rtpGearValue = computed({
-          get() {
-            if (form.rtpGear === "low") return form.rtpValueLow;
-            if (form.rtpGear === "mid") return form.rtpValueMid;
-            return form.rtpValueHigh;
-          },
-          set(v) {
-            const value = normalizeRtpValue(v);
-            if (form.rtpGear === "low") form.rtpValueLow = value;
-            else if (form.rtpGear === "mid") form.rtpValueMid = value;
-            else form.rtpValueHigh = value;
-          },
+        function releasePlayer(player) {
+          ElementPlus.ElMessage.success(`已解除 ${player.userId}`);
+        }
+
+        watch([statusFilter, tagFilter, keyword, pageSize], () => {
+          page.value = 1;
         });
-        const releaseAmountValue = computed({
-          get() {
-            return form.releaseAmount;
-          },
-          set(v) {
-            if (v === null || v === undefined || v === "") {
-              form.releaseAmount = v;
-              return;
-            }
-            if (form.winLoss === "loss") form.releaseAmount = -Math.abs(v);
-            else form.releaseAmount = Math.abs(v);
-          },
-        });
-        function syncReleaseAmountSign() {
-          if (form.releaseType !== "amount") return;
-          const v = form.releaseAmount;
-          if (form.winLoss === "loss") {
-            if (v === null || v === undefined || v === "" || v >= 0) form.releaseAmount = typeof v === "number" && v > 0 ? -v : -1;
-          } else if (form.winLoss === "win" && v !== null && v !== undefined && v < 0) {
-            form.releaseAmount = Math.abs(v) || 1;
-          }
-        }
-        function onReleaseAmountChange() {
-          if (form.releaseType !== "amount") return;
-          if (form.winLoss === "loss" && form.releaseAmount > 0) form.releaseAmount = -form.releaseAmount;
-          if (form.winLoss === "win" && form.releaseAmount < 0) form.releaseAmount = Math.abs(form.releaseAmount);
-        }
-        const controlModeLabel = computed(() => (form.controlMode === "brand" ? "按游戏品牌" : "按游戏"));
-        const rtpGearLabel = computed(() => {
-          if (form.rtpGear === "low") return "低速";
-          if (form.rtpGear === "mid") return "中速";
-          return "高速";
-        });
-        const controlTargetLabel = computed(() => {
-          if (form.controlMode === "brand") return form.brandIds.length ? `品牌 ${form.brandIds.join("、")}` : "待选择品牌";
-          return selectedControlGame.value ? `游戏 ${selectedControlGame.value.name}` : "待选择游戏";
-        });
-        const selectedControlGame = computed(() => gameOptions.find((game) => game.value === form.gameId));
-        const filteredControlGames = computed(() => {
-          const keyword = controlGameSearch.value.trim().toLowerCase();
-          return gameOptions.filter((game) => {
-            const matchBrand = !controlGameBrand.value || game.brand === controlGameBrand.value;
-            const matchKeyword = !keyword || game.name.toLowerCase().includes(keyword) || game.value.toLowerCase().includes(keyword) || game.id.includes(keyword);
-            return matchBrand && matchKeyword;
-          });
-        });
-        const controlGameTotalPages = computed(() => Math.max(1, Math.ceil(filteredControlGames.value.length / controlGamePageSize)));
-        const pagedControlGames = computed(() => {
-          if (controlGamePage.value > controlGameTotalPages.value) controlGamePage.value = controlGameTotalPages.value;
-          const start = (controlGamePage.value - 1) * controlGamePageSize;
-          return filteredControlGames.value.slice(start, start + controlGamePageSize);
-        });
-        function setControlGameBrand(brand) {
-          controlGameBrand.value = brand;
-          controlGamePage.value = 1;
-        }
-        function selectControlGame(game) {
-          form.gameId = game.value;
-          formRef.value?.clearValidate?.("gameId");
-        }
-        const releaseRuleLabel = computed(() => {
-          if (form.releaseType === "amount") {
-            return signedAmount(form.releaseAmount || 0, form.winLoss === "loss" ? "loss" : "win");
-          }
-          if (form.releaseType === "rtp") return `RTP 达到 ${form.releaseRtp}%`;
-          const map = { d1: "1天后解除", d7: "7天后解除", d30: "30天后解除", d365: "365天后解除", forever: "永久控制" };
-          return map[form.releaseTimeKind] || "按时间解除";
-        });
-        function formatAmount(value) {
-          return Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        function signedAmount(value, type) {
-          const amount = formatAmount(value);
-          return type === "loss" ? `-${amount}` : amount;
-        }
-        const controlledPlayers = computed(() => {
-          const seeds = [
-            { platformId: "10470001344450", bet: 327270, lossRtp: 78.4, winRtp: 118.5, result: 95672.1, total: 113623.4, progress: 95672.1 },
-            { platformId: "10470004889926", bet: 202265.06, lossRtp: 82.1, winRtp: 124.8, result: 26644.9, total: 30650.13, progress: 26644.9 },
-            { platformId: "10470001601623", bet: 268073, lossRtp: 79.8, winRtp: 132.6, result: 19786.7, total: 16803.67, progress: 19786.7 },
-            { platformId: "10470007305040", bet: 428720, lossRtp: 76.9, winRtp: 121.2, result: 40155.5, total: 124850.93, progress: 40155.5 },
-            { platformId: "10410001538841", bet: 161662.16, lossRtp: 80.3, winRtp: 116.7, result: 26513.32, total: 24922, progress: 26513.32 },
-            { platformId: "10470004414669", bet: 161024, lossRtp: 83.6, winRtp: 119.4, result: 29384.9, total: 24220.9, progress: 29384.9 },
-            { platformId: "10470000804108", bet: 210356, lossRtp: 81.5, winRtp: 123.1, result: 22040.48, total: 14458.92, progress: 22040.48 },
-            { platformId: "10470001978708", bet: 64750, lossRtp: 84.1, winRtp: 114.8, result: 16873.2, total: 21312.7, progress: 16873.2 },
-          ];
-          const base = Array.from({ length: 120 }, (_, index) => {
-            const seed = seeds[index % seeds.length];
-            const batch = Math.floor(index / seeds.length);
-            const scale = 1 + batch * 0.055 + (index % 4) * 0.018;
-            return {
-              platformId: index < seeds.length ? seed.platformId : String(10470090000000 + index * 137),
-              bet: formatAmount(seed.bet * scale),
-              lossRtp: Math.max(70, seed.lossRtp - (batch % 5) * 0.5).toFixed(1),
-              winRtp: Math.min(220, seed.winRtp + (batch % 6) * 1.4).toFixed(1),
-              lossResult: signedAmount(seed.result * scale, "loss"),
-              winResult: signedAmount(seed.result * scale, "win"),
-              totalLoss: signedAmount(seed.total * scale, "loss"),
-              totalWin: signedAmount(seed.total * scale, "win"),
-              carryAmount: formatAmount(seed.bet * (0.072 + (index % 6) * 0.006) * scale),
-              lossProgress: signedAmount(seed.progress * scale, "loss"),
-              winProgress: signedAmount(seed.progress * scale, "win"),
-            };
-          });
-          return base.map((item) => ({
-            platformId: item.platformId,
-            target: `${controlTargetLabel.value} / ${rtpGearLabel.value}`,
-            currentRtp: form.winLoss === "loss" ? item.lossRtp : item.winRtp,
-            todayBet: item.bet,
-            result: form.winLoss === "loss" ? item.lossResult : item.winResult,
-            resultClass: form.winLoss === "loss" ? "neg" : "pos",
-            totalResult: form.winLoss === "loss" ? item.totalLoss : item.totalWin,
-            totalResultClass: form.winLoss === "loss" ? "neg" : "pos",
-            carryAmount: item.carryAmount,
-            releaseTypeLabel: form.releaseType === "amount" ? "金额解除" : form.releaseType === "rtp" ? "RTP解除" : "时间解除",
-            releaseThreshold: releaseRuleLabel.value,
-            releaseProgress: form.releaseType === "amount" ? (form.winLoss === "loss" ? item.lossProgress : item.winProgress) : form.releaseType === "rtp" ? `当前 ${form.winLoss === "loss" ? item.lossRtp : item.winRtp}%` : "计时中",
-            status: form.winLoss === "loss" ? "控输中" : "控赢中",
-          }));
-        });
-        const controlledPlayerTotalPages = computed(() => Math.max(1, Math.ceil(controlledPlayers.value.length / controlledPlayerPageSize.value)));
-        const controlledPlayerPageNumbers = computed(() => Array.from({ length: controlledPlayerTotalPages.value }, (_, index) => index + 1));
-        const pagedControlledPlayers = computed(() => {
-          if (controlledPlayerPage.value > controlledPlayerTotalPages.value) controlledPlayerPage.value = controlledPlayerTotalPages.value;
-          const start = (controlledPlayerPage.value - 1) * controlledPlayerPageSize.value;
-          return controlledPlayers.value.slice(start, start + controlledPlayerPageSize.value);
-        });
-        function releaseControlledPlayer(player) {
-          ElementPlus.ElMessage.success(`已解除 ${player.platformId} 的点控`);
-        }
-        watch(controlledPlayerPageSize, () => {
-          controlledPlayerPage.value = 1;
-        });
-        watch(
-          () => form.controlMode,
-          () => {
-            formRef.value?.clearValidate?.(["brandIds", "gameId"]);
-          }
-        );
-        watch(
-          () => form.releaseType,
-          (t) => {
-            if (t === "amount") syncReleaseAmountSign();
-          }
-        );
-        watch(
-          () => form.winLoss,
-          () => {
-            if (form.releaseType === "amount") syncReleaseAmountSign();
-            applyRtpTierDefaults();
-            syncRtpValues();
-          }
-        );
-        const rules = {
-          platformIds: [{ required: true, message: "维护中请输入", trigger: "blur" }],
-          brandIds: [
-            {
-              validator(_, v, cb) {
-                if (form.controlMode !== "brand") return cb();
-                if (!Array.isArray(v) || !v.length) return cb(new Error("请选择游戏品牌"));
-                cb();
-              },
-              trigger: "change",
-            },
-          ],
-          gameId: [
-            {
-              validator(_, v, cb) {
-                if (form.controlMode !== "game") return cb();
-                if (!v) return cb(new Error("请选择游戏"));
-                cb();
-              },
-              trigger: "change",
-            },
-          ],
-          releaseAmount: [
-            {
-              validator(_, v, cb) {
-                if (form.releaseType !== "amount") return cb();
-                if (v === null || v === undefined || v === "") return cb(new Error("请输入解除金额"));
-                cb();
-              },
-              trigger: "change",
-            },
-          ],
-          releaseRtp: [
-            {
-              validator(_, v, cb) {
-                if (form.releaseType !== "rtp") return cb();
-                if (v === null || v === undefined) return cb(new Error("请输入解除RTP"));
-                cb();
-              },
-              trigger: "change",
-            },
-          ],
-          releaseTimeKind: [
-            {
-              validator(_, v, cb) {
-                if (form.releaseType !== "time") return cb();
-                if (!v) return cb(new Error("请选择解除时间"));
-                cb();
-              },
-              trigger: "change",
-            },
-          ],
+
+        return {
+          timezone,
+          statusFilter,
+          tagFilter,
+          keyword,
+          page,
+          pageSize,
+          filteredPlayers,
+          pagedPlayers,
+          pageNumbers,
+          totalPages,
+          activeCount,
+          totalBet,
+          totalProfit,
+          totalProfitValue,
+          formatMoney,
+          signedMoney,
+          applySearch,
+          resetFilters,
+          viewPlayer,
+          releasePlayer,
         };
-        function onCancel() {
-          formRef.value?.resetFields();
-          form.controlMode = "brand";
-          form.brandIds = [];
-          form.gameId = "";
-          controlGameBrand.value = "";
-          controlGameSearch.value = "";
-          controlGamePage.value = 1;
-          form.winLoss = "loss";
-          form.rtpGear = "mid";
-          applyRtpTierDefaults();
-          form.releaseType = "amount";
-          form.releaseAmount = -1;
-          form.releaseRtp = 97;
-          form.releaseTimeKind = "d1";
-        }
-        function onSave() {
-          formRef.value?.validate((ok) => {
-            if (ok) ElementPlus.ElMessage.success("已保存");
-          });
-        }
-        return { timezone, formRef, form, rules, brandOptions, gameBrandOptions, controlGameBrand, controlGameSearch, controlGamePage, selectedControlGame, controlGameTotalPages, pagedControlGames, setControlGameBrand, selectControlGame, rtpGearValue, rtpMin, rtpMax, releaseAmountValue, rtpQuickVal, fillRtpQuick, onReleaseAmountChange, controlModeLabel, controlledPlayers, controlledPlayerPage, controlledPlayerPageSize, controlledPlayerTotalPages, controlledPlayerPageNumbers, pagedControlledPlayers, releaseControlledPlayer, onCancel, onSave };
       },
     }).use(ElementPlus).mount("#app");
   </script>

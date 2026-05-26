@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>仪表盘 - API ADMIN</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.4/dist/index.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <script src="sidebar.js"></script>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left"><div class="collapse-btn">☰</div><div class="breadcrumb"><strong>仪表盘</strong></div></div>
+        <div class="topbar-right"><span class="top-icon">↗</span><span class="top-icon">A</span><span class="time" data-current-time></span><select class="el-select__wrapper timezone"><option>+05:30</option><option>+08:00</option><option>UTC</option></select><span class="account">ar518888</span><span class="top-icon">⌄</span></div>
+      </header>
+      <section class="content dashboard-page">
+        <section class="dashboard-card">
+          <div class="dashboard-head">
+            <div>
+              <h1>运营仪表盘</h1>
+              <p>商户登录后可快速查看投注、输赢、在线、登录与新增趋势。</p>
+            </div>
+            <div class="dashboard-date-filter">
+              <label class="date-field">
+                <span class="date-field-label">开始</span>
+                <input class="profit-input date" type="date" value="2026-05-11" data-dashboard-from />
+              </label>
+              <span class="profit-date-range-sep">至</span>
+              <label class="date-field">
+                <span class="date-field-label">结束</span>
+                <input class="profit-input date" type="date" value="2026-05-11" data-dashboard-to />
+              </label>
+              <button class="profit-btn primary" type="button" data-dashboard-search>查询</button>
+              <button class="profit-btn" type="button" data-dashboard-reset>重置</button>
+            </div>
+          </div>
+
+          <div class="dashboard-summary">
+            <article class="dashboard-metric">
+              <span>投注人数</span>
+              <strong data-metric="bettors">12,846</strong>
+              <em>较上一周期 <b class="up" data-delta="bettors">+8.6%</b></em>
+            </article>
+            <article class="dashboard-metric">
+              <span>注单数</span>
+              <strong data-metric="orders">186,420</strong>
+              <em>较上一周期 <b class="up" data-delta="orders">+6.2%</b></em>
+            </article>
+            <article class="dashboard-metric">
+              <span>投注金额</span>
+              <strong data-metric="betAmount">9,624,580.00</strong>
+              <em>USDT，较上一周期 <b class="up" data-delta="betAmount">+9.4%</b></em>
+            </article>
+            <article class="dashboard-metric winloss">
+              <span>周期输赢</span>
+              <strong class="neg" data-metric="winLoss">-428,613.25</strong>
+              <em>玩家视角，较上一周期 <b class="down" data-delta="winLoss">-3.1%</b></em>
+            </article>
+            <article class="dashboard-metric online">
+              <span>在线人数</span>
+              <strong data-metric="online">3,926</strong>
+              <em>峰值 <b data-metric="onlinePeak">5,318</b>，在线率 <b data-metric="onlineRate">21.0%</b></em>
+            </article>
+            <article class="dashboard-metric">
+              <span>登录人数</span>
+              <strong data-metric="login">18,704</strong>
+              <em>较上一周期 <b class="up" data-delta="login">+5.5%</b></em>
+            </article>
+            <article class="dashboard-metric">
+              <span>新增人数</span>
+              <strong data-metric="newUsers">1,238</strong>
+              <em>较上一周期 <b class="up" data-delta="newUsers">+4.8%</b></em>
+            </article>
+          </div>
+
+          <div class="dashboard-analysis-grid">
+            <section class="dashboard-panel dashboard-compare-panel">
+              <div class="dashboard-panel-head">
+                <h2>当前周期 / 上一周期对比</h2>
+                <span data-analysis-date>2026-05-11 对比 2026-05-10</span>
+              </div>
+              <div class="dashboard-compare-note" data-compare-note>选择单日时对比前一天；选择多日时对比前一个等长日期区间。</div>
+              <div class="dashboard-compare-table" data-compare-table></div>
+            </section>
+
+            <section class="dashboard-panel">
+              <div class="dashboard-panel-head">
+                <h2>在线人数分析</h2>
+                <span>当前在线结构</span>
+              </div>
+              <div class="online-breakdown">
+                <div class="online-main">
+                  <span>在线人数</span>
+                  <strong data-metric="onlineDetail">3,926</strong>
+                  <em>占周期登录人数 <b data-metric="onlineLoginRate">21.0%</b></em>
+                </div>
+                <div class="online-bars">
+                  <div class="online-bar-row"><span>活跃投注</span><div><i style="width: 68%"></i></div><b>68%</b></div>
+                  <div class="online-bar-row"><span>观望未投注</span><div><i style="width: 21%"></i></div><b>21%</b></div>
+                  <div class="online-bar-row"><span>新注册在线</span><div><i style="width: 11%"></i></div><b>11%</b></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="dashboard-panel dashboard-wide-panel">
+              <div class="dashboard-panel-head">
+                <h2>时段趋势</h2>
+                <span>按 4 小时聚合</span>
+              </div>
+              <div class="trend-bars" data-trend-bars></div>
+            </section>
+
+            <section class="dashboard-panel">
+              <div class="dashboard-panel-head">
+                <h2>商户关注点</h2>
+                <span>自动分析</span>
+              </div>
+              <div class="dashboard-insights">
+                <div><strong>投注活跃</strong><span data-insight="bet">投注人数和注单数较上一周期增长，说明当前周期玩家活跃度更高。</span></div>
+                <div><strong>在线留存</strong><span data-insight="online">在线人数保持在登录人数的两成左右，可继续关注晚高峰转化。</span></div>
+                <div><strong>新增质量</strong><span data-insight="newUsers">新增人数稳定增长，建议结合投注人数观察新玩家首投情况。</span></div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    (() => {
+      const fromInput = document.querySelector("[data-dashboard-from]");
+      const toInput = document.querySelector("[data-dashboard-to]");
+      const searchButton = document.querySelector("[data-dashboard-search]");
+      const resetButton = document.querySelector("[data-dashboard-reset]");
+      const compareTable = document.querySelector("[data-compare-table]");
+      const compareNote = document.querySelector("[data-compare-note]");
+      const trendBars = document.querySelector("[data-trend-bars]");
+      const analysisDate = document.querySelector("[data-analysis-date]");
+      const insightBet = document.querySelector('[data-insight="bet"]');
+      const insightOnline = document.querySelector('[data-insight="online"]');
+      const insightNewUsers = document.querySelector('[data-insight="newUsers"]');
+      const metrics = {
+        bettors: document.querySelector('[data-metric="bettors"]'),
+        orders: document.querySelector('[data-metric="orders"]'),
+        betAmount: document.querySelector('[data-metric="betAmount"]'),
+        winLoss: document.querySelector('[data-metric="winLoss"]'),
+        online: document.querySelector('[data-metric="online"]'),
+        onlineDetail: document.querySelector('[data-metric="onlineDetail"]'),
+        onlinePeak: document.querySelector('[data-metric="onlinePeak"]'),
+        onlineRate: document.querySelector('[data-metric="onlineRate"]'),
+        onlineLoginRate: document.querySelector('[data-metric="onlineLoginRate"]'),
+        login: document.querySelector('[data-metric="login"]'),
+        newUsers: document.querySelector('[data-metric="newUsers"]')
+      };
+      const deltas = {
+        bettors: document.querySelector('[data-delta="bettors"]'),
+        orders: document.querySelector('[data-delta="orders"]'),
+        betAmount: document.querySelector('[data-delta="betAmount"]'),
+        winLoss: document.querySelector('[data-delta="winLoss"]'),
+        login: document.querySelector('[data-delta="login"]'),
+        newUsers: document.querySelector('[data-delta="newUsers"]')
+      };
+      const baseData = {
+        bettors: 12846,
+        orders: 186420,
+        betAmount: 9624580,
+        winLoss: -428613.25,
+        online: 3926,
+        login: 18704,
+        newUsers: 1238
+      };
+      const previousBaseData = {
+        bettors: 11826,
+        orders: 175531,
+        betAmount: 8796800,
+        winLoss: -442315.72,
+        online: 3658,
+        login: 17732,
+        newUsers: 1182
+      };
+      const labels = {
+        bettors: "投注人数",
+        orders: "注单数",
+        betAmount: "投注金额",
+        winLoss: "周期输赢",
+        online: "在线人数",
+        login: "登录人数",
+        newUsers: "新增人数"
+      };
+
+      function parseDate(value) {
+        const date = new Date(`${value}T00:00:00`);
+        return Number.isNaN(date.getTime()) ? null : date;
+      }
+
+      function formatDate(date) {
+        const pad = (value) => String(value).padStart(2, "0");
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+      }
+
+      function addDays(date, days) {
+        const next = new Date(date);
+        next.setDate(next.getDate() + days);
+        return next;
+      }
+
+      function periodInfo() {
+        let from = parseDate(fromInput.value);
+        let to = parseDate(toInput.value);
+        if (!from || !to) {
+          from = parseDate("2026-05-11");
+          to = parseDate("2026-05-11");
+        }
+        if (from > to) {
+          const temp = from;
+          from = to;
+          to = temp;
+          fromInput.value = formatDate(from);
+          toInput.value = formatDate(to);
+        }
+        const days = Math.max(1, Math.round((to - from) / 86400000) + 1);
+        const compareTo = addDays(from, -1);
+        const compareFrom = addDays(compareTo, -(days - 1));
+        return { from, to, compareFrom, compareTo, days };
+      }
+
+      function periodText(start, end) {
+        return formatDate(start) === formatDate(end) ? formatDate(start) : `${formatDate(start)} 至 ${formatDate(end)}`;
+      }
+
+      function numberText(value, fraction = 0) {
+        return value.toLocaleString("en-US", { minimumFractionDigits: fraction, maximumFractionDigits: fraction });
+      }
+
+      function percentText(current, previous) {
+        if (!previous) return "0.0%";
+        const value = ((current - previous) / Math.abs(previous)) * 100;
+        return `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
+      }
+
+      function scaledData(source, scale, periodOffset = 0) {
+        const offsetFactor = 1 + periodOffset;
+        return {
+          bettors: Math.round(source.bettors * Math.sqrt(scale) * offsetFactor),
+          orders: Math.round(source.orders * scale * offsetFactor),
+          betAmount: source.betAmount * scale * offsetFactor,
+          winLoss: source.winLoss * scale * offsetFactor,
+          online: Math.round(source.online * (scale === 1 ? 1 : 1.08) * offsetFactor),
+          login: Math.round(source.login * Math.sqrt(scale) * offsetFactor),
+          newUsers: Math.round(source.newUsers * Math.sqrt(scale) * offsetFactor)
+        };
+      }
+
+      function formatMetric(key, value) {
+        return key === "betAmount" || key === "winLoss" ? numberText(value, 2) : numberText(value);
+      }
+
+      function renderCompare(current, previous, periods) {
+        const keys = ["bettors", "orders", "betAmount", "winLoss", "online", "login", "newUsers"];
+        compareTable.innerHTML = `
+          <div class="dashboard-compare-row header"><div>指标</div><div>当前周期</div><div>上一周期</div><div>变化</div></div>
+          ${keys.map((key) => {
+            const change = percentText(current[key], previous[key]);
+            const trendClass = change.startsWith("-") ? "down" : "up";
+            return `<div class="dashboard-compare-row"><div>${labels[key]}</div><div>${formatMetric(key, current[key])}</div><div>${formatMetric(key, previous[key])}</div><div><span class="${trendClass}">${change}</span></div></div>`;
+          }).join("")}
+        `;
+        analysisDate.textContent = `${periodText(periods.from, periods.to)} 对比 ${periodText(periods.compareFrom, periods.compareTo)}`;
+        compareNote.textContent = periods.days === 1
+          ? "当前选择为单日，系统自动对比前一天。"
+          : `当前选择 ${periods.days} 天，系统自动对比前一个等长 ${periods.days} 天周期。`;
+      }
+
+      function renderTrend(scale) {
+        const rows = [
+          ["00:00", 34],
+          ["04:00", 28],
+          ["08:00", 52],
+          ["12:00", 76],
+          ["16:00", 64],
+          ["20:00", 92]
+        ];
+        trendBars.innerHTML = rows.map(([time, value]) => {
+          const adjusted = Math.min(100, Math.round(value * Math.min(1.12, 0.94 + scale * 0.02)));
+          return `<div class="trend-row"><span>${time}</span><div><i style="width: ${adjusted}%"></i></div><b>${adjusted}%</b></div>`;
+        }).join("");
+      }
+
+      function renderInsights(current, previous, periods) {
+        const bettorChange = percentText(current.bettors, previous.bettors);
+        const orderChange = percentText(current.orders, previous.orders);
+        const newUserChange = percentText(current.newUsers, previous.newUsers);
+        const onlineRate = current.login ? (current.online / current.login) * 100 : 0;
+        insightBet.textContent = `当前周期投注人数 ${bettorChange}，注单数 ${orderChange}，可结合活动和游戏入口查看增长来源。`;
+        insightOnline.textContent = `在线人数占周期登录人数 ${onlineRate.toFixed(1)}%，${periods.days === 1 ? "可重点看晚高峰在线转化。" : "多日区间建议继续拆分到日维度观察峰值。"}`;
+        insightNewUsers.textContent = `新增人数较上一周期 ${newUserChange}，建议结合投注人数观察新玩家首投和留存质量。`;
+      }
+
+      function renderMetrics() {
+        const periods = periodInfo();
+        const scale = Math.min(periods.days, 31);
+        const current = scaledData(baseData, scale, 0);
+        const previous = scaledData(previousBaseData, scale, periods.days > 1 ? -0.015 : 0);
+        const onlineRate = current.login ? (current.online / current.login) * 100 : 0;
+        metrics.bettors.textContent = numberText(current.bettors);
+        metrics.orders.textContent = numberText(current.orders);
+        metrics.betAmount.textContent = numberText(current.betAmount, 2);
+        metrics.winLoss.textContent = numberText(current.winLoss, 2);
+        metrics.online.textContent = numberText(current.online);
+        metrics.onlineDetail.textContent = numberText(current.online);
+        metrics.onlinePeak.textContent = numberText(Math.round(current.online * 1.35));
+        metrics.onlineRate.textContent = `${onlineRate.toFixed(1)}%`;
+        metrics.onlineLoginRate.textContent = `${onlineRate.toFixed(1)}%`;
+        metrics.login.textContent = numberText(current.login);
+        metrics.newUsers.textContent = numberText(current.newUsers);
+        Object.keys(deltas).forEach((key) => {
+          const change = percentText(current[key], previous[key]);
+          deltas[key].textContent = change;
+          deltas[key].className = change.startsWith("-") ? "down" : "up";
+        });
+        renderCompare(current, previous, periods);
+        renderTrend(scale);
+        renderInsights(current, previous, periods);
+      }
+
+      searchButton.addEventListener("click", renderMetrics);
+      resetButton.addEventListener("click", () => {
+        fromInput.value = "2026-05-11";
+        toInput.value = "2026-05-11";
+        renderMetrics();
+      });
+      [fromInput, toInput].forEach((input) => input.addEventListener("change", renderMetrics));
+      renderMetrics();
+    })();
+  </script>
+</body>
+</html>

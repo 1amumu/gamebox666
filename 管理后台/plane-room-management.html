@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>飞机房间管理</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <script src="sidebar.js"></script>
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar-left">
+            <div class="collapse-btn">☰</div>
+            <div class="breadcrumb" data-breadcrumb></div>
+          </div>
+          <div class="topbar-right">
+            <span class="top-icon">↻</span>
+            <span class="top-icon">A</span>
+            <span class="time" data-current-time></span>
+            <select class="timezone topbar-select" aria-label="时区">
+              <option>+08:00</option>
+              <option>+05:30</option>
+              <option>UTC</option>
+            </select>
+            <span class="account">admin-master</span>
+            <span class="top-icon">▾</span>
+          </div>
+        </header>
+        <section class="content management-content" id="pageRoot"></section>
+      </main>
+    </div>
+    <script src="common.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

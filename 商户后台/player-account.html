@@ -79,6 +79,87 @@
           </div>
         </div>
       </section>
+      <div class="account-detail-mask" data-account-detail hidden>
+        <div class="account-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="account-detail-title">
+          <div class="account-detail-head">
+            <div>
+              <h3 id="account-detail-title">会员详情 <span data-detail-id></span></h3>
+              <p>按当前账号列表数据同步展示会员基础信息与游戏输赢概览。</p>
+            </div>
+            <div class="account-detail-head-actions">
+              <button class="detail-expand-btn" type="button" data-detail-fullscreen>全屏</button>
+              <button class="account-detail-close" type="button" data-detail-close aria-label="关闭">×</button>
+            </div>
+          </div>
+          <div class="account-detail-body">
+            <div class="account-detail-grid" data-detail-grid></div>
+            <div class="account-detail-tabs" data-detail-tabs>
+              <button class="active" type="button" data-detail-tab="game">游戏输赢数据</button>
+              <button type="button" data-detail-tab="bet">投注行为</button>
+              <button type="button" data-detail-tab="device">同设备账号</button>
+            </div>
+            <div class="account-detail-panel active" data-detail-panel="game">
+              <div class="account-detail-filter">
+                <label><span>游戏</span><select><option>全部</option><option>Avlator</option><option>Fortune Gems</option><option>Maya Gold</option></select></label>
+                <div>
+                  <button class="profit-btn" type="button">重置</button>
+                  <button class="profit-btn primary" type="button">搜索</button>
+                </div>
+              </div>
+              <div class="account-detail-table-wrap">
+                <div class="account-detail-table" data-detail-game-table></div>
+              </div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="bet">
+              <div class="account-detail-filter bet-record-filter">
+                <label>
+                  <span>游戏</span>
+                  <div class="game-picker stats-game-picker" data-bet-game-picker>
+                    <button class="game-picker-trigger" type="button" data-bet-game-trigger>
+                      <span class="game-choice-icon" data-bet-game-icon>ALL</span>
+                      <span data-bet-game-label>全部游戏</span>
+                      <span class="game-picker-arrow">⌄</span>
+                    </button>
+                    <div class="game-picker-panel" data-bet-game-panel hidden>
+                      <div class="game-brand-tabs" data-bet-brand-tabs>
+                        <button class="game-brand-tab active" type="button" data-bet-brand value="">全部品牌</button>
+                        <button class="game-brand-tab" type="button" data-bet-brand value="PG">PG</button>
+                        <button class="game-brand-tab" type="button" data-bet-brand value="PP">PP</button>
+                        <button class="game-brand-tab" type="button" data-bet-brand value="JILI">JILI</button>
+                        <button class="game-brand-tab" type="button" data-bet-brand value="SPRLBE">SPRLBE</button>
+                      </div>
+                      <input class="game-search" type="text" placeholder="搜索游戏名称 / 英文名" data-bet-game-search />
+                      <div class="game-options" data-bet-game-options></div>
+                      <div class="game-picker-pager">
+                        <button class="game-page-btn" type="button" data-bet-game-prev>‹</button>
+                        <span class="game-page-info" data-bet-game-page-info>1 / 1</span>
+                        <button class="game-page-btn" type="button" data-bet-game-next>›</button>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+                <label><span>开始</span><input class="profit-input date" type="date" value="2026-05-06" data-bet-from /></label>
+                <span class="profit-date-range-sep">至</span>
+                <label><input class="profit-input date" type="date" value="2026-05-11" aria-label="投注行为结束日期" data-bet-to /></label>
+                <div>
+                  <button class="profit-btn" type="button" data-bet-reset>重置</button>
+                  <button class="profit-btn primary" type="button" data-bet-search>搜索</button>
+                </div>
+              </div>
+              <div class="game-record-table-wrap account-bet-table-wrap">
+                <div class="game-record-table account-bet-table" data-bet-table></div>
+              </div>
+              <div class="account-detail-summary" data-bet-summary>共 0 条记录</div>
+            </div>
+            <div class="account-detail-panel" data-detail-panel="device">
+              <div class="account-detail-table-wrap">
+                <div class="account-detail-table same-device-table" data-device-table></div>
+              </div>
+              <div class="account-detail-summary" data-device-summary>共 0 条记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
   <script src="common.js"></script>
@@ -92,6 +173,105 @@
     const loginTo = document.querySelector("[data-login-to]");
     const searchAccount = document.querySelector("[data-account-search]");
     const resetAccount = document.querySelector("[data-account-reset]");
+    const detailMask = document.querySelector("[data-account-detail]");
+    const detailDialog = document.querySelector(".account-detail-dialog");
+    const detailId = document.querySelector("[data-detail-id]");
+    const detailGrid = document.querySelector("[data-detail-grid]");
+    const detailGameTable = document.querySelector("[data-detail-game-table]");
+    const detailFullscreen = document.querySelector("[data-detail-fullscreen]");
+    const detailClose = document.querySelector("[data-detail-close]");
+    const detailTabs = Array.from(document.querySelectorAll("[data-detail-tab]"));
+    const detailPanels = Array.from(document.querySelectorAll("[data-detail-panel]"));
+    const betGamePicker = document.querySelector("[data-bet-game-picker]");
+    const betGameTrigger = document.querySelector("[data-bet-game-trigger]");
+    const betGamePanel = document.querySelector("[data-bet-game-panel]");
+    const betGameIcon = document.querySelector("[data-bet-game-icon]");
+    const betGameLabel = document.querySelector("[data-bet-game-label]");
+    const betGameSearch = document.querySelector("[data-bet-game-search]");
+    const betBrandTabs = Array.from(document.querySelectorAll("[data-bet-brand]"));
+    const betGameOptionsWrap = document.querySelector("[data-bet-game-options]");
+    const betGamePrev = document.querySelector("[data-bet-game-prev]");
+    const betGameNext = document.querySelector("[data-bet-game-next]");
+    const betGamePageInfo = document.querySelector("[data-bet-game-page-info]");
+    const betFrom = document.querySelector("[data-bet-from]");
+    const betTo = document.querySelector("[data-bet-to]");
+    const betSearch = document.querySelector("[data-bet-search]");
+    const betReset = document.querySelector("[data-bet-reset]");
+    const betTable = document.querySelector("[data-bet-table]");
+    const betSummary = document.querySelector("[data-bet-summary]");
+    const deviceTable = document.querySelector("[data-device-table]");
+    const deviceSummary = document.querySelector("[data-device-summary]");
+    let activeDetailRow = null;
+    let betSelectedGame = "";
+    let betSelectedBrand = "";
+    let betGamePage = 1;
+    let betFilteredGames = [];
+    const betGamePageSize = 8;
+
+    const betRecordsByPlayer = {
+      "10470001344450": [
+        { brand: "PG", orderId: "GB202605110001", roundId: "RPG-61148290", gameCn: "海怪之力", gameEn: "PowerOfTheKraken", trigger: "普通投注", rtp: "96.20%", multiple: "1.20x", bet: "8,420.00", win: "1,700.00", before: "54,880.00", after: "56,580.00", date: "2026-05-11", time: "13:48:22" },
+        { brand: "PG", orderId: "GB202605100087", roundId: "RPG-61030087", gameCn: "海怪之力", gameEn: "PowerOfTheKraken", trigger: "普通投注", rtp: "98.36%", multiple: "1.08x", bet: "4,200.00", win: "352.00", before: "50,328.00", after: "50,680.00", date: "2026-05-10", time: "21:12:06" },
+        { brand: "PP", orderId: "GB202605090142", roundId: "RPP-60910142", gameCn: "法老牌", gameEn: "Pharaoh Cards", trigger: "免费旋转", rtp: "88.10%", multiple: "0.76x", bet: "5,600.00", win: "-1,064.00", before: "47,990.00", after: "46,926.00", date: "2026-05-09", time: "10:26:48" }
+      ],
+      "10470007305040": [
+        { brand: "PG", orderId: "GB202605110002", roundId: "RPG-61148291", gameCn: "海怪传说", gameEn: "eKraken", trigger: "免费旋转", rtp: "91.40%", multiple: "0.55x", bet: "16,800.00", win: "-7,560.00", before: "132,640.00", after: "125,080.00", date: "2026-05-11", time: "12:21:09" },
+        { brand: "JILI", orderId: "GB202605100064", roundId: "RJL-61012064", gameCn: "龙之宝藏", gameEn: "Dragon Treasure", trigger: "普通投注", rtp: "103.20%", multiple: "1.64x", bet: "12,400.00", win: "7,120.00", before: "118,960.00", after: "126,080.00", date: "2026-05-10", time: "17:08:14" }
+      ],
+      "10470004414669": [
+        { brand: "PG", orderId: "GB202605100128", roundId: "RPG-61039128", gameCn: "宝石财富", gameEn: "Fortune Gems", trigger: "普通投注", rtp: "102.80%", multiple: "1.52x", bet: "3,600.00", win: "1,888.00", before: "26,300.00", after: "28,188.00", date: "2026-05-10", time: "20:06:13" },
+        { brand: "SPRLBE", orderId: "GB202605090033", roundId: "RSP-60900033", gameCn: "幸运糖果", gameEn: "Lucky Candy", trigger: "普通投注", rtp: "94.40%", multiple: "0.92x", bet: "2,240.00", win: "-128.00", before: "28,316.00", after: "28,188.00", date: "2026-05-09", time: "09:16:55" }
+      ],
+      "10470004889926": [
+        { brand: "JILI", orderId: "GB202605090276", roundId: "RPG-60988276", gameCn: "玛雅黄金", gameEn: "Maya Gold", trigger: "普通投注", rtp: "0.00%", multiple: "0.00x", bet: "22,000.00", win: "-22,000.00", before: "18,960.00", after: "-3,040.00", date: "2026-05-09", time: "18:44:30" }
+      ],
+      "10410001538841": [
+        { brand: "PP", orderId: "GB202605080318", roundId: "RPG-60855318", gameCn: "保龄球之王", gameEn: "Bowling King", trigger: "普通投注", rtp: "120.78%", multiple: "1.21x", bet: "11,260.00", win: "2,340.00", before: "146,520.00", after: "148,860.00", date: "2026-05-08", time: "10:32:45" },
+        { brand: "JILI", orderId: "GB202605070148", roundId: "RJL-60710148", gameCn: "玛雅黄金", gameEn: "Maya Gold", trigger: "免费旋转", rtp: "87.00%", multiple: "0.60x", bet: "6,840.00", win: "-2,736.00", before: "151,596.00", after: "148,860.00", date: "2026-05-07", time: "16:42:11" }
+      ],
+      "10470000804108": [
+        { brand: "SPRLBE", orderId: "GB202605070536", roundId: "RPG-60770536", gameCn: "幸运糖果", gameEn: "Lucky Candy", trigger: "免费旋转", rtp: "82.07%", multiple: "0.82x", bet: "7,920.00", win: "-1,420.00", before: "33,680.00", after: "32,260.00", date: "2026-05-07", time: "23:12:18" }
+      ]
+    };
+    const sameDeviceAccountsByPlayer = {
+      "10470001344450": [
+        { id: "10470001344450", registeredAt: "2026-04-24 13:16:50", lastLogin: "2026-05-07 14:05:32", totalBet: "589,086.00", totalPayout: "475,462.60", historyProfit: "-113,623.40" },
+        { id: "10470001344512", registeredAt: "2026-04-26 09:42:18", lastLogin: "2026-05-06 21:18:44", totalBet: "226,440.00", totalPayout: "201,118.00", historyProfit: "-25,322.00" }
+      ],
+      "10470007305040": [
+        { id: "10470007305040", registeredAt: "2026-04-23 11:05:12", lastLogin: "2026-05-07 13:52:18", totalBet: "802,316.00", totalPayout: "1,048,634.52", historyProfit: "246,318.52" }
+      ],
+      "10470004414669": [
+        { id: "10470004414669", registeredAt: "2026-04-21 08:32:19", lastLogin: "2026-05-06 21:44:09", totalBet: "185,244.00", totalPayout: "161,023.10", historyProfit: "-24,220.90" },
+        { id: "10470004414702", registeredAt: "2026-04-29 15:08:51", lastLogin: "2026-05-05 10:26:17", totalBet: "92,600.00", totalPayout: "88,412.00", historyProfit: "-4,188.00" }
+      ],
+      "10470004889926": [
+        { id: "10470004889926", registeredAt: "2026-04-30 12:15:44", lastLogin: "2026-05-07 12:18:45", totalBet: "260,915.19", totalPayout: "230,265.06", historyProfit: "-30,650.13" }
+      ],
+      "10410001538841": [
+        { id: "10410001538841", registeredAt: "2026-04-18 17:28:36", lastLogin: "2026-05-07 11:08:20", totalBet: "516,882.00", totalPayout: "599,323.20", historyProfit: "82,441.20" },
+        { id: "10410001538877", registeredAt: "2026-04-25 09:31:02", lastLogin: "2026-05-04 19:52:41", totalBet: "144,880.00", totalPayout: "138,520.00", historyProfit: "-6,360.00" }
+      ],
+      "10470000804108": [
+        { id: "10470000804108", registeredAt: "2026-04-27 14:02:48", lastLogin: "2026-05-06 18:26:59", totalBet: "324,814.92", totalPayout: "310,356.00", historyProfit: "-14,458.92" }
+      ]
+    };
+    const registeredIpsByPlayer = {
+      "10470001344450": ["103.48.12.16", "103.48.12.27", "103.48.13.04"],
+      "10470007305040": ["82.14.66.120", "82.14.66.153"],
+      "10470004414669": ["61.177.92.44", "61.177.92.58", "61.177.92.61"],
+      "10470004889926": ["45.116.228.19", "45.116.228.33"],
+      "10410001538841": ["119.28.74.90", "119.28.74.116", "119.28.75.02"],
+      "10470000804108": ["88.214.201.13", "88.214.201.26"]
+    };
+    const loginIpsByPlayer = {
+      "10470001344450": ["103.48.12.16", "103.48.12.21"],
+      "10470007305040": ["82.14.66.153"],
+      "10470004414669": ["61.177.92.61", "61.177.92.78"],
+      "10470004889926": ["45.116.228.33"],
+      "10410001538841": ["119.28.75.02", "119.28.75.18"],
+      "10470000804108": ["88.214.201.26"]
+    };
 
     function applyAccountFilters() {
       const platform = platformFilter.value.trim();
@@ -111,6 +291,368 @@
       });
     }
 
+    function bindCopyButtons(scope = document) {
+      scope.querySelectorAll("[data-copy]").forEach((button) => {
+        if (button.dataset.copyBound === "true") return;
+        button.dataset.copyBound = "true";
+        button.addEventListener("click", async (event) => {
+          event.stopPropagation();
+          const value = button.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(value);
+          } catch (_) {
+            const textarea = document.createElement("textarea");
+            textarea.value = value;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+          button.classList.add("copied");
+          setTimeout(() => button.classList.remove("copied"), 900);
+        });
+      });
+    }
+
+    function cellText(row, index) {
+      return row.children[index]?.innerText.trim().replace(/\s+/g, " ") || "-";
+    }
+
+    function moneyNumber(text) {
+      const value = Number(String(text).replace(/,/g, ""));
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function detailItems(row) {
+      const platformId = row.dataset.platform;
+      const balance = cellText(row, 6);
+      const todayBet = cellText(row, 4);
+      const historyWin = cellText(row, 5);
+      const loginCount = cellText(row, 7);
+      const lastLogin = cellText(row, 8);
+      const loginIp = cellText(row, 9);
+      const historyWinValue = moneyNumber(historyWin);
+      const todayBetValue = moneyNumber(todayBet);
+      const rtp = todayBetValue ? Math.max(0, 100 - Math.abs(historyWinValue / todayBetValue) * 100).toFixed(2) : "0.00";
+      return [
+        ["唯一ID", platformId.slice(-7)],
+        ["会员ID", platformId],
+        ["所属商户", "ar518888"],
+        ["商户ID", platformId.slice(0, 6)],
+        ["当前余额", `${balance} USD`],
+        ["创建时间", "2026-04-24 13:16:50"],
+        ["最后登录时间", lastLogin],
+        ["当天投注", `${todayBet} USD`],
+        ["历史投注", `${Math.max(todayBetValue * 1.8, 24).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`],
+        ["今日RTP", `${rtp}%`],
+        ["历史RTP", historyWinValue < 0 ? "32.50%" : "68.80%"],
+        ["三日登录次数", loginCount],
+        ["今日输赢", `${historyWin} USD`],
+        ["历史输赢", `${historyWin} USD`],
+        ["今日局数", loginCount],
+        ["历史局数", String(Math.max(6, Number(loginCount) * 8 || 6))],
+        ["留存天数", row.dataset.loginDate === "2026-05-07" ? "1" : "2"],
+        ["注册IP地址", loginIp],
+        ["登录设备码", "go-resty/2.17.1"],
+        ["登录IP地址", loginIp],
+        ["账号状态", cellText(row, 3)]
+      ];
+    }
+
+    function stackHtml(items) {
+      return `<span class="detail-stack">${items.map((item) => `<i>${item}</i>`).join("")}</span>`;
+    }
+
+    function hoverListHtml(items, triggerLabel) {
+      if (items.length <= 1) return items[0] || "-";
+      return `
+        <span class="detail-hover-group">
+          <button class="detail-link-btn detail-hover-trigger" type="button">${triggerLabel}</button>
+          <span class="detail-hover-panel">
+            ${items.map((item) => `
+              <span class="detail-hover-item">
+                <i>${item}</i>
+                <button class="profit-copy" type="button" data-copy="${item}" title="复制IP" aria-label="复制IP"></button>
+              </span>
+            `).join("")}
+          </span>
+        </span>
+      `;
+    }
+
+    function detailItems(row) {
+      const platformId = row.dataset.platform;
+      const balance = cellText(row, 6);
+      const todayBet = cellText(row, 4);
+      const historyWin = cellText(row, 5);
+      const loginCount = cellText(row, 7);
+      const lastLogin = cellText(row, 8);
+      const loginIps = loginIpsByPlayer[platformId] || [cellText(row, 9)];
+      const loginIp = loginIps[0];
+      const registerIps = registeredIpsByPlayer[platformId] || [loginIp];
+      const sameDevicePlayers = (sameDeviceAccountsByPlayer[platformId] || []).map((item) => item.id).filter((id) => id !== platformId);
+      const accountStatus = row.querySelector(".account-status")?.outerHTML || cellText(row, 3);
+      const accountTag = row.querySelector(".player-tag")?.outerHTML || cellText(row, 0);
+      const historyWinValue = moneyNumber(historyWin);
+      const todayBetValue = moneyNumber(todayBet);
+      const rtp = todayBetValue ? Math.max(0, 100 - Math.abs(historyWinValue / todayBetValue) * 100).toFixed(2) : "0.00";
+      const items = [
+        ["会员ID", platformId],
+        ["所属商户", "ar518888"],
+        ["商户ID", platformId.slice(0, 6)],
+        ["当前余额", `${balance} USD`],
+        ["当天投注", `${todayBet} USD`],
+        ["历史投注", `${Math.max(todayBetValue * 1.8, 24).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`],
+        ["今日RTP", `${rtp}%`],
+        ["历史RTP", historyWinValue < 0 ? "32.50%" : "68.80%"],
+        ["今日输赢", `${historyWin} USD`],
+        ["历史输赢", `${historyWin} USD`],
+        ["今日局数", loginCount],
+        ["历史局数", String(Math.max(6, Number(loginCount) * 8 || 6))],
+        ["三日登录次数", loginCount],
+        ["留存天数", row.dataset.loginDate === "2026-05-07" ? "1" : "2"],
+        ["注册IP", hoverListHtml(registerIps, `${registerIps.length}个IP`)],
+        ["登录IP", hoverListHtml(loginIps, `${loginIps.length}个IP`)],
+        ["同设备ID", sameDevicePlayers.length ? `<button class="detail-link-btn" type="button" data-open-detail-tab="device">${sameDevicePlayers.length}个账号</button>` : "无"],
+        ["账号状态", cellText(row, 3)],
+        ["创建时间", "2026-04-24 13:16:50"],
+        ["最后登录时间", lastLogin]
+      ];
+      return [
+        items[0],
+        ["账号状态", accountStatus],
+        ["账号标签", accountTag],
+        ...items.slice(1, 17),
+        items[18],
+        items[19]
+      ];
+    }
+
+    function currentBetRecords() {
+      return betRecordsByPlayer[activeDetailRow?.dataset.platform] || [];
+    }
+
+    function betGameMeta(gameEn, gameCn, brand) {
+      const thumbMap = {
+        PowerOfTheKraken: ["kraken", "K"],
+        eKraken: ["ek", "eK"],
+        "Fortune Gems": ["gems", "FG"],
+        "Pharaoh Cards": ["pharaoh", "法"],
+        "Bowling King": ["bowling", "保"],
+        "Maya Gold": ["maya", "玛"],
+        "Dragon Treasure": ["dragon", "龙"],
+        "Lucky Candy": ["candy", "糖"]
+      };
+      const [thumbClass, icon] = thumbMap[gameEn] || ["all", (gameCn || gameEn || "G").slice(0, 2)];
+      return { thumbClass, icon, label: `${gameEn} ${gameCn || ""}`.trim(), brand };
+    }
+
+    function currentBetGames() {
+      const map = new Map();
+      currentBetRecords().forEach((item) => {
+        if (!map.has(item.gameEn)) {
+          map.set(item.gameEn, {
+            value: item.gameEn,
+            cn: item.gameCn,
+            brand: item.brand,
+            ...betGameMeta(item.gameEn, item.gameCn, item.brand)
+          });
+        }
+      });
+      return Array.from(map.values());
+    }
+
+    function selectedBetBrandGames() {
+      if (!betSelectedBrand) return [];
+      return currentBetGames().filter((item) => item.brand === betSelectedBrand).map((item) => item.value);
+    }
+
+    function updateBetGameLabel() {
+      if (betSelectedGame) {
+        const current = currentBetGames().find((item) => item.value === betSelectedGame);
+        if (current) {
+          betGameIcon.textContent = current.icon;
+          betGameLabel.textContent = current.label;
+          return;
+        }
+      }
+      betGameIcon.textContent = betSelectedBrand || "ALL";
+      betGameLabel.textContent = betSelectedBrand ? `${betSelectedBrand} 全部游戏` : "全部游戏";
+    }
+
+    function positionBetGamePanel() {
+      if (betGamePanel.hidden) return;
+      const triggerRect = betGameTrigger.getBoundingClientRect();
+      const dialogRect = detailDialog.getBoundingClientRect();
+      const leftLimit = Math.max(16, dialogRect.left + 16);
+      const rightLimit = Math.min(window.innerWidth - 24, dialogRect.right - 16);
+      const panelWidth = Math.max(320, Math.min(760, rightLimit - leftLimit));
+      let panelLeft = triggerRect.left;
+      if (panelLeft + panelWidth > rightLimit) panelLeft = rightLimit - panelWidth;
+      if (panelLeft < leftLimit) panelLeft = leftLimit;
+      const panelTop = Math.min(triggerRect.bottom + 8, window.innerHeight - 280);
+      betGamePanel.style.left = `${panelLeft}px`;
+      betGamePanel.style.top = `${Math.max(24, panelTop)}px`;
+      betGamePanel.style.width = `${panelWidth}px`;
+      betGamePanel.style.maxHeight = `${Math.max(260, window.innerHeight - panelTop - 18)}px`;
+    }
+
+    function renderBetGamePage() {
+      const totalPages = Math.max(1, Math.ceil(betFilteredGames.length / betGamePageSize));
+      betGamePage = Math.min(betGamePage, totalPages);
+      const start = (betGamePage - 1) * betGamePageSize;
+      const visibleGames = betFilteredGames.slice(start, start + betGamePageSize);
+      betGameOptionsWrap.innerHTML = visibleGames.map((item) => `
+        <button class="game-option${item.value === betSelectedGame ? " active" : ""}" type="button" data-bet-game-option data-value="${item.value}" data-brand="${item.brand}" data-icon="${item.icon}">
+          <span class="game-thumb ${item.thumbClass}"><span>${item.icon}</span></span>
+        </button>
+      `).join("");
+      betGamePageInfo.textContent = `${betGamePage} / ${totalPages}`;
+      betGamePrev.disabled = betGamePage <= 1;
+      betGameNext.disabled = betGamePage >= totalPages;
+      betGameOptionsWrap.querySelectorAll("[data-bet-game-option]").forEach((button) => {
+        button.addEventListener("click", () => {
+          betSelectedGame = button.dataset.value;
+          betGameSearch.value = "";
+          updateBetGameLabel();
+          betGamePanel.hidden = true;
+          renderBetRecords();
+        });
+      });
+      positionBetGamePanel();
+    }
+
+    function filterBetGames() {
+      const keyword = betGameSearch.value.trim().toLowerCase();
+      betFilteredGames = currentBetGames().filter((item) => {
+        const matchBrand = !betSelectedBrand || item.brand === betSelectedBrand;
+        const matchKeyword = !keyword || item.value.toLowerCase().includes(keyword) || item.label.toLowerCase().includes(keyword) || item.cn.toLowerCase().includes(keyword);
+        return matchBrand && matchKeyword;
+      });
+      betGamePage = 1;
+      renderBetGamePage();
+    }
+
+    function syncBetGames() {
+      const availableGames = currentBetGames().map((item) => item.value);
+      if (!availableGames.includes(betSelectedGame)) betSelectedGame = "";
+      if (betSelectedBrand && !currentBetGames().some((item) => item.brand === betSelectedBrand)) betSelectedBrand = "";
+      betGameSearch.value = "";
+      betBrandTabs.forEach((tab) => {
+        tab.classList.toggle("active", betSelectedBrand ? tab.value === betSelectedBrand : tab.value === "");
+      });
+      updateBetGameLabel();
+      filterBetGames();
+    }
+
+    function renderBetRecords() {
+      const records = currentBetRecords().filter((item) => {
+        const brandGames = selectedBetBrandGames();
+        const matchGame = betSelectedGame ? item.gameEn === betSelectedGame : (!betSelectedBrand || brandGames.includes(item.gameEn));
+        const matchFrom = !betFrom.value || item.date >= betFrom.value;
+        const matchTo = !betTo.value || item.date <= betTo.value;
+        return matchGame && matchFrom && matchTo;
+      });
+      betSummary.textContent = `共 ${records.length} 条记录`;
+      betTable.innerHTML = `
+        <div class="game-record-row header">
+          <div>序号</div><div>订单编号</div><div>牌局编号</div><div>中文游戏名称</div><div>英文游戏名称</div><div>触发方式</div><div>RTP</div><div>返奖倍数</div><div>投注金额</div><div>玩家输赢</div><div>投注前余额</div><div>结算后余额</div><div>创建时间</div>
+        </div>
+        ${records.map((item, index) => `
+          <div class="game-record-row">
+            <div>${index + 1}</div>
+            <div><span class="record-copy-value">${item.orderId} <button class="profit-copy" type="button" data-copy="${item.orderId}" title="复制订单编号" aria-label="复制订单编号"></button></span></div>
+            <div><span class="record-copy-value">${item.roundId} <button class="profit-copy" type="button" data-copy="${item.roundId}" title="复制牌局编号" aria-label="复制牌局编号"></button></span></div>
+            <div>${item.gameCn}</div>
+            <div>${item.gameEn}</div>
+            <div>${item.trigger}</div>
+            <div>${item.rtp}</div>
+            <div class="record-multiple${item.multiple === "0.00x" ? " muted" : ""}">${item.multiple}</div>
+            <div class="profit-num">${item.bet}</div>
+            <div class="profit-num ${moneyNumber(item.win) >= 0 ? "pos" : "neg"}">${item.win}</div>
+            <div class="profit-num">${item.before}</div>
+            <div class="profit-num ${moneyNumber(item.after) >= 0 ? "" : "neg"}">${item.after}</div>
+            <div><span class="profit-date">${item.date}<br/>${item.time}</span></div>
+          </div>
+        `).join("")}
+      `;
+      bindCopyButtons(betTable);
+    }
+
+    function renderSameDeviceAccounts() {
+      const records = sameDeviceAccountsByPlayer[activeDetailRow?.dataset.platform] || [];
+      deviceSummary.textContent = `共 ${records.length} 条记录`;
+      deviceTable.innerHTML = `
+        <div class="same-device-row header">
+          <div>ID</div><div>注册时间</div><div>最后登录</div><div>总投注</div><div>总返奖</div><div>历史盈亏</div>
+        </div>
+        ${records.map((item) => `
+          <div class="same-device-row">
+            <div><span class="profit-player">${item.id}</span></div>
+            <div>${item.registeredAt}</div>
+            <div>${item.lastLogin}</div>
+            <div class="profit-num">${item.totalBet}</div>
+            <div class="profit-num">${item.totalPayout}</div>
+            <div class="profit-num ${moneyNumber(item.historyProfit) >= 0 ? "pos" : "neg"}">${item.historyProfit}</div>
+          </div>
+        `).join("")}
+      `;
+    }
+
+    function renderDetail(row) {
+      activeDetailRow = row;
+      const platformId = row.dataset.platform;
+      const name = row.dataset.name;
+      const todayBet = cellText(row, 4);
+      const historyWin = cellText(row, 5);
+      const loginCount = cellText(row, 7);
+      const gameName = name.includes("gems") ? "Fortune Gems" : name.includes("maya") ? "Maya Gold" : "Avlator";
+      const brand = gameName === "Maya Gold" ? "JILI" : "PG";
+      detailId.textContent = `[${platformId}]`;
+      detailGrid.innerHTML = detailItems(row).map(([label, value]) => (
+        `<div class="account-detail-cell"><span>${label}</span><strong>${value}</strong></div>`
+      )).join("");
+      bindCopyButtons(detailGrid);
+      detailGameTable.innerHTML = `
+        <div class="account-detail-game-row header"><div>序号</div><div>品牌</div><div>中文游戏名称</div><div>英文游戏名称</div><div>注单额</div><div>注单数</div><div>总输赢</div><div>RTP</div></div>
+        <div class="account-detail-game-row"><div>1</div><div><span class="detail-brand">${brand}</span></div><div>${gameName === "Avlator" ? "飞机游戏" : gameName}</div><div>${gameName}</div><div class="profit-num pos">${todayBet} USD</div><div>${Math.max(1, Number(loginCount) || 1)}</div><div class="profit-num neg">${historyWin} USD</div><div>${moneyNumber(todayBet) ? Math.max(0, 100 - Math.abs(moneyNumber(historyWin) / moneyNumber(todayBet)) * 100).toFixed(2) : "0.00"}%</div></div>
+      `;
+      betFrom.value = "2026-05-06";
+      betTo.value = "2026-05-11";
+      syncBetGames();
+      renderBetRecords();
+      renderSameDeviceAccounts();
+    }
+
+    function openAccountDetail(row) {
+      renderDetail(row);
+      detailDialog.classList.remove("is-fullscreen");
+      detailFullscreen.textContent = "全屏";
+      detailMask.hidden = false;
+      document.body.classList.add("modal-open");
+    }
+
+    function closeAccountDetail() {
+      detailMask.hidden = true;
+      detailDialog.classList.remove("is-fullscreen");
+      detailFullscreen.textContent = "全屏";
+      document.body.classList.remove("modal-open");
+    }
+
+    function switchDetailTab(tabName) {
+      detailTabs.forEach((item) => item.classList.toggle("active", item.dataset.detailTab === tabName));
+      detailPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.detailPanel === tabName));
+    }
+
+    function openAccountDetail(row) {
+      renderDetail(row);
+      switchDetailTab("game");
+      detailDialog.classList.remove("is-fullscreen");
+      detailFullscreen.textContent = "全屏";
+      detailMask.hidden = false;
+      document.body.classList.add("modal-open");
+    }
+
     searchAccount.addEventListener("click", applyAccountFilters);
     [platformFilter, nameFilter, ipFilter].forEach((input) => {
       input.addEventListener("keydown", (event) => {
@@ -127,21 +669,88 @@
       applyAccountFilters();
     });
 
-    document.querySelectorAll("[data-copy]").forEach((button) => {
-      button.addEventListener("click", async () => {
-        const value = button.dataset.copy;
-        try {
-          await navigator.clipboard.writeText(value);
-        } catch (_) {
-          const textarea = document.createElement("textarea");
-          textarea.value = value;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          textarea.remove();
-        }
-        button.classList.add("copied");
-        setTimeout(() => button.classList.remove("copied"), 900);
+    bindCopyButtons();
+
+    detailFullscreen.addEventListener("click", () => {
+      const fullscreen = detailDialog.classList.toggle("is-fullscreen");
+      positionBetGamePanel();
+      detailFullscreen.textContent = fullscreen ? "还原" : "全屏";
+    });
+    betGameTrigger.addEventListener("click", () => {
+      betGamePanel.hidden = !betGamePanel.hidden;
+      if (!betGamePanel.hidden) {
+        filterBetGames();
+        positionBetGamePanel();
+        betGameSearch.focus();
+      }
+    });
+    betGameSearch.addEventListener("input", filterBetGames);
+    betBrandTabs.forEach((tab) => {
+      if (!tab.querySelector(".game-brand-tab-check")) {
+        const label = tab.textContent.trim();
+        tab.textContent = "";
+        const check = document.createElement("span");
+        check.className = "game-brand-tab-check";
+        check.setAttribute("aria-hidden", "true");
+        const text = document.createElement("span");
+        text.className = "game-brand-tab-label";
+        text.textContent = label;
+        tab.append(check, text);
+      }
+      tab.addEventListener("click", (event) => {
+        if (!event.target.closest(".game-brand-tab-check")) return;
+        const shouldClearBrand = tab.value && tab.classList.contains("active");
+        betSelectedBrand = shouldClearBrand ? "" : tab.value;
+        if (betSelectedBrand) betSelectedGame = "";
+        updateBetGameLabel();
+        filterBetGames();
+        renderBetRecords();
+      });
+    });
+    betGamePrev.addEventListener("click", () => {
+      betGamePage -= 1;
+      renderBetGamePage();
+    });
+    betGameNext.addEventListener("click", () => {
+      betGamePage += 1;
+      renderBetGamePage();
+    });
+    betSearch.addEventListener("click", renderBetRecords);
+    betReset.addEventListener("click", () => {
+      betSelectedGame = "";
+      betSelectedBrand = "";
+      betGamePanel.hidden = true;
+      betFrom.value = "2026-05-06";
+      betTo.value = "2026-05-11";
+      syncBetGames();
+      renderBetRecords();
+    });
+    [betFrom, betTo].forEach((control) => control.addEventListener("change", renderBetRecords));
+
+    accountRows.forEach((row) => {
+      row.querySelector(".profit-player")?.addEventListener("click", () => openAccountDetail(row));
+    });
+
+    detailClose.addEventListener("click", closeAccountDetail);
+    detailGrid.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-open-detail-tab]");
+      if (!trigger) return;
+      switchDetailTab(trigger.dataset.openDetailTab);
+    });
+    detailMask.addEventListener("click", (event) => {
+      if (event.target === detailMask) closeAccountDetail();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !detailMask.hidden) closeAccountDetail();
+    });
+    document.addEventListener("click", (event) => {
+      if (!betGamePicker.contains(event.target)) betGamePanel.hidden = true;
+    });
+    window.addEventListener("resize", positionBetGamePanel);
+    detailTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        detailTabs.forEach((item) => item.classList.toggle("active", item === tab));
+        detailPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.detailPanel === tab.dataset.detailTab));
       });
     });
 

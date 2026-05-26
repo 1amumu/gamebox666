@@ -107,7 +107,13 @@
 
   function getCurrentPageKey() {
     const params = new URLSearchParams(window.location.search);
-    return params.get("page") || "dashboard";
+    const path = (window.location.pathname || "").toLowerCase();
+    return (
+      params.get("page") ||
+      (path.endsWith("/plane-room-management.html") || path.endsWith("\\plane-room-management.html")
+        ? "flight-room-manage"
+        : "dashboard")
+    );
   }
 
   function pageHref(pageKey) {
