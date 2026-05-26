@@ -11,6 +11,18 @@
 
   var brandOptions = ["GameBox", "SPRIBE", "PG", "PP", "JILI", "TADA", "InOut"];
   var gameOptions = ["Aviator", "火热辣椒", "发财树", "麻将胡了", "赏金女王", "Mini Roulette", "Lightning Dice", "丛林之王"];
+  var rateGameOptions = [
+    { id: "1001", name: "飞机", key: "aviator" },
+    { id: "1002", name: "绿魔", key: "roulette" },
+    { id: "1003", name: "火热辣椒", key: "chilli" },
+    { id: "1004", name: "麻将胡了", key: "mahjong" },
+    { id: "1005", name: "发财树", key: "fortune-tree" },
+    { id: "1006", name: "赏金女王", key: "bounty-queen" },
+    { id: "1007", name: "Aviator", key: "spribe-aviator" },
+    { id: "1008", name: "Mini Roulette", key: "mini-roulette" },
+    { id: "1009", name: "Lightning Dice", key: "lightning-dice" },
+    { id: "1010", name: "丛林之王", key: "jungle-king" }
+  ];
 
   function money(value) {
     return Number(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -109,6 +121,10 @@
       if (event.target.closest("[data-rate-add-game]")) {
         addRateGame(modal);
       }
+      var rateOption = event.target.closest("[data-rate-game-option]");
+      if (rateOption) {
+        selectRateGame(modal, rateOption.getAttribute("data-rate-game-option"));
+      }
       if (event.target.closest("[data-save-brand]")) {
         saveBrandModal(page, modal);
       }
@@ -130,6 +146,19 @@
     modal.addEventListener("change", function(event) {
       if (event.target.matches("[data-edit='enabled']")) {
         event.target.parentElement.querySelector("em").textContent = event.target.checked ? "启用" : "停用";
+      }
+    });
+    modal.addEventListener("input", function(event) {
+      if (event.target.matches("[data-rate]")) {
+        clearRateError(event.target);
+      }
+      if (event.target.matches("[data-rate-game-search]")) {
+        renderRateGameDropdown(modal);
+      }
+    });
+    modal.addEventListener("focusin", function(event) {
+      if (event.target.matches("[data-rate-game-search]")) {
+        renderRateGameDropdown(modal);
       }
     });
 
@@ -168,19 +197,69 @@
   function addRateGame(modal) {
     var input = modal.querySelector("[data-rate-game-search]");
     if (!input) return;
-    var keyword = input.value.trim().toLowerCase();
-    var game = gameOptions.filter(function(item) {
-      return item.toLowerCase().indexOf(keyword) !== -1;
-    })[0];
-    if (!game || modal.querySelector("[data-rate-game='" + game + "']")) return;
+    var key = input.getAttribute("data-selected-rate-game");
+    var game = findRateGame(key);
+    if (!game) {
+      renderRateAddMessage(modal, "请先在下拉列表中选择游戏", true);
+      renderRateGameDropdown(modal);
+      return;
+    }
+    if (modal.querySelector("[data-rate-game='" + game.key + "']")) {
+      renderRateAddMessage(modal, game.name + "已添加", true);
+      return;
+    }
     var grid = modal.querySelector(".merchant-rate-grid-games");
-    var key = game;
     var item = document.createElement("div");
     item.className = "merchant-rate-game-item";
-    item.setAttribute("data-rate-game", key);
-    item.innerHTML = "<span>" + game + "</span><input data-rate=\"" + key + "\" value=\"3.0\"><em>%</em><button type=\"button\" data-rate-remove-game=\"" + key + "\">删除</button>";
+    item.setAttribute("data-rate-game", game.key);
+    item.innerHTML = "<span>" + game.name + "<small>ID:" + game.id + "</small></span><input data-rate=\"" + game.key + "\" value=\"3.0\"><em>%</em><button type=\"button\" data-rate-remove-game=\"" + game.key + "\">删除</button>";
     grid.appendChild(item);
     input.value = "";
+    input.removeAttribute("data-selected-rate-game");
+    renderRateGameDropdown(modal, []);
+    renderRateAddMessage(modal, "", false);
+  }
+
+  function findRateGame(key) {
+    return rateGameOptions.filter(function(item) { return item.key === key; })[0];
+  }
+
+  function selectRateGame(modal, key) {
+    var game = findRateGame(key);
+    var input = modal.querySelector("[data-rate-game-search]");
+    if (!game || !input) return;
+    input.value = game.name + "  ID:" + game.id;
+    input.setAttribute("data-selected-rate-game", game.key);
+    renderRateGameDropdown(modal, []);
+    renderRateAddMessage(modal, "", false);
+  }
+
+  function renderRateGameDropdown(modal, list) {
+    var input = modal.querySelector("[data-rate-game-search]");
+    var panel = modal.querySelector("[data-rate-game-dropdown]");
+    if (!input || !panel) return;
+    if (!Array.isArray(list)) input.removeAttribute("data-selected-rate-game");
+    var keyword = input.value.trim().toLowerCase();
+    var options = Array.isArray(list) ? list : rateGameOptions.filter(function(item) {
+      return !modal.querySelector("[data-rate-game='" + item.key + "']") &&
+        (keyword === "" || item.name.toLowerCase().indexOf(keyword) !== -1 || item.id.indexOf(keyword) !== -1);
+    }).slice(0, 8);
+    if (!options.length) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.innerHTML = options.map(function(item) {
+      return "<button type=\"button\" data-rate-game-option=\"" + item.key + "\"><span>" + item.name + "</span><em>ID:" + item.id + "</em></button>";
+    }).join("");
+  }
+
+  function renderRateAddMessage(modal, text, isError) {
+    var message = modal.querySelector("[data-rate-add-message]");
+    if (!message) return;
+    message.textContent = text || "";
+    message.className = "merchant-rate-add-message" + (isError ? " is-error" : "");
   }
 
   function openModal(page, title, body, footer) {
@@ -248,10 +327,10 @@
     if (!row) return;
     var rate = row.rate;
     var gameItems = [
-      { label: "飞机", key: "aviator" },
-      { label: "绿魔", key: "roulette" },
-      { label: "游戏1", key: "chilli" },
-      { label: "游戏2", key: "mahjong" }
+      { label: "飞机", key: "aviator", id: "1001" },
+      { label: "绿魔", key: "roulette", id: "1002" },
+      { label: "游戏1", key: "chilli", id: "1003" },
+      { label: "游戏2", key: "mahjong", id: "1004" }
     ];
     var body =
       "<div class=\"merchant-rate-shell\">" +
@@ -261,10 +340,10 @@
             rateItem("SPRIBE", "spribe", rate.spribe) + rateItem("PP", "evo", rate.evo) + rateItem("PG", "pg", rate.pg) + rateItem("JILI", "jili", rate.jili) + rateItem("品牌1", "base", rate.base) + rateItem("品牌2", "base2", rate.base2 || 3.0) +
           "</div></div>" +
           "<div class=\"merchant-rate-section\"><div class=\"merchant-rate-title\"><h3>游戏</h3></div><div class=\"merchant-rate-grid merchant-rate-grid-games\">" +
-            gameItems.map(function(item) { return rateGameItem(item.label, item.key, rate[item.key]); }).join("") +
+            gameItems.map(function(item) { return rateGameItem(item.label, item.key, rate[item.key], item.id); }).join("") +
           "</div><div class=\"merchant-rate-warning\">费率配置范围为1.0-10.0,超出范围请联系管理员</div></div>" +
         "</div>" +
-        "<div class=\"merchant-rate-add\"><span>添加游戏</span><input data-rate-game-search placeholder=\"输入游戏名称\"><button type=\"button\" data-rate-add-game>添加</button></div>" +
+        "<div class=\"merchant-rate-add\"><span>添加游戏</span><div class=\"merchant-rate-search\"><input data-rate-game-search placeholder=\"输入游戏名称或ID\"><div class=\"merchant-rate-dropdown\" data-rate-game-dropdown hidden></div></div><button type=\"button\" data-rate-add-game>添加</button><div class=\"merchant-rate-add-message\" data-rate-add-message></div></div>" +
       "</div>";
     var modal = openModal(page, "商户费率", body, "<button type=\"button\" data-modal-cancel>取消</button><button type=\"button\" class=\"is-primary\" data-save-rate>确定</button>");
     modal._rateGames = gameItems.slice();
@@ -273,11 +352,11 @@
   }
 
   function rateItem(label, key, value) {
-    return "<label class=\"merchant-rate-item\"><span>" + label + "</span><input data-rate=\"" + key + "\" value=\"" + Number(value).toFixed(1) + "\"><em>%</em></label>";
+    return "<label class=\"merchant-rate-item\"><span>" + label + "</span><input data-rate=\"" + key + "\" value=\"" + Number(value).toFixed(1) + "\"><em>%</em><strong data-rate-error></strong></label>";
   }
 
-  function rateGameItem(label, key, value) {
-    return "<div class=\"merchant-rate-game-item\" data-rate-game=\"" + key + "\"><span>" + label + "</span><input data-rate=\"" + key + "\" value=\"" + Number(value).toFixed(1) + "\"><em>%</em><button type=\"button\" data-rate-remove-game=\"" + key + "\">删除</button></div>";
+  function rateGameItem(label, key, value, id) {
+    return "<div class=\"merchant-rate-game-item\" data-rate-game=\"" + key + "\"><span>" + label + "<small>ID:" + id + "</small></span><input data-rate=\"" + key + "\" value=\"" + Number(value).toFixed(1) + "\"><em>%</em><button type=\"button\" data-rate-remove-game=\"" + key + "\">删除</button><strong data-rate-error></strong></div>";
   }
 
   function openBrandModal(page, id) {
@@ -315,12 +394,40 @@
   function saveRateModal(page, modal) {
     var row = findMerchant(modal.getAttribute("data-id"));
     if (!row) return;
-    ["pg", "jili", "spribe", "evo", "aviator", "chilli", "mahjong", "roulette"].forEach(function(key) {
-      var value = Number(modal.querySelector("[data-rate='" + key + "']").value);
-      if (Number.isNaN(value)) value = row.rate[key];
-      row.rate[key] = Math.max(1, Math.min(10, Math.round(value * 10) / 10));
+    var hasError = false;
+    Array.prototype.forEach.call(modal.querySelectorAll("[data-rate]"), function(input) {
+      clearRateError(input);
+      var value = Number(input.value);
+      if (input.value.trim() === "" || Number.isNaN(value) || value < 1 || value > 10) {
+        showRateError(input, "请输入1.0-10.0");
+        hasError = true;
+      }
+    });
+    if (hasError) return;
+    row.rate = row.rate || {};
+    Array.prototype.forEach.call(modal.querySelectorAll("[data-rate]"), function(input) {
+      var key = input.getAttribute("data-rate");
+      var value = Math.round(Number(input.value) * 10) / 10;
+      row.rate[key] = value;
+      input.value = value.toFixed(1);
     });
     modal.hidden = true;
+  }
+
+  function showRateError(input, text) {
+    var wrap = input.closest(".merchant-rate-item, .merchant-rate-game-item");
+    if (!wrap) return;
+    wrap.classList.add("has-error");
+    var error = wrap.querySelector("[data-rate-error]");
+    if (error) error.textContent = text;
+  }
+
+  function clearRateError(input) {
+    var wrap = input.closest(".merchant-rate-item, .merchant-rate-game-item");
+    if (!wrap) return;
+    wrap.classList.remove("has-error");
+    var error = wrap.querySelector("[data-rate-error]");
+    if (error) error.textContent = "";
   }
 
   function syncBrandModal(modal) {
@@ -350,9 +457,11 @@
     var name = page.querySelector("[data-filter='name']").value.trim();
     var id = page.querySelector("[data-filter='merchantId']").value.trim();
     var status = page.querySelector("[data-filter='status']").value;
+    var merchantType = page.querySelector("[data-filter='merchantType']").value;
     var filtered = merchants.filter(function(row) {
       return (!name || row.name.indexOf(name) !== -1) &&
         (!id || row.id.indexOf(id) !== -1) &&
+        (!merchantType || row.type === merchantType) &&
         (!status || row.disabled === status || row.gameStatus === status);
     });
     page.querySelector(".merchant-list-table tbody").innerHTML = filtered.map(rowHtml).join("");
@@ -385,6 +494,7 @@
       "<div class=\"merchant-list-filters\">" +
         "<label class=\"merchant-filter-field\"><span>商户名称</span><input data-filter=\"name\" placeholder=\"请输入商户名称\"></label>" +
         "<label class=\"merchant-filter-field\"><span>商户ID</span><input data-filter=\"merchantId\" placeholder=\"请输入商户ID\"></label>" +
+        "<label class=\"merchant-filter-field\"><span>商户类型</span><select data-filter=\"merchantType\"><option value=\"\">全部</option><option value=\"预充值商户\">预充值商户</option><option value=\"月结商户\">月结商户</option></select></label>" +
         "<label class=\"merchant-filter-field\"><span>商户状态</span><select data-filter=\"status\"><option value=\"\">全部</option><option value=\"启用\">游戏启用</option><option value=\"停用\">游戏停用</option><option value=\"否\">商户启用</option><option value=\"是\">商户禁用</option></select></label>" +
         "<div class=\"merchant-list-actions\"><button type=\"button\" data-action=\"reset\">重置</button><button type=\"button\" class=\"is-primary\" data-action=\"query\">查询</button></div>" +
       "</div>" +

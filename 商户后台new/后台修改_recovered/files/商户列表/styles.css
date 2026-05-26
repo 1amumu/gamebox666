@@ -8104,6 +8104,8 @@ body {
 }
 .merchant-rate-item {
   grid-template-columns:82px 80px 18px;
+  position:relative;
+  padding-bottom:16px;
 }
 .merchant-rate-item input {
   height:24px;
@@ -8119,6 +8121,8 @@ body {
   grid-template-columns:72px 80px 18px 40px;
   align-items:center;
   gap:10px;
+  position:relative;
+  padding-bottom:16px;
 }
 .merchant-rate-game-item span {
   color:#344054;
@@ -8148,6 +8152,32 @@ body {
   cursor:pointer;
   text-decoration:underline;
 }
+.merchant-rate-item.has-error input,
+.merchant-rate-game-item.has-error input {
+  border-color:#F04438;
+  box-shadow:0 0 0 2px rgba(240, 68, 56, 0.10);
+}
+.merchant-rate-item strong,
+.merchant-rate-game-item strong {
+  position:absolute;
+  left:82px;
+  bottom:0;
+  color:#F04438;
+  font-size:11px;
+  font-weight:500;
+  line-height:14px;
+  white-space:nowrap;
+}
+.merchant-rate-game-item strong {
+  left:82px;
+}
+.merchant-rate-game-item small {
+  display:block;
+  color:#98A2B3;
+  font-size:10px;
+  font-weight:500;
+  line-height:12px;
+}
 .merchant-rate-warning {
   margin-top:2px;
   color:#F04438;
@@ -8156,8 +8186,8 @@ body {
 }
 .merchant-rate-add {
   display:grid;
-  grid-template-columns:84px 126px 60px;
-  align-items:center;
+  grid-template-columns:84px 190px 60px 1fr;
+  align-items:start;
   gap:10px;
   margin-top:2px;
 }
@@ -8166,7 +8196,11 @@ body {
   font-size:13px;
   font-weight:700;
 }
+.merchant-rate-search {
+  position:relative;
+}
 .merchant-rate-add input {
+  width:100%;
   height:28px;
   padding:0 8px;
   border:1px solid #98A2B3;
@@ -8174,6 +8208,41 @@ body {
   color:#111827;
   font-size:13px;
   box-sizing:border-box;
+}
+.merchant-rate-dropdown {
+  position:absolute;
+  z-index:5;
+  left:0;
+  right:0;
+  top:32px;
+  max-height:188px;
+  overflow:auto;
+  border:1px solid #D0D5DD;
+  border-radius:6px;
+  background:#FFFFFF;
+  box-shadow:0 10px 24px rgba(16, 24, 40, 0.14);
+}
+.merchant-rate-dropdown button {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  height:32px;
+  padding:0 10px;
+  border:0;
+  border-radius:0;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:12px;
+  text-align:left;
+}
+.merchant-rate-dropdown button:hover {
+  background:#F2F4F7;
+}
+.merchant-rate-dropdown em {
+  color:#98A2B3;
+  font-size:11px;
+  font-style:normal;
 }
 .merchant-rate-add button {
   height:28px;
@@ -8183,6 +8252,15 @@ body {
   color:#344054;
   font-size:13px;
   cursor:pointer;
+}
+.merchant-rate-add-message {
+  min-height:28px;
+  color:#667085;
+  font-size:12px;
+  line-height:28px;
+}
+.merchant-rate-add-message.is-error {
+  color:#F04438;
 }
 .merchant-rate-help {
   display:none;
