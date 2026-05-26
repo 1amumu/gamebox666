@@ -7351,7 +7351,8 @@ body {
 .merchant-list-titlebar {
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-start;
+  gap:12px;
   height:32px;
   margin-bottom:12px;
 }
@@ -7375,7 +7376,7 @@ body {
 }
 .merchant-list-filters {
   display:grid;
-  grid-template-columns:220px 180px 180px auto 1fr;
+  grid-template-columns:220px 180px 180px 180px auto 1fr;
   gap:12px;
   align-items:end;
   padding:14px 16px;
@@ -7429,6 +7430,17 @@ body {
   cursor:pointer;
 }
 .merchant-list-actions .is-primary {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
+.merchant-create-action {
+  display:flex;
+  justify-content:flex-end;
+  align-items:end;
+  grid-column:6;
+}
+.merchant-create-action .merchant-create-btn {
   border-color:#2F80ED;
   background:#2F80ED;
   color:#FFFFFF;

@@ -490,13 +490,14 @@
     var page = document.createElement("div");
     page.className = "merchant-list-page";
     page.innerHTML =
-      "<div class=\"game-records-titlebar merchant-list-titlebar\"><h1>商户列表</h1><button type=\"button\" class=\"merchant-create-btn\" data-action=\"create\">创建商户</button></div>" +
+      "<div class=\"game-records-titlebar merchant-list-titlebar\"><h1>商户列表</h1></div>" +
       "<div class=\"merchant-list-filters\">" +
         "<label class=\"merchant-filter-field\"><span>商户名称</span><input data-filter=\"name\" placeholder=\"请输入商户名称\"></label>" +
         "<label class=\"merchant-filter-field\"><span>商户ID</span><input data-filter=\"merchantId\" placeholder=\"请输入商户ID\"></label>" +
         "<label class=\"merchant-filter-field\"><span>商户类型</span><select data-filter=\"merchantType\"><option value=\"\">全部</option><option value=\"预充值商户\">预充值商户</option><option value=\"月结商户\">月结商户</option></select></label>" +
         "<label class=\"merchant-filter-field\"><span>商户状态</span><select data-filter=\"status\"><option value=\"\">全部</option><option value=\"启用\">游戏启用</option><option value=\"停用\">游戏停用</option><option value=\"否\">商户启用</option><option value=\"是\">商户禁用</option></select></label>" +
         "<div class=\"merchant-list-actions\"><button type=\"button\" data-action=\"reset\">重置</button><button type=\"button\" class=\"is-primary\" data-action=\"query\">查询</button></div>" +
+        "<div class=\"merchant-create-action\"><button type=\"button\" class=\"merchant-create-btn\" data-action=\"create\">创建商户</button></div>" +
       "</div>" +
       "<div class=\"merchant-list-table-card\"><div class=\"merchant-list-table-wrap\"><table class=\"merchant-list-table\"><thead><tr><th>商户ID</th><th>商户名称</th><th>商户类型</th><th>剩余额度</th><th>已结算金额(美元)</th><th>待结算金额</th><th>本月结算金额</th><th>游戏状态</th><th>商户禁用</th><th>操作</th></tr></thead><tbody></tbody></table></div></div>";
 
