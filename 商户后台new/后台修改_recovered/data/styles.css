@@ -513,43 +513,59 @@ textarea, select, input, button { outline: none; }
   box-sizing:border-box;
 }
 .modern-sidebar__section {
-  margin:0;
+  margin:0 0 2px;
   padding:0;
 }
 .modern-sidebar__group,
 .modern-sidebar__item {
   display:flex;
   align-items:center;
-  width:154px;
+  width:150px;
   min-width:0;
-  margin:0 10px;
+  margin:0 12px;
   text-decoration:none;
   white-space:nowrap;
 }
 .modern-sidebar__group {
-  height:30px;
-  margin-top:6px;
-  color:#333333;
+  height:28px;
+  margin-top:5px;
+  padding:0 6px;
+  border:0;
+  border-radius:4px;
+  background:transparent;
+  color:#475467;
   font-size:14px;
   font-weight:500;
+  font-family:'Arial Normal', 'Arial', sans-serif;
+  cursor:pointer;
+  justify-content:flex-start;
+  line-height:28px;
+  text-align:left;
 }
 .modern-sidebar__section:first-child .modern-sidebar__group {
   margin-top:0;
 }
+.modern-sidebar__group:hover {
+  background:#F8FAFC;
+  color:#222222;
+}
 .modern-sidebar__children {
   display:flex;
   flex-direction:column;
-  gap:1px;
-  margin:0;
+  gap:0;
+  margin:0 0 2px;
   padding:0;
 }
+.modern-sidebar__children[hidden] {
+  display:none;
+}
 .modern-sidebar__item {
-  height:28px;
-  padding:0 8px 0 26px;
+  height:26px;
+  padding:0 8px 0 28px;
   border-radius:4px;
   color:#333333;
   font-size:14px;
-  line-height:28px;
+  line-height:26px;
 }
 .modern-sidebar__item:hover {
   background:#F7F9FC;
@@ -560,24 +576,40 @@ textarea, select, input, button { outline: none; }
   color:#222222;
 }
 .modern-sidebar__icon {
-  flex:0 0 16px;
-  width:16px;
-  height:16px;
+  flex:0 0 15px;
+  width:15px;
+  height:15px;
   margin-right:6px;
-  color:#667085;
+  color:#98A2B3;
 }
 .modern-sidebar__icon svg {
   display:block;
-  width:16px;
-  height:16px;
+  width:15px;
+  height:15px;
 }
 .modern-sidebar__label {
   display:block;
+  flex:1 1 auto;
   min-width:0;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+.modern-sidebar__toggle {
+  flex:0 0 12px;
+  width:12px;
+  height:12px;
+  margin-left:6px;
+  color:#B0B7C3;
+}
+.modern-sidebar__toggle svg {
+  display:block;
+  width:12px;
+  height:12px;
+}
+.modern-sidebar__group.is-active {
+  color:#222222;
+}
 .modern-sidebar__group.is-active .modern-sidebar__icon,
 .modern-sidebar__item.active .modern-sidebar__icon {
-  color:#344054;
+  color:#667085;
 }

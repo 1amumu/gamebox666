@@ -298,6 +298,18 @@ return _creator();
     return normalizeTitle(item.title || item.label) === currentTitle || item.href === currentFile;
   }
 
+  function readSidebarState() {
+    try {
+      return JSON.parse(localStorage.getItem('gb-modern-sidebar-state') || '{}') || {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function writeSidebarState(state) {
+    localStorage.setItem('gb-modern-sidebar-state', JSON.stringify(state));
+  }
+
   function modernSidebarItem(item, currentTitle, currentFile) {
     var classes = ['modern-sidebar__item'];
     if (isSidebarItemActive(item, currentTitle, currentFile)) classes.push('active');
@@ -317,16 +329,20 @@ return _creator();
 
     var currentTitle = normalizeTitle(document.title || '');
     var currentFile = decodeURIComponent((window.location.pathname || '').split('/').pop() || '');
-    var html = SIDEBAR_CONFIG.map(function(group) {
+    var sidebarState = readSidebarState();
+    var html = SIDEBAR_CONFIG.map(function(group, index) {
+      var groupKey = 'group-' + index + '-' + group.label;
       var isGroupActive = group.children.some(function(item) {
         return isSidebarItemActive(item, currentTitle, currentFile);
       });
+      var isCollapsed = isGroupActive ? false : sidebarState[groupKey] === false;
       var groupHtml =
-        '<div class="modern-sidebar__group' + (isGroupActive ? ' is-active' : '') + '">' +
+        '<button class="modern-sidebar__group' + (isGroupActive ? ' is-active' : '') + '" type="button" data-sidebar-group="' + groupKey + '" aria-expanded="' + (!isCollapsed) + '">' +
           '<span class="modern-sidebar__icon">' + iconSvg(group.icon) + '</span>' +
           '<span class="modern-sidebar__label">' + group.label + '</span>' +
-        '</div>' +
-        '<div class="modern-sidebar__children">' +
+          '<span class="modern-sidebar__toggle">' + iconSvg(isCollapsed ? 'chevronDown' : 'chevronUp') + '</span>' +
+        '</button>' +
+        '<div class="modern-sidebar__children"' + (isCollapsed ? ' hidden' : '') + '>' +
           group.children.map(function(item) {
             return modernSidebarItem(item, currentTitle, currentFile);
           }).join('') +
@@ -339,6 +355,23 @@ return _creator();
     sidebar.style.left = Math.round(box.left) + 'px';
     sidebar.style.top = Math.round(box.top) + 'px';
     sidebar.innerHTML = html;
+    sidebar.addEventListener('click', function(event) {
+      var groupButton = event.target.closest && event.target.closest('.modern-sidebar__group');
+      if (!groupButton) return;
+      var section = groupButton.closest('.modern-sidebar__section');
+      var children = section ? section.querySelector('.modern-sidebar__children') : null;
+      if (!children) return;
+
+      var nextExpanded = groupButton.getAttribute('aria-expanded') !== 'true';
+      groupButton.setAttribute('aria-expanded', nextExpanded ? 'true' : 'false');
+      children.hidden = !nextExpanded;
+      var toggle = groupButton.querySelector('.modern-sidebar__toggle');
+      if (toggle) toggle.innerHTML = iconSvg(nextExpanded ? 'chevronUp' : 'chevronDown');
+
+      var state = readSidebarState();
+      state[groupButton.getAttribute('data-sidebar-group')] = nextExpanded;
+      writeSidebarState(state);
+    });
     base.appendChild(sidebar);
   }
 
