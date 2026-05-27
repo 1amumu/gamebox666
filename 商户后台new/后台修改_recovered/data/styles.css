@@ -105,6 +105,8 @@ textarea, select, input, button { outline: none; }
 .unified-brand {
   position:absolute;
   display:block;
+  left:8px !important;
+  top:20px !important;
   min-width:120px;
   height:28px;
   padding:0;
@@ -497,8 +499,9 @@ textarea, select, input, button { outline: none; }
 
 .modern-sidebar {
   position:absolute;
-  width:178px;
-  min-height:760px;
+  width:180px;
+  height:calc(100vh - 58px);
+  min-height:0;
   box-sizing:border-box;
   padding:8px 0 14px;
   border-right:1px solid #E5E7EB;
@@ -506,7 +509,8 @@ textarea, select, input, button { outline: none; }
   color:#333333;
   font-family:'Arial Normal', 'Arial', sans-serif;
   z-index:9000;
-  overflow:hidden;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 .modern-sidebar,
 .modern-sidebar * {
@@ -612,4 +616,16 @@ textarea, select, input, button { outline: none; }
 .modern-sidebar__group.is-active .modern-sidebar__icon,
 .modern-sidebar__item.active .modern-sidebar__icon {
   color:#667085;
+}
+
+/* Global right-top account area. Keep this block last so page CSS cannot drift it. */
+#base .unified-topbar,
+.unified-topbar {
+  position:fixed !important;
+  left:auto !important;
+  right:24px !important;
+  top:20px !important;
+  width:322px !important;
+  height:40px !important;
+  z-index:20000 !important;
 }

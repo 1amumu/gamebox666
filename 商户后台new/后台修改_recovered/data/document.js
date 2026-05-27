@@ -30,11 +30,14 @@ return _creator();
     };
   }
 
-  function buildTopbar(left, top) {
+  function buildTopbar() {
     var wrapper = document.createElement('div');
     wrapper.className = 'unified-topbar';
-    wrapper.style.left = Math.round(left) + 'px';
-    wrapper.style.top = Math.round(top) + 'px';
+    wrapper.style.setProperty('position', 'fixed', 'important');
+    wrapper.style.setProperty('left', 'auto', 'important');
+    wrapper.style.setProperty('right', '24px', 'important');
+    wrapper.style.setProperty('top', '20px', 'important');
+    wrapper.style.setProperty('z-index', '20000', 'important');
     wrapper.innerHTML =
       '<a class="unified-topbar__message" href="消息页.html" title="消息">' +
         '<span class="unified-topbar__message-icon" aria-hidden="true"></span>' +
@@ -120,10 +123,9 @@ return _creator();
 
     var groups = Array.prototype.filter.call(base.querySelectorAll('div[data-left][data-top]'), isHeaderGroup);
     groups.forEach(function(group) {
-      var bounds = groupBounds(group);
       group.style.display = 'none';
-      base.appendChild(buildTopbar(bounds.left, bounds.top));
     });
+    base.appendChild(buildTopbar());
   }
 
   function applyUnifiedBrand() {
@@ -324,7 +326,7 @@ return _creator();
     if (!base || base.querySelector('.modern-sidebar')) return;
 
     var root = document.querySelector('.treeroot');
-    var box = root ? visibleBox(root) : { left: 24, top: 58 };
+    var box = { left: 8, top: 58 };
     if (root) root.style.display = 'none';
 
     var currentTitle = normalizeTitle(document.title || '');

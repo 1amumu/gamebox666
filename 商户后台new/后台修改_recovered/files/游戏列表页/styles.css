@@ -3957,16 +3957,9 @@ body {
   min-width:1920px !important;
   min-height:1080px !important;
 }
-#u2264 {
-  left:42px !important;
-  top:88px !important;
-  width:178px !important;
-  height:960px !important;
-  z-index:9999 !important;
-}
 #base .unified-brand {
-  left:42px !important;
-  top:50px !important;
+  left:18px !important;
+  top:20px !important;
   z-index:12000 !important;
 }
 .unified-topbar {
@@ -3977,9 +3970,9 @@ body {
 }
 .game-list-page {
   position:absolute;
-  left:280px;
-  top:48px;
-  width:1576px;
+  left:198px;
+  top:20px;
+  width:calc(100vw - 214px);
   min-height:860px;
   z-index:10000;
   color:#111827;

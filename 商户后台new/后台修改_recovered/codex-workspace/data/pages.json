@@ -1,7 +1,7 @@
 ﻿{
     "generatedAt":  "2026-05-07 21:24:46",
     "sourceRoot":  "E:\\gamebox\\gamebox666\\商户后台new\\后台修改_recovered",
-    "pageCount":  57,
+    "pageCount":  56,
     "groups":  [
                    {
                        "name":  "axure-pages",
@@ -167,15 +167,6 @@
                       "group":  "axure-pages",
                       "source":  "../飞机房间管理页.html",
                       "size":  38359,
-                      "lastModified":  "2026-05-07 16:05:47",
-                      "status":  "axure-source"
-                  },
-                  {
-                      "title":  "飞机房间配置页",
-                      "file":  "飞机房间配置页.html",
-                      "group":  "axure-pages",
-                      "source":  "../飞机房间配置页.html",
-                      "size":  64164,
                       "lastModified":  "2026-05-07 16:05:47",
                       "status":  "axure-source"
                   },

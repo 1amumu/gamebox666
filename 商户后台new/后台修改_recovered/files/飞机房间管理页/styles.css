@@ -3649,3 +3649,321 @@
   white-space:nowrap;
   text-transform:none;
 }
+
+.flight-room-page {
+  position:absolute;
+  left:190px;
+  top:20px;
+  width:calc(100% - 198px);
+  min-width:0;
+  height:calc(100vh - 20px);
+  box-sizing:border-box;
+  padding:0 0 12px 0;
+  background:#FFFFFF;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+  color:#101828;
+  z-index:8000;
+}
+.flight-room-titlebar {
+  height:34px;
+  display:flex;
+  align-items:center;
+}
+.flight-room-titlebar h1 {
+  margin:0;
+  color:#101828;
+  font-size:18px;
+  line-height:24px;
+  font-weight:600;
+}
+.flight-room-page .codex-page-tabs {
+  position:static;
+  width:100%;
+  height:32px;
+  margin:0 0 10px;
+  padding:0;
+  border-bottom:1px solid #D9E0EA;
+  background:#F7F9FC;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.flight-room-page .codex-page-tab {
+  height:26px;
+  min-width:0;
+  padding:0 8px;
+  border:1px solid #D6DEE8;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  border-radius:0;
+}
+.flight-room-page .codex-page-tab.is-active {
+  border-color:#4096FF;
+  background:#4096FF;
+  color:#FFFFFF;
+}
+.flight-room-page .codex-page-tab-close {
+  margin-left:6px;
+  color:inherit;
+}
+.flight-room-panel {
+  height:calc(100vh - 96px);
+  padding:14px 8px 18px;
+  border:1px solid #E4E7EC;
+  border-radius:4px;
+  background:#FFFFFF;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.flight-room-tabs {
+  display:flex;
+  align-items:center;
+  margin:0 0 16px;
+}
+.flight-room-tabs button {
+  width:66px;
+  height:40px;
+  border:1px solid #D9E0EA;
+  border-left:0;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  cursor:pointer;
+}
+.flight-room-tabs button:first-child {
+  border-left:1px solid #D9E0EA;
+  border-radius:4px 0 0 0;
+}
+.flight-room-tabs button:last-child {
+  border-radius:0 4px 0 0;
+}
+.flight-room-tabs button.is-active {
+  color:#2F6BFF;
+  background:#FFFFFF;
+  font-weight:500;
+}
+.flight-room-grid {
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:10px;
+  align-items:stretch;
+}
+.flight-room-card {
+  display:block;
+  width:auto;
+  margin:0;
+  min-height:112px;
+  height:auto;
+  min-width:0;
+  padding:9px 8px 10px;
+  border:1px solid #DDE5F0;
+  border-radius:7px;
+  background:#FFFFFF;
+  box-sizing:border-box;
+  transition:border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+.flight-room-card.is-drop-target {
+  border-color:#4096FF;
+  background:#F8FBFF;
+  box-shadow:0 0 0 2px rgba(64, 150, 255, 0.14);
+}
+.flight-room-card.is-locked {
+  background:#FCFCFD;
+}
+.flight-room-card-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:28px;
+  min-width:0;
+  border-bottom:1px solid #E5EAF2;
+}
+.flight-room-card-header strong {
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#0F172A;
+  font-size:14px;
+  font-weight:700;
+}
+.flight-room-meta {
+  display:flex;
+  align-items:center;
+  gap:3px;
+  flex:0 0 auto;
+  margin-left:6px;
+  min-width:0;
+}
+.flight-room-pill {
+  min-width:17px;
+  height:20px;
+  padding:0 5px;
+  border-radius:10px;
+  background:#EAF2FF;
+  color:#2F6BFF;
+  font-size:11px;
+  line-height:20px;
+  text-align:center;
+}
+.flight-room-stock,
+.flight-room-rate {
+  height:20px;
+  padding:0 4px;
+  border-radius:10px;
+  background:#F7F3FF;
+  color:#7A2CFF;
+  font-size:9px;
+  line-height:20px;
+  white-space:nowrap;
+}
+.flight-room-stock {
+  background:#FFF1F3;
+  color:#F04438;
+}
+.flight-room-stock.is-negative {
+  background:#FFF1F3;
+  color:#D92D20;
+}
+.flight-room-control {
+  height:38px;
+  margin-top:8px;
+  padding:0 8px;
+  border:1px solid #DDE5F0;
+  border-radius:5px;
+  background:#F8FAFC;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.flight-room-control strong {
+  color:#0F172A;
+  font-size:13px;
+}
+.flight-room-control button {
+  height:26px;
+  padding:0 12px;
+  border:1px solid #D0D5DD;
+  border-radius:3px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:12px;
+}
+.flight-room-list {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:8px;
+}
+.flight-room-table {
+  min-height:46px;
+  padding:6px 7px 5px;
+  border:1px solid #DDE5F0;
+  border-radius:5px;
+  background:#F8FAFC;
+  cursor:grab;
+  user-select:none;
+  transition:border-color 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.flight-room-table:hover {
+  border-color:#BBD4FF;
+  box-shadow:0 2px 8px rgba(16, 24, 40, 0.08);
+}
+.flight-room-table.is-dragging {
+  opacity:1;
+  border-color:#4096FF;
+  background:#FFFFFF;
+  box-shadow:0 6px 18px rgba(64, 150, 255, 0.28);
+  cursor:grabbing;
+}
+.flight-room-drag-preview {
+  position:fixed;
+  left:-9999px;
+  top:-9999px;
+  z-index:30000;
+  opacity:1;
+  border:2px solid #1677FF;
+  border-radius:6px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(22, 119, 255, 0.34);
+  transform:scale(1.03);
+  pointer-events:none;
+}
+.flight-room-empty {
+  height:44px;
+  border:1px dashed #D0D5DD;
+  border-radius:5px;
+  background:#F9FAFB;
+  color:#98A2B3;
+  font-size:12px;
+  line-height:44px;
+  text-align:center;
+}
+.flight-room-table-top,
+.flight-room-table-bottom {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+.flight-room-table-top strong {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#0F172A;
+  font-size:13px;
+  line-height:18px;
+}
+.flight-room-table-top span,
+.flight-room-table-bottom span {
+  color:#6B7EA8;
+  font-size:12px;
+  line-height:18px;
+  white-space:nowrap;
+}
+.flight-room-table-bottom em {
+  color:#F20D20;
+  font-style:normal;
+  font-weight:700;
+}
+.flight-room-table-bottom b {
+  color:#7A2CFF;
+  font-weight:400;
+}
+
+@media (max-width: 1500px) {
+  .flight-room-grid {
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    gap:10px;
+  }
+  .flight-room-card {
+    padding:9px 8px;
+  }
+  .flight-room-stock,
+  .flight-room-rate {
+    font-size:9px;
+    padding:0 4px;
+  }
+}
+
+body {
+  left:0 !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  overflow-x:hidden !important;
+}
+#base {
+  left:0 !important;
+  top:0 !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-x:hidden !important;
+}
