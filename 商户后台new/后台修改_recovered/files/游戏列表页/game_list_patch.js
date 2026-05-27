@@ -112,7 +112,7 @@
     var homeUrl = isEdit ? "https://games.example.com/" + data.id : "";
     var configValue = isEdit ? "{\"rtp\":" + Number(data.rtp || 97).toFixed(2) + ",\"brand\":\"" + data.brand + "\"}" : "";
     var saveAttr = isEdit ? " data-save-edit=\"" + data.id + "\"" : " data-save-add";
-    return "<div class=\"game-list-modal-panel game-info-modal\"><div class=\"game-info-tabs\"><button type=\"button\" class=\"is-active\" data-info-tab=\"base\">游戏信息</button><button type=\"button\" data-info-tab=\"config\">游戏配置</button><button class=\"game-info-close\" type=\"button\" data-close>×</button></div>" +
+    return "<div class=\"game-list-modal-panel game-info-modal\"><div class=\"game-info-tabs\"><button type=\"button\" class=\"is-active\" data-info-tab=\"base\">游戏信息</button><button type=\"button\" data-info-tab=\"config\">下注配置</button><button class=\"game-info-close\" type=\"button\" data-close>×</button></div>" +
       "<div class=\"game-list-modal-body game-info-body\"><div class=\"game-info-pane is-active\" data-info-pane=\"base\">" +
         "<div class=\"game-info-row\"><div class=\"game-info-label\">启用状态</div><div class=\"game-info-control\"><label class=\"game-info-switch\"><input type=\"checkbox\" data-info=\"status\"" + (data.status === "停用" ? "" : " checked") + "><span></span><em>启用</em></label></div></div>" +
         "<div class=\"game-info-row\"><div class=\"game-info-label is-required\">游戏ID</div><div class=\"game-info-control\"><input data-info=\"id\" value=\"" + idValue + "\" placeholder=\"请输入游戏ID\"></div></div>" +
@@ -126,7 +126,7 @@
         "<div class=\"game-info-row\"><div class=\"game-info-label\">模板url</div><div class=\"game-info-control\"><label class=\"game-info-switch is-red\"><input type=\"checkbox\" data-info=\"templateUrl\"><span></span><em>否</em></label></div></div>" +
         "<div class=\"game-info-row\"><div class=\"game-info-label\">排名统计</div><div class=\"game-info-control\"><label class=\"game-info-switch is-red\"><input type=\"checkbox\" data-info=\"ranking\"><span></span><em>否</em></label></div></div>" +
         "<div class=\"game-info-row\"><div class=\"game-info-label is-required\">游戏主页url</div><div class=\"game-info-control is-wide\"><input data-info=\"homeUrl\" value=\"" + homeUrl + "\" placeholder=\"请输入\"></div></div>" +
-      "</div><div class=\"game-info-pane game-info-config-pane\" data-info-pane=\"config\"><textarea data-info=\"config\" placeholder=\"请输入游戏配置\">" + configValue + "</textarea></div>" +
+      "</div><div class=\"game-info-pane game-info-config-pane\" data-info-pane=\"config\"><textarea data-info=\"config\" placeholder=\"请输入下注配置\">" + configValue + "</textarea></div>" +
       "</div><div class=\"game-list-modal-foot\"><button type=\"button\" data-close>取消</button><button type=\"button\" class=\"is-primary\"" + saveAttr + ">确定</button></div></div>";
   }
 
