@@ -113,6 +113,7 @@
             stock: stock,
             lowStock: lowStock,
             initStock: INIT_STOCK,
+            todayProfit: randomNumber(-180000, 260000),
             rtp: randomNumber(90, 97, 2)
           };
           site.gameList.push(game);
@@ -420,12 +421,13 @@
     }
     var sortIcon = sortType === "stockDesc" ? "▼" : "▲";
     document.getElementById("contentContainer").innerHTML =
-      "<table class=\"game-table\"><thead><tr><th width=\"60\">序号</th><th>游戏名称</th><th id=\"sortStock\">库存 " + sortIcon + "</th><th>初始库存</th><th>T</th><th>RTP</th><th width=\"100\">站内排名</th><th>操作</th></tr></thead><tbody>" +
+      "<table class=\"game-table\"><thead><tr><th width=\"60\">序号</th><th>游戏名称</th><th>今日盈亏</th><th id=\"sortStock\">库存 " + sortIcon + "</th><th>初始库存</th><th>T</th><th>RTP</th><th width=\"100\">站内排名</th><th>操作</th></tr></thead><tbody>" +
       rows.map(function(game, index) {
         var high = gameTotalStock(game) > 700000;
         return "<tr class=\"" + (high ? "high-stock" : "") + "\">" +
           "<td>" + (index + 1) + "</td>" +
           "<td class=\"game-name\">" + highlightKeyword(game.name, keyword) + "</td>" +
+          "<td class=\"profit-value " + (game.todayProfit >= 0 ? "is-positive" : "is-negative") + "\">" + (game.todayProfit >= 0 ? "+" : "") + formatNumber(game.todayProfit) + "</td>" +
           "<td class=\"game-stock\">" + stockDisplayHtml(game) + "</td>" +
           "<td>" + formatNumber(game.initStock) + "</td>" +
           "<td><span class=\"tag tag-t\">" + stockRatio(game) + "</span></td>" +
@@ -459,6 +461,7 @@
               stock: game.stock,
               lowStock: game.lowStock,
               initStock: game.initStock,
+              todayProfit: game.todayProfit,
               rtp: game.rtp,
               score: match.score
             });
@@ -473,9 +476,9 @@
     }
     document.getElementById("contentContainer").innerHTML =
       "<div class=\"search-result-header\"><div class=\"search-result-title\">游戏「" + keyword + "」全平台库存</div><div class=\"search-result-total\">共 " + results.length + " 条</div></div>" +
-      "<table class=\"game-table\"><thead><tr><th>序号</th><th>商户</th><th>站点</th><th>游戏</th><th>货币</th><th>RTP</th><th>库存</th><th>T</th><th>操作</th></tr></thead><tbody>" +
+      "<table class=\"game-table\"><thead><tr><th>序号</th><th>商户</th><th>站点</th><th>游戏</th><th>今日盈亏</th><th>货币</th><th>RTP</th><th>库存</th><th>T</th><th>操作</th></tr></thead><tbody>" +
       results.map(function(item, index) {
-        return "<tr><td>" + (index + 1) + "</td><td>" + item.merchantName + "</td><td>" + item.siteName + "</td><td class=\"game-name\">" + highlightKeyword(item.gameName, keyword) + "</td><td><span class=\"tag tag-currency\">" + item.currency + "</span></td><td><span class=\"tag tag-rtp\">" + item.rtp + "%</span></td><td class=\"game-stock\">" + stockDisplayHtml(item) + "</td><td><span class=\"tag tag-t\">" + stockRatio(item) + "</span></td><td><button class=\"btn btn-outline btn-sm\" type=\"button\" data-jump-merchant=\"" + item.merchantId + "\" data-jump-site=\"" + item.siteId + "\">查看详情</button></td></tr>";
+        return "<tr><td>" + (index + 1) + "</td><td>" + item.merchantName + "</td><td>" + item.siteName + "</td><td class=\"game-name\">" + highlightKeyword(item.gameName, keyword) + "</td><td class=\"profit-value " + (item.todayProfit >= 0 ? "is-positive" : "is-negative") + "\">" + (item.todayProfit >= 0 ? "+" : "") + formatNumber(item.todayProfit) + "</td><td><span class=\"tag tag-currency\">" + item.currency + "</span></td><td><span class=\"tag tag-rtp\">" + item.rtp + "%</span></td><td class=\"game-stock\">" + stockDisplayHtml(item) + "</td><td><span class=\"tag tag-t\">" + stockRatio(item) + "</span></td><td><button class=\"btn btn-outline btn-sm\" type=\"button\" data-jump-merchant=\"" + item.merchantId + "\" data-jump-site=\"" + item.siteId + "\">查看详情</button></td></tr>";
       }).join("") +
       "</tbody></table>";
   }

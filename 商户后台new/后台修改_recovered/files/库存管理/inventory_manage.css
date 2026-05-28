@@ -740,6 +740,15 @@ select {
     color:#1677FF;
     font-weight:700;
   }
+  .profit-value {
+    font-weight:700;
+  }
+  .profit-value.is-positive {
+    color:#16A34A;
+  }
+  .profit-value.is-negative {
+    color:#D92D20;
+  }
   .stock-single {
     display:inline-flex;
     align-items:center;

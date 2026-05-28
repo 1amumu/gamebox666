@@ -10,6 +10,17 @@
     { id: "EV01", type: "TABLE", brand: "EVOLUTION", name: "Mini Roulette" }
   ];
 
+  var merchants = [
+    { id: "M10086", name: "星海娱乐" },
+    { id: "M10021", name: "蓝鲸游戏" },
+    { id: "M10057", name: "银河互动" },
+    { id: "M10012", name: "赤焰互娱" },
+    { id: "M10073", name: "风暴游戏" },
+    { id: "M10039", name: "晨星娱乐" },
+    { id: "M10068", name: "火山竞技" },
+    { id: "M10044", name: "海豚游戏" }
+  ];
+
   var rows = [
     { tag: "高频玩家", platformId: "PLT-220391", time: "2026-05-09 00:18:42", betCount: 42, todayBet: 12680.00, todayReward: 11844.00, todayProfit: -836.00, historyBet: 662300.00, historyReward: 634912.00, historyProfit: -27388.00, rtp: 0.9586, gameId: "PG02" },
     { tag: "VIP金牌", platformId: "PLT-220478", time: "2026-05-09 00:26:11", betCount: 19, todayBet: 8800.00, todayReward: 10860.00, todayProfit: 2060.00, historyBet: 401620.00, historyReward: 389722.00, historyProfit: -11898.00, rtp: 0.9704, gameId: "PG01" },
@@ -32,6 +43,13 @@
 
   games.forEach(function(game) {
     gameMap[game.id] = game;
+  });
+
+  rows.forEach(function(row, index) {
+    var merchant = merchants[index % merchants.length];
+    row.platformId = String(20260509000001 + index);
+    row.merchantId = merchant.id;
+    row.merchantName = merchant.name;
   });
 
   function escapeHtml(value) {
@@ -109,6 +127,16 @@
     });
   }
 
+  function buildMerchantTree() {
+    return merchants.map(function(merchant) {
+      return {
+        value: merchant.id,
+        label: merchant.name + "（" + merchant.id + "）",
+        name: merchant.name
+      };
+    });
+  }
+
   function getTreeLeaves(nodes, list) {
     nodes.forEach(function(node) {
       if (node.children) {
@@ -171,7 +199,7 @@
       if (checkedItems.length === 1) {
         input.value = checkedItems[0].parentNode.getAttribute("data-item-label");
       } else {
-        input.value = checkedItems.length ? "已选 " + checkedItems.length + " 个游戏" : "";
+        input.value = checkedItems.length ? "已选 " + checkedItems.length + " 个" : "";
       }
     }
   }
@@ -201,6 +229,7 @@
     return "<tr>" +
       "<td>" + escapeHtml(row.tag) + "</td>" +
       "<td><button type=\"button\" class=\"today-profit-link\" data-player-id=\"" + escapeHtml(row.platformId) + "\">" + escapeHtml(row.platformId) + "</button></td>" +
+      "<td>" + escapeHtml(row.merchantName) + "</td>" +
       "<td>" + escapeHtml(row.time) + "</td>" +
       "<td>" + integer(row.betCount) + "</td>" +
       "<td>" + money(row.todayBet) + "</td>" +
@@ -216,23 +245,24 @@
     var tableBody = page.querySelector(".today-profit-table tbody");
     var state = getFilterState(page);
     var filtered = rows.filter(function(row) {
-      var matchesPlatform = !state.platformId || row.platformId.toLowerCase().indexOf(state.platformId) !== -1;
+      var matchesMerchant = !state.merchantIds.length || state.merchantIds.indexOf(row.merchantId) !== -1;
       var matchesGame = !state.gameIds.length || state.gameIds.indexOf(row.gameId) !== -1;
       var rowDate = parseDate(dateValue(row.time));
       var matchesStart = !state.start || (rowDate && rowDate.getTime() >= state.start.getTime());
       var matchesEnd = !state.end || (rowDate && rowDate.getTime() <= state.end.getTime());
-      return matchesPlatform && matchesGame && matchesStart && matchesEnd;
+      return matchesMerchant && matchesGame && matchesStart && matchesEnd;
     }).sort(function(a, b) {
       return b.todayProfit - a.todayProfit;
     });
-    tableBody.innerHTML = filtered.length ? filtered.map(rowHtml).join("") : "<tr><td class=\"today-profit-empty\" colspan=\"10\">当前筛选条件下暂无数据</td></tr>";
+    tableBody.innerHTML = filtered.length ? filtered.map(rowHtml).join("") : "<tr><td class=\"today-profit-empty\" colspan=\"11\">当前筛选条件下暂无数据</td></tr>";
   }
 
   function getFilterState(page) {
-    var selector = page.querySelector("[data-selector='game']");
+    var gameSelector = page.querySelector("[data-selector='game']");
+    var merchantSelector = page.querySelector("[data-selector='merchant']");
     return {
-      platformId: page.querySelector("[data-filter='platform']").value.trim().toLowerCase(),
-      gameIds: selector ? selectorValues(selector) : [],
+      merchantIds: merchantSelector ? selectorValues(merchantSelector) : [],
+      gameIds: gameSelector ? selectorValues(gameSelector) : [],
       start: parseDate(page.querySelector("[data-filter='start']").value),
       end: parseDate(page.querySelector("[data-filter='end']").value)
     };
@@ -240,7 +270,6 @@
 
   function resetPage(page) {
     var range = todayRange();
-    page.querySelector("[data-filter='platform']").value = "";
     page.querySelector("[data-filter='start']").value = range.start;
     page.querySelector("[data-filter='end']").value = range.end;
     Array.prototype.forEach.call(page.querySelectorAll("[data-selector-item], [data-selector-group], [data-selector-all]"), function(input) {
@@ -272,7 +301,8 @@
         "<div class=\"today-profit-modal-header\"><div><h2>玩家详情</h2><p data-modal-subtitle></p></div><button type=\"button\" class=\"today-profit-modal-close\" aria-label=\"关闭\">×</button></div>" +
         "<div class=\"today-profit-modal-body\">" +
           "<div class=\"today-profit-detail-grid\">" +
-            "<div class=\"today-profit-detail-item\"><span>平台ID</span><strong data-detail=\"platformId\"></strong></div>" +
+            "<div class=\"today-profit-detail-item\"><span>玩家ID</span><strong data-detail=\"platformId\"></strong></div>" +
+            "<div class=\"today-profit-detail-item\"><span>商户</span><strong data-detail=\"merchant\"></strong></div>" +
             "<div class=\"today-profit-detail-item\"><span>玩家标签</span><strong data-detail=\"tag\"></strong></div>" +
             "<div class=\"today-profit-detail-item\"><span>游戏名称</span><strong data-detail=\"game\"></strong></div>" +
             "<div class=\"today-profit-detail-item\"><span>最近时间</span><strong data-detail=\"time\"></strong></div>" +
@@ -296,6 +326,7 @@
     if (!modal || !row) return;
     modal.querySelector("[data-modal-subtitle]").textContent = (game ? game.name : "") + " / " + dateValue(row.time);
     modal.querySelector("[data-detail='platformId']").textContent = row.platformId;
+    modal.querySelector("[data-detail='merchant']").textContent = row.merchantName + "（" + row.merchantId + "）";
     modal.querySelector("[data-detail='tag']").textContent = row.tag;
     modal.querySelector("[data-detail='game']").textContent = game ? game.name : "--";
     modal.querySelector("[data-detail='time']").textContent = row.time;
@@ -324,18 +355,19 @@
 
     var range = todayRange();
     var gameTree = buildGameTree();
+    var merchantTree = buildMerchantTree();
     var page = document.createElement("div");
     page.className = "today-profit-page";
     page.innerHTML =
       "<div class=\"game-records-titlebar today-profit-titlebar\"><h1>今日玩家盈亏</h1></div>" +
       "<div class=\"today-profit-filters\">" +
-        "<label class=\"today-profit-filter-field\"><span>平台ID</span><input type=\"text\" data-filter=\"platform\" placeholder=\"请输入平台ID\"></label>" +
+        buildSelectorField("选择商户", "merchant", "请选择 / 输入商户名或ID", merchantTree) +
         buildSelectorField("选择游戏", "game", "请选择 / 输入游戏名", gameTree) +
         "<label class=\"today-profit-filter-field today-profit-filter-field--dates\"><span>时间范围</span><div class=\"today-profit-date-fields\"><input type=\"date\" data-filter=\"start\" value=\"" + range.start + "\"><em>至</em><input type=\"date\" data-filter=\"end\" value=\"" + range.end + "\"></div></label>" +
         "<div class=\"today-profit-filter-actions\"><button type=\"button\" data-action=\"reset\">重置</button><button type=\"button\" class=\"is-primary\" data-action=\"query\">查询</button></div>" +
       "</div>" +
       "<div class=\"today-profit-table-card\"><div class=\"today-profit-table-wrap\"><table class=\"today-profit-table\"><thead><tr>" +
-        "<th>玩家标签</th><th>平台ID</th><th>时间</th><th>下注次数</th><th>今日下注</th><th>今日返奖</th><th>今日输赢</th><th>历史下注</th><th>历史返奖</th><th>历史输赢(RTP)</th>" +
+        "<th>玩家标签</th><th>玩家ID</th><th>商户</th><th>时间</th><th>下注次数</th><th>今日下注</th><th>今日返奖</th><th>今日输赢</th><th>历史下注</th><th>历史返奖</th><th>历史输赢(RTP)</th>" +
       "</tr></thead><tbody></tbody></table></div></div>" +
       buildModal();
 
