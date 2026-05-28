@@ -216,6 +216,8 @@ select {
   overflow-x:hidden;
   padding:0 0 14px;
   border-right:1px solid #E5E7EB;
+  background:#FFFFFF;
+  scrollbar-gutter:stable;
 }
 .sidebar-section {
   margin:0 0 2px;
@@ -224,15 +226,15 @@ select {
 .sidebar-item {
   display:flex;
   align-items:center;
-  width:154px;
+  width:150px;
   min-width:0;
-  margin:0 6px;
+  margin:0 8px;
   white-space:nowrap;
 }
 .sidebar-group {
   height:28px;
   margin-top:5px;
-  padding:0 7px;
+  padding:0 6px;
   border:0;
   border-radius:4px;
   background:transparent;
@@ -247,6 +249,7 @@ select {
 }
 .sidebar-group:hover {
   background:#F8FAFC;
+  color:#222222;
 }
 .sidebar-children {
   display:flex;
@@ -266,8 +269,13 @@ select {
 }
 .sidebar-item:hover,
 .sidebar-item.active {
-  background:#F0F0F0;
   color:#222222;
+}
+.sidebar-item:hover {
+  background:#F7F9FC;
+}
+.sidebar-item.active {
+  background:#F0F0F0;
 }
 .sidebar-icon {
   flex:0 0 15px;

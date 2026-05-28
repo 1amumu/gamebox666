@@ -11786,3 +11786,64 @@ body {
 .dashboard-rank-table td {
   padding:0 10px !important;
 }
+
+/* Final dashboard header alignment: keep left brand and right page title on one baseline. */
+body .unified-brand,
+#base .unified-brand {
+  position:fixed !important;
+  left:20px !important;
+  top:20px !important;
+  height:32px !important;
+  color:#0F172A !important;
+  font-size:20px !important;
+  font-weight:700 !important;
+  line-height:32px !important;
+}
+body .unified-topbar,
+#base .unified-topbar {
+  position:fixed !important;
+  left:auto !important;
+  right:24px !important;
+  top:20px !important;
+  width:322px !important;
+  height:40px !important;
+}
+#u467 {
+  left:340px !important;
+  top:20px !important;
+  width:160px !important;
+  height:32px !important;
+  display:flex !important;
+  align-items:center !important;
+}
+#u467_div {
+  width:160px !important;
+  height:32px !important;
+}
+#u467_text {
+  align-self:center !important;
+  width:160px !important;
+  height:32px !important;
+  color:#0F172A !important;
+  font-size:20px !important;
+  font-weight:700 !important;
+  line-height:32px !important;
+}
+#u467_text p {
+  margin:0 !important;
+}
+#u467_text span {
+  line-height:32px !important;
+}
+#u456 {
+  top:92px !important;
+}
+#u457 {
+  top:142px !important;
+}
+#u458 {
+  top:116px !important;
+}
+#u669 {
+  top:152px !important;
+}

@@ -130,7 +130,7 @@
     };
   }
 
-  var sidebarConfig = [
+  var fallbackSidebarConfig = [
     { title: "概括", icon: "⌂", items: [
       { title: "首页仪表盘", file: "首页仪表盘.html" }
     ] },
@@ -186,7 +186,8 @@
 
   function readSidebarState() {
     try {
-      return JSON.parse(localStorage.getItem("gb-clean-sidebar-state") || "{}");
+      var key = window.GB_NAVIGATION && window.GB_NAVIGATION.storageKey ? window.GB_NAVIGATION.storageKey : "gb-clean-sidebar-state";
+      return JSON.parse(localStorage.getItem(key) || "{}");
     } catch (error) {
       return {};
     }
@@ -194,13 +195,15 @@
 
   function writeSidebarState(state) {
     try {
-      localStorage.setItem("gb-clean-sidebar-state", JSON.stringify(state));
+      var key = window.GB_NAVIGATION && window.GB_NAVIGATION.storageKey ? window.GB_NAVIGATION.storageKey : "gb-clean-sidebar-state";
+      localStorage.setItem(key, JSON.stringify(state));
     } catch (error) {}
   }
 
   function sidebarHtml() {
     var activeFile = currentFile();
     var state = readSidebarState();
+    var sidebarConfig = window.GB_NAVIGATION && window.GB_NAVIGATION.plainGroups ? window.GB_NAVIGATION.plainGroups() : fallbackSidebarConfig;
     return sidebarConfig.map(function(group, index) {
       var collapsed = state[group.title] === false ? " is-collapsed" : "";
       var items = group.items.map(function(item) {

@@ -178,7 +178,6 @@ return _creator();
     var map = {
       '首页仪表盘': '首页',
       '游戏列表页': '游戏列表',
-      '飞机房间配置页': '飞机房间配置',
       '飞机房间管理页': '飞机房间管理',
       '游戏rtp配置': '游戏RTP配置',
       '玩家总览页': '玩家总览',
@@ -245,7 +244,6 @@ return _creator();
       icon: 'setting',
       children: [
         { label: '游戏列表', title: '游戏列表页', href: '游戏列表页.html', icon: 'setting' },
-        { label: '飞机房间配置', title: '飞机房间配置页', href: '飞机房间配置页.html', icon: 'setting' },
         { label: '飞机房间管理', title: '飞机房间管理页', href: '飞机房间管理页.html', icon: 'setting' },
         { label: '库存管理', title: '库存管理', href: '库存管理.html', icon: 'report' },
         { label: '游戏RTP配置', title: '游戏rtp配置', href: '游戏rtp配置.html', icon: 'setting' }
@@ -302,14 +300,16 @@ return _creator();
 
   function readSidebarState() {
     try {
-      return JSON.parse(localStorage.getItem('gb-modern-sidebar-state') || '{}') || {};
+      var key = window.GB_NAVIGATION && window.GB_NAVIGATION.storageKey ? window.GB_NAVIGATION.storageKey : 'gb-modern-sidebar-state';
+      return JSON.parse(localStorage.getItem(key) || '{}') || {};
     } catch (error) {
       return {};
     }
   }
 
   function writeSidebarState(state) {
-    localStorage.setItem('gb-modern-sidebar-state', JSON.stringify(state));
+    var key = window.GB_NAVIGATION && window.GB_NAVIGATION.storageKey ? window.GB_NAVIGATION.storageKey : 'gb-modern-sidebar-state';
+    localStorage.setItem(key, JSON.stringify(state));
   }
 
   function modernSidebarItem(item, currentTitle, currentFile) {
@@ -332,7 +332,8 @@ return _creator();
     var currentTitle = normalizeTitle(document.title || '');
     var currentFile = decodeURIComponent((window.location.pathname || '').split('/').pop() || '');
     var sidebarState = readSidebarState();
-    var html = SIDEBAR_CONFIG.map(function(group, index) {
+    var sidebarConfig = window.GB_NAVIGATION && window.GB_NAVIGATION.groups ? window.GB_NAVIGATION.groups : SIDEBAR_CONFIG;
+    var html = sidebarConfig.map(function(group, index) {
       var groupKey = 'group-' + index + '-' + group.label;
       var isGroupActive = group.children.some(function(item) {
         return isSidebarItemActive(item, currentTitle, currentFile);
