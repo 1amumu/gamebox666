@@ -16,6 +16,318 @@
   position:absolute;
   z-index:0;
 }
+.create-merchant-page {
+  position:absolute;
+  left:280px;
+  top:48px;
+  width:1120px;
+  min-height:860px;
+  z-index:20;
+  font-family:Arial, "Microsoft YaHei", sans-serif;
+}
+.create-merchant-titlebar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:32px;
+  margin-bottom:12px;
+}
+.create-merchant-titlebar h1 {
+  margin:0;
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  line-height:32px;
+}
+.create-merchant-titlebar button {
+  height:34px;
+  padding:0 14px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.create-merchant-card {
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  overflow:hidden;
+}
+.create-merchant-section-title {
+  height:46px;
+  padding:0 18px;
+  border-bottom:1px solid #EAECF0;
+  background:#F8FAFC;
+  color:#111827;
+  font-size:15px;
+  font-weight:700;
+  line-height:46px;
+}
+.create-merchant-row {
+  display:grid;
+  grid-template-columns:180px 1fr;
+  min-height:44px;
+  border-bottom:1px solid #EAECF0;
+}
+.create-merchant-label {
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  border-right:1px solid #EAECF0;
+  background:#FCFCFD;
+  color:#475467;
+  font-size:13px;
+  font-weight:700;
+}
+.create-merchant-control {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 8px;
+  min-width:0;
+  position:relative;
+}
+.create-merchant-control > input,
+.create-merchant-control > select,
+.create-merchant-inline input,
+.create-merchant-contact input {
+  height:32px;
+  padding:0 10px;
+  border:1px solid #D0D5DD;
+  border-radius:5px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.create-merchant-control > input,
+.create-merchant-control > select {
+  width:220px;
+}
+.create-merchant-control > input[name="playerApi"],
+.create-merchant-control > input[name="balanceApi"],
+.create-merchant-control > input[name="changeApi"] {
+  width:640px;
+  max-width:100%;
+}
+.create-merchant-control input:focus,
+.create-merchant-control select:focus {
+  border-color:#D0D5DD;
+  box-shadow:none;
+}
+.create-merchant-control input:disabled {
+  border-color:#E4E7EC;
+  background:#F2F4F7;
+  color:#98A2B3;
+  cursor:not-allowed;
+  box-shadow:inset 0 0 0 1px rgba(152, 162, 179, 0.08);
+}
+.create-merchant-inline {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.create-merchant-inline input {
+  width:300px;
+}
+.create-merchant-inline button {
+  height:32px;
+  padding:0 14px;
+  border:1px solid #D0D5DD;
+  border-radius:5px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.create-merchant-account-line {
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.create-merchant-account-line input {
+  width:220px;
+  height:32px;
+  padding:0 10px;
+  border:1px solid #D0D5DD;
+  border-radius:5px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.create-merchant-account-line span {
+  color:#475467;
+  font-size:13px;
+  font-weight:700;
+  line-height:32px;
+  white-space:nowrap;
+}
+.create-merchant-contact {
+  display:grid;
+  grid-template-columns:180px 260px;
+  gap:8px;
+}
+.create-merchant-contact input {
+  width:100%;
+}
+.create-merchant-country-line {
+  display:grid;
+  grid-template-columns:300px 220px 160px;
+  align-items:center;
+  gap:12px;
+}
+.create-merchant-country-line select {
+  width:100%;
+  height:32px;
+  padding:0 10px;
+  border:1px solid #D0D5DD;
+  border-radius:5px;
+  background:#FFFFFF;
+  color:#111827;
+  font-size:13px;
+  box-sizing:border-box;
+  outline:none;
+}
+.create-merchant-region-meta {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  height:32px;
+  padding:0 10px;
+  border:1px solid #EAECF0;
+  border-radius:5px;
+  background:#F8FAFC;
+  color:#667085;
+  box-sizing:border-box;
+}
+.create-merchant-region-meta span {
+  color:#475467;
+  font-size:12px;
+}
+.create-merchant-region-meta strong {
+  color:#111827;
+  font-size:13px;
+  font-weight:700;
+}
+.create-merchant-region-meta input {
+  width:64px;
+  height:28px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#111827;
+  font-size:13px;
+  font-weight:700;
+  outline:none;
+}
+.create-merchant-status-group {
+  display:flex;
+  align-items:flex-start;
+  gap:26px;
+}
+.create-merchant-status-group > div {
+  display:grid;
+  gap:6px;
+}
+.create-merchant-status-group b {
+  color:#475467;
+  font-size:13px;
+  font-weight:700;
+}
+.create-merchant-switch {
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+  width:74px;
+  height:28px;
+  padding:0 6px;
+  border:1px solid #12B76A;
+  border-radius:999px;
+  background:#ECFDF3;
+  color:#027A48;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  box-sizing:border-box;
+}
+.create-merchant-switch input {
+  position:absolute;
+  opacity:0;
+}
+.create-merchant-switch span {
+  flex:0 0 18px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#12B76A;
+  box-shadow:0 1px 3px rgba(15, 23, 42, 0.2);
+}
+.create-merchant-switch em {
+  font-style:normal;
+}
+.create-merchant-switch:has(input:not(:checked)) {
+  border-color:#D0D5DD;
+  background:#F2F4F7;
+  color:#667085;
+}
+.create-merchant-switch input:not(:checked) + span {
+  background:#FFFFFF;
+}
+.create-merchant-type {
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.create-merchant-type label {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#344054;
+  font-size:13px;
+  cursor:pointer;
+}
+.create-merchant-control.has-error input {
+  border-color:#F04438;
+  box-shadow:0 0 0 2px rgba(240, 68, 56, 0.10);
+}
+.create-merchant-control strong[data-field-error] {
+  color:#F04438;
+  font-size:12px;
+  font-weight:500;
+  line-height:18px;
+}
+.create-merchant-foot {
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  padding:14px 18px;
+  background:#FFFFFF;
+}
+.create-merchant-foot button {
+  height:36px;
+  padding:0 18px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.create-merchant-foot .is-primary {
+  border-color:#2F80ED;
+  background:#2F80ED;
+  color:#FFFFFF;
+}
 #u1969_img {
   border-width:0px;
   position:absolute;

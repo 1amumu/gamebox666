@@ -3414,7 +3414,7 @@ body {
 }
 .today-profit-filters {
   display:grid;
-  grid-template-columns:240px 320px 1fr auto;
+  grid-template-columns:260px 320px 300px auto;
   gap:12px;
   align-items:end;
   padding:14px 16px;

@@ -1,11 +1,11 @@
 ﻿{
     "generatedAt":  "2026-05-07 21:24:46",
     "sourceRoot":  "E:\\gamebox\\gamebox666\\商户后台new\\后台修改_recovered",
-    "pageCount":  59,
+    "pageCount":  56,
     "groups":  [
                    {
                        "name":  "axure-pages",
-                       "count":  45
+                       "count":  43
                    },
                    {
                        "name":  "entry",
@@ -167,15 +167,6 @@
                       "group":  "axure-pages",
                       "source":  "../飞机房间管理页.html",
                       "size":  38359,
-                      "lastModified":  "2026-05-07 16:05:47",
-                      "status":  "axure-source"
-                  },
-                  {
-                      "title":  "飞机房间配置页",
-                      "file":  "飞机房间配置页.html",
-                      "group":  "axure-pages",
-                      "source":  "../飞机房间配置页.html",
-                      "size":  64164,
                       "lastModified":  "2026-05-07 16:05:47",
                       "status":  "axure-source"
                   },
@@ -414,15 +405,6 @@
                       "status":  "axure-source"
                   },
                   {
-                      "title":  "新增游戏页",
-                      "file":  "新增游戏页.html",
-                      "group":  "axure-pages",
-                      "source":  "../新增游戏页.html",
-                      "size":  4098,
-                      "lastModified":  "2026-05-07 16:05:47",
-                      "status":  "axure-source"
-                  },
-                  {
                       "title":  "游戏RTP配置",
                       "file":  "游戏rtp配置.html",
                       "group":  "axure-pages",
@@ -492,15 +474,6 @@
                       "source":  "../游戏留存_1.html",
                       "size":  2933,
                       "lastModified":  "2026-05-07 16:05:50",
-                      "status":  "axure-source"
-                  },
-                  {
-                      "title":  "游戏配置页",
-                      "file":  "游戏配置页.html",
-                      "group":  "axure-pages",
-                      "source":  "../游戏配置页.html",
-                      "size":  27094,
-                      "lastModified":  "2026-05-07 16:05:47",
                       "status":  "axure-source"
                   },
                   {

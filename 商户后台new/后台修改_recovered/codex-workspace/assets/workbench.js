@@ -59,9 +59,6 @@ const sitemapGroups = [
     group: "game-management",
     files: [
       "游戏列表页.html",
-      "游戏配置页.html",
-      "新增游戏页.html",
-      "飞机房间配置页.html",
       "飞机房间管理页.html",
       "库存管理.html",
       "游戏rtp配置.html"
@@ -353,6 +350,7 @@ function selectPage(page) {
   ensureTab(page);
   title.textContent = page.title;
   meta.textContent = `${groupLabels[page.group] || page.group} / ${page.file} / ${page.status}`;
+  frame.classList.toggle("responsive-frame", page.file === "飞机房间管理页.html");
   frame.src = page.source;
   openRaw.href = new URL(page.source, window.location.href).href;
   window.location.hash = encodeURIComponent(page.file);
