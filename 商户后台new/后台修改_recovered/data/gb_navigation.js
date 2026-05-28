@@ -40,7 +40,7 @@
         { label: "游戏列表", title: "游戏列表页", href: "游戏列表页.html", icon: "setting" },
         { label: "飞机房间管理", title: "飞机房间管理页", href: "飞机房间管理页.html", icon: "setting" },
         { label: "库存管理", title: "库存管理", href: "库存管理.html", icon: "report" },
-        { label: "游戏RTP配置", title: "游戏rtp配置", href: "游戏rtp配置.html", icon: "setting" }
+        { label: "批量RTP配置", title: "批量RTP配置", href: "游戏rtp配置.html", icon: "setting" }
       ]
     },
     {

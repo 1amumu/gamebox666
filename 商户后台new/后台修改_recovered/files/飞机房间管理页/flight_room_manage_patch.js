@@ -228,7 +228,7 @@
         "<h1 class=\"topbar-page-title\">飞机房间管理</h1>" +
         "<div class=\"topbar-actions\">" +
           "<a class=\"topbar-message\" href=\"消息页.html\" title=\"消息\"><span class=\"topbar-message-icon\"></span><span class=\"topbar-badge\">9</span></a>" +
-          "<select class=\"topbar-language\" aria-label=\"语言\"><option>中文</option><option>English</option></select>" +
+          "<div class=\"topbar-region-time\" data-topbar-time>--:-- 中国</div>" +
           "<div class=\"topbar-account-wrap\">" +
             "<div class=\"topbar-account\"><span class=\"topbar-account-label\">账号</span><span class=\"topbar-account-name\">admin</span></div>" +
             "<button type=\"button\" class=\"topbar-account-toggle\" aria-label=\"账号菜单\"></button>" +
@@ -661,6 +661,10 @@
     var page = app.querySelector(".flight-room-page");
     render(page);
     bindDrag(page);
+    updateTopbarTime(app);
+    window.setInterval(function() {
+      updateTopbarTime(app);
+    }, 30000);
 
     app.addEventListener("click", function(event) {
       var tab = event.target.closest("[data-currency]");
@@ -750,6 +754,15 @@
         updateStockPreview(event.target.closest(".room-modal"));
       }
     });
+  }
+
+  function updateTopbarTime(app) {
+    var node = app.querySelector("[data-topbar-time]");
+    if (!node) return;
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, "0");
+    var mm = String(now.getMinutes()).padStart(2, "0");
+    node.textContent = hh + ":" + mm + " 中国";
   }
 
   if (document.readyState === "loading") {

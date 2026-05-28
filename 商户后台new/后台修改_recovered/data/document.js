@@ -44,10 +44,7 @@ return _creator();
         '<span class="unified-topbar__message-label">消息</span>' +
         '<span class="unified-topbar__message-badge">12</span>' +
       '</a>' +
-      '<select class="unified-topbar__language" aria-label="语言">' +
-        '<option value="中文">中文</option>' +
-        '<option value="English">English</option>' +
-      '</select>' +
+      '<div class="unified-topbar__region-time" data-topbar-time>--:-- 中国</div>' +
       '<div class="unified-topbar__account">' +
         '<span class="unified-topbar__account-label">当前账号</span>' +
         '<span class="unified-topbar__account-name">qq1234567</span>' +
@@ -71,7 +68,20 @@ return _creator();
       wrapper.classList.remove('unified-topbar--menu-open');
       toggle.setAttribute('aria-expanded', 'false');
     });
+    updateTopbarTime(wrapper);
+    window.setInterval(function() {
+      updateTopbarTime(wrapper);
+    }, 30000);
     return wrapper;
+  }
+
+  function updateTopbarTime(root) {
+    var node = root.querySelector('[data-topbar-time]');
+    if (!node) return;
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, '0');
+    var mm = String(now.getMinutes()).padStart(2, '0');
+    node.textContent = hh + ':' + mm + ' 中国';
   }
 
   function buildBrand(left, top) {
@@ -91,7 +101,7 @@ return _creator();
     });
     return text.indexOf('当前账号') !== -1 &&
       (text.indexOf('消息') !== -1 || text.indexOf('信息') !== -1 || text.indexOf('警报') !== -1) &&
-      element.querySelector('select') &&
+      (element.querySelector('select') || text.indexOf('中国') !== -1) &&
       directChildren.length <= 12;
   }
 

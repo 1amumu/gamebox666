@@ -91,7 +91,8 @@
     var files = ["游戏列表页.html", "飞机房间管理页.html", "库存管理.html", "游戏rtp配置.html"];
     return files.map(function(file) {
       var active = file === "游戏rtp配置.html" ? " is-active" : "";
-      return "<button type=\"button\" class=\"codex-page-tab" + active + "\" data-tab-file=\"" + file + "\"><span class=\"codex-page-tab-dot\"></span><span class=\"codex-page-tab-title\">" + file.replace(".html", "") + "</span><span class=\"codex-page-tab-close\">×</span></button>";
+      var title = file === "游戏rtp配置.html" ? "批量RTP配置" : file.replace(".html", "");
+      return "<button type=\"button\" class=\"codex-page-tab" + active + "\" data-tab-file=\"" + file + "\"><span class=\"codex-page-tab-dot\"></span><span class=\"codex-page-tab-title\">" + title + "</span><span class=\"codex-page-tab-close\">×</span></button>";
     }).join("");
   }
 
@@ -182,7 +183,7 @@
         "<h1 class=\"topbar-page-title\">批量RTP配置</h1>" +
         "<div class=\"topbar-actions\">" +
           "<a class=\"topbar-message\" href=\"消息页.html\" title=\"消息\"><span class=\"topbar-message-icon\"></span><span class=\"topbar-badge\">9</span></a>" +
-          "<select class=\"topbar-language\" aria-label=\"语言\"><option>中文</option><option>English</option></select>" +
+          "<div class=\"topbar-region-time\" data-topbar-time>--:-- 中国</div>" +
           "<div class=\"topbar-account-wrap\">" +
             "<div class=\"topbar-account\"><span class=\"topbar-account-label\">账号</span><span class=\"topbar-account-name\">admin</span></div>" +
             "<button type=\"button\" class=\"topbar-account-toggle\" aria-label=\"账号菜单\"></button>" +
@@ -396,6 +397,19 @@
     syncMerchantSelector();
     syncTreeGroups();
     bindEvents(app);
+    updateTopbarTime(app);
+    window.setInterval(function() {
+      updateTopbarTime(app);
+    }, 30000);
+  }
+
+  function updateTopbarTime(app) {
+    var node = app.querySelector("[data-topbar-time]");
+    if (!node) return;
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, "0");
+    var mm = String(now.getMinutes()).padStart(2, "0");
+    node.textContent = hh + ":" + mm + " 中国";
   }
 
   if (document.readyState === "loading") {

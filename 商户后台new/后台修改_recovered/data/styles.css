@@ -210,18 +210,22 @@ textarea, select, input, button { outline: none; }
   box-shadow:0 2px 6px rgba(240, 68, 56, 0.32);
   white-space:nowrap;
 }
-.unified-topbar__language {
+.unified-topbar__language,
+.unified-topbar__region-time {
   position:absolute;
   left:66px;
   top:8px;
-  width:59px;
-  height:22px;
-  padding:2px;
-  border:1px solid #797979;
-  background:#FFFFFF;
-  color:#000000;
+  min-width:86px;
+  height:24px;
+  padding:0 4px;
+  border:0;
+  background:transparent;
+  color:#344054;
   font-family:'Arial Normal', 'Arial', sans-serif;
   font-size:13px;
+  font-weight:400;
+  line-height:24px;
+  white-space:nowrap;
 }
 .unified-topbar__account {
   position:absolute;
@@ -406,6 +410,7 @@ textarea, select, input, button { outline: none; }
 }
 .unified-topbar__message,
 .unified-topbar__language,
+.unified-topbar__region-time,
 .unified-topbar__account,
 .unified-topbar__account-toggle {
   position:relative;
@@ -453,13 +458,17 @@ textarea, select, input, button { outline: none; }
   line-height:14px;
   font-size:11px;
 }
-.unified-topbar__language {
-  width:76px;
+.unified-topbar__language,
+.unified-topbar__region-time {
+  width:auto;
+  min-width:86px;
   height:28px;
   margin:0;
-  border-color:#D0D5DD;
-  border-radius:5px;
+  border:0;
+  background:transparent;
   color:#344054;
+  line-height:28px;
+  text-align:center;
 }
 .unified-topbar__account {
   width:86px;
