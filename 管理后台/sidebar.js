@@ -52,7 +52,6 @@
         { label: "游戏列表", key: "game-list" },
         { label: "游戏配置", key: "game-config" },
         { label: "新增游戏", key: "game-create" },
-        { label: "飞机房间配置", key: "flight-room-config" },
         { label: "飞机房间管理", key: "flight-room-manage" },
         { label: "库存管理", key: "inventory-manage" },
         { label: "游戏RTP配置", key: "game-rtp-config" },

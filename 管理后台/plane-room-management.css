@@ -1,0 +1,1021 @@
+.management-content {
+  padding:14px 16px 18px;
+}
+.management-content button,
+.management-content select,
+.management-content input {
+  font-family:inherit;
+  outline:none;
+}
+.flight-room-page {
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.codex-page-tabs {
+  height:32px;
+  margin:0 0 10px;
+  border-bottom:1px solid #D9E0EA;
+  background:#F7F9FC;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex:0 0 auto;
+}
+.codex-page-tab {
+  height:26px;
+  padding:0 8px;
+  border:1px solid #D6DEE8;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  cursor:pointer;
+}
+.codex-page-tab.is-active {
+  border-color:#4096FF;
+  background:#4096FF;
+  color:#FFFFFF;
+}
+.codex-page-tab-close {
+  margin-left:6px;
+}
+.flight-room-panel {
+  flex:1 1 auto;
+  min-height:0;
+  padding:12px 8px 14px;
+  border:1px solid #E4E7EC;
+  border-radius:4px;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.flight-room-dashboard {
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+  margin:0 0 12px;
+}
+.dashboard-metric span {
+  display:block;
+  color:#667085;
+  font-size:12px;
+  line-height:16px;
+}
+.dashboard-metrics {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(178px, 1fr));
+  gap:8px;
+  flex:1 1 auto;
+  min-width:0;
+}
+.dashboard-metric {
+  position:relative;
+  min-width:0;
+  min-height:56px;
+  padding:8px 10px;
+  border:1px solid #E4E7EC;
+  border-radius:6px;
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.dashboard-metric::before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width:3px;
+  border-radius:0 3px 3px 0;
+  background:#1677FF;
+}
+.dashboard-metric strong {
+  display:block;
+  margin-top:5px;
+  overflow:hidden;
+  color:#101828;
+  font-size:17px;
+  line-height:23px;
+  font-weight:700;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dashboard-metric.is-sites::before,
+.dashboard-metric.is-online::before,
+.dashboard-metric.is-peak::before {
+  background:#1677FF;
+}
+.dashboard-metric.is-sites strong,
+.dashboard-metric.is-online strong,
+.dashboard-metric.is-peak strong {
+  color:#1257A8;
+}
+.dashboard-metric.is-bet::before {
+  background:#2F80ED;
+}
+.dashboard-metric.is-bet strong {
+  color:#155EEF;
+}
+.dashboard-metric.is-return::before {
+  background:#7A5AF8;
+}
+.dashboard-metric.is-return strong {
+  color:#5925DC;
+}
+.dashboard-metric.is-profit::before {
+  background:#F04438;
+}
+.dashboard-metric.is-profit strong {
+  color:#D92D20;
+}
+.dashboard-metric.is-rtp::before {
+  background:#12B76A;
+}
+.dashboard-metric.is-rtp strong {
+  color:#079455;
+}
+.flight-room-tabbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 12px;
+}
+.flight-room-toolbar {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  flex:0 0 auto;
+}
+.flight-room-action {
+  height:30px;
+  padding:0 13px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:13px;
+  line-height:28px;
+  cursor:pointer;
+}
+.flight-room-action:hover {
+  border-color:#4096FF;
+  color:#1677FF;
+}
+.flight-room-action.is-primary {
+  border-color:#1677FF;
+  background:#1677FF;
+  color:#FFFFFF;
+}
+.flight-room-action.is-primary:hover {
+  border-color:#0958D9;
+  background:#0958D9;
+  color:#FFFFFF;
+}
+.flight-room-tabs {
+  width:max-content;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:0;
+  padding:5px;
+  border:1px solid #D7E4F5;
+  border-radius:8px;
+  background:#F5F8FF;
+  box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 1px 2px rgba(16, 24, 40, 0.04);
+  flex:0 0 auto;
+}
+.flight-room-tabs button {
+  min-width:92px;
+  padding:0 12px;
+  height:34px;
+  border:1px solid transparent;
+  border-radius:6px;
+  background:transparent;
+  color:#3E5A7D;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.flight-room-tabs button:hover {
+  border-color:#C6D9F4;
+  background:#FFFFFF;
+  color:#1677FF;
+}
+.flight-room-tabs button.is-active {
+  border-color:#1677FF;
+  background:#1677FF;
+  color:#FFFFFF;
+  box-shadow:0 7px 14px rgba(22, 119, 255, 0.22);
+  transform:translateY(-1px);
+}
+.flight-room-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:8px;
+  align-items:stretch;
+  transition:all 140ms ease;
+}
+.flight-room-card {
+  min-width:0;
+  min-height:104px;
+  padding:7px 7px 8px;
+  border:1px solid #DDE5F0;
+  border-radius:7px;
+  background:#FFFFFF;
+  transition:border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+.flight-room-card.is-drop-target {
+  border-color:#4096FF;
+  background:#F8FBFF;
+  box-shadow:0 0 0 2px rgba(64, 150, 255, 0.14);
+}
+.flight-room-card.is-locked {
+  background:#FCFCFD;
+}
+.flight-room-card-header {
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  gap:5px;
+  min-height:46px;
+  padding-bottom:6px;
+  border-bottom:1px solid #E5EAF2;
+  min-width:0;
+}
+.flight-room-title-row {
+  min-width:0;
+  display:grid;
+  grid-template-columns:26px minmax(0, 1fr) 26px;
+  align-items:center;
+  gap:6px;
+}
+.flight-room-title-spacer {
+  display:block;
+  width:26px;
+  height:1px;
+}
+.flight-room-name {
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-align:center;
+}
+.flight-room-name strong {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:13px;
+}
+.flight-room-meta {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  width:100%;
+  min-width:0;
+  margin-left:0;
+}
+.flight-room-edit {
+  justify-self:end;
+  height:18px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#1677FF;
+  font-size:11px;
+  line-height:18px;
+  cursor:pointer;
+}
+.flight-room-edit:hover {
+  color:#0958D9;
+  text-decoration:underline;
+}
+.flight-room-pill {
+  min-width:17px;
+  height:20px;
+  padding:0 5px;
+  border-radius:10px;
+  background:#EAF2FF;
+  color:#2F6BFF;
+  font-size:11px;
+  line-height:20px;
+  text-align:center;
+}
+.flight-room-stock,
+.flight-room-rate {
+  min-width:0;
+  height:18px;
+  padding:0;
+  border-radius:0;
+  background:transparent;
+  font-size:10px;
+  font-weight:700;
+  line-height:18px;
+  white-space:nowrap;
+}
+.flight-room-stock {
+  flex:1 1 auto;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.flight-room-stock {
+  color:#F04438;
+}
+.flight-room-stock.is-negative {
+  color:#D92D20;
+}
+.flight-room-rate {
+  flex:0 0 auto;
+  color:#7A2CFF;
+}
+.flight-room-control {
+  min-height:58px;
+  margin-top:8px;
+  padding:7px 8px;
+  border:1px solid #DDE5F0;
+  border-radius:5px;
+  background:#F8FAFC;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  gap:7px;
+}
+.flight-room-control-main {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+.flight-room-control strong {
+  font-size:13px;
+}
+.flight-room-control span {
+  flex:0 0 auto;
+  color:#5D74A5;
+  font-size:12px;
+  line-height:16px;
+}
+.flight-room-control button {
+  width:100%;
+  height:28px;
+  padding:0 12px;
+  border:1px solid #D0D5DD;
+  border-radius:3px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:12px;
+}
+.flight-room-list {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:6px;
+}
+.flight-room-table {
+  min-height:34px;
+  padding:4px 6px;
+  border:1px solid #DDE5F0;
+  border-radius:5px;
+  background:#F8FAFC;
+  cursor:grab;
+  user-select:none;
+  transition:border-color 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.flight-room-table:hover {
+  border-color:#BBD4FF;
+  box-shadow:0 2px 8px rgba(16, 24, 40, 0.08);
+}
+.flight-room-table.is-dragging {
+  opacity:1;
+  border-color:#4096FF;
+  background:#FFFFFF;
+  box-shadow:0 6px 18px rgba(64, 150, 255, 0.28);
+  cursor:grabbing;
+}
+.flight-room-table-top,
+.flight-room-table-bottom {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:4px;
+  min-width:0;
+}
+.flight-room-table-top strong {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:12px;
+  line-height:16px;
+}
+.flight-room-table-top span,
+.flight-room-table-bottom span {
+  color:#6B7EA8;
+  font-size:10px;
+  line-height:14px;
+  white-space:nowrap;
+}
+.flight-room-table-bottom span:first-child {
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.flight-room-table-bottom span:last-child {
+  flex:0 0 auto;
+  text-align:right;
+}
+.flight-room-table-bottom em {
+  display:inline-block;
+  max-width:108px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  vertical-align:bottom;
+  white-space:nowrap;
+}
+.flight-room-table-bottom em {
+  color:#F20D20;
+  font-style:normal;
+  font-weight:700;
+}
+.flight-room-table-bottom b {
+  color:#7A2CFF;
+  font-weight:400;
+}
+.flight-room-empty {
+  height:44px;
+  border:1px dashed #D0D5DD;
+  border-radius:5px;
+  background:#F9FAFB;
+  color:#98A2B3;
+  font-size:12px;
+  line-height:44px;
+  text-align:center;
+}
+.flight-room-drag-preview {
+  position:fixed;
+  left:-9999px;
+  top:-9999px;
+  z-index:30000;
+  opacity:1;
+  border:2px solid #1677FF;
+  border-radius:6px;
+  background:#FFFFFF;
+  box-shadow:0 12px 28px rgba(22, 119, 255, 0.34);
+  transform:scale(1.03);
+  pointer-events:none;
+}
+.flight-room-page.is-drag-overview .flight-room-panel {
+  padding:8px;
+}
+.flight-room-page.is-drag-overview .flight-room-dashboard,
+.flight-room-page.is-drag-overview .flight-room-tabbar,
+.flight-room-page.is-drag-overview .codex-page-tabs {
+  display:none;
+}
+.flight-room-page.is-drag-overview .flight-room-grid {
+  grid-template-columns:repeat(auto-fit, minmax(132px, 1fr));
+  gap:6px;
+}
+.flight-room-page.is-drag-overview .flight-room-card {
+  min-height:76px;
+  padding:6px;
+  border-radius:5px;
+}
+.flight-room-page.is-drag-overview .flight-room-card-header {
+  min-height:23px;
+  padding-bottom:3px;
+  gap:2px;
+}
+.flight-room-page.is-drag-overview .flight-room-title-row,
+.flight-room-page.is-drag-overview .flight-room-name {
+  gap:4px;
+}
+.flight-room-page.is-drag-overview .flight-room-name strong {
+  font-size:12px;
+}
+.flight-room-page.is-drag-overview .flight-room-edit,
+.flight-room-page.is-drag-overview .flight-room-stock,
+.flight-room-page.is-drag-overview .flight-room-rate,
+.flight-room-page.is-drag-overview .flight-room-table:not(.is-dragging) .flight-room-table-bottom,
+.flight-room-page.is-drag-overview .flight-room-control button {
+  display:none;
+}
+.flight-room-page.is-drag-overview .flight-room-pill {
+  height:18px;
+  min-width:18px;
+  padding:0 5px;
+  font-size:11px;
+  line-height:18px;
+}
+.flight-room-page.is-drag-overview .flight-room-list {
+  gap:4px;
+  margin-top:5px;
+}
+.flight-room-page.is-drag-overview .flight-room-table {
+  min-height:28px;
+  padding:4px 5px;
+  border-color:#DDE5F0;
+  background:#FFFFFF;
+}
+.flight-room-page.is-drag-overview .flight-room-table-top strong {
+  font-size:11px;
+  line-height:16px;
+}
+.flight-room-page.is-drag-overview .flight-room-table-top span {
+  font-size:11px;
+  line-height:16px;
+}
+.flight-room-page.is-drag-overview .flight-room-empty {
+  height:28px;
+  font-size:11px;
+  line-height:28px;
+}
+.flight-room-page.is-drag-overview .flight-room-card.is-drop-target {
+  border-color:#1677FF;
+  background:#EAF3FF;
+  box-shadow:0 0 0 3px rgba(22, 119, 255, 0.18);
+}
+.flight-room-page.is-drag-overview .flight-room-table.is-dragging {
+  border-color:#1677FF;
+  box-shadow:0 4px 14px rgba(22, 119, 255, 0.32);
+}
+.room-modal-mask {
+  position:fixed;
+  inset:0;
+  z-index:20000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15, 23, 42, 0.28);
+}
+.room-modal-mask[hidden] {
+  display:none;
+}
+.room-modal {
+  position:relative;
+  width:min(760px, calc(100vw - 48px));
+  max-height:calc(100vh - 48px);
+  border:1px solid #E4E7EC;
+  border-radius:8px;
+  background:#FFFFFF;
+  box-shadow:0 24px 64px rgba(16, 24, 40, 0.26);
+  overflow:hidden;
+}
+.room-modal-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 20px 14px;
+  border-bottom:1px solid #EEF2F6;
+  background:#FFFFFF;
+}
+.room-modal-close {
+  flex:0 0 auto;
+  width:30px;
+  height:30px;
+  border:1px solid transparent;
+  border-radius:6px;
+  background:#FFFFFF;
+  color:#667085;
+  font-size:22px;
+  line-height:24px;
+  cursor:pointer;
+}
+.room-modal-close:hover {
+  border-color:#D0D5DD;
+  background:#F8FAFC;
+  color:#344054;
+}
+.room-modal h2 {
+  margin:0;
+  color:#1F2937;
+  font-size:18px;
+  font-weight:700;
+  line-height:24px;
+}
+.room-modal-head p {
+  margin:4px 0 0;
+  color:#667085;
+  font-size:13px;
+  line-height:18px;
+}
+.room-modal-body {
+  max-height:calc(100vh - 178px);
+  padding:16px 20px 18px;
+  overflow:auto;
+  background:#F8FAFC;
+}
+.room-modal-pane {
+  display:none;
+}
+.room-modal-pane.is-active {
+  display:block;
+}
+.room-modal-error {
+  min-height:30px;
+  margin:0 0 12px;
+  padding:6px 10px;
+  border:1px solid #FDA29B;
+  border-radius:4px;
+  background:#FFF1F3;
+  color:#D92D20;
+  font-size:12px;
+  line-height:16px;
+}
+.room-form-section {
+  border:1px solid #E4E7EC;
+  border-radius:8px;
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(16, 24, 40, 0.03);
+}
+.room-form-section + .room-form-section {
+  margin-top:12px;
+}
+.room-section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:42px;
+  padding:0 16px;
+  border-bottom:1px solid #EEF2F6;
+}
+.room-section-head strong {
+  color:#101828;
+  font-size:14px;
+  line-height:20px;
+}
+.room-section-head span {
+  color:#98A2B3;
+  font-size:12px;
+  line-height:18px;
+  white-space:nowrap;
+}
+.room-field-grid {
+  padding:12px 16px 14px;
+}
+.robot-name-config {
+  margin-bottom:12px;
+  border:1px solid #E4E7EC;
+  border-radius:8px;
+  background:#FFFFFF;
+  overflow:hidden;
+}
+.robot-name-title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 14px;
+  border-bottom:1px solid #EEF2F6;
+  background:#FCFCFD;
+}
+.robot-name-title strong {
+  display:block;
+  color:#1D2939;
+  font-size:14px;
+  line-height:20px;
+}
+.robot-name-title span {
+  display:block;
+  margin-top:2px;
+  color:#98A2B3;
+  font-size:12px;
+  line-height:18px;
+}
+.robot-name-preview {
+  min-width:190px;
+  padding:6px 10px;
+  border:1px solid #B2DDFF;
+  border-radius:6px;
+  background:#EFF8FF;
+  text-align:right;
+}
+.robot-name-preview strong {
+  color:#175CD3;
+  font-size:15px;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  word-break:break-all;
+}
+.robot-name-fields {
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+  padding:12px 14px 14px;
+}
+.robot-name-fields label {
+  display:grid;
+  gap:6px;
+  margin:0;
+}
+.robot-name-fields label > span {
+  color:#344054;
+  font-size:13px;
+  font-weight:600;
+  line-height:18px;
+}
+.robot-name-fields input {
+  width:100%;
+  height:34px;
+  padding:0 10px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:14px;
+}
+.ranking-grid {
+  overflow:hidden;
+}
+.ranking-field {
+  display:grid;
+  grid-template-columns:230px minmax(220px, 1fr) 184px;
+  align-items:center;
+  gap:20px;
+  min-height:70px;
+  margin:0;
+  padding:12px 16px;
+  border-bottom:1px solid #EEF2F6;
+  background:#FFFFFF;
+}
+.ranking-field:nth-child(odd) {
+  background:#FCFCFD;
+}
+.ranking-field:last-child {
+  border-bottom:0;
+}
+.ranking-field > span {
+  color:#1D2939;
+  font-size:16px;
+  font-weight:700;
+  line-height:22px;
+  text-align:left;
+}
+.ranking-field em {
+  color:#667085;
+  font-size:13px;
+  font-style:normal;
+  line-height:20px;
+}
+.ranking-field .ranking-stepper {
+  justify-self:end;
+}
+.room-field {
+  display:grid;
+  grid-template-columns:152px minmax(0, 1fr) minmax(0, 240px);
+  align-items:center;
+  gap:12px;
+  min-height:36px;
+  margin:0;
+}
+.room-field + .room-field {
+  margin-top:10px;
+}
+.room-field > span {
+  position:relative;
+  color:#344054;
+  font-size:14px;
+  font-weight:600;
+  line-height:20px;
+  text-align:right;
+}
+.room-field.is-required > span::before {
+  content:"*";
+  margin-right:4px;
+  color:#F04438;
+}
+.room-field input,
+.room-field select {
+  width:100%;
+  height:34px;
+  padding:0 11px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:14px;
+}
+.room-field select {
+  max-width:200px;
+  color:#98A2B3;
+}
+.room-field em {
+  color:#667085;
+  font-size:12px;
+  font-style:normal;
+  white-space:nowrap;
+}
+.room-stepper {
+  display:grid;
+  grid-template-columns:32px 92px 32px;
+  width:156px;
+  height:34px;
+}
+.room-stepper button {
+  border:1px solid #D0D5DD;
+  background:#F8FAFC;
+  color:#667085;
+  font-size:16px;
+  cursor:pointer;
+}
+.room-stepper button:first-child {
+  border-radius:4px 0 0 4px;
+}
+.room-stepper button:last-child {
+  border-radius:0 4px 4px 0;
+}
+.room-stepper input {
+  width:92px;
+  border-right:0;
+  border-left:0;
+  border-radius:0;
+  text-align:center;
+}
+.ranking-stepper {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) 28px;
+  width:176px;
+  height:38px;
+  border:1px solid #D0D5DD;
+  border-radius:6px;
+  background:#FFFFFF;
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.ranking-stepper input {
+  width:100%;
+  height:100%;
+  padding:0 10px;
+  border:0;
+  border-radius:0;
+  color:#101828;
+  font-size:15px;
+  font-weight:600;
+  text-align:center;
+}
+.ranking-stepper-actions {
+  display:grid;
+  grid-template-rows:1fr 1fr;
+  border-left:1px solid #D0D5DD;
+  background:#F8FAFC;
+}
+.ranking-stepper-actions button {
+  width:28px;
+  min-width:0;
+  height:auto;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#667085;
+  font-size:9px;
+  line-height:1;
+}
+.ranking-stepper-actions button + button {
+  border-top:1px solid #D0D5DD;
+}
+.ranking-stepper-actions button:hover {
+  background:#EEF4FF;
+  color:#1677FF;
+}
+.room-modal-footer {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  padding:12px 20px;
+  border-top:1px solid #EEF2F6;
+  background:#FFFFFF;
+}
+.room-modal-footer-spacer {
+  flex:1 1 auto;
+}
+.room-modal-footer button {
+  min-width:72px;
+  height:34px;
+  padding:0 16px;
+  border-radius:4px;
+  font-size:14px;
+  cursor:pointer;
+}
+.room-modal-cancel {
+  border:1px solid #D0D5DD;
+  background:#FFFFFF;
+  color:#344054;
+}
+.room-modal-delete {
+  border:1px solid #FDA29B;
+  background:#FFFFFF;
+  color:#D92D20;
+}
+.room-modal-delete:hover {
+  border-color:#F04438;
+  background:#FFF1F3;
+}
+.room-modal-save {
+  border:1px solid #1677FF;
+  background:#1677FF;
+  color:#FFFFFF;
+}
+@media (min-width:1600px) {
+  .dashboard-metrics {
+    grid-template-columns:repeat(7, minmax(0, 1fr));
+  }
+}
+
+@media (max-width:1440px) {
+  .dashboard-metrics {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+  .flight-room-grid {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width:1180px) {
+  .dashboard-metrics {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+  .flight-room-grid {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width:920px) {
+  .management-content {
+    padding:10px;
+  }
+  .dashboard-metrics {
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+  .flight-room-tabbar {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .flight-room-grid {
+    grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .room-modal {
+    width:calc(100vw - 24px);
+  }
+  .room-modal-body {
+    padding:12px;
+  }
+  .room-field {
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+  .room-field > span {
+    text-align:left;
+  }
+  .room-field em {
+    white-space:normal;
+  }
+  .room-section-head {
+    align-items:flex-start;
+    flex-direction:column;
+    gap:2px;
+    padding:10px 12px;
+  }
+  .room-section-head span {
+    white-space:normal;
+  }
+  .robot-name-title {
+    align-items:flex-start;
+    flex-direction:column;
+    gap:10px;
+  }
+  .robot-name-preview {
+    width:100%;
+    min-width:0;
+    text-align:left;
+  }
+  .robot-name-fields {
+    grid-template-columns:1fr;
+  }
+  .ranking-field {
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .ranking-field > span {
+    text-align:left;
+  }
+  .ranking-field .room-stepper {
+    justify-self:start;
+  }
+}
+
+@media (max-width:560px) {
+  .dashboard-metrics {
+    grid-template-columns:1fr;
+  }
+}

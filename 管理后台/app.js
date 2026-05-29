@@ -1158,66 +1158,11 @@
         },
       ],
     }),
-    "flight-room-config": formPage({
-      title: "飞机房间配置",
-      section: "游戏管理",
-      description: "集中维护飞机房间的底注、税率和爆点区间。",
-      formDefaults: {
-        roomName: "飞机高频房",
-        roomCode: "FR-2001",
-        baseBet: "20",
-        taxRate: "4",
-        enterLimit: "500",
-        burstFloor: "1.20",
-        burstCap: "8.60",
-        robotSwitch: "开启",
-      },
-      sections: [
-        {
-          title: "房间参数",
-          description: "基础押注、税率和进入门槛。",
-          fields: [
-            field("roomName", "房间名称", "text", "请输入房间名称"),
-            field("roomCode", "房间编号", "text", "请输入房间编号"),
-            field("baseBet", "基础底注", "number", "请输入基础底注"),
-            field("taxRate", "税率(%)", "number", "请输入税率"),
-            field("enterLimit", "进入门槛", "number", "请输入门槛"),
-            selectField("robotSwitch", "机器人开关", ["开启", "关闭"]),
-          ],
-        },
-        {
-          title: "爆点区间",
-          description: "配置风控区间和演示范围。",
-          fields: [
-            field("burstFloor", "最小爆点", "number", "请输入最小爆点"),
-            field("burstCap", "最大爆点", "number", "请输入最大爆点"),
-          ],
-        },
-      ],
-      preview: {
-        title: "当前房间列表预览",
-        description: "保存前先核对房间配置、在线人数和税率。",
-        columns: [
-          { label: "房间名称", key: "roomName" },
-          { label: "房间编号", key: "roomCode", className: "mono" },
-          { label: "商户", key: "merchant" },
-          { label: "基础底注", render: (row) => renderMoneyCell(row.baseBet) },
-          { label: "税率", key: "taxRate" },
-          { label: "活跃人数", render: (row) => renderNumberCell(row.activeUsers) },
-          { label: "爆点上限", key: "burstCap" },
-          { label: "状态", render: (row) => badge(row.status, row.statusTone) },
-        ],
-        rows: buildFlightRoomRows(8),
-      },
-    }),
     "flight-room-manage": {
-      type: "roomOps",
+      type: "planeRoomManagement",
       title: "飞机房间管理",
       section: "游戏管理",
-      description: "房间树与货币维度保留；站点列表表格设计已作废。",
-      defaultPageSize: 100,
-      pageSizeOptions: [50, 100, 500, 1000],
-      opsData: buildFlightRoomOpsData(),
+      description: "恢复为飞机房间管理页原型样式。",
     },
     "inventory-manage": tablePage({
       title: "库存管理",
@@ -1748,11 +1693,9 @@
   }
 
   function updateBreadcrumb(page) {
+    // Topbar breadcrumb stays hidden by product request; menu pages should not repeat the current menu title here.
     const breadcrumb = document.querySelector("[data-breadcrumb]");
-    if (!breadcrumb) return;
-    breadcrumb.innerHTML = `<span>${escapeHtml(page.section)}</span><span>/</span><strong>${escapeHtml(
-      page.title,
-    )}</strong>`;
+    if (breadcrumb) breadcrumb.textContent = "";
     document.title = `${page.title} - 管理后台`;
   }
 
@@ -1782,6 +1725,14 @@
 
     if (page.type === "roomOps") {
       root.innerHTML = renderFlightRoomOpsPage(page, state);
+      return;
+    }
+
+    if (page.type === "planeRoomManagement") {
+      root.innerHTML = "";
+      if (typeof window.renderPlaneRoomManagementPage === "function") {
+        window.renderPlaneRoomManagementPage();
+      }
       return;
     }
 
@@ -3954,9 +3905,11 @@
     };
   }
 
-  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
-  pageConfigs["flight-room-manage"].defaultPageSize = 100;
-  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+  if (pageConfigs["flight-room-manage"].type === "roomOps") {
+    pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+    pageConfigs["flight-room-manage"].defaultPageSize = 100;
+    pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+  }
 
   function getRoomOpsCountryOptionLabel(country) {
     return `${country.country}-${country.code}`;
@@ -7253,11 +7206,13 @@
     };
   }
 
-  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
-  pageConfigs["flight-room-manage"].defaultPageSize = 100;
-  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
-  pageConfigs["flight-room-manage"].section = roomOpsText.section;
-  pageConfigs["flight-room-manage"].title = roomOpsText.title;
+  if (pageConfigs["flight-room-manage"].type === "roomOps") {
+    pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+    pageConfigs["flight-room-manage"].defaultPageSize = 100;
+    pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+    pageConfigs["flight-room-manage"].section = roomOpsText.section;
+    pageConfigs["flight-room-manage"].title = roomOpsText.title;
+  }
 
   function renderCurrencySelector(page, state) {
     const countries = getOrderedCurrencies(page, state);
