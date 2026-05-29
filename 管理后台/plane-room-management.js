@@ -17,6 +17,8 @@
   var currencies = ["INR", "GHS", "USD"];
   var activeCurrency = "INR";
   var draggingSite = null;
+  var draggingRoom = null;
+  var pointerRoomDrag = null;
   var dragPreview = null;
   var editingRoomIndex = null;
 
@@ -37,7 +39,7 @@
     bigAmount: 500000,
     comboMultiplier: 5000,
     botPrefix: "",
-    botSuffix: "",
+    botSuffixType: "number",
     botMaxCount: 500,
     botMinBet: 10,
     botMaxBet: 8000,
@@ -298,7 +300,7 @@
     var stockClass = room.stock < 0 ? " is-negative" : "";
     return "<div class=\"flight-room-card-header\">" +
       "<div class=\"flight-room-title-row\">" +
-        "<span class=\"flight-room-title-spacer\"></span>" +
+        "<button type=\"button\" class=\"flight-room-drag-handle\" data-room-drag-handle=\"true\" aria-label=\"拖动排序\" title=\"拖动排序\">☰</button>" +
         "<div class=\"flight-room-name\"><strong>" + escapeHtml(room.name) + "</strong></div>" +
         "<button type=\"button\" class=\"flight-room-edit\" data-edit-room=\"" + index + "\">编辑</button>" +
       "</div>" +
@@ -328,7 +330,7 @@
     var tables = room.tables.map(function(table) { return tableHtml(table, room.name); }).join("");
     var locked = room.control ? " is-locked" : "";
     var empty = room.tables.length || locked ? "" : "<div class=\"flight-room-empty\">房间当前没有站点</div>";
-    return "<section class=\"flight-room-card" + locked + "\" data-room-name=\"" + escapeHtml(room.name) + "\" data-drop-disabled=\"" + (room.control ? "true" : "false") + "\">" + roomHeader(room, index) + detail + "<div class=\"flight-room-list\">" + tables + empty + "</div></section>";
+    return "<section class=\"flight-room-card" + locked + "\" data-room-index=\"" + index + "\" data-room-name=\"" + escapeHtml(room.name) + "\" data-drop-disabled=\"" + (room.control ? "true" : "false") + "\">" + roomHeader(room, index) + detail + "<div class=\"flight-room-list\">" + tables + empty + "</div></section>";
   }
 
   function render(page) {
@@ -398,6 +400,54 @@
     return true;
   }
 
+  function moveRoom(sourceIndex, targetIndex) {
+    if (sourceIndex === targetIndex || sourceIndex < 0 || targetIndex < 0) return false;
+    if (sourceIndex >= rooms.length || targetIndex >= rooms.length) return false;
+    var room = rooms.splice(sourceIndex, 1)[0];
+    rooms.splice(targetIndex, 0, room);
+    return true;
+  }
+
+  function startPointerRoomDrag(page, card, clientX, clientY) {
+    pointerRoomDrag = {
+      sourceIndex: Number(card.getAttribute("data-room-index")),
+      targetIndex: Number(card.getAttribute("data-room-index")),
+      startX: clientX,
+      startY: clientY,
+      active: false
+    };
+  }
+
+  function updatePointerRoomDrag(page, clientX, clientY) {
+    if (!pointerRoomDrag) return;
+    var moved = Math.abs(clientX - pointerRoomDrag.startX) + Math.abs(clientY - pointerRoomDrag.startY);
+    if (!pointerRoomDrag.active && moved > 6) {
+      pointerRoomDrag.active = true;
+      page.classList.add("is-room-sort");
+      var sourceCard = page.querySelector(".flight-room-card[data-room-index='" + pointerRoomDrag.sourceIndex + "']");
+      if (sourceCard) sourceCard.classList.add("is-room-dragging");
+    }
+    if (!pointerRoomDrag.active) return;
+    var target = document.elementFromPoint(clientX, clientY);
+    var card = target && target.closest ? target.closest(".flight-room-card") : null;
+    if (!card || !page.contains(card)) return;
+    pointerRoomDrag.targetIndex = Number(card.getAttribute("data-room-index"));
+    Array.prototype.forEach.call(page.querySelectorAll(".flight-room-card.is-room-sort-target"), function(targetCard) {
+      if (targetCard !== card) targetCard.classList.remove("is-room-sort-target");
+    });
+    card.classList.toggle("is-room-sort-target", pointerRoomDrag.targetIndex !== pointerRoomDrag.sourceIndex);
+  }
+
+  function finishPointerRoomDrag(page) {
+    if (!pointerRoomDrag) return;
+    var drag = pointerRoomDrag;
+    pointerRoomDrag = null;
+    if (drag.active && moveRoom(drag.sourceIndex, drag.targetIndex)) {
+      render(page);
+    }
+    cleanupDragState(page);
+  }
+
   function addCurrency(page) {
     var value = window.prompt("请输入货币名称", "PHP");
     if (!value) return;
@@ -433,16 +483,12 @@
   }
 
   function robotNameConfig(data) {
-    return "<div class=\"robot-name-config\">" +
-      "<div class=\"robot-name-title\">" +
-        "<div><strong>机器人名称配置</strong><span>支持前缀、后缀、字母数字组合</span></div>" +
-        "<div class=\"robot-name-preview\"><span>生成示例</span><strong data-bot-name-preview=\"true\"></strong></div>" +
-      "</div>" +
-      "<div class=\"robot-name-fields\">" +
-        "<label><span>前缀内容</span><input name=\"botPrefix\" type=\"text\" value=\"" + escapeHtml(data.botPrefix) + "\" maxlength=\"16\" placeholder=\"例如 1 或 a\"></label>" +
-        "<label><span>后缀内容</span><input name=\"botSuffix\" type=\"text\" value=\"" + escapeHtml(data.botSuffix) + "\" maxlength=\"16\" placeholder=\"可选，字母或数字\"></label>" +
-      "</div>" +
-    "</div>";
+    var suffixType = data.botSuffixType || (data.botSuffix && /^[A-Za-z]+$/.test(data.botSuffix) ? "letter" : "number");
+    return "<label class=\"compact-field\"><span>前缀内容</span><input name=\"botPrefix\" type=\"text\" value=\"" + escapeHtml(data.botPrefix) + "\" maxlength=\"16\" placeholder=\"例如 1 或 a\"></label>" +
+      "<label class=\"compact-field\"><span>后缀内容</span><select name=\"botSuffixType\">" +
+        "<option value=\"number\"" + (suffixType === "number" ? " selected" : "") + ">数字</option>" +
+        "<option value=\"letter\"" + (suffixType === "letter" ? " selected" : "") + ">字母</option>" +
+      "</select></label>";
   }
 
   function stepper(label, name, value, hint) {
@@ -454,6 +500,17 @@
         "<button type=\"button\" data-step=\"1\">＋</button>" +
       "</div>" +
       (hint ? "<em>" + hint + "</em>" : "") +
+    "</label>";
+  }
+
+  function compactStepper(label, name, value) {
+    return "<label class=\"compact-field compact-field-stepper\">" +
+      "<span>" + label + "</span>" +
+      "<div class=\"room-stepper\" data-stepper=\"" + name + "\">" +
+        "<button type=\"button\" data-step=\"-1\">−</button>" +
+        "<input name=\"" + name + "\" type=\"number\" value=\"" + escapeHtml(value) + "\">" +
+        "<button type=\"button\" data-step=\"1\">＋</button>" +
+      "</div>" +
     "</label>";
   }
 
@@ -476,10 +533,17 @@
     return "<div class=\"room-modal-error\" hidden></div>" +
       "<div class=\"room-modal-pane is-active\" data-room-pane=\"setting\">" +
         "<section class=\"room-form-section\">" +
-          "<div class=\"room-section-head\"><strong>基础配置</strong><span>房间名称与库存信息</span></div>" +
-          "<div class=\"room-field-grid\">" +
-            "<label class=\"room-field is-required\"><span>房间名称</span><input name=\"name\" type=\"text\" value=\"" + escapeHtml(data.name || nextRoomName()) + "\" placeholder=\"请输入\"></label>" +
-            "<label class=\"room-field\"><span>库存配置</span><input name=\"stock\" type=\"number\" step=\"0.01\" value=\"" + escapeHtml(Number(data.stock || 0)) + "\" placeholder=\"请输入库存\"></label>" +
+          "<div class=\"room-section-head\"><strong>基础配置</strong><span>房间信息、增减库存与机器人参数</span></div>" +
+          "<div class=\"compact-field-grid\">" +
+            "<label class=\"compact-field is-required\"><span>房间名称</span><input name=\"name\" type=\"text\" value=\"" + escapeHtml(data.name || nextRoomName()) + "\" placeholder=\"请输入\"></label>" +
+            "<div class=\"compact-field compact-field-readonly\"><span>当前库存</span><strong>" + money(data.stock || 0) + "</strong></div>" +
+            "<label class=\"compact-field\"><span>增减库存</span><input name=\"stockDelta\" type=\"number\" step=\"0.01\" value=\"0\" placeholder=\"正数增加，负数减少\"></label>" +
+            robotNameConfig(data) +
+            compactStepper("机器人最大数量", "botMaxCount", data.botMaxCount) +
+            compactStepper("机器人最小下注", "botMinBet", data.botMinBet) +
+            compactStepper("机器人最大下注", "botMaxBet", data.botMaxBet) +
+            compactStepper("机器人最大奖金", "botMaxPrize", data.botMaxPrize) +
+            compactStepper("机器人最大分享数量", "botMaxShare", data.botMaxShare) +
           "</div>" +
         "</section>" +
         "<section class=\"room-form-section\">" +
@@ -488,17 +552,6 @@
             rankingStepper("大额返奖倍数设定(X)", "bigMultiplier", data.bigMultiplier, "设定玩家大额返奖倍数(等于或大于此值)") +
             rankingStepper("大奖金额设定(赢奖)", "bigAmount", data.bigAmount, "设定大额返奖金额排行(等于或大于此值)") +
             rankingStepper("大额局返奖倍数设定(回合)", "comboMultiplier", data.comboMultiplier, "设定大额局返奖倍数排行(等于或大于此值)") +
-          "</div>" +
-        "</section>" +
-        "<section class=\"room-form-section\">" +
-          "<div class=\"room-section-head\"><strong>机器人配置</strong><span>配置机器人名称、下注、奖金与分享上限</span></div>" +
-          "<div class=\"room-field-grid\">" +
-            robotNameConfig(data) +
-            stepper("机器人最大数量", "botMaxCount", data.botMaxCount, "") +
-            stepper("机器人最小下注", "botMinBet", data.botMinBet, "") +
-            stepper("机器人最大下注", "botMaxBet", data.botMaxBet, "") +
-            stepper("机器人最大奖金", "botMaxPrize", data.botMaxPrize, "") +
-            stepper("机器人最大分享数量", "botMaxShare", data.botMaxShare, "") +
           "</div>" +
         "</section>" +
       "</div>";
@@ -515,7 +568,6 @@
     window.setTimeout(function() {
       var input = body.querySelector(".room-modal-pane.is-active input[name='name']");
       if (input) input.focus();
-      updateRobotNamePreview(body);
     }, 0);
   }
 
@@ -560,11 +612,12 @@
       error.hidden = false;
       return;
     }
-    if (!/^[A-Za-z0-9]*$/.test(formData.botPrefix || "") || !/^[A-Za-z0-9]*$/.test(formData.botSuffix || "")) {
-      error.textContent = "机器人名称前缀和后缀只支持字母、数字";
+    if (!/^[A-Za-z0-9]*$/.test(formData.botPrefix || "")) {
+      error.textContent = "机器人名称前缀只支持字母、数字";
       error.hidden = false;
       return;
     }
+    formData.botSuffixType = formData.botSuffixType || roomDefaults.botSuffixType;
     var duplicate = rooms.some(function(room, index) {
       return index !== editingRoomIndex && room.name === formData.name;
     });
@@ -582,7 +635,10 @@
     if (editingRoomIndex == null) {
       formData.region = currencyRegions[activeCurrency] || roomDefaults.region;
     }
+    var stockDelta = Number(formData.stockDelta || 0);
+    delete formData.stockDelta;
     Object.assign(target, formData);
+    target.stock = Number(target.stock || 0) + stockDelta;
     if (editingRoomIndex == null) {
       target.name = formData.name;
       target.sites = 0;
@@ -608,59 +664,115 @@
     input.dispatchEvent(new Event("input", { bubbles: true }));
   }
 
-  function robotNameParts(container) {
-    var prefixInput = container.querySelector("input[name='botPrefix']");
-    var suffixInput = container.querySelector("input[name='botSuffix']");
-    var prefix = (prefixInput && prefixInput.value.trim()) || "1";
-    var suffix = suffixInput ? suffixInput.value.trim() : "";
-    return {
-      prefix: prefix,
-      suffix: suffix,
-      code: "B2C3D"
-    };
-  }
-
-  function updateRobotNamePreview(root) {
-    var container = root.classList && root.classList.contains("robot-name-config") ? root : root.querySelector(".robot-name-config");
-    if (!container) return;
-    var parts = robotNameParts(container);
-    var preview = container.querySelector("[data-bot-name-preview]");
-    if (preview) preview.textContent = (parts.prefix || "Bot") + parts.code + parts.suffix;
-  }
-
   function cleanupDragState(page) {
     page.classList.remove("is-drag-overview");
+    page.classList.remove("is-room-sort");
     Array.prototype.forEach.call(page.querySelectorAll(".flight-room-table.is-dragging"), function(site) {
       site.classList.remove("is-dragging");
     });
+    Array.prototype.forEach.call(page.querySelectorAll(".flight-room-card.is-room-dragging"), function(card) {
+      card.classList.remove("is-room-dragging");
+    });
     Array.prototype.forEach.call(page.querySelectorAll(".flight-room-card.is-drop-target"), function(card) {
       card.classList.remove("is-drop-target");
+    });
+    Array.prototype.forEach.call(page.querySelectorAll(".flight-room-card.is-room-sort-target"), function(card) {
+      card.classList.remove("is-room-sort-target");
     });
     if (dragPreview && dragPreview.parentNode) {
       dragPreview.parentNode.removeChild(dragPreview);
     }
     dragPreview = null;
     draggingSite = null;
+    draggingRoom = null;
+    pointerRoomDrag = null;
   }
 
   function bindDrag(page) {
+    page.addEventListener("pointerdown", function(event) {
+      if (event.button !== 0) return;
+      if (event.target.closest(".flight-room-table") || event.target.closest(".flight-room-edit") || event.target.closest("button:not(.flight-room-drag-handle)")) return;
+      if (!event.target.closest(".flight-room-card-header")) return;
+      var card = event.target.closest(".flight-room-card");
+      if (!card) return;
+      event.preventDefault();
+      startPointerRoomDrag(page, card, event.clientX, event.clientY);
+    });
+
+    window.addEventListener("pointermove", function(event) {
+      updatePointerRoomDrag(page, event.clientX, event.clientY);
+    });
+
+    window.addEventListener("pointerup", function() {
+      finishPointerRoomDrag(page);
+    });
+
+    window.addEventListener("pointercancel", function() {
+      finishPointerRoomDrag(page);
+    });
+
+    page.addEventListener("mousedown", function(event) {
+      if (event.button !== 0) return;
+      if (pointerRoomDrag) return;
+      if (event.target.closest(".flight-room-table") || event.target.closest(".flight-room-edit") || event.target.closest("button:not(.flight-room-drag-handle)")) return;
+      if (!event.target.closest(".flight-room-card-header")) return;
+      var card = event.target.closest(".flight-room-card");
+      if (!card) return;
+      event.preventDefault();
+      startPointerRoomDrag(page, card, event.clientX, event.clientY);
+    });
+
+    window.addEventListener("mousemove", function(event) {
+      updatePointerRoomDrag(page, event.clientX, event.clientY);
+    });
+
+    window.addEventListener("mouseup", function() {
+      finishPointerRoomDrag(page);
+    });
+
     page.addEventListener("dragstart", function(event) {
+      if (pointerRoomDrag) {
+        event.preventDefault();
+        return;
+      }
       var site = event.target.closest(".flight-room-table");
-      if (!site) return;
-      draggingSite = {
-        siteId: site.getAttribute("data-site-id"),
-        roomName: site.getAttribute("data-room-name")
+      if (site) {
+        draggingSite = {
+          siteId: site.getAttribute("data-site-id"),
+          roomName: site.getAttribute("data-room-name")
+        };
+        site.classList.add("is-dragging");
+        dragPreview = site.cloneNode(true);
+        dragPreview.classList.add("flight-room-drag-preview");
+        dragPreview.style.width = site.offsetWidth + "px";
+        document.body.appendChild(dragPreview);
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", draggingSite.siteId);
+        event.dataTransfer.setDragImage(dragPreview, Math.min(80, site.offsetWidth / 2), 26);
+        window.setTimeout(function() {
+          if (draggingSite) page.classList.add("is-drag-overview");
+        }, 0);
+        return;
+      }
+      var card = event.target.closest(".flight-room-card");
+      if (!card || event.target.closest(".flight-room-edit")) {
+        event.preventDefault();
+        return;
+      }
+      draggingRoom = {
+        index: Number(card.getAttribute("data-room-index")),
+        roomName: card.getAttribute("data-room-name")
       };
-      site.classList.add("is-dragging");
-      dragPreview = site.cloneNode(true);
-      dragPreview.classList.add("flight-room-drag-preview");
-      dragPreview.style.width = site.offsetWidth + "px";
+      card.classList.add("is-room-dragging");
+      dragPreview = card.cloneNode(true);
+      dragPreview.classList.add("flight-room-room-preview");
+      dragPreview.style.width = card.offsetWidth + "px";
       document.body.appendChild(dragPreview);
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("text/plain", draggingSite.siteId);
-      event.dataTransfer.setDragImage(dragPreview, Math.min(80, site.offsetWidth / 2), 26);
+      event.dataTransfer.setData("text/plain", draggingRoom.roomName);
+      event.dataTransfer.setDragImage(dragPreview, Math.min(100, card.offsetWidth / 2), 36);
       window.setTimeout(function() {
-        if (draggingSite) page.classList.add("is-drag-overview");
+        if (draggingRoom) page.classList.add("is-room-sort");
       }, 0);
     });
 
@@ -670,7 +782,17 @@
 
     page.addEventListener("dragover", function(event) {
       var card = event.target.closest(".flight-room-card");
-      if (!card || !draggingSite) return;
+      if (!card) return;
+      if (draggingRoom) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        Array.prototype.forEach.call(page.querySelectorAll(".flight-room-card.is-room-sort-target"), function(targetCard) {
+          if (targetCard !== card) targetCard.classList.remove("is-room-sort-target");
+        });
+        card.classList.toggle("is-room-sort-target", Number(card.getAttribute("data-room-index")) !== draggingRoom.index);
+        return;
+      }
+      if (!draggingSite) return;
       if (card.getAttribute("data-drop-disabled") === "true") return;
       event.preventDefault();
       event.dataTransfer.dropEffect = "move";
@@ -680,14 +802,26 @@
     page.addEventListener("dragleave", function(event) {
       var card = event.target.closest(".flight-room-card");
       if (!card) return;
-      if (!card.contains(event.relatedTarget)) card.classList.remove("is-drop-target");
+      if (!card.contains(event.relatedTarget)) {
+        card.classList.remove("is-drop-target");
+        card.classList.remove("is-room-sort-target");
+      }
     });
 
     page.addEventListener("drop", function(event) {
       var card = event.target.closest(".flight-room-card");
-      if (!card || !draggingSite) return;
-      if (card.getAttribute("data-drop-disabled") === "true") return;
+      if (!card) return;
       event.preventDefault();
+      if (draggingRoom) {
+        var targetIndex = Number(card.getAttribute("data-room-index"));
+        if (moveRoom(draggingRoom.index, targetIndex)) {
+          render(page);
+        }
+        cleanupDragState(page);
+        return;
+      }
+      if (!draggingSite) return;
+      if (card.getAttribute("data-drop-disabled") === "true") return;
       var targetName = card.getAttribute("data-room-name");
       if (moveSite(draggingSite.roomName, targetName, draggingSite.siteId)) {
         render(page);
@@ -750,19 +884,10 @@
       }
     });
 
-    app.addEventListener("change", function(event) {
-      var container = event.target.closest(".robot-name-config");
-      if (!container) return;
-      updateRobotNamePreview(container);
-    });
-
     app.addEventListener("input", function(event) {
-      var container = event.target.closest(".robot-name-config");
-      if (!container) return;
-      if (event.target.name === "botPrefix" || event.target.name === "botSuffix") {
+      if (event.target.name === "botPrefix") {
         event.target.value = event.target.value.replace(/[^A-Za-z0-9]/g, "");
       }
-      updateRobotNamePreview(container);
     });
   }
 

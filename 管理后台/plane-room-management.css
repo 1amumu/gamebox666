@@ -224,7 +224,20 @@
   border:1px solid #DDE5F0;
   border-radius:7px;
   background:#FFFFFF;
+  cursor:grab;
   transition:border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+.flight-room-card.is-room-dragging {
+  opacity:.55;
+  border-color:#1677FF;
+  background:#F5FAFF;
+  box-shadow:0 8px 20px rgba(22, 119, 255, 0.18);
+  cursor:grabbing;
+}
+.flight-room-card.is-room-sort-target {
+  border-color:#1677FF;
+  background:#F0F7FF;
+  box-shadow:0 0 0 3px rgba(22, 119, 255, 0.18);
 }
 .flight-room-card.is-drop-target {
   border-color:#4096FF;
@@ -256,6 +269,28 @@
   display:block;
   width:26px;
   height:1px;
+}
+.flight-room-drag-handle {
+  justify-self:start;
+  width:22px;
+  height:20px;
+  padding:0;
+  border:1px solid transparent;
+  border-radius:4px;
+  background:transparent;
+  color:#98A2B3;
+  font-size:12px;
+  line-height:18px;
+  cursor:grab;
+}
+.flight-room-drag-handle:hover {
+  border-color:#BBD4FF;
+  background:#EFF6FF;
+  color:#1677FF;
+}
+.flight-room-card.is-room-dragging .flight-room-drag-handle,
+.flight-room-page.is-room-sort .flight-room-drag-handle {
+  cursor:grabbing;
 }
 .flight-room-name {
   min-width:0;
@@ -473,6 +508,22 @@
   transform:scale(1.03);
   pointer-events:none;
 }
+.flight-room-room-preview {
+  position:fixed;
+  left:-9999px;
+  top:-9999px;
+  z-index:30000;
+  opacity:1;
+  border:2px solid #1677FF;
+  border-radius:8px;
+  background:#FFFFFF;
+  box-shadow:0 14px 32px rgba(22, 119, 255, 0.32);
+  transform:scale(1.02);
+  pointer-events:none;
+}
+.flight-room-page.is-room-sort .flight-room-card:not(.is-room-dragging) {
+  cursor:grabbing;
+}
 .flight-room-page.is-drag-overview .flight-room-panel {
   padding:8px;
 }
@@ -562,7 +613,7 @@
 }
 .room-modal {
   position:relative;
-  width:min(760px, calc(100vw - 48px));
+  width:min(920px, calc(100vw - 48px));
   max-height:calc(100vh - 48px);
   border:1px solid #E4E7EC;
   border-radius:8px;
@@ -664,75 +715,64 @@
 .room-field-grid {
   padding:12px 16px 14px;
 }
-.robot-name-config {
-  margin-bottom:12px;
-  border:1px solid #E4E7EC;
-  border-radius:8px;
-  background:#FFFFFF;
-  overflow:hidden;
-}
-.robot-name-title {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding:12px 14px;
-  border-bottom:1px solid #EEF2F6;
-  background:#FCFCFD;
-}
-.robot-name-title strong {
-  display:block;
-  color:#1D2939;
-  font-size:14px;
-  line-height:20px;
-}
-.robot-name-title span {
-  display:block;
-  margin-top:2px;
-  color:#98A2B3;
-  font-size:12px;
-  line-height:18px;
-}
-.robot-name-preview {
-  min-width:190px;
-  padding:6px 10px;
-  border:1px solid #B2DDFF;
-  border-radius:6px;
-  background:#EFF8FF;
-  text-align:right;
-}
-.robot-name-preview strong {
-  color:#175CD3;
-  font-size:15px;
-  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  word-break:break-all;
-}
-.robot-name-fields {
+.compact-field-grid {
   display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:12px;
-  padding:12px 14px 14px;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:10px;
+  padding:14px 16px 16px;
 }
-.robot-name-fields label {
+.compact-field {
   display:grid;
   gap:6px;
   margin:0;
+  min-width:0;
 }
-.robot-name-fields label > span {
+.compact-field > span {
   color:#344054;
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
-  line-height:18px;
+  line-height:16px;
+  white-space:nowrap;
 }
-.robot-name-fields input {
+.compact-field input,
+.compact-field select {
   width:100%;
-  height:34px;
+  height:32px;
   padding:0 10px;
   border:1px solid #D0D5DD;
   border-radius:4px;
   background:#FFFFFF;
   color:#344054;
   font-size:14px;
+}
+.compact-field select {
+  appearance:auto;
+  cursor:pointer;
+}
+.compact-field-readonly strong {
+  display:flex;
+  align-items:center;
+  width:100%;
+  height:32px;
+  padding:0 10px;
+  border:1px solid #D7E3F5;
+  border-radius:4px;
+  background:#F8FBFF;
+  color:#175CD3;
+  font-size:14px;
+  font-weight:700;
+  line-height:32px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.compact-field-stepper .room-stepper {
+  width:100%;
+  height:32px;
+  grid-template-columns:28px minmax(0, 1fr) 28px;
+}
+.compact-field-stepper .room-stepper input {
+  width:100%;
 }
 .ranking-grid {
   overflow:hidden;
@@ -989,18 +1029,9 @@
   .room-section-head span {
     white-space:normal;
   }
-  .robot-name-title {
-    align-items:flex-start;
-    flex-direction:column;
-    gap:10px;
-  }
-  .robot-name-preview {
-    width:100%;
-    min-width:0;
-    text-align:left;
-  }
-  .robot-name-fields {
-    grid-template-columns:1fr;
+  .compact-field-grid {
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    padding:12px;
   }
   .ranking-field {
     grid-template-columns:1fr;
@@ -1016,6 +1047,9 @@
 
 @media (max-width:560px) {
   .dashboard-metrics {
+    grid-template-columns:1fr;
+  }
+  .compact-field-grid {
     grid-template-columns:1fr;
   }
 }
