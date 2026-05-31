@@ -170,7 +170,6 @@
       { title: "游戏记录", file: "游戏记录.html" },
       { title: "运营数据", file: "运营数据.html" },
       { title: "今日玩家盈亏", file: "今日玩家盈亏.html" },
-      { title: "飞机爆点数据", file: "飞机爆点数据.html" },
       { title: "玩家在线数据", file: "玩家在线数据.html" },
       { title: "游戏留存", file: "游戏留存.html" },
       { title: "玩家留存", file: "玩家留存.html" }

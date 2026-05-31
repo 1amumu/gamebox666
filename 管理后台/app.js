@@ -13,7 +13,6 @@
   ];
   const playerLevels = ["低端玩家", "中端玩家", "优质玩家", "疑似刷分"];
   const siteCodes = ["SG-01", "MY-02", "TH-03", "PH-04", "VN-05", "ID-06"];
-  const riskLevels = ["低", "中", "高"];
   const settlementStatus = ["待审核", "待出款", "已完成", "异常"];
 
   function escapeHtml(value) {
@@ -169,24 +168,6 @@
         todayRtp: 78.3 + (index % 5) * 3.1,
         controlStatus: ["正常", "监控中", "已点控"][index % 3],
         updatedAt: datetimeShift(index * 2 + 2),
-      };
-    });
-  }
-
-  function buildFlightBurstRows(count) {
-    return range(count, (index) => {
-      const burst = 1.2 + (index % 9) * 0.45;
-      const activeRooms = 18 + (index % 6);
-      return {
-        date: datetimeShift(index),
-        roomCode: `FL-${1001 + index}`,
-        merchant: merchants[index % merchants.length],
-        site: siteCodes[index % siteCodes.length],
-        roundCount: 560 + index * 18,
-        averageBurst: burst,
-        highestBurst: burst + 8.4 + (index % 3) * 1.2,
-        activeRooms,
-        riskLevel: riskLevels[index % riskLevels.length],
       };
     });
   }
@@ -839,45 +820,6 @@
         { label: "更新时间", key: "updatedAt" },
       ],
       rows: buildTodayProfitRows(36),
-    }),
-    "flight-burst-data": tablePage({
-      title: "飞机爆点数据",
-      section: "数据管理",
-      description: "跟踪飞机类房间的爆点区间、活跃度和异常风险。",
-      filters: [
-        {
-          key: "merchant",
-          label: "商户",
-          type: "select",
-          options: ["全部", ...merchants],
-          apply: (row, value) => !value || value === "全部" || row.merchant === value,
-        },
-        {
-          key: "risk",
-          label: "风险等级",
-          type: "select",
-          options: ["全部", ...riskLevels],
-          apply: (row, value) => !value || value === "全部" || row.riskLevel === value,
-        },
-        {
-          key: "dateRange",
-          label: "日期选择",
-          type: "date-range",
-          apply: () => true,
-        },
-      ],
-      columns: [
-        { label: "抓取时间", key: "date" },
-        { label: "房间编号", key: "roomCode", className: "mono" },
-        { label: "商户", key: "merchant" },
-        { label: "站点", key: "site" },
-        { label: "局数", render: (row) => renderNumberCell(row.roundCount) },
-        { label: "平均爆点", render: (row) => renderTextCell(`${row.averageBurst.toFixed(2)}x`) },
-        { label: "最高爆点", render: (row) => renderTextCell(`${row.highestBurst.toFixed(2)}x`) },
-        { label: "活跃房间", render: (row) => renderNumberCell(row.activeRooms) },
-        { label: "风险等级", render: (row) => badge(row.riskLevel, row.riskLevel === "高" ? "danger" : row.riskLevel === "中" ? "warning" : "success") },
-      ],
-      rows: buildFlightBurstRows(24),
     }),
     "player-online-data": tablePage({
       title: "玩家在线数据",

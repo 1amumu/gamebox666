@@ -28,7 +28,6 @@
         { label: "游戏记录", key: "game-records" },
         { label: "运营数据", key: "operations-data" },
         { label: "今日玩家盈亏", key: "today-player-profit" },
-        { label: "飞机爆点数据", key: "flight-burst-data" },
         { label: "玩家在线数据", key: "player-online-data" },
         { label: "游戏留存", key: "game-retention" },
         { label: "玩家留存", key: "player-retention" },

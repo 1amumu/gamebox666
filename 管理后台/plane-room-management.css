@@ -775,40 +775,45 @@
   width:100%;
 }
 .ranking-grid {
-  overflow:hidden;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:12px;
+  padding:14px 16px 16px;
 }
 .ranking-field {
   display:grid;
-  grid-template-columns:230px minmax(220px, 1fr) 184px;
-  align-items:center;
-  gap:20px;
-  min-height:70px;
+  grid-template-columns:1fr;
+  align-content:start;
+  gap:8px;
+  min-height:136px;
   margin:0;
-  padding:12px 16px;
-  border-bottom:1px solid #EEF2F6;
+  padding:12px;
+  border:1px solid #E4E7EC;
+  border-radius:8px;
   background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(16, 24, 40, 0.03);
 }
 .ranking-field:nth-child(odd) {
-  background:#FCFCFD;
-}
-.ranking-field:last-child {
-  border-bottom:0;
+  background:#FFFFFF;
 }
 .ranking-field > span {
   color:#1D2939;
-  font-size:16px;
+  font-size:14px;
   font-weight:700;
-  line-height:22px;
+  line-height:20px;
   text-align:left;
 }
 .ranking-field em {
   color:#667085;
-  font-size:13px;
+  font-size:12px;
   font-style:normal;
-  line-height:20px;
+  line-height:18px;
 }
 .ranking-field .ranking-stepper {
-  justify-self:end;
+  align-self:end;
+  justify-self:stretch;
+  width:100%;
+  margin-top:auto;
 }
 .room-field {
   display:grid;
@@ -1031,6 +1036,10 @@
   }
   .compact-field-grid {
     grid-template-columns:repeat(2, minmax(0, 1fr));
+    padding:12px;
+  }
+  .ranking-grid {
+    grid-template-columns:1fr;
     padding:12px;
   }
   .ranking-field {

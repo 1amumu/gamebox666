@@ -45,7 +45,6 @@ const sitemapGroups = [
       "游戏记录.html",
       "运营数据.html",
       "今日玩家盈亏.html",
-      "飞机爆点数据.html",
       "玩家在线数据.html",
       "游戏留存.html",
       "玩家留存.html"
