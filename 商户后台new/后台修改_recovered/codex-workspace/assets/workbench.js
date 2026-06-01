@@ -75,8 +75,7 @@ const sitemapGroups = [
       "汇率查询.html",
       "结算信息页.html",
       "待结算信息页.html",
-      "充值订单页.html",
-      "赠送余额页.html"
+      "充值订单页.html"
     ]
   },
   {

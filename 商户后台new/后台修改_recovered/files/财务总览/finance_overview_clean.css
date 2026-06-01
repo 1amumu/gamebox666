@@ -1,0 +1,126 @@
+@import url("../智能点控推荐/smart_control_recommend.css");
+
+.finance-page {
+  min-width:980px;
+  padding-top:0;
+}
+.finance-panel {
+  min-height:calc(100vh - 118px);
+  border:1px solid #EAECF0;
+  border-radius:6px;
+  background:#FFFFFF;
+  overflow:hidden;
+}
+.finance-filter {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:48px;
+  padding:8px 14px;
+  border-bottom:1px solid #EAECF0;
+  background:#FFFFFF;
+}
+.finance-filter-label {
+  color:#111827;
+  font-size:14px;
+  white-space:nowrap;
+}
+.finance-date-range {
+  display:grid;
+  grid-template-columns:34px 1fr 24px 1fr;
+  align-items:center;
+  width:350px;
+  height:32px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  background:#FFFFFF;
+  color:#344054;
+  overflow:hidden;
+}
+.finance-date-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  border-right:1px solid #EAECF0;
+  color:#98A2B3;
+  font-size:14px;
+}
+.finance-date-range input {
+  min-width:0;
+  height:30px;
+  border:0;
+  padding:0 10px;
+  background:transparent;
+  color:#344054;
+  font-size:13px;
+}
+.finance-date-range span {
+  color:#111827;
+  font-size:13px;
+  text-align:center;
+}
+.finance-table {
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.finance-table th,
+.finance-table td {
+  height:32px;
+  padding:0 8px;
+  color:#111827;
+  font-size:13px;
+  font-weight:400;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.finance-table th {
+  background:#F2F2F2;
+}
+.finance-table tbody td {
+  height:56px;
+  border-bottom:1px solid #F3F4F6;
+}
+.finance-summary-row {
+  cursor:pointer;
+}
+.finance-table tbody tr:hover {
+  background:#F9FBFF;
+}
+.finance-summary-row.is-expanded {
+  background:#F7FBFF;
+}
+.finance-expand-icon {
+  display:inline-block;
+  width:0;
+  height:0;
+  margin:0 8px 1px 0;
+  border-left:5px solid #667085;
+  border-top:4px solid transparent;
+  border-bottom:4px solid transparent;
+  vertical-align:middle;
+  transition:transform 120ms ease;
+}
+.finance-summary-row.is-expanded .finance-expand-icon {
+  transform:rotate(90deg);
+}
+.finance-detail-row td {
+  height:38px !important;
+  background:#FBFCFE;
+  color:#475467;
+  font-size:12px;
+}
+.finance-detail-row:hover td {
+  background:#F5F8FF;
+}
+.finance-merchant-name {
+  display:inline-block;
+  padding-left:20px;
+  color:#344054;
+}
+.finance-col-date { width:78px; }
+.finance-col-money { width:126px; }
+.finance-col-count { width:98px; }

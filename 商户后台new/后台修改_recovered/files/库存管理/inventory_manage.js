@@ -23,7 +23,9 @@
 
   function totalInventory() {
     return fullData.reduce(function(sum, merchant) {
-      return sum + merchant.totalStock;
+      return sum + merchant.siteList.reduce(function(siteSum, site) {
+        return siteSum + site.gameList.length;
+      }, 0);
     }, 0);
   }
 

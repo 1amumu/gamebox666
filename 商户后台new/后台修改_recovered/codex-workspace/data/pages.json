@@ -1,11 +1,11 @@
 ﻿{
     "generatedAt":  "2026-05-07 21:24:46",
     "sourceRoot":  "E:\\gamebox\\gamebox666\\商户后台new\\后台修改_recovered",
-    "pageCount":  56,
+    "pageCount":  55,
     "groups":  [
                    {
                        "name":  "axure-pages",
-                       "count":  43
+                       "count":  42
                    },
                    {
                        "name":  "entry",
@@ -492,15 +492,6 @@
                       "source":  "../运营数据_1.html",
                       "size":  63756,
                       "lastModified":  "2026-05-07 16:05:50",
-                      "status":  "axure-source"
-                  },
-                  {
-                      "title":  "赠送余额页",
-                      "file":  "赠送余额页.html",
-                      "group":  "axure-pages",
-                      "source":  "../赠送余额页.html",
-                      "size":  35242,
-                      "lastModified":  "2026-05-07 16:05:48",
                       "status":  "axure-source"
                   },
                   {

@@ -286,37 +286,34 @@ select { font-family:inherit; outline:none; }
 .codex-page-tabs {
   display:flex;
   align-items:center;
-  gap:6px;
-  height:34px;
-  margin:0 0 8px;
+  gap:4px;
+  height:32px;
+  margin:0 0 10px;
+  border-bottom:1px solid #D9E0EA;
+  background:#F7F9FC;
   overflow:hidden;
 }
 .codex-page-tab {
   display:inline-flex;
   align-items:center;
-  gap:6px;
   height:26px;
   max-width:180px;
   padding:0 8px;
-  border:1px solid #D7DEE8;
-  border-radius:5px;
+  border:1px solid #D6DEE8;
+  border-radius:0;
   background:#FFFFFF;
-  color:#475467;
+  color:#344054;
   cursor:pointer;
-  font-size:12px;
+  font-size:13px;
   line-height:24px;
 }
 .codex-page-tab.is-active {
-  border-color:#BFD6FF;
-  background:#EEF6FF;
-  color:#1677FF;
+  border-color:#4096FF;
+  background:#4096FF;
+  color:#FFFFFF;
 }
 .codex-page-tab-dot {
-  width:6px;
-  height:6px;
-  border-radius:999px;
-  background:currentColor;
-  opacity:.7;
+  display:none;
 }
 .codex-page-tab-title {
   min-width:0;
@@ -325,11 +322,10 @@ select { font-family:inherit; outline:none; }
   white-space:nowrap;
 }
 .codex-page-tab-close {
-  width:14px;
-  height:14px;
+  margin-left:6px;
   color:inherit;
   font:16px/14px Arial, sans-serif;
-  opacity:.72;
+  opacity:.78;
 }
 .smart-panel {
   min-height:calc(100vh - 118px);

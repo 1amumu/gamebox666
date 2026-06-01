@@ -316,12 +316,18 @@
 
   function dashboardStats() {
     var allTables = [];
+    var merchantMap = {};
     var peakOnline = 0;
     rooms.forEach(function(room) {
       normalizeRoom(room);
       allTables = allTables.concat(room.tables || []);
       peakOnline += Number(room.maxOnline || 0);
     });
+    allTables.forEach(function(table) {
+      var merchantId = String(table.id || "").split("-")[0];
+      if (merchantId) merchantMap[merchantId] = true;
+    });
+    var merchantCount = Object.keys(merchantMap).length;
     var siteCount = allTables.length;
     var totalBet = allTables.reduce(function(sum, table) { return sum + Number(table.flow || 0); }, 0);
     var online = allTables.reduce(function(sum, table) { return sum + Number(table.online || 0); }, 0);
@@ -329,6 +335,7 @@
       return sum + Number(table.flow || 0) * Number(table.rtp || 0);
     }, 0) / totalBet : 0;
     return {
+      merchantCount: merchantCount,
       siteCount: siteCount,
       totalBet: totalBet,
       rtp: rtp,
@@ -341,7 +348,7 @@
     var stats = dashboardStats();
     page.querySelector(".flight-room-dashboard").innerHTML =
       "<div class=\"dashboard-metrics\">" +
-        "<div class=\"dashboard-metric\"><span>站点数</span><strong>" + stats.siteCount + "</strong></div>" +
+        "<div class=\"dashboard-metric\"><span>商户-站点数</span><strong>" + stats.merchantCount + "-" + stats.siteCount + "</strong></div>" +
         "<div class=\"dashboard-metric\"><span>今日总下注</span><strong>" + money(stats.totalBet) + "</strong></div>" +
         "<div class=\"dashboard-metric\"><span>RTP</span><strong>" + stats.rtp.toFixed(2) + "%</strong></div>" +
         "<div class=\"dashboard-metric\"><span>今日在线人数</span><strong>" + stats.online + "</strong></div>" +
