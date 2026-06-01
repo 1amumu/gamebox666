@@ -13,7 +13,6 @@
   ];
   const playerLevels = ["低端玩家", "中端玩家", "优质玩家", "疑似刷分"];
   const siteCodes = ["SG-01", "MY-02", "TH-03", "PH-04", "VN-05", "ID-06"];
-  const riskLevels = ["低", "中", "高"];
   const settlementStatus = ["待审核", "待出款", "已完成", "异常"];
 
   function escapeHtml(value) {
@@ -169,24 +168,6 @@
         todayRtp: 78.3 + (index % 5) * 3.1,
         controlStatus: ["正常", "监控中", "已点控"][index % 3],
         updatedAt: datetimeShift(index * 2 + 2),
-      };
-    });
-  }
-
-  function buildFlightBurstRows(count) {
-    return range(count, (index) => {
-      const burst = 1.2 + (index % 9) * 0.45;
-      const activeRooms = 18 + (index % 6);
-      return {
-        date: datetimeShift(index),
-        roomCode: `FL-${1001 + index}`,
-        merchant: merchants[index % merchants.length],
-        site: siteCodes[index % siteCodes.length],
-        roundCount: 560 + index * 18,
-        averageBurst: burst,
-        highestBurst: burst + 8.4 + (index % 3) * 1.2,
-        activeRooms,
-        riskLevel: riskLevels[index % riskLevels.length],
       };
     });
   }
@@ -840,45 +821,6 @@
       ],
       rows: buildTodayProfitRows(36),
     }),
-    "flight-burst-data": tablePage({
-      title: "飞机爆点数据",
-      section: "数据管理",
-      description: "跟踪飞机类房间的爆点区间、活跃度和异常风险。",
-      filters: [
-        {
-          key: "merchant",
-          label: "商户",
-          type: "select",
-          options: ["全部", ...merchants],
-          apply: (row, value) => !value || value === "全部" || row.merchant === value,
-        },
-        {
-          key: "risk",
-          label: "风险等级",
-          type: "select",
-          options: ["全部", ...riskLevels],
-          apply: (row, value) => !value || value === "全部" || row.riskLevel === value,
-        },
-        {
-          key: "dateRange",
-          label: "日期选择",
-          type: "date-range",
-          apply: () => true,
-        },
-      ],
-      columns: [
-        { label: "抓取时间", key: "date" },
-        { label: "房间编号", key: "roomCode", className: "mono" },
-        { label: "商户", key: "merchant" },
-        { label: "站点", key: "site" },
-        { label: "局数", render: (row) => renderNumberCell(row.roundCount) },
-        { label: "平均爆点", render: (row) => renderTextCell(`${row.averageBurst.toFixed(2)}x`) },
-        { label: "最高爆点", render: (row) => renderTextCell(`${row.highestBurst.toFixed(2)}x`) },
-        { label: "活跃房间", render: (row) => renderNumberCell(row.activeRooms) },
-        { label: "风险等级", render: (row) => badge(row.riskLevel, row.riskLevel === "高" ? "danger" : row.riskLevel === "中" ? "warning" : "success") },
-      ],
-      rows: buildFlightBurstRows(24),
-    }),
     "player-online-data": tablePage({
       title: "玩家在线数据",
       section: "数据管理",
@@ -1158,66 +1100,11 @@
         },
       ],
     }),
-    "flight-room-config": formPage({
-      title: "飞机房间配置",
-      section: "游戏管理",
-      description: "集中维护飞机房间的底注、税率和爆点区间。",
-      formDefaults: {
-        roomName: "飞机高频房",
-        roomCode: "FR-2001",
-        baseBet: "20",
-        taxRate: "4",
-        enterLimit: "500",
-        burstFloor: "1.20",
-        burstCap: "8.60",
-        robotSwitch: "开启",
-      },
-      sections: [
-        {
-          title: "房间参数",
-          description: "基础押注、税率和进入门槛。",
-          fields: [
-            field("roomName", "房间名称", "text", "请输入房间名称"),
-            field("roomCode", "房间编号", "text", "请输入房间编号"),
-            field("baseBet", "基础底注", "number", "请输入基础底注"),
-            field("taxRate", "税率(%)", "number", "请输入税率"),
-            field("enterLimit", "进入门槛", "number", "请输入门槛"),
-            selectField("robotSwitch", "机器人开关", ["开启", "关闭"]),
-          ],
-        },
-        {
-          title: "爆点区间",
-          description: "配置风控区间和演示范围。",
-          fields: [
-            field("burstFloor", "最小爆点", "number", "请输入最小爆点"),
-            field("burstCap", "最大爆点", "number", "请输入最大爆点"),
-          ],
-        },
-      ],
-      preview: {
-        title: "当前房间列表预览",
-        description: "保存前先核对房间配置、在线人数和税率。",
-        columns: [
-          { label: "房间名称", key: "roomName" },
-          { label: "房间编号", key: "roomCode", className: "mono" },
-          { label: "商户", key: "merchant" },
-          { label: "基础底注", render: (row) => renderMoneyCell(row.baseBet) },
-          { label: "税率", key: "taxRate" },
-          { label: "活跃人数", render: (row) => renderNumberCell(row.activeUsers) },
-          { label: "爆点上限", key: "burstCap" },
-          { label: "状态", render: (row) => badge(row.status, row.statusTone) },
-        ],
-        rows: buildFlightRoomRows(8),
-      },
-    }),
     "flight-room-manage": {
-      type: "roomOps",
+      type: "planeRoomManagement",
       title: "飞机房间管理",
       section: "游戏管理",
-      description: "房间树与货币维度保留；站点列表表格设计已作废。",
-      defaultPageSize: 100,
-      pageSizeOptions: [50, 100, 500, 1000],
-      opsData: buildFlightRoomOpsData(),
+      description: "恢复为飞机房间管理页原型样式。",
     },
     "inventory-manage": tablePage({
       title: "库存管理",
@@ -1727,6 +1614,9 @@
       if (page.type === "playerTodayProfit") {
         pageStates[pageKey].filters = {
           platform: "",
+          merchant: "",
+          merchants: [],
+          merchantSearch: "",
           game: "",
           gameLabel: "全部游戏",
           gameBrand: "",
@@ -1734,6 +1624,7 @@
           dateFrom: "2026-05-06",
           dateTo: "2026-05-07",
         };
+        pageStates[pageKey].merchantPickerOpen = false;
         pageStates[pageKey].gamePickerOpen = false;
         pageStates[pageKey].controlModal = null;
         pageStates[pageKey].page = 1;
@@ -1744,11 +1635,9 @@
   }
 
   function updateBreadcrumb(page) {
+    // Topbar breadcrumb stays hidden by product request; menu pages should not repeat the current menu title here.
     const breadcrumb = document.querySelector("[data-breadcrumb]");
-    if (!breadcrumb) return;
-    breadcrumb.innerHTML = `<span>${escapeHtml(page.section)}</span><span>/</span><strong>${escapeHtml(
-      page.title,
-    )}</strong>`;
+    if (breadcrumb) breadcrumb.textContent = "";
     document.title = `${page.title} - 管理后台`;
   }
 
@@ -1778,6 +1667,14 @@
 
     if (page.type === "roomOps") {
       root.innerHTML = renderFlightRoomOpsPage(page, state);
+      return;
+    }
+
+    if (page.type === "planeRoomManagement") {
+      root.innerHTML = "";
+      if (typeof window.renderPlaneRoomManagementPage === "function") {
+        window.renderPlaneRoomManagementPage();
+      }
       return;
     }
 
@@ -3950,9 +3847,11 @@
     };
   }
 
-  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
-  pageConfigs["flight-room-manage"].defaultPageSize = 100;
-  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+  if (pageConfigs["flight-room-manage"].type === "roomOps") {
+    pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+    pageConfigs["flight-room-manage"].defaultPageSize = 100;
+    pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+  }
 
   function getRoomOpsCountryOptionLabel(country) {
     return `${country.country}-${country.code}`;
@@ -6595,6 +6494,7 @@
       return {
         level: item[0],
         platformId: item[1],
+        merchant: merchants[index % merchants.length],
         date: item[2],
         betCount: item[3],
         todayBet: item[4],
@@ -6635,16 +6535,60 @@
   function getPlayerTodayProfitRows(page, state) {
     const filters = state.filters || {};
     const platform = String(filters.platform || "").trim();
+    const selectedMerchants = Array.isArray(filters.merchants)
+      ? filters.merchants
+      : (filters.merchant ? [filters.merchant] : []);
     const game = String(filters.game || "").trim();
     const dateFrom = filters.dateFrom || "";
     const dateTo = filters.dateTo || "";
     return (page.rows || []).filter((row) => {
       if (platform && !row.platformId.includes(platform)) return false;
+      if (selectedMerchants.length && !selectedMerchants.includes(row.merchant)) return false;
       if (game && row.game !== game) return false;
       if (dateFrom && row.date < dateFrom) return false;
       if (dateTo && row.date > dateTo) return false;
       return true;
     });
+  }
+
+  function renderPlayerProfitMerchantPicker(state) {
+    const filters = state.filters || {};
+    const selectedMerchants = Array.isArray(filters.merchants) ? filters.merchants : [];
+    const merchantSearch = String(filters.merchantSearch || "").trim().toLowerCase();
+    const visibleMerchants = merchants.filter((merchant) => {
+      if (!merchantSearch) return true;
+      return merchant.toLowerCase().includes(merchantSearch);
+    });
+    const selectedText = selectedMerchants.length ? selectedMerchants.join("、") : "全部商户";
+    return `
+      <div class="admin-profit-merchant-picker">
+        <button class="admin-profit-merchant-trigger${selectedMerchants.length ? " has-value" : ""}" type="button" data-action="profit-merchant-toggle" title="${escapeHtml(selectedText)}">
+          <span class="admin-profit-merchant-value">${escapeHtml(selectedText)}</span>
+          <span class="admin-profit-game-arrow">⌄</span>
+        </button>
+        ${state.merchantPickerOpen ? `
+          <div class="admin-profit-merchant-panel">
+            <input class="admin-profit-merchant-search" type="text" value="${escapeHtml(filters.merchantSearch || "")}" placeholder="搜索商户" data-profit-merchant-search />
+            <div class="admin-profit-merchant-options">
+              <button class="admin-profit-merchant-option${selectedMerchants.length ? "" : " active"}" type="button" data-action="profit-merchant-clear">
+                <span class="admin-profit-merchant-check"></span>
+                <span>全部商户</span>
+              </button>
+              ${visibleMerchants.map((merchant) => {
+                const checked = selectedMerchants.includes(merchant);
+                return `
+                  <button class="admin-profit-merchant-option${checked ? " active" : ""}" type="button" data-action="profit-merchant-option" data-merchant="${escapeHtml(merchant)}">
+                    <span class="admin-profit-merchant-check"></span>
+                    <span>${escapeHtml(merchant)}</span>
+                  </button>
+                `;
+              }).join("")}
+              ${visibleMerchants.length ? "" : `<div class="admin-profit-merchant-empty">暂无匹配商户</div>`}
+            </div>
+          </div>
+        ` : ""}
+      </div>
+    `;
   }
 
   function renderPlayerProfitGamePicker(state) {
@@ -6943,6 +6887,10 @@
                 <span>平台ID</span>
                 <input class="admin-profit-input" type="text" value="${escapeHtml(filters.platform || "")}" placeholder="请输入" data-profit-filter="platform" />
               </label>
+              <label class="admin-profit-filter admin-profit-merchant-filter">
+                <span>商户选择</span>
+                ${renderPlayerProfitMerchantPicker(state)}
+              </label>
               <label class="admin-profit-filter">
                 <span>游戏选择</span>
                 ${renderPlayerProfitGamePicker(state)}
@@ -6966,6 +6914,7 @@
               <div class="admin-profit-row header">
                 <div>玩家标签</div>
                 <div>平台ID</div>
+                <div>商户</div>
                 <div>下注次数</div>
                 <div>今日下注</div>
                 <div>今日返奖</div>
@@ -6980,6 +6929,7 @@
                 <div class="admin-profit-row">
                   <div><span class="admin-player-tag ${getProfitTagClass(row.level)}">${escapeHtml(row.level)}</span></div>
                   <div><span class="admin-profit-player">${escapeHtml(row.platformId)} <button class="admin-profit-copy" type="button" data-action="profit-copy" data-copy="${escapeHtml(row.platformId)}" title="复制平台ID"></button></span></div>
+                  <div>${escapeHtml(row.merchant || "")}</div>
                   <div>${formatNumber(row.betCount)}</div>
                   <div><span class="admin-profit-num">${formatProfitPlainMoney(row.todayBet)}</span></div>
                   <div><span class="admin-profit-num">${formatProfitPlainMoney(row.todayPayout)}</span></div>
@@ -7198,11 +7148,13 @@
     };
   }
 
-  pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
-  pageConfigs["flight-room-manage"].defaultPageSize = 100;
-  pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
-  pageConfigs["flight-room-manage"].section = roomOpsText.section;
-  pageConfigs["flight-room-manage"].title = roomOpsText.title;
+  if (pageConfigs["flight-room-manage"].type === "roomOps") {
+    pageConfigs["flight-room-manage"].opsData = buildFlightRoomOpsData();
+    pageConfigs["flight-room-manage"].defaultPageSize = 100;
+    pageConfigs["flight-room-manage"].pageSizeOptions = [50, 100, 500, 1000];
+    pageConfigs["flight-room-manage"].section = roomOpsText.section;
+    pageConfigs["flight-room-manage"].title = roomOpsText.title;
+  }
 
   function renderCurrencySelector(page, state) {
     const countries = getOrderedCurrencies(page, state);
@@ -8286,10 +8238,54 @@
           return;
         }
       }
+      if (
+        state.merchantPickerOpen &&
+        !event.target.closest(".admin-profit-merchant-picker")
+      ) {
+        state.merchantPickerOpen = false;
+        if (!actionTarget) {
+          renderCurrentPage();
+          return;
+        }
+      }
       if (!actionTarget) return;
       const action = actionTarget.dataset.action;
+      if (action === "profit-merchant-toggle") {
+        state.merchantPickerOpen = !state.merchantPickerOpen;
+        state.gamePickerOpen = false;
+        renderCurrentPage();
+        return;
+      }
+      if (action === "profit-merchant-option") {
+        const merchant = actionTarget.dataset.merchant || "";
+        const selectedMerchants = Array.isArray(state.filters.merchants)
+          ? [...state.filters.merchants]
+          : [];
+        const index = selectedMerchants.indexOf(merchant);
+        if (index >= 0) {
+          selectedMerchants.splice(index, 1);
+        } else if (merchant) {
+          selectedMerchants.push(merchant);
+        }
+        state.filters.merchants = selectedMerchants;
+        state.filters.merchant = "";
+        state.page = 1;
+        state.merchantPickerOpen = true;
+        renderCurrentPage();
+        return;
+      }
+      if (action === "profit-merchant-clear") {
+        state.filters.merchants = [];
+        state.filters.merchant = "";
+        state.filters.merchantSearch = "";
+        state.page = 1;
+        state.merchantPickerOpen = true;
+        renderCurrentPage();
+        return;
+      }
       if (action === "profit-game-toggle") {
         state.gamePickerOpen = !state.gamePickerOpen;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
@@ -8310,12 +8306,16 @@
       if (action === "profit-search") {
         state.page = 1;
         state.gamePickerOpen = false;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
       if (action === "profit-reset") {
         state.filters = {
           platform: "",
+          merchant: "",
+          merchants: [],
+          merchantSearch: "",
           game: "",
           gameLabel: "全部游戏",
           gameBrand: "",
@@ -8325,6 +8325,7 @@
         };
         state.page = 1;
         state.gamePickerOpen = false;
+        state.merchantPickerOpen = false;
         renderCurrentPage();
         return;
       }
@@ -8573,6 +8574,21 @@
     const input = event.target.closest("[data-profit-filter]");
     const pageKey = getCurrentPageKey();
     const page = pageConfigs[pageKey];
+    const merchantSearch = event.target.closest("[data-profit-merchant-search]");
+    if (page?.type === "playerTodayProfit" && merchantSearch) {
+      const state = getPageState(pageKey, page);
+      state.filters.merchantSearch = merchantSearch.value;
+      state.merchantPickerOpen = true;
+      state.page = 1;
+      renderCurrentPage();
+      const nextSearch = document.querySelector("[data-profit-merchant-search]");
+      if (nextSearch) {
+        nextSearch.focus();
+        const cursor = nextSearch.value.length;
+        nextSearch.setSelectionRange(cursor, cursor);
+      }
+      return;
+    }
     if (page?.type === "playerTodayProfit" && input) {
       const state = getPageState(pageKey, page);
       state.filters[input.dataset.profitFilter] = input.value;
