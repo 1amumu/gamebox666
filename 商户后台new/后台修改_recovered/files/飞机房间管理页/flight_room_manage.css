@@ -447,13 +447,16 @@ select {
   flex:1 1 auto;
 }
 .flight-room-tabs button {
-  width:66px;
+  width:auto;
+  min-width:82px;
   height:34px;
+  padding:0 12px;
   border:1px solid #D9E0EA;
   border-left:0;
   background:#FFFFFF;
   color:#111827;
   font-size:13px;
+  white-space:nowrap;
   cursor:pointer;
 }
 .flight-room-tabs button:first-child {
@@ -1125,4 +1128,137 @@ select {
   color:#1677FF;
   font-size:20px;
   font-weight:700;
+}
+
+.currency-modal-mask {
+  position:fixed;
+  inset:0;
+  z-index:20010;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15, 23, 42, 0.28);
+}
+.currency-modal-mask[hidden] {
+  display:none;
+}
+.currency-modal {
+  position:relative;
+  width:490px;
+  height:307px;
+  padding:0 16px;
+  border-radius:4px;
+  background:#FFFFFF;
+  box-shadow:0 18px 42px rgba(16, 24, 40, 0.24);
+  overflow:hidden;
+}
+.currency-modal-close {
+  position:absolute;
+  right:12px;
+  top:8px;
+  width:24px;
+  height:24px;
+  border:0;
+  background:transparent;
+  color:#98A2B3;
+  cursor:pointer;
+  font-size:22px;
+  line-height:22px;
+}
+.currency-modal h2 {
+  margin:0 0 2px;
+  height:42px;
+  color:#1F2937;
+  font-size:18px;
+  font-weight:500;
+  line-height:42px;
+}
+.currency-form-row {
+  display:grid;
+  grid-template-columns:52px 1fr;
+  align-items:center;
+  min-height:50px;
+  color:#4B5563;
+  font-size:14px;
+  font-weight:600;
+}
+.currency-form-row.is-required span::before {
+  content:"*";
+  margin-right:3px;
+  color:#F04438;
+}
+.currency-form-row input,
+.currency-form-row select {
+  height:32px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  background:#FFFFFF;
+  color:#344054;
+  font-size:14px;
+  padding:0 10px;
+}
+.currency-form-row select {
+  width:200px;
+}
+.currency-form-row input[name="area"] {
+  width:410px;
+}
+.currency-stepper {
+  display:grid;
+  grid-template-columns:34px 86px 34px;
+  width:154px;
+  height:32px;
+  border:1px solid #D0D5DD;
+  border-radius:4px;
+  overflow:hidden;
+}
+.currency-stepper button {
+  border:0;
+  border-right:1px solid #D0D5DD;
+  background:#F8FAFC;
+  color:#667085;
+  cursor:pointer;
+  font-size:16px;
+}
+.currency-stepper button:last-child {
+  border-right:0;
+  border-left:1px solid #D0D5DD;
+}
+.currency-stepper input {
+  width:86px;
+  height:30px;
+  border:0;
+  padding:0;
+  text-align:center;
+}
+.currency-modal-error {
+  margin-left:52px;
+  color:#D92D20;
+  font-size:12px;
+  line-height:18px;
+}
+.currency-modal-footer {
+  position:absolute;
+  right:16px;
+  bottom:12px;
+  display:flex;
+  gap:12px;
+}
+.currency-modal-footer button {
+  height:32px;
+  min-width:60px;
+  padding:0 14px;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:14px;
+}
+.currency-modal-cancel {
+  border:1px solid #D0D5DD;
+  background:#FFFFFF;
+  color:#475467;
+}
+.currency-modal-save {
+  border:1px solid #1677FF;
+  background:#1677FF;
+  color:#FFFFFF;
 }

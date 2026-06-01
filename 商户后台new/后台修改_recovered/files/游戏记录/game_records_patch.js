@@ -54,6 +54,11 @@
     return (Math.random() * 4.99 + 0.01).toFixed(2);
   }
 
+  function freeSpinHtml(row) {
+    var seed = Number(String(row[0] || "").slice(-2)) || 0;
+    return "<span class=\"game-record-free-spin\">" + (seed % 3 === 0 ? "免费旋转" : "正常触发") + "</span>";
+  }
+
   var slotSymbolAssets = {
     "金币": "files/游戏记录/symbols/coin.svg",
     "宝箱": "files/游戏记录/symbols/chest.svg",
@@ -79,7 +84,7 @@
       "<td><button class=\"game-record-link\" data-player=\"" + row[3] + "\">" + row[3] + "</button></td>" +
       "<td>" + row[4] + "</td><td>" + row[5] + "</td>" +
       "<td class=\"" + winClass + "\">" + money(row[6]) + "</td>" +
-      "<td>" + money(row[7]).replace("+", "") + "</td><td>" + row[8] + "</td><td>" + randomT() + "</td>" +
+      "<td>" + money(row[7]).replace("+", "") + "</td><td>" + row[8] + "</td><td>" + freeSpinHtml(row) + "</td><td>" + randomT() + "</td>" +
       "<td><span class=\"game-record-strategy\">" + row[9] + "</span></td>" +
       "<td>" + row[10] + "</td><td>" + row[11] + "</td>" +
     "</tr>";
@@ -243,6 +248,170 @@
     modal.hidden = false;
   }
 
+  function plainMoney(value) {
+    return Number(value || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function playerRecords(playerId) {
+    return records.filter(function(row) {
+      return row[3] === playerId;
+    });
+  }
+
+  function playerSnapshot(playerId) {
+    var list = playerRecords(playerId);
+    var source = list[0] || records[0];
+    var totalBet = list.reduce(function(sum, row) { return sum + Number(row[7] || 0); }, 0);
+    var totalProfit = list.reduce(function(sum, row) { return sum + Number(row[6] || 0); }, 0);
+    var balance = Number(String(source[11] || "0").replace(/,/g, ""));
+    var seed = Number(String(playerId).replace(/\D/g, "").slice(-4)) || 1000;
+    return {
+      playerId: playerId,
+      merchant: "星海娱乐 M10086",
+      loginIp: "103.44." + (seed % 90 + 10) + "." + (seed % 180 + 30),
+      createdAt: "2026-05-" + String(seed % 18 + 1).padStart(2, "0") + " 10:21:44",
+      lastLogin: source[1],
+      status: seed % 2 ? "在线" : "离线",
+      currency: source[5],
+      todayBet: totalBet || Number(source[7] || 0),
+      todayProfit: totalProfit || Number(source[6] || 0),
+      historyBet: (totalBet || Number(source[7] || 0)) * (seed % 26 + 18),
+      historyProfit: (totalProfit || Number(source[6] || 0)) * (seed % 12 + 6),
+      balance: balance,
+      loginCount: (seed % 9 + 1) + " / " + (seed % 220 + 80),
+      records: list.length ? list : [source]
+    };
+  }
+
+  function playerModalTabsHtml() {
+    return ["基础信息", "下注信息", "登录日志", "用户标签", "关联账号"].map(function(tab, index) {
+      return "<button type=\"button\" class=\"player-modal-tab" + (index === 0 ? " is-active" : "") + "\" data-player-tab=\"" + tab + "\">" + tab + "</button>";
+    }).join("");
+  }
+
+  function playerBaseInfoHtml(row) {
+    var rtp = row.historyBet ? ((row.historyBet + row.historyProfit) / row.historyBet * 100).toFixed(2) : "0.00";
+    return "<div class=\"player-base-layout\">" +
+      "<div class=\"modal-section-head\"><span>基础资料</span><button type=\"button\" class=\"control-btn\">点控</button></div>" +
+      "<table class=\"info-table\"><tbody>" +
+        "<tr><th>账号ID</th><td>" + escapeHtml(row.playerId) + "</td><th>商户站点</th><td>" + escapeHtml(row.merchant) + "</td></tr>" +
+        "<tr><th>余额</th><td>" + plainMoney(row.balance) + "</td><th>游戏局数</th><td>" + Math.max(1, row.records.length).toLocaleString("en-US") + "</td></tr>" +
+        "<tr><th>总返奖</th><td>" + plainMoney(row.historyBet + row.historyProfit) + "</td><th>总派奖</th><td>" + plainMoney(row.historyBet * 0.18) + "</td></tr>" +
+        "<tr><th>累计输赢</th><td class=\"" + (row.historyProfit >= 0 ? "money-positive" : "money-negative") + "\">" + plainMoney(row.historyProfit) + "</td><th>RTP</th><td>" + rtp + "%</td></tr>" +
+        "<tr><th>创建时间</th><td>" + row.createdAt + "</td><th>登录次数</th><td>" + row.loginCount.split("/").pop().trim() + "</td></tr>" +
+        "<tr><th>最后登录时间</th><td>" + row.lastLogin + "</td><th>最后登录IP</th><td><span>" + row.loginIp + "</span><button type=\"button\" class=\"ip-history-toggle\" data-ip-history>展开</button></td></tr>" +
+        "<tr><th>控制</th><td colspan=\"3\">RTP 70%　目标 " + plainMoney(row.historyBet * 0.12) + "　目前 " + plainMoney(row.historyProfit) + "</td></tr>" +
+      "</tbody></table>" +
+      "<div class=\"ip-history-panel\" hidden>" +
+        "<div class=\"ip-history-title\">历史登录IP <span>共 4 个</span></div>" +
+        "<div class=\"ip-history-list\"><span>" + row.loginIp + "</span><span>103.44.18.92</span><span>45.118.22.16</span><span>182.74.21.109</span></div>" +
+      "</div>" +
+    "</div>";
+  }
+
+  function playerTableHtml(headers, data, extraClass) {
+    return "<div class=\"modal-table-card\"><table class=\"modal-table " + (extraClass || "") + "\"><thead><tr>" +
+      headers.map(function(header) { return "<th>" + header + "</th>"; }).join("") +
+      "</tr></thead><tbody>" +
+      data.map(function(row) {
+        return "<tr>" + row.map(function(cell) {
+          return "<td>" + String(cell).replace(/\n/g, "<br>") + "</td>";
+        }).join("") + "</tr>";
+      }).join("") +
+      "</tbody></table></div>";
+  }
+
+  function playerBetInfoHtml(row) {
+    var data = row.records.slice(0, 8).map(function(record) {
+      return [record[0], record[1], record[2], record[4], plainMoney(record[7]), plainMoney(Number(record[7]) + Number(record[6])), record[8], randomT(), (Number(record[6]) >= 0 ? "高" : "低") + plainMoney(Math.abs(record[6]) * 12), record[9], record[11]];
+    });
+    return playerTableHtml(["记录ID", "时间", "牌局编号", "游戏名称", "下注金额", "游戏返奖", "返奖倍数", "T", "高/低库存", "控制策略", "账户余额"], data, "bet-info-table");
+  }
+
+  function playerLoginLogHtml(row) {
+    return playerTableHtml(["时间", "登录ip", "登录设备", "操作", "登录余额"], [
+      [row.lastLogin, row.loginIp, "Chrome 125 / Windows 11", "登录", plainMoney(row.balance)],
+      ["2026-05-27 21:08:31", "103.44.18.92", "Safari 17 / iOS 17", "登录", plainMoney(row.balance - 320)],
+      ["2026-05-26 18:42:17", "45.118.22.16", "Edge 124 / Windows 10", "退出", plainMoney(row.balance - 560)]
+    ]);
+  }
+
+  function playerTagsHtml() {
+    return playerTableHtml(["标签", "说明"], [
+      ["【新】高频活跃户", "获利即走，RTP异常，自杀式倍投，机械下注"],
+      ["【白名单潜力】\n【新】优质贡献户", "自杀式倍投，机械下注"],
+      ["重点风控核心风险户", "快速大额盈利，机械下注"]
+    ], "tag-table");
+  }
+
+  function playerLinkedAccountsHtml(row) {
+    var base = Number(String(row.playerId).replace(/\D/g, "").slice(-8)) || 10000000;
+    return "<div class=\"linked-title\">同IP账号</div>" +
+      playerTableHtml(["用户id", "注册时长(天)", "游戏局数", "累计输赢(RTP)", "余额"], [
+        [row.playerId, "29", Math.max(1, row.records.length), plainMoney(row.historyProfit) + " (" + ((row.historyBet + row.historyProfit) / row.historyBet * 100).toFixed(2) + "%)", plainMoney(row.balance)],
+        ["P" + (base + 246), "18", "72", "106,500.37 (112.54%)", "905,255.00"]
+      ]) +
+      "<div class=\"linked-title linked-title-secondary\">行为相似账号</div>" +
+      playerTableHtml(["用户id", "注册时长(天)", "游戏局数", "累计输赢(RTP)", "余额"], [
+        ["P" + (base + 531), "26", "118", plainMoney(row.historyProfit * 0.82) + " (108.31%)", plainMoney(row.balance * 0.76)],
+        ["P" + (base + 918), "31", "96", plainMoney(row.historyProfit * 0.64) + " (104.92%)", plainMoney(row.balance * 0.58)]
+      ]);
+  }
+
+  function playerModalContent(tab, row) {
+    if (tab === "下注信息") return playerBetInfoHtml(row);
+    if (tab === "登录日志") return playerLoginLogHtml(row);
+    if (tab === "用户标签") return playerTagsHtml(row);
+    if (tab === "关联账号") return playerLinkedAccountsHtml(row);
+    return playerBaseInfoHtml(row);
+  }
+
+  function ensurePlayerModal() {
+    var modal = document.querySelector(".game-player-modal");
+    if (modal) return modal;
+    modal = document.createElement("div");
+    modal.className = "player-modal-mask game-player-modal";
+    modal.hidden = true;
+    document.body.appendChild(modal);
+    modal.addEventListener("click", function(event) {
+      if (event.target.closest("[data-modal-close]") || event.target === modal) {
+        modal.hidden = true;
+        return;
+      }
+      var tab = event.target.closest("[data-player-tab]");
+      if (tab) {
+        var panel = tab.closest(".player-modal-panel");
+        var row = playerSnapshot(panel.getAttribute("data-active-player"));
+        Array.prototype.forEach.call(panel.querySelectorAll("[data-player-tab]"), function(item) {
+          item.classList.toggle("is-active", item === tab);
+        });
+        panel.querySelector(".player-modal-body").innerHTML = playerModalContent(tab.getAttribute("data-player-tab"), row);
+        return;
+      }
+      var ipHistory = event.target.closest("[data-ip-history]");
+      if (ipHistory) {
+        var historyPanel = ipHistory.closest(".player-base-layout").querySelector(".ip-history-panel");
+        var willShow = historyPanel.hidden;
+        historyPanel.hidden = !willShow;
+        ipHistory.textContent = willShow ? "收起" : "展开";
+      }
+    });
+    return modal;
+  }
+
+  function openPlayerOverviewModal(playerId) {
+    var row = playerSnapshot(playerId);
+    var modal = ensurePlayerModal();
+    modal.innerHTML =
+      "<div class=\"player-modal-panel\" data-active-player=\"" + escapeHtml(row.playerId) + "\">" +
+        "<div class=\"player-modal-head\"><div class=\"player-modal-title\">玩家详情</div><button type=\"button\" class=\"player-modal-close\" data-modal-close>×</button></div>" +
+        "<div class=\"player-modal-tabs\">" + playerModalTabsHtml() + "</div>" +
+        "<div class=\"player-modal-body\">" + playerBaseInfoHtml(row) + "</div>" +
+        "<div class=\"player-modal-actions\"><button type=\"button\" class=\"modal-primary\" data-modal-close>确定</button></div>" +
+      "</div>";
+    modal.hidden = false;
+  }
+
   function gameFilterHtml() {
     var tree = gameTree.map(function(typeNode) {
       var brands = typeNode.brands.map(function(brand) {
@@ -280,7 +449,7 @@
         "<label><span>时间范围</span><input data-filter=\"time\" value=\"2026-05-08 00:00 - 2026-05-08 23:59\"></label>" +
         "<div class=\"game-records-actions\"><button type=\"button\" data-action=\"reset\">重置</button><button type=\"button\" data-action=\"query\">查询</button></div>" +
       "</div>" +
-      "<div class=\"game-records-table-card\"><div class=\"game-records-table-wrap\"><table class=\"game-records-table\"><thead><tr><th>记录ID</th><th>时间</th><th>牌局编号</th><th>玩家id</th><th>游戏名称</th><th>货币</th><th>玩家输赢</th><th>下注金额</th><th>返奖倍数</th><th>T</th><th>控制策略</th><th>下注前</th><th>结算后</th></tr></thead><tbody></tbody></table></div></div>";
+      "<div class=\"game-records-table-card\"><div class=\"game-records-table-wrap\"><table class=\"game-records-table\"><thead><tr><th>记录ID</th><th>时间</th><th>牌局编号</th><th>玩家id</th><th>游戏名称</th><th>货币</th><th>玩家输赢</th><th>下注金额</th><th>返奖倍数</th><th>免费旋转</th><th>T</th><th>控制策略</th><th>下注前</th><th>结算后</th></tr></thead><tbody></tbody></table></div></div>";
 
     base.appendChild(page);
     renderRows(page, records);
@@ -291,6 +460,11 @@
       var recordButton = event.target.closest("[data-record]");
       if (recordButton) {
         openRecordDetail(recordButton.getAttribute("data-record"));
+        return;
+      }
+      var playerButton = event.target.closest("[data-player]");
+      if (playerButton) {
+        openPlayerOverviewModal(playerButton.getAttribute("data-player"));
         return;
       }
       if (event.target.classList.contains("game-filter-arrow")) {

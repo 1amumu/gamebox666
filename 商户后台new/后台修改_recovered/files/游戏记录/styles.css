@@ -5061,23 +5061,324 @@ body {
   background:#F5F8FF;
 }
 
-/* Remove pool column and fit 13-column game record table. */
+/* Remove pool column and fit 14-column game record table. */
 .game-records-table th:nth-child(10),
 .game-records-table td:nth-child(10) {
-  width:48px !important;
+  width:86px !important;
   text-align:center !important;
 }
 .game-records-table th:nth-child(11),
 .game-records-table td:nth-child(11) {
-  width:76px !important;
-  text-align:left !important;
+  width:44px !important;
+  text-align:center !important;
 }
 .game-records-table th:nth-child(12),
-.game-records-table td:nth-child(12),
+.game-records-table td:nth-child(12) {
+  width:70px !important;
+  text-align:left !important;
+}
 .game-records-table th:nth-child(13),
-.game-records-table td:nth-child(13) {
-  width:104px !important;
+.game-records-table td:nth-child(13),
+.game-records-table th:nth-child(14),
+.game-records-table td:nth-child(14) {
+  width:92px !important;
   text-align:right !important;
+}
+
+.game-record-free-spin {
+  display:inline-block;
+  max-width:100%;
+  line-height:22px;
+  color:#344054;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Player overview detail modal reused from 玩家总览页. */
+.player-modal-mask.game-player-modal {
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15, 23, 42, 0.42);
+  backdrop-filter:blur(2px);
+}
+.player-modal-mask.game-player-modal[hidden] {
+  display:none !important;
+}
+.player-modal-panel {
+  position:relative;
+  width:920px;
+  height:590px;
+  border:1px solid #D8E2F0;
+  border-radius:12px;
+  background:#FFFFFF;
+  box-shadow:0 24px 70px rgba(15, 23, 42, 0.26);
+  overflow:hidden;
+}
+.player-modal-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:56px;
+  padding:0 20px 0 24px;
+  border-bottom:1px solid #E6EEF8;
+  background:linear-gradient(180deg, #FBFDFF 0%, #F6F9FF 100%);
+}
+.player-modal-title {
+  color:#101828;
+  font-size:18px;
+  font-weight:700;
+  line-height:24px;
+}
+.player-modal-close {
+  width:34px;
+  height:34px;
+  border:1px solid #D0D5DD;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#667085;
+  cursor:pointer;
+  font-size:22px;
+  line-height:30px;
+}
+.player-modal-tabs {
+  display:flex;
+  gap:4px;
+  height:38px;
+  padding:0 20px;
+  align-items:flex-end;
+  border-bottom:1px solid #EAECF0;
+  background:#FFFFFF;
+}
+.player-modal-tab {
+  height:34px;
+  min-width:86px;
+  padding:0 12px;
+  border:0;
+  border-bottom:2px solid transparent;
+  border-radius:0;
+  background:transparent;
+  color:#344054;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  line-height:34px;
+}
+.player-modal-tab.is-active {
+  border-bottom-color:#1677FF;
+  color:#1677FF;
+  font-weight:700;
+}
+.player-modal-body {
+  height:420px;
+  padding:18px 22px 14px;
+  overflow:auto;
+  background:#F8FAFD;
+}
+.player-modal-actions {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  display:flex;
+  justify-content:flex-end;
+  height:56px;
+  padding:10px 22px;
+  border-top:1px solid #EAECF0;
+  background:#FFFFFF;
+}
+.modal-primary {
+  height:36px;
+  min-width:84px;
+  padding:0 20px;
+  border:1px solid #1677FF;
+  border-radius:7px;
+  background:#1677FF;
+  color:#FFFFFF;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
+}
+.modal-section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  color:#101828;
+  font-size:15px;
+  font-weight:700;
+}
+.control-btn {
+  height:36px;
+  padding:0 18px;
+  border:1px solid #BFD6FF;
+  border-radius:7px;
+  background:#FFFFFF;
+  color:#1677FF;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
+}
+.info-table {
+  width:100%;
+  border:1px solid #E1E8F2;
+  border-collapse:separate;
+  border-spacing:0;
+  border-radius:10px;
+  overflow:hidden;
+  background:#FFFFFF;
+}
+.info-table th,
+.info-table td {
+  height:46px;
+  padding:0 16px;
+  border-right:1px solid #EEF2F6;
+  border-bottom:1px solid #EEF2F6;
+  color:#344054;
+  font-size:14px;
+  text-align:left;
+  white-space:nowrap;
+}
+.info-table th {
+  width:128px;
+  background:#F7FAFF;
+  color:#475467;
+  font-weight:700;
+}
+.info-table td {
+  font-weight:500;
+}
+.info-table tr:last-child th,
+.info-table tr:last-child td,
+.modal-table tr:last-child td {
+  border-bottom:0;
+}
+.info-table th:last-child,
+.info-table td:last-child {
+  border-right:0;
+}
+.ip-history-toggle {
+  margin-left:8px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#1677FF;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+}
+.ip-history-panel {
+  margin-top:10px;
+  padding:12px 14px;
+  border:1px solid #DCE8F8;
+  border-radius:9px;
+  background:#FFFFFF;
+}
+.ip-history-title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  color:#101828;
+  font-size:14px;
+  font-weight:700;
+}
+.ip-history-title span {
+  color:#667085;
+  font-size:13px;
+  font-weight:500;
+}
+.ip-history-list {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.ip-history-list span {
+  height:26px;
+  padding:0 10px;
+  border:1px solid #E4EAF2;
+  border-radius:14px;
+  background:#F8FAFC;
+  color:#344054;
+  font-size:13px;
+  line-height:24px;
+}
+.modal-table-card {
+  border:1px solid #E1E8F2;
+  border-radius:10px;
+  overflow:hidden;
+  background:#FFFFFF;
+}
+.modal-table {
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:auto;
+}
+.modal-table thead {
+  background:#F3F7FE;
+}
+.modal-table th,
+.modal-table td {
+  height:40px;
+  padding:0 12px;
+  color:#344054;
+  font-size:14px;
+  font-weight:400;
+  text-align:center;
+  white-space:nowrap;
+  border-bottom:1px solid #EEF2F6;
+}
+.modal-table th {
+  font-weight:700;
+}
+.bet-info-table {
+  table-layout:fixed;
+}
+.bet-info-table th,
+.bet-info-table td {
+  height:38px;
+  padding:0 7px;
+  font-size:12px;
+}
+.tag-table th,
+.tag-table td {
+  text-align:left;
+}
+.tag-table td:first-child {
+  width:220px;
+  color:#1D2939;
+  font-weight:700;
+}
+.linked-title {
+  display:inline-block;
+  margin:0 0 12px;
+  padding:5px 10px;
+  border:1px solid #BFDBFE;
+  border-radius:14px;
+  background:#EFF6FF;
+  color:#175CD3;
+  font-size:13px;
+  font-weight:700;
+}
+.linked-title-secondary {
+  margin-top:16px;
+  border-color:#D9D6FE;
+  background:#F4F3FF;
+  color:#5925DC;
+}
+.money-positive {
+  color:#16A34A;
+  font-weight:600;
+}
+.money-negative {
+  color:#D92D20;
+  font-weight:600;
 }
 
 /* Fill the 1920 preview canvas without the Axure outer blank frame. */

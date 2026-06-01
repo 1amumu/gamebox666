@@ -11,6 +11,22 @@
     USD: "美元 - USD"
   };
 
+  var currencyLabels = {
+    INR: "印度-INR",
+    GHS: "加纳-GHS",
+    USD: "美国-USD"
+  };
+
+  var currencyOptions = [
+    { code: "INR", area: "印度", timezone: "UTC+05:30" },
+    { code: "GHS", area: "加纳", timezone: "UTC+00:00" },
+    { code: "USD", area: "美国", timezone: "UTC-05:00" },
+    { code: "PHP", area: "菲律宾", timezone: "UTC+08:00" },
+    { code: "BRL", area: "巴西", timezone: "UTC-03:00" },
+    { code: "VND", area: "越南", timezone: "UTC+07:00" },
+    { code: "THB", area: "泰国", timezone: "UTC+07:00" }
+  ];
+
   var roomDefaults = {
     region: "印度卢比 - INR",
     bigMultiplier: 500,
@@ -264,6 +280,17 @@
           "</div>" +
         "</div>" +
       "</div>" +
+      "<div class=\"currency-modal-mask\" hidden>" +
+        "<div class=\"currency-modal\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"currencyModalTitle\">" +
+          "<button type=\"button\" class=\"currency-modal-close\" data-currency-modal-close=\"true\" aria-label=\"关闭\">×</button>" +
+          "<h2 id=\"currencyModalTitle\">新增货币</h2>" +
+          "<div class=\"currency-modal-body\"></div>" +
+          "<div class=\"currency-modal-footer\">" +
+            "<button type=\"button\" class=\"currency-modal-cancel\" data-currency-modal-close=\"true\">取消</button>" +
+            "<button type=\"button\" class=\"currency-modal-save\" data-currency-modal-save=\"true\">保存</button>" +
+          "</div>" +
+        "</div>" +
+      "</div>" +
     "</div>";
   }
 
@@ -309,7 +336,7 @@
   function render(page) {
     renderDashboard(page);
     page.querySelector(".flight-room-tabs").innerHTML = currencies.map(function(currency) {
-      return "<button type=\"button\" class=\"" + (currency === activeCurrency ? "is-active" : "") + "\" data-currency=\"" + currency + "\">" + currency + "</button>";
+      return "<button type=\"button\" class=\"" + (currency === activeCurrency ? "is-active" : "") + "\" data-currency=\"" + currency + "\">" + escapeHtml(currencyLabels[currency] || currency) + "</button>";
     }).join("");
     page.querySelector(".flight-room-grid").innerHTML = rooms.map(roomHtml).join("");
   }
@@ -375,18 +402,68 @@
   }
 
   function addCurrency(page) {
-    var value = window.prompt("请输入货币名称", "PHP");
-    if (!value) return;
-    var currency = value.trim().toUpperCase();
-    if (!currency) return;
-    if (currencies.indexOf(currency) !== -1) {
-      activeCurrency = currency;
-      render(page);
+    openCurrencyModal(page);
+  }
+
+  function currencySelectOptions() {
+    return "<option value=\"\">请选择</option>" + currencyOptions.map(function(item) {
+      return "<option value=\"" + item.code + "\">" + item.code + "</option>";
+    }).join("");
+  }
+
+  function selectedCurrencyOption(code) {
+    return currencyOptions.filter(function(item) {
+      return item.code === code;
+    })[0] || null;
+  }
+
+  function openCurrencyModal(page) {
+    var modal = document.querySelector(".currency-modal-mask");
+    if (!modal) return;
+    modal.querySelector(".currency-modal-body").innerHTML =
+      "<label class=\"currency-form-row is-required\"><span>币种</span><select name=\"code\">" + currencySelectOptions() + "</select></label>" +
+      "<label class=\"currency-form-row is-required\"><span>地区</span><input name=\"area\" placeholder=\"请输入运营地区\"></label>" +
+      "<label class=\"currency-form-row\"><span>时区</span><select name=\"timezone\"><option>UTC+00:00</option><option>UTC+05:30</option><option>UTC+07:00</option><option>UTC+08:00</option><option>UTC-03:00</option><option>UTC-05:00</option></select></label>" +
+      "<label class=\"currency-form-row currency-order-row\"><span>序号</span><div class=\"currency-stepper\"><button type=\"button\" data-currency-step=\"-1\">−</button><input name=\"order\" type=\"number\" value=\"0\"><button type=\"button\" data-currency-step=\"1\">＋</button></div></label>" +
+      "<div class=\"currency-modal-error\" hidden></div>";
+    modal._page = page;
+    modal.hidden = false;
+    modal.querySelector("select[name='code']").focus();
+  }
+
+  function closeCurrencyModal() {
+    var modal = document.querySelector(".currency-modal-mask");
+    if (modal) modal.hidden = true;
+  }
+
+  function saveCurrencyModal() {
+    var modal = document.querySelector(".currency-modal-mask");
+    var codeInput = modal.querySelector("select[name='code']");
+    var areaInput = modal.querySelector("input[name='area']");
+    var orderInput = modal.querySelector("input[name='order']");
+    var error = modal.querySelector(".currency-modal-error");
+    var code = codeInput.value.trim().toUpperCase();
+    var area = areaInput.value.trim();
+    if (!code) {
+      error.textContent = "请选择币种";
+      error.hidden = false;
       return;
     }
-    currencies.push(currency);
-    activeCurrency = currency;
-    render(page);
+    if (!area) {
+      error.textContent = "请输入运营地区";
+      error.hidden = false;
+      return;
+    }
+    currencyLabels[code] = area + "-" + code;
+    currencyRegions[code] = area + " - " + code;
+    if (currencies.indexOf(code) === -1) {
+      var order = Number(orderInput.value || currencies.length);
+      var insertIndex = Math.max(0, Math.min(currencies.length, order));
+      currencies.splice(insertIndex, 0, code);
+    }
+    activeCurrency = code;
+    render(modal._page || document.querySelector(".flight-room-page"));
+    closeCurrencyModal();
   }
 
   function addRoom(page) {
@@ -684,6 +761,14 @@
         addCurrency(page);
         return;
       }
+      if (event.target.closest("[data-currency-modal-close]")) {
+        closeCurrencyModal();
+        return;
+      }
+      if (event.target.closest("[data-currency-modal-save]")) {
+        saveCurrencyModal();
+        return;
+      }
       if (event.target.closest("[data-add-room]")) {
         addRoom(page);
         return;
@@ -728,6 +813,13 @@
         adjustStepper(stepButton.closest(".room-stepper"), Number(stepButton.getAttribute("data-step")));
         return;
       }
+      var currencyStepButton = event.target.closest("[data-currency-step]");
+      if (currencyStepButton) {
+        var stepInput = currencyStepButton.closest(".currency-stepper").querySelector("input");
+        var nextValue = Number(stepInput.value || 0) + Number(currencyStepButton.getAttribute("data-currency-step"));
+        stepInput.value = Math.max(0, nextValue);
+        return;
+      }
       var groupToggle = event.target.closest("[data-sidebar-toggle]");
       if (groupToggle) {
         var section = groupToggle.closest(".sidebar-section");
@@ -759,6 +851,17 @@
     app.addEventListener("input", function(event) {
       if (event.target.matches("input[name='stockDelta']")) {
         updateStockPreview(event.target.closest(".room-modal"));
+      }
+    });
+
+    app.addEventListener("change", function(event) {
+      if (event.target.matches(".currency-modal select[name='code']")) {
+        var option = selectedCurrencyOption(event.target.value);
+        var modal = event.target.closest(".currency-modal");
+        if (option && modal) {
+          modal.querySelector("input[name='area']").value = option.area;
+          modal.querySelector("select[name='timezone']").value = option.timezone;
+        }
       }
     });
   }
