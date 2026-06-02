@@ -38,6 +38,24 @@
     return (gameTotalStock(game) / game.initStock).toFixed(2);
   }
 
+  function highLowStockRatio(game) {
+    var total = gameTotalStock(game);
+    if (!total) return "0%/0%";
+    var high = Math.round(Number(game.stock || 0) / total * 100);
+    return high + "%/" + (100 - high) + "%";
+  }
+
+  function highStockPercent(game) {
+    var total = gameTotalStock(game);
+    if (!total) return 50;
+    return Math.round(Number(game.stock || 0) / total * 100);
+  }
+
+  function ratioRangeStyle(value) {
+    var ratio = Math.max(0, Math.min(100, Number(value || 0)));
+    return "background:linear-gradient(90deg,#1677FF 0%,#1677FF " + ratio + "%,#E4E7EC " + ratio + "%,#E4E7EC 100%)";
+  }
+
   function updateOverviewTotal() {
     var node = document.getElementById("overviewTotalStock");
     if (node) node.textContent = formatNumber(totalInventory());
@@ -108,6 +126,8 @@
           var stock = randomNumber(STOCK_MIN, STOCK_MAX);
           var lowStock = randomNumber(5000, 280000);
           var gameCode = String(100000 + (merchantId - 1) * SITE_PER_MERCHANT * GAME_PER_SITE + (siteId - 1) * GAME_PER_SITE + gameId);
+          var todayBet = randomNumber(180000, 980000);
+          var todayPayout = randomNumber(120000, 860000);
           var game = {
             id: gameId,
             gameCode: gameCode,
@@ -115,7 +135,10 @@
             stock: stock,
             lowStock: lowStock,
             initStock: INIT_STOCK,
+            todayBet: todayBet,
+            todayPayout: todayPayout,
             todayProfit: randomNumber(-180000, 260000),
+            highLowBoundary: 10,
             rtp: randomNumber(90, 97, 2)
           };
           site.gameList.push(game);
@@ -343,13 +366,17 @@
           "<div><span>当前高库存</span><strong>" + formatNumber(game.stock) + "</strong></div>" +
           "<div><span>当前低库存</span><strong>" + formatNumber(game.lowStock) + "</strong></div>" +
           "<div><span>当前初始库存</span><strong>" + formatNumber(game.initStock) + "</strong></div>" +
+          "<div><span>高低库存比例</span><strong>" + highLowStockRatio(game) + "</strong></div>" +
+          "<div><span>高低库存倍率分界</span><strong>" + (game.highLowBoundary || 10) + "x</strong></div>" +
         "</div>" +
         "<div class=\"stock-form\">" +
           "<label><span>高库存调整</span><input type=\"number\" step=\"1\" id=\"stockHighInput\" value=\"0\" placeholder=\"输入正数增加，负数减少\"></label>" +
           "<label><span>低库存调整</span><input type=\"number\" step=\"1\" id=\"stockLowInput\" value=\"0\" placeholder=\"输入正数增加，负数减少\"></label>" +
           "<label><span>初始库存调整</span><input type=\"number\" step=\"1\" id=\"stockInitInput\" value=\"0\" placeholder=\"输入正数增加，负数减少\"></label>" +
+          "<label class=\"stock-ratio-row\"><span>分配比例</span><div class=\"stock-ratio-control\"><div class=\"stock-ratio-scale\"><span>高库存</span><strong id=\"stockRatioText\">" + highLowStockRatio(game) + "</strong><span>低库存</span></div><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" id=\"stockRatioInput\" value=\"" + highStockPercent(game) + "\" style=\"" + ratioRangeStyle(highStockPercent(game)) + "\"></div></label>" +
+          "<label><span>倍率分界</span><input type=\"number\" min=\"1\" step=\"1\" id=\"stockBoundaryInput\" value=\"" + (game.highLowBoundary || 10) + "\" placeholder=\"高低库存倍率分界，如10\"></label>" +
         "</div>" +
-        "<div class=\"stock-form-tip\" id=\"stockFormTip\">调整后库存不能小于 0，初始库存必须大于 0。当前 T：" + stockRatio(game) + "</div>" +
+        "<div class=\"stock-form-tip\" id=\"stockFormTip\">调整后库存不能小于 0，初始库存必须大于 0。分配比例填写高库存占比；倍率分界用于区分低库存与高库存返奖区间。当前 T：" + stockRatio(game) + "</div>" +
         "<div class=\"inventory-modal-actions\">" +
           "<button type=\"button\" class=\"btn btn-outline\" data-stock-cancel>取消</button>" +
           "<button type=\"button\" class=\"btn btn-primary\" data-stock-confirm>确定</button>" +
@@ -378,21 +405,29 @@
       var highInput = modal.querySelector("#stockHighInput");
       var lowInput = modal.querySelector("#stockLowInput");
       var initInput = modal.querySelector("#stockInitInput");
+      var ratioInput = modal.querySelector("#stockRatioInput");
+      var boundaryInput = modal.querySelector("#stockBoundaryInput");
       var tip = modal.querySelector("#stockFormTip");
       var highAdjust = Number(highInput.value || 0);
       var lowAdjust = Number(lowInput.value || 0);
       var initAdjust = Number(initInput.value || 0);
+      var ratio = Number(ratioInput.value);
+      var boundary = Number(boundaryInput.value);
       var nextHigh = Math.floor(game.stock + highAdjust);
       var nextLow = Math.floor(game.lowStock + lowAdjust);
       var nextInit = Math.floor(game.initStock + initAdjust);
-      if (!Number.isFinite(highAdjust) || !Number.isFinite(lowAdjust) || !Number.isFinite(initAdjust) || nextHigh < 0 || nextLow < 0 || nextInit <= 0) {
-        tip.textContent = "调整后的高低库存不能小于 0，初始库存必须大于 0。";
+      if (!Number.isFinite(highAdjust) || !Number.isFinite(lowAdjust) || !Number.isFinite(initAdjust) || !Number.isFinite(ratio) || !Number.isFinite(boundary) || nextHigh < 0 || nextLow < 0 || nextInit <= 0 || ratio < 0 || ratio > 100 || boundary <= 0) {
+        tip.textContent = "调整后的高低库存不能小于 0，初始库存必须大于 0；分配比例需在 0-100 之间，倍率分界必须大于 0。";
         tip.classList.add("is-error");
         return;
       }
+      var adjustedTotal = nextHigh + nextLow;
+      nextHigh = Math.round(adjustedTotal * ratio / 100);
+      nextLow = adjustedTotal - nextHigh;
       game.stock = nextHigh;
       game.lowStock = nextLow;
       game.initStock = nextInit;
+      game.highLowBoundary = boundary;
       var nextTotal = gameTotalStock(game);
       site.totalStock = site.totalStock - oldTotal + nextTotal;
       merchant.totalStock = merchant.totalStock - oldTotal + nextTotal;
@@ -401,6 +436,15 @@
       updateOverviewTotal();
       renderGameList(merchant.id, site.id);
       close();
+    });
+
+    modal.addEventListener("input", function(event) {
+      if (event.target && event.target.id === "stockRatioInput") {
+        var value = Number(event.target.value || 0);
+        var text = modal.querySelector("#stockRatioText");
+        if (text) text.textContent = value + "%/" + (100 - value) + "%";
+        event.target.setAttribute("style", ratioRangeStyle(value));
+      }
     });
   }
 
@@ -423,16 +467,20 @@
     }
     var sortIcon = sortType === "stockDesc" ? "▼" : "▲";
     document.getElementById("contentContainer").innerHTML =
-      "<table class=\"game-table\"><thead><tr><th width=\"60\">序号</th><th>游戏名称</th><th>今日盈亏</th><th id=\"sortStock\">库存 " + sortIcon + "</th><th>初始库存</th><th>T</th><th>RTP</th><th width=\"100\">站内排名</th><th>操作</th></tr></thead><tbody>" +
+      "<table class=\"game-table\"><thead><tr><th width=\"60\">序号</th><th>游戏名称</th><th>今日下注</th><th>今日返奖</th><th>今日盈亏</th><th id=\"sortStock\">库存 " + sortIcon + "</th><th>高低库存比例</th><th>初始库存</th><th>T</th><th>高低库存倍率分界</th><th>RTP</th><th width=\"100\">站内排名</th><th>操作</th></tr></thead><tbody>" +
       rows.map(function(game, index) {
         var high = gameTotalStock(game) > 700000;
         return "<tr class=\"" + (high ? "high-stock" : "") + "\">" +
           "<td>" + (index + 1) + "</td>" +
           "<td class=\"game-name\">" + highlightKeyword(game.name, keyword) + "</td>" +
+          "<td>" + formatNumber(game.todayBet) + "</td>" +
+          "<td>" + formatNumber(game.todayPayout) + "</td>" +
           "<td class=\"profit-value " + (game.todayProfit >= 0 ? "is-positive" : "is-negative") + "\">" + (game.todayProfit >= 0 ? "+" : "") + formatNumber(game.todayProfit) + "</td>" +
           "<td class=\"game-stock\">" + stockDisplayHtml(game) + "</td>" +
+          "<td><span class=\"tag tag-t\">" + highLowStockRatio(game) + "</span></td>" +
           "<td>" + formatNumber(game.initStock) + "</td>" +
           "<td><span class=\"tag tag-t\">" + stockRatio(game) + "</span></td>" +
+          "<td><span class=\"tag tag-boundary\">" + (game.highLowBoundary || 10) + "x</span></td>" +
           "<td><span class=\"tag tag-rtp\">" + game.rtp + "%</span></td>" +
           "<td><span class=\"tag " + (index < 10 ? "tag-success" : "tag-secondary") + "\">第" + (index + 1) + "名</span></td>" +
           "<td><button class=\"btn btn-primary btn-sm\" type=\"button\" data-stock-game=\"" + game.id + "\">修改库存</button></td>" +
@@ -458,12 +506,16 @@
               merchantId: merchant.id,
               siteName: site.name,
               siteId: site.id,
+              gameId: game.id,
               gameName: game.name,
               currency: merchant.currency,
               stock: game.stock,
               lowStock: game.lowStock,
               initStock: game.initStock,
+              todayBet: game.todayBet,
+              todayPayout: game.todayPayout,
               todayProfit: game.todayProfit,
+              highLowBoundary: game.highLowBoundary,
               rtp: game.rtp,
               score: match.score
             });
@@ -478,9 +530,9 @@
     }
     document.getElementById("contentContainer").innerHTML =
       "<div class=\"search-result-header\"><div class=\"search-result-title\">游戏「" + keyword + "」全平台库存</div><div class=\"search-result-total\">共 " + results.length + " 条</div></div>" +
-      "<table class=\"game-table\"><thead><tr><th>序号</th><th>商户</th><th>站点</th><th>游戏</th><th>今日盈亏</th><th>货币</th><th>RTP</th><th>库存</th><th>T</th><th>操作</th></tr></thead><tbody>" +
+      "<table class=\"game-table\"><thead><tr><th>序号</th><th>商户</th><th>站点</th><th>游戏</th><th>今日下注</th><th>今日返奖</th><th>今日盈亏</th><th>货币</th><th>RTP</th><th>库存</th><th>高低库存比例</th><th>T</th><th>高低库存倍率分界</th><th>操作</th></tr></thead><tbody>" +
       results.map(function(item, index) {
-        return "<tr><td>" + (index + 1) + "</td><td>" + item.merchantName + "</td><td>" + item.siteName + "</td><td class=\"game-name\">" + highlightKeyword(item.gameName, keyword) + "</td><td class=\"profit-value " + (item.todayProfit >= 0 ? "is-positive" : "is-negative") + "\">" + (item.todayProfit >= 0 ? "+" : "") + formatNumber(item.todayProfit) + "</td><td><span class=\"tag tag-currency\">" + item.currency + "</span></td><td><span class=\"tag tag-rtp\">" + item.rtp + "%</span></td><td class=\"game-stock\">" + stockDisplayHtml(item) + "</td><td><span class=\"tag tag-t\">" + stockRatio(item) + "</span></td><td><button class=\"btn btn-outline btn-sm\" type=\"button\" data-jump-merchant=\"" + item.merchantId + "\" data-jump-site=\"" + item.siteId + "\">查看详情</button></td></tr>";
+        return "<tr><td>" + (index + 1) + "</td><td>" + item.merchantName + "</td><td>" + item.siteName + "</td><td class=\"game-name\">" + highlightKeyword(item.gameName, keyword) + "</td><td>" + formatNumber(item.todayBet) + "</td><td>" + formatNumber(item.todayPayout) + "</td><td class=\"profit-value " + (item.todayProfit >= 0 ? "is-positive" : "is-negative") + "\">" + (item.todayProfit >= 0 ? "+" : "") + formatNumber(item.todayProfit) + "</td><td><span class=\"tag tag-currency\">" + item.currency + "</span></td><td><span class=\"tag tag-rtp\">" + item.rtp + "%</span></td><td class=\"game-stock\">" + stockDisplayHtml(item) + "</td><td><span class=\"tag tag-t\">" + highLowStockRatio(item) + "</span></td><td><span class=\"tag tag-t\">" + stockRatio(item) + "</span></td><td><span class=\"tag tag-boundary\">" + (item.highLowBoundary || 10) + "x</span></td><td><button class=\"btn btn-primary btn-sm\" type=\"button\" data-search-stock-game=\"" + item.gameId + "\" data-search-merchant=\"" + item.merchantId + "\" data-search-site=\"" + item.siteId + "\">修改库存</button></td></tr>";
       }).join("") +
       "</tbody></table>";
   }
@@ -535,6 +587,15 @@
       var stockTarget = event.target.closest("[data-stock-game]");
       if (stockTarget) {
         modifyStock(currentMerchantId, currentSiteId, Number(stockTarget.getAttribute("data-stock-game")));
+        return;
+      }
+      var searchStockTarget = event.target.closest("[data-search-stock-game]");
+      if (searchStockTarget) {
+        modifyStock(
+          Number(searchStockTarget.getAttribute("data-search-merchant")),
+          Number(searchStockTarget.getAttribute("data-search-site")),
+          Number(searchStockTarget.getAttribute("data-search-stock-game"))
+        );
         return;
       }
       var sortStock = event.target.closest("#sortStock");
