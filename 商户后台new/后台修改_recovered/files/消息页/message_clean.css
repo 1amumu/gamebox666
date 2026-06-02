@@ -1,0 +1,358 @@
+@import url("../智能点控推荐/smart_control_recommend.css");
+
+.message-page {
+  min-width: 980px;
+}
+
+.message-panel {
+  min-height: calc(100vh - 118px);
+  border: 1px solid #EAECF0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  overflow: visible;
+}
+
+.message-page .topbar-message {
+  overflow: visible;
+}
+
+.message-page .topbar-badge {
+  z-index: 20;
+  left: 16px;
+  top: -5px;
+}
+
+.message-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 44px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #EAECF0;
+}
+
+.message-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-search label {
+  color: #111827;
+  font-size: 14px;
+}
+
+.message-input {
+  width: 204px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid #D0D5DD;
+  border-radius: 2px;
+  color: #344054;
+  font-size: 13px;
+}
+
+.message-btn {
+  min-width: 60px;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #9CA3AF;
+  border-radius: 4px;
+  background: #FFFFFF;
+  color: #111827;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.message-btn.primary {
+  border-color: #2E90FA;
+  background: #9DDCFF;
+}
+
+.message-btn:hover {
+  border-color: #1677FF;
+  color: #1677FF;
+}
+
+.message-publish {
+  min-width: 96px;
+  height: 32px;
+  border: 1px solid #2E90FA;
+  border-radius: 4px;
+  background: #9DDCFF;
+  color: #111827;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.message-tabs {
+  display: flex;
+  align-items: flex-end;
+  min-height: 40px;
+  padding: 6px 10px 0;
+  border-bottom: 1px solid #EAECF0;
+  overflow: visible;
+}
+
+.message-tab {
+  position: relative;
+  z-index: 1;
+  min-width: 96px;
+  height: 30px;
+  margin-right: 0;
+  padding: 0 10px;
+  border: 1px solid #8B8F98;
+  background: #FFFFFF;
+  color: #111827;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.message-tab.is-active {
+  z-index: 2;
+  background: #F7FAFF;
+}
+
+.message-tab-badge {
+  position: absolute;
+  right: 2px;
+  top: -9px;
+  z-index: 10;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border: 1px solid #FFFFFF;
+  border-radius: 999px;
+  background: #D91F3C;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.message-list {
+  padding: 14px 10px 24px;
+}
+
+.message-item {
+  position: relative;
+  z-index: 1;
+  min-height: 74px;
+  padding: 10px 72px 9px 12px;
+  border: 1px solid #D7DCE2;
+  background: #FFFFFF;
+}
+
+.message-item + .message-item {
+  margin-top: 12px;
+}
+
+.message-item:hover {
+  z-index: 3;
+}
+
+.message-head {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 26px;
+}
+
+.message-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 102px;
+  height: 20px;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 13px;
+}
+
+.message-type.player { background: #08A9E8; }
+.message-type.settle { background: #64B900; }
+.message-type.quota { background: #F91515; }
+.message-type.notice { background: #0718F2; }
+.message-type.other { background: #667085; }
+
+.message-title {
+  min-width: 0;
+  color: #111827;
+  font-size: 15px;
+  line-height: 22px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-content {
+  margin-top: 8px;
+  color: #111827;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.message-meta-line {
+  display: flex;
+  gap: 48px;
+  margin-top: 8px;
+  color: #111827;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.message-time {
+  position: absolute;
+  right: 24px;
+  top: 34px;
+  color: #111827;
+  font-size: 14px;
+}
+
+.message-unread-dot {
+  position: absolute;
+  right: -10px;
+  top: -11px;
+  z-index: 6;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #D91F3C;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.8);
+}
+
+.message-empty {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #667085;
+  font-size: 14px;
+}
+
+.message-drawer-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(17, 24, 39, .36);
+}
+
+.message-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  width: 386px;
+  max-width: calc(100vw - 64px);
+  height: 100vh;
+  border-left: 2px solid #B66B24;
+  background: #FFFFFF;
+  box-shadow: -12px 0 32px rgba(16, 24, 40, .18);
+  animation: messageDrawerIn .18s ease-out;
+}
+
+@keyframes messageDrawerIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.message-drawer-close {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #B8BDC7;
+  font-size: 28px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.message-drawer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 18px 16px;
+  overflow-y: auto;
+}
+
+.message-drawer-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  height: 20px;
+  border-radius: 4px;
+  color: #FFFFFF;
+  font-size: 13px;
+}
+
+.message-drawer-title {
+  margin: 18px 0 18px;
+  color: #111827;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.message-drawer-divider {
+  height: 1px;
+  margin: 0 0 14px;
+  background: #9CA3AF;
+}
+
+.message-drawer-meta {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+  color: #98A2B3;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.message-drawer-detail {
+  color: #111827;
+  font-size: 15px;
+  line-height: 18px;
+  white-space: pre-line;
+}
+
+.message-drawer-actions {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 18px;
+  border-top: 1px solid #9CA3AF;
+}
+
+.message-delete {
+  min-width: 58px;
+  height: 32px;
+  border: 1px solid #8B8F98;
+  border-radius: 4px;
+  background: #FFFFFF;
+  color: #111827;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.message-delete:hover {
+  border-color: #D92D20;
+  color: #D92D20;
+}
+
+@media (max-width: 1280px) {
+  .message-page {
+    min-width: 0;
+  }
+
+  .message-toolbar {
+    flex-wrap: wrap;
+  }
+}

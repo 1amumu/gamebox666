@@ -1,0 +1,249 @@
+@import url("../智能点控推荐/smart_control_recommend.css");
+
+.recharge-page {
+  min-width: 1040px;
+}
+
+.recharge-panel {
+  min-height: calc(100vh - 118px);
+  border: 1px solid #EAECF0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.recharge-filter {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 58px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #EAECF0;
+  background: #FFFFFF;
+  flex-wrap: wrap;
+}
+
+.recharge-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.recharge-input,
+.recharge-select {
+  height: 30px;
+  border: 1px solid #D0D5DD;
+  border-radius: 4px;
+  background: #FFFFFF;
+  color: #344054;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.merchant-picker {
+  position: relative;
+  width: 178px;
+}
+
+.merchant-picker-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #D0D5DD;
+  border-radius: 4px;
+  background: #FFFFFF;
+  color: #344054;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.merchant-picker-button::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  border-right: 1.5px solid #667085;
+  border-bottom: 1.5px solid #667085;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.merchant-picker-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merchant-picker-menu {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  z-index: 30;
+  width: 220px;
+  padding: 8px;
+  border: 1px solid #D0D5DD;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 12px 28px rgba(16, 24, 40, .14);
+}
+
+.merchant-picker-search {
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #D0D5DD;
+  border-radius: 4px;
+  color: #344054;
+  font-size: 13px;
+}
+
+.merchant-picker-list {
+  max-height: 188px;
+  margin-top: 6px;
+  overflow-y: auto;
+}
+
+.merchant-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  padding: 0 5px;
+  border-radius: 4px;
+  color: #344054;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.merchant-picker-option:hover {
+  background: #F2F4F7;
+}
+
+.merchant-picker-option input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+
+.recharge-input {
+  width: 118px;
+  padding: 0 8px;
+}
+
+.recharge-select {
+  width: 112px;
+  padding: 0 8px;
+}
+
+.recharge-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recharge-table-wrap {
+  overflow-x: auto;
+}
+
+.recharge-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.recharge-table th,
+.recharge-table td {
+  height: 42px;
+  padding: 0 8px;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.recharge-table th {
+  height: 34px;
+  background: #F2F2F2;
+}
+
+.recharge-table tbody td {
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.recharge-table tbody tr:hover {
+  background: #F9FBFF;
+}
+
+.recharge-money {
+  font-variant-numeric: tabular-nums;
+}
+
+.recharge-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.recharge-status.success {
+  background: #ECFDF3;
+  color: #039855;
+}
+
+.recharge-status.timeout {
+  background: #FEF3F2;
+  color: #D92D20;
+}
+
+.recharge-status.pending {
+  background: #EFF8FF;
+  color: #1570EF;
+}
+
+.recharge-delete {
+  border: 0;
+  background: transparent;
+  color: #111827;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 22px;
+  text-decoration: underline;
+}
+
+.recharge-delete:hover {
+  color: #1677FF;
+}
+
+.recharge-empty {
+  height: 120px !important;
+  color: #667085 !important;
+}
+
+.recharge-col-order { width: 132px; }
+.recharge-col-name { width: 118px; }
+.recharge-col-id { width: 96px; }
+.recharge-col-type { width: 112px; }
+.recharge-col-money { width: 104px; }
+.recharge-col-status { width: 104px; }
+.recharge-col-time { width: 148px; }
+.recharge-col-action { width: 82px; }
+
+@media (max-width: 1360px) {
+  .recharge-page { min-width: 0; }
+  .recharge-table { min-width: 1080px; }
+}

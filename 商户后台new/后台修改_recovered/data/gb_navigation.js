@@ -62,7 +62,8 @@
         { label: "汇率查询", title: "汇率查询", href: "汇率查询.html", icon: "report" },
         { label: "结算商户", title: "结算信息页", href: "结算信息页.html", icon: "order" },
         { label: "待结算信息", title: "待结算信息页", href: "待结算信息页.html", icon: "order" },
-        { label: "充值订单", title: "充值订单页", href: "充值订单页.html", icon: "order" }
+        { label: "充值订单", title: "充值订单页", href: "充值订单页.html", icon: "order" },
+        { label: "商户消费流水", title: "商户消费流水页", href: "商户消费流水页.html", icon: "order" }
       ]
     },
     {
