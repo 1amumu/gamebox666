@@ -87,7 +87,7 @@
       "<td class=\"pending-money\">" + money(row.profit) + "</td>" +
       "<td>" + dateText(row.period) + "</td>" +
       "<td class=\"pending-money\">" + money(row.amount) + "</td>" +
-      "<td><div class=\"pending-detail\"><button type=\"button\" class=\"pending-mini-btn\" data-brief=\"" + index + "\">简报</button><button type=\"button\" class=\"pending-mini-btn\" data-manual=\"" + index + "\">手动结算</button></div></td>" +
+      "<td><div class=\"pending-detail\"><button type=\"button\" class=\"pending-link-btn\" data-brief=\"" + index + "\">简报</button><button type=\"button\" class=\"pending-link-btn\" data-manual=\"" + index + "\">手动结算</button></div></td>" +
     "</tr>";
   }
 
@@ -108,26 +108,66 @@
     }).join("") : "<tr><td colspan=\"8\">暂无匹配数据</td></tr>";
   }
 
+  function briefMockData(row) {
+    var flow = Number(row.flow || 0);
+    var profit = Number(row.profit || 0);
+    var usd = Number(row.amount || 0);
+    var inrRate = 83.42;
+    var parts = [
+      { title: "小飞机", unit: "局数", count: 3180, users: 96, flowRate: .09, profitRate: .12 },
+      { title: "slot游戏", unit: "局数", count: 12840, users: 426, flowRate: .46, profitRate: .38 },
+      { title: "fish游戏", unit: "子弹数", count: 96800, users: 182, flowRate: .28, profitRate: .31 },
+      { title: "mini游戏", unit: "局数", count: 6240, users: 214, flowRate: .17, profitRate: .19 }
+    ];
+    return parts.map(function(part, index) {
+      var bet = flow * part.flowRate;
+      var win = Math.max(0, bet - profit * part.profitRate);
+      var itemProfit = bet - win;
+      var itemUsd = index === parts.length - 1
+        ? usd - parts.slice(0, index).reduce(function(sum, prev) { return sum + (profit * prev.profitRate); }, 0)
+        : profit * part.profitRate;
+      return {
+        title: part.title,
+        unit: part.unit,
+        count: Math.round(part.count + flow / 12000 + index * 37),
+        users: Math.round(part.users + flow / 28000 + index * 11),
+        bet: bet,
+        win: win,
+        profit: itemProfit,
+        inr: itemUsd * inrRate,
+        usd: itemUsd
+      };
+    });
+  }
+
+  function briefSection(item) {
+    return "<div class=\"brief-section\">" +
+      "<div class=\"brief-game-title\"><span>" + item.title + "</span></div>" +
+      "<table class=\"brief-table\"><thead><tr><th>" + item.unit + "</th><th>人数</th><th>下注金额</th><th>返奖金额</th><th>盈利金额</th><th>结算(inr)</th><th>结算(usd)</th></tr></thead><tbody>" +
+        "<tr><td>" + item.count.toLocaleString("en-US") + "</td><td>" + item.users.toLocaleString("en-US") + "</td><td>" + money(item.bet) + "</td><td>" + money(item.win) + "</td><td>" + money(item.profit) + "</td><td>" + money(item.inr) + "</td><td>" + money(item.usd) + "</td></tr>" +
+      "</tbody></table>" +
+    "</div>";
+  }
+
   function openBrief(row) {
-    var slotBet = row.flow * 0.52;
-    var flightBet = row.flow * 0.31;
-    var fishBet = row.flow * 0.17;
+    var details = briefMockData(row);
+    var totalUsers = details.reduce(function(sum, item) { return sum + item.users; }, 0);
+    var totalRounds = details.reduce(function(sum, item) { return sum + item.count; }, 0);
     document.getElementById("pendingModalHost").innerHTML = "<div class=\"pending-modal-mask\">" +
-      "<div class=\"pending-modal\">" +
+      "<div class=\"pending-brief-modal\">" +
         "<button type=\"button\" class=\"pending-modal-close\" data-modal-close>×</button>" +
-        "<div class=\"pending-modal-head\"><strong>待结算简报</strong><span>" + row.name + "（" + row.id + "） / " + dateText(row.period) + "</span></div>" +
-        "<div class=\"pending-modal-body\">" +
-          "<div class=\"pending-summary\">" +
-            "<div><span>商户类型</span><strong>" + row.type + "</strong></div>" +
-            "<div><span>应结算金额</span><strong>" + money(row.amount) + "</strong></div>" +
-            "<div><span>总盈利</span><strong>" + money(row.profit) + "</strong></div>" +
-          "</div>" +
-          "<table class=\"pending-brief-table\"><thead><tr><th>游戏分类</th><th>总流水(美元)</th><th>总盈利(美元)</th><th>结算金额</th></tr></thead><tbody>" +
-            "<tr><td>小飞机</td><td>" + money(flightBet) + "</td><td>" + money(row.profit * 0.36) + "</td><td>" + money(row.amount * 0.36) + "</td></tr>" +
-            "<tr><td>slot游戏</td><td>" + money(slotBet) + "</td><td>" + money(row.profit * 0.47) + "</td><td>" + money(row.amount * 0.47) + "</td></tr>" +
-            "<tr><td>fish游戏</td><td>" + money(fishBet) + "</td><td>" + money(row.profit * 0.17) + "</td><td>" + money(row.amount * 0.17) + "</td></tr>" +
-          "</tbody></table>" +
+        "<div class=\"brief-head\">" +
+          "<div><strong>结算简报</strong><span>" + row.name + "（" + row.id + "）</span></div>" +
+          "<div><label>结算周期</label><span>" + row.period + "</span></div>" +
         "</div>" +
+        "<div class=\"brief-summary\">" +
+          "<div><span>总结算金额</span><strong>" + money(row.amount) + " USDT</strong></div>" +
+          "<div><span>总流水</span><strong>" + money(row.flow) + "</strong></div>" +
+          "<div><span>总盈利</span><strong>" + money(row.profit) + "</strong></div>" +
+          "<div><span>参与人数</span><strong>" + totalUsers.toLocaleString("en-US") + "</strong></div>" +
+          "<div><span>游戏量</span><strong>" + totalRounds.toLocaleString("en-US") + "</strong></div>" +
+        "</div>" +
+        "<div class=\"brief-section-list\">" + details.map(briefSection).join("") + "</div>" +
         "<div class=\"pending-modal-actions\"><button type=\"button\" class=\"btn btn-outline\" data-modal-close>确定</button></div>" +
       "</div>" +
     "</div>";
@@ -135,20 +175,17 @@
 
   function openManual(row) {
     document.getElementById("pendingModalHost").innerHTML = "<div class=\"pending-modal-mask\">" +
-      "<div class=\"pending-modal\">" +
+      "<div class=\"pending-manual-modal\">" +
         "<button type=\"button\" class=\"pending-modal-close\" data-modal-close>×</button>" +
-        "<div class=\"pending-modal-head\"><strong>手动结算确认</strong><span>" + row.name + "（" + row.id + "）</span></div>" +
-        "<div class=\"pending-modal-body\">" +
-          "<p class=\"pending-manual-note\">确认后将以当前待结算金额生成结算记录，并从待结算列表中移出。</p>" +
-          "<div class=\"pending-manual-grid\">" +
-            "<span>结算周期</span><strong>" + dateText(row.period) + "</strong>" +
-            "<span>商户类型</span><strong>" + row.type + "</strong>" +
-            "<span>总流水</span><strong>" + money(row.flow) + " 美元</strong>" +
-            "<span>总盈利</span><strong>" + money(row.profit) + " 美元</strong>" +
-            "<span>应结算金额</span><strong>" + money(row.amount) + "</strong>" +
-          "</div>" +
+        "<div class=\"pending-manual-body\">" +
+          "<p class=\"manual-confirm-text\">是否给 " + row.name + "（商户id " + row.id + "）进行手动结算：</p>" +
+          "<p class=\"manual-info-line\"><span>结算金额：</span><strong>" + money(row.amount) + "</strong></p>" +
+          "<p class=\"manual-info-line\"><span>结算日期：</span><strong>" + dateText(row.period) + "</strong></p>" +
+          "<label class=\"manual-form-row\"><span>输入订单id</span><input type=\"text\" placeholder=\"请输入\"><i></i></label>" +
+          "<label class=\"manual-form-row manual-upload-row\"><span>选择上传图片</span><input class=\"manual-file-name\" type=\"text\" placeholder=\"请选择\" readonly><button type=\"button\" data-manual-upload>上传</button><input class=\"manual-file-input\" type=\"file\" accept=\"image/*\" hidden></label>" +
+          "<div class=\"manual-upload-preview\"><span>上传图片后在此预览</span></div>" +
         "</div>" +
-        "<div class=\"pending-modal-actions\"><button type=\"button\" class=\"btn btn-outline\" data-modal-close>取消</button><button type=\"button\" class=\"btn btn-primary\" data-modal-close>确定</button></div>" +
+        "<div class=\"pending-manual-actions\"><button type=\"button\" data-modal-close>确定</button></div>" +
       "</div>" +
     "</div>";
   }
@@ -260,7 +297,23 @@
       }
       if (event.target.closest("[data-modal-close]") || event.target.classList.contains("pending-modal-mask")) {
         document.getElementById("pendingModalHost").innerHTML = "";
+        return;
       }
+      var uploadButton = event.target.closest("[data-manual-upload]");
+      if (uploadButton) {
+        uploadButton.closest(".manual-upload-row").querySelector(".manual-file-input").click();
+      }
+    });
+
+    app.addEventListener("change", function(event) {
+      if (!event.target.classList.contains("manual-file-input")) return;
+      var file = event.target.files && event.target.files[0];
+      var modal = event.target.closest(".pending-manual-modal");
+      if (!file || !modal) return;
+      modal.querySelector(".manual-file-name").value = file.name;
+      var preview = modal.querySelector(".manual-upload-preview");
+      preview.innerHTML = "<img alt=\"上传图片预览\">";
+      preview.querySelector("img").src = URL.createObjectURL(file);
     });
   }
 
